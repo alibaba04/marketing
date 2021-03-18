@@ -1,0 +1,264 @@
+<?php
+//=======  : Alibaba
+//Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
+defined('validSession') or die('Restricted access');
+$curPage = "view/sph_list";
+
+//Periksa hak user pada modul/menu ini
+$judulMenu = 'Surat Penawaran Harga';
+$hakUser = getUserPrivilege($curPage);
+
+if ($hakUser < 10) {
+    session_unregister("my");
+    echo "<p class='error'>";
+    die('User anda tidak terdaftar untuk mengakses halaman ini!');
+    echo "</p>";
+}
+
+//Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
+if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
+
+    require_once("./class/c_sph.php");
+    $tmpsph = new c_sph;
+
+//Jika Mode Tambah/Add
+    if ($_POST["txtMode"] == "Add") {
+        $pesan = $tmpsph->add($_POST);
+    }
+
+//Jika Mode Ubah/Edit
+    if ($_POST["txtMode"] == "Edit") {
+        $pesan = $tmpsph->edit($_POST);
+    }
+
+//Jika Mode Hapus/Delete
+    if ($_GET["txtMode"] == "Delete") {
+        $pesan = $tmpsph->delete($_GET["kode"]);
+    }
+
+//Seharusnya semua transaksi Add dan Edit Sukses karena data sudah tervalidasi dengan javascript di form detail.
+//Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
+    if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
+        global $mailSupport;
+        $pesan.="Gagal simpan data, mohon hubungi " . $mailSupport . " untuk keterangan lebih lanjut terkait masalah ini.";
+    }
+    header("Location:index.php?page=$curPage&pesan=" . $pesan);
+    exit;
+}
+?>
+<!-- Include script date di bawah jika ada field tanggal -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="dist/js/jquery-ui.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(function () {
+        $('#tglTransaksi').daterangepicker({ 
+            locale: { format: 'DD-MM-YYYY' } });
+    //$('#tglTransaksi').val('00-00-0000');
+});
+
+</script>
+
+<!-- End of Script Tanggal -->
+<section class="content-header">
+    <h1>
+        SURAT PENAWARAN HARGA
+        <small>List SPH</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Input</li>
+        <li class="active">SPH</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6">
+            <!-- TO DO List -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">Search SPH </h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>"autocomplete="off">
+                        <input type="hidden" name="page" value="<?php echo $curPage; ?>">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" name="noSph" id="noSph" placeholder="Cari . . . ."
+                            <?php
+                            if (isset($_GET["noSph"])) {
+                                echo("value='" . $_GET["noSph"] . "'");
+                            }
+                            ?>
+                            onKeyPress="return handleEnter(this, event)">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <?php
+                    if ($hakUser==90 or $hakUser==80){
+                        ?>
+                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPH</button></a>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <!-- /.box -->
+        </section>
+        <section class="col-lg-6">
+            <?php
+            //informasi hasil input/update Sukses atau Gagal
+            if (isset($_GET["pesan"]) != "") {
+                ?>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <i class="fa fa-warning"></i>
+                        <h3 class="box-title">Pesan</h3>
+                    </div>
+                    <div class="box-body">
+                        <?php
+                        if (substr($_GET["pesan"],0,5) == "Gagal") { 
+                            echo '<div class="callout callout-danger">';
+                        }else{
+                            echo '<div class="callout callout-success">';
+                        }
+                        if ($_GET["pesan"] != "") {
+
+                            echo $_GET["pesan"];
+                        }
+                        echo '</div>';
+                        ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </section>
+        <!-- /.right col -->
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-primary">
+                <?php
+                $filter="";
+                if(isset($_GET["noSph"]) ){
+                    $noSph = secureParam($_GET["noSph"], $dbLink);
+                    if ($noSph)
+                        $filter = $filter . " AND s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
+                }else{
+                    $filter = '';
+                }
+            //database
+                $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
+                $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
+                $q.= "WHERE 1=1 " . $filter."group by s.noSph" ;
+                $q.= " ORDER BY idSph desc ";
+            //Paging
+                $rs = new MySQLPagedResultSet($q, 50, $dbLink);
+                ?>
+                <div class="box-header">
+                    <i class="ion ion-clipboard"></i>
+                    <ul class="pagination pagination-sm inline"><?php echo $rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
+                    <?php
+                    if ($_SESSION['my']->privilege == 'ADMIN') {
+                        echo '<a href="class/c_exportexcel.php?"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>';
+                    }
+                    ?>
+                </div>
+
+                <div class="box-body" style="width: 100%;overflow-x: scroll;">
+                    <table class="table table-bordered table-striped table-hover" >
+                        <thead>
+                            <tr>
+                                <th width="3%">Action</th>
+                                <th style="width: 20%">Number SPH</th>
+                                <th style="width: 10%">Date</th>
+                                <th style="width: 10%">Client</th>
+                                <th style="width: 20%">Address</th>
+                                <th style="width: 30%">Information</th>
+                                <th style="width: 15%">Operator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $rowCounter=1;
+                            while ($query_data = $rs->fetchArray()) {
+                                echo "<tr>";
+                                if (empty($query_data["keterangan_kk"])) {
+                                    if($hakUser == 90){
+                                        if ($_SESSION["my"]->id == $query_data["kodeUser"] || $_SESSION["my"]->privilege == "GODMODE"|| $_SESSION["my"]->privilege == "ADMIN") {
+                                            echo '<td><div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-fw fa-angle-double-down"></i></button>
+                                            <ul class="dropdown-menu" style="border-color:#000;">';
+                                            echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
+                                            echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus data SPH ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noSph"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
+                                            echo "</ul></div></td>";
+                                        }else{
+                                            echo '<td><div class="dropdown">
+                                            <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <i class="fa fa-fw fa-exclamation"></i></button>
+                                            <ul class="dropdown-menu" style="border-color:#000;">';
+                                            echo "<li><a ><i class='fa fa-fw fa-remove'></i></i>Akun Tidak Punya Akses Edit</a></li>";
+                                            echo "</ul></div></td>";
+                                        }
+                                    } else{
+                                        echo '<td><div class="dropdown">
+                                        <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <i class="fa fa-fw fa-exclamation"></i></button>
+                                        <ul class="dropdown-menu" style="border-color:#000;">';
+                                        echo "<li><a><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
+                                        echo "</ul></div></td>";
+                                    }
+
+                                } else {
+                                    echo '<td><div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <i class="fa fa-fw fa-check"></i></button>
+                                        <ul class="dropdown-menu" style="border-color:#000;">';
+                                        echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
+                                        echo "</ul></div></td>";
+                                }
+                                echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/pdf_sph.php?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
+                                <button type='button' class='btn btn-block btn-info'>".($query_data["noSph"])."</button></a></td>";
+                                echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
+                                echo "<td>" . ($query_data["nama_cust"]) . "</td>";
+                                echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
+                                $kel = '';
+                                if ($query_data["plafon"] == 0){
+                                    $kel = 'Full';
+                                }else if ($query_data["plafon"] == 1){
+                                    $kel = 'Tanpa Plafon';
+                                }else{
+                                    $kel = 'Waterproof';
+                                }
+                                $dt = '';
+                                if ($query_data["dt"] != 0){
+                                    $dt = ', DT : '.$query_data["dt"];
+                                }
+                                $spek = 'MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
+                                echo "<td>" . $spek ."</td>";
+                                echo "<td>" . strtoupper($query_data["nama"]) . "</td>";
+                                echo("</tr>");
+                                $rowCounter++;
+                            }
+                            if (!$rs->getNumPages()) {
+                                echo("<tr class='even'>");
+                                echo ("<td colspan='10' align='center'>Maaf, data tidak ditemukan</td>");
+                                echo("</tr>");
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+        </section>
+    </div>
+</section>
