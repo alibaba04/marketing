@@ -42,8 +42,10 @@ class c_sph
                     $transport = secureParam($params["txtTransport_" . $j], $dbLink);
                     $harga1 = secureParam($params["txtHarga1_" . $j], $dbLink);
                     $harga2 = secureParam($params["txtHarga2_" . $j], $dbLink);
+                    $harga3 = secureParam($params["txtHarga3_" . $j], $dbLink);
                     $h1 = preg_replace("/\D/", "", $harga1);
                     $h2 = preg_replace("/\D/", "", $harga2);
+                    $h3 = preg_replace("/\D/", "", $harga3);
                     $transport = preg_replace("/\D/", "", $transport);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
@@ -53,8 +55,8 @@ class c_sph
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
-                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, harga, harga2, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
-					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$h1."', '".$h2."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
+                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
+					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data SPH.');
@@ -115,7 +117,7 @@ class c_sph
 			}
 			
 			//report
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`harga2`,ds.`jumlah`,ds.`ket`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_sph s LEFT JOIN aki_dsph ds ON s.`noSph`=ds.`noSph` WHERE s.`noSph` = '".$params["txtnoSph"]."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`harga2`,ds.`harga3`,ds.`jumlah`,ds.`ket`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_sph s LEFT JOIN aki_dsph ds ON s.`noSph`=ds.`noSph` WHERE s.`noSph` = '".$params["txtnoSph"]."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];
@@ -128,6 +130,7 @@ class c_sph
 			$tempPlafon  = $temp['plafon'];
 			$tempHarga  = $temp['harga'];
 			$tempHarga2  = $temp['harga2'];
+			$tempHarga3  = $temp['harga3'];
 			$tempJumlah  = $temp['jumlah'];
 			$tempKet  = $temp['ket'];
 			$tempTrans  = $temp['transport'];
@@ -148,8 +151,10 @@ class c_sph
                     $transport = secureParam($params["txtTransport_" . $j], $dbLink);
                     $harga1 = secureParam($params["txtHarga1_" . $j], $dbLink);
                     $harga2 = secureParam($params["txtHarga2_" . $j], $dbLink);
+                    $harga3 = secureParam($params["txtHarga3_" . $j], $dbLink);
                     $h1 = preg_replace("/\D/", "", $harga1);
                     $h2 = preg_replace("/\D/", "", $harga2);
+                    $h3 = preg_replace("/\D/", "", $harga3);
                     $transport = preg_replace("/\D/", "", $transport);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
@@ -159,7 +164,7 @@ class c_sph
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
-                    $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`ket`='".$ketkubah."'";
+                    $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";
 					$q.= " WHERE idDsph='".$idSph."' ;";
 
 					if (!mysql_query( $q, $dbLink))
@@ -230,7 +235,7 @@ class c_sph
 			if (!$result) {
 				throw new Exception('Could not begin transaction');
 			}
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`harga2`,ds.`jumlah`,ds.`ket`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_sph s LEFT JOIN aki_dsph ds ON s.`noSph`=ds.`noSph` WHERE s.`noSph` = '".$noSph."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`harga2`,ds.`harga2`,ds.`jumlah`,ds.`ket`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_sph s LEFT JOIN aki_dsph ds ON s.`noSph`=ds.`noSph` WHERE s.`noSph` = '".$noSph."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];
@@ -243,6 +248,7 @@ class c_sph
 			$tempPlafon  = $temp['plafon'];
 			$tempHarga  = $temp['harga'];
 			$tempHarga2  = $temp['harga2'];
+			$tempHarga3  = $temp['harga3'];
 			$tempJumlah  = $temp['jumlah'];
 			$tempKet  = $temp['ket'];
 			$tempTrans  = $temp['transport'];

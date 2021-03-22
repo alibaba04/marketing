@@ -36,13 +36,14 @@ Sehubungan dengan pembangunan Masjid, Kami selaku kontraktor Kubah Masjid mengaj
 ';
 $pdf->writeHTML($tbl);
 $pdf->SetFont('helvetica', '', 11); 
-$q2 = "SELECT ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
+$q2 = "SELECT ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
 $rs2 = mysql_query($q2, $dbLink);
 $nourut = 1;
 $rincian = '';
 $rincian2 = '';
 $tharga1 = 0;
 $tharga2 = 0;
+$tharga3 = 0;
 $model ='';
 $bplafon ='';
 $ongkir =0;
@@ -63,10 +64,10 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     }else{
         $luas = luas($hasil['d'],$hasil['t'],$hasil['dt']);
     }
+    $luas = round($luas,2);
     $harga1 = ($hasil['harga']);
     $harga2 = ($hasil['harga2']);
-    $tharga = ($hasil['harga']);
-    $thargaa = ($hasil['harga2']);
+    $harga3 = ($hasil['harga3']);
     
     $d = $hasil['d'];
     $t = $hasil['t'];
@@ -79,7 +80,7 @@ while (  $hasil = mysql_fetch_array($rs2)) {
         $rangka = cekrangka($hasil['d']);
     }
     
-
+//if bahan ga 
 if ($bahan == '1' or $bahan == '0') {
     if ($dt != 0){
         $pdf->SetMargins(34, 10, 10, true);
@@ -239,16 +240,15 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     ';
     $pdf->writeHTML($tbl);
     $nourut+=1;
-    
-
 }
+//end bahan ga 
 if ($bahan == '1' or $bahan == '0' ) {
 
     $pdf->addpage();
     $pdf->SetMargins(15, 10, 10, true);
 }
 
-    
+//if bahan en
 if ($bahan == '2' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
@@ -384,8 +384,159 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga2).'</b></i>
     ';
     $pdf->writeHTML($tbl);
+    $nourut+=1;
 }
-if ($bahan == '2' ) {
+//end bahan En 
+
+//if bahan Titanium 
+if ($bahan == '3' or $bahan == '0') {
+    if ($dt != 0){
+        $pdf->SetMargins(34, 10, 10, true);
+        $pdf->Ln(10);
+        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+        $pdf->subWrite(5,'2','',6,4);
+    }else{
+        $pdf->SetMargins(50, 10, 10, true);
+        $pdf->Ln(7);
+        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
+        $pdf->subWrite(5,'2','',6,4);
+    }
+    $pdf->Ln(2);
+    $pdf->SetMargins(13, 10, 10, true);
+    $tbl = '<br>
+    <i><b>'.$nourut.'. SPESIFIKASI KUBAH PLAT TITANIUM ( '.$ketkubah .') </b></i>
+    ';
+    $pdf->writeHTML($tbl);
+    $pdf->SetMargins(18, 10, 10, true);
+    
+    $pdf->Ln(10);  
+    $pdf->SetFont('helvetica', 'B', 11);
+    $pdf->Cell(8,6,'No',1,0,'C',0);
+    $pdf->Cell(32,6,'Item',1,0,'C',0);
+    $pdf->Cell(143,6,'Spesifikasi','1',1,'C',0);  
+    $pdf->SetFont('helvetica', '', 11);
+    $pdf->Cell(8,6,'1.','LR',0,'C',0);
+    $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
+    if ($hasil['d']>=6) {
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
+        $pdf->SetFont('helvetica', '', 11);
+    }
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
+    $pdf->Cell(8,6,'','LTR',0,'C',0);
+    $pdf->Cell(32,6,'','LTR',0,'C',0);
+    $pdf->Cell(40,6,'   ~ Bahan terbuat dari','LT',0,'L',0);
+    $pdf->SetFont('helvetica', 'B', 11);
+    $pdf->Cell(26,6,'Plat Titanium','T','L',0);
+    $pdf->SetFont('helvetica', '', 11);
+    $pdf->Cell(77,6,'0,5  mm','TR',1,'L',0);
+    $pdf->Cell(8,6,'2.','LR',0,'C',0);
+    $pdf->Cell(32,6,'Atap Kubah','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Garansi warna dan konstruksi 5 tahun.','LR',1,'L',0);
+    
+    if ($d >= '0.5' and $d<'3'){
+        $rangka2 = '1 inch tebal 1,6  mm, hollow';
+        $rangka2a = '1,5 x 3,5 cm';
+    }
+    elseif ($d >= '3' and $d<'8' ) {
+        $rangka2 = '1,25 inch tebal 1,6 mm, Hollow';
+        $rangka2a = '1,5 x 3,5 cm';
+    }
+    elseif ($d >= '8' and $d<'10') {
+        $rangka2 = '1,25 inch tebal 1,6 mm, Hollow';
+        $rangka2a = '1,5 x 3,5 cm dan 3,5 x 3,5 cm';
+    }
+    elseif ($d >= '10' and $d<'21') {
+        $rangka2 = '1,25 inch tebal 1,6 mm, Hollow';
+        $rangka2a = '3,5 x 3,5 cm';
+    }
+    elseif ($d >= '21' and $d<'31') {
+        $rangka2 = '1,5 inch tebal 1,6 mm, Hollow';
+        $rangka2a = '3,5 x 3,5 cm';
+    }
+if ($hasil['plafon'] == 0){
+    $pdf->Cell(8,6,'','LTR',0,'C',0);
+    $pdf->Cell(32,6,'','LTR',0,'C',0);
+    $pdf->Cell(110,6,'   ~ Bahan Kalsiboard 3 mm finishing cat dinding dengan lukisan','LT',0,'L',0);
+    $pdf->SetFont('helvetica', 'B', 11);
+    if ($bplafon!=0) {
+        $pdf->Cell(33,6,' Motif Kaligrafi','TR',1,'L',0);
+    }else{
+        $pdf->Cell(33,6,' Motif Awan','TR',1,'L',0);
+    }
+    $pdf->SetFont('helvetica', '', 11);
+    $pdf->Cell(8,6,'3.','LR',0,'C',0);
+    $pdf->Cell(32,6,'Plafon Kubah','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LR',1,'L',0);
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
+}else if($hasil['plafon'] == 2){
+    $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+    $pdf->Cell(32,6,'Plafon Kubah','LTR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LTR',1,'L',0);
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
+}
+
+if ($hasil['d']>=5 && $hasil['d']<6){
+    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+    }else {
+        $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+    }
+    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+    $pdf->Cell(8,6,'','LRB',0,'C',0);
+    $pdf->Cell(32,6,'','LRB',0,'C',0);
+    $pdf->SetFont('helvetica', 'B', 11);
+    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+    $pdf->SetFont('helvetica', '', 11);
+}else if ($hasil['d']>=6){
+    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+    }else {
+        $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+    }
+    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+    $pdf->Cell(8,6,'','LR',0,'C',0);
+    $pdf->Cell(32,6,'','LR',0,'C',0);
+    $pdf->SetFont('helvetica', 'B', 11);
+    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
+    $pdf->Cell(8,6,'','LRB',0,'C',0);
+    $pdf->Cell(32,6,'','LRB',0,'C',0);
+    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    $pdf->SetFont('helvetica', '', 11);
+}else{
+    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+        $pdf->Cell(8,6,'4.',1,0,'C',0);
+    }else {
+        $pdf->Cell(8,6,'3.',1,0,'C',0);
+    }
+    $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
+    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+}
+ $tbl = '<br>
+    <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b></i>
+    ';
+    $pdf->writeHTML($tbl);
+}
+
+if ($bahan == '2' or $bahan == '3' or $bahan == '0' ) {
 
     $pdf->addpage();
     $pdf->SetMargins(15, 10, 10, true);
@@ -414,12 +565,11 @@ $pdf->Ln(6);
 
     if ($bahan == '1' or $bahan == '0') {
         $tharga1=0;
-        $pdf->Cell(80,7,'Rincian Galvalum',0,1,'C',0);
+        $pdf->Cell(10,6,' ',0,0,'L',0);
+        $pdf->Cell(80,7,'Rincian Galvalum',0,1,'L',0);
         while (  $hasil = mysql_fetch_array($rs2)) {
            $ketkubah = $hasil['ket'];
            $jumlah = $hasil['jumlah'];
-           $harga1 = number_format($hasil['harga']);
-           $harga2 = number_format($hasil['harga2']);
            $pdf->Cell(80,6,' ',0,0,'L',0);
            $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
            $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
@@ -434,13 +584,12 @@ $pdf->Ln(6);
     if($bahan == '2' or $bahan == '0'){
         $tharga2=0;
         $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(80,7,'Rincian Enamel',0,1,'C',0);
+        $pdf->Cell(10,6,' ',0,0,'L',0);
+        $pdf->Cell(80,7,'Rincian Enamel',0,1,'L',0);
         $rs2 = mysql_query($q2, $dbLink);
         while (  $hasil = mysql_fetch_array($rs2)) {
            $ketkubah = $hasil['ket'];
            $jumlah = $hasil['jumlah'];
-           $harga1 = number_format($hasil['harga']);
-           $harga2 = number_format($hasil['harga2']);
            $pdf->Cell(80,6,' ',0,0,'L',0);
            $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
            $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
@@ -452,10 +601,27 @@ $pdf->Ln(6);
         $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
         $pdf->Cell(40,6,number_format($tharga2),'T',1,'R',0);
     }
-/*}else{
-    $pdf->Ln(6);
-}
-*/
+    if($bahan == '3' or $bahan == '0'){
+        $tharga3=0;
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(10,6,' ',0,0,'L',0);
+        $pdf->Cell(80,7,'Rincian Titanium',0,1,'L',0);
+        $rs2 = mysql_query($q2, $dbLink);
+        while (  $hasil = mysql_fetch_array($rs2)) {
+           $ketkubah = $hasil['ket'];
+           $jumlah = $hasil['jumlah'];
+           $pdf->Cell(80,6,' ',0,0,'L',0);
+           $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
+           $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
+           $pdf->Cell(40,6,number_format($hasil['harga3']*$jumlah),0,1,'R',0);
+            $tharga3 +=  $hasil['harga3']*$jumlah;
+        }
+        $pdf->Cell(80,6,' ',0,0,'L',0);
+        $pdf->Cell(40,6,'Total ',0,0,'L',0);
+        $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
+        $pdf->Cell(40,6,number_format($tharga3),'T',1,'R',0);
+    }
+
 if ($bahan != '0') {
     if ($nourut<3) {
         $pdf->addpage();

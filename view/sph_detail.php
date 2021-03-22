@@ -81,6 +81,7 @@ $(".select2").select2();
                 $('#idmargin').attr("placeholder", data.margin);
                 $('#idharga1').val(data.tharga);
                 $('#idharga2').val(data.tharga2);
+                $('#idharga3').val(data.tharga2);
             }
         },"json");
     }
@@ -181,17 +182,25 @@ $(document).ready(function () {
             document.getElementById("txtT").value = data.t;
             document.getElementById("idharga1").value = data.harga;
             document.getElementById("idharga2").value = data.harga2;
+            document.getElementById("idharga3").value = data.harga;
             document.getElementById("txtongkir").value = data.transport;
             document.getElementById("txtBiayaPlafon").value = data.biaya_plafon;
             if (data.bahan == 1) {
                 document.getElementById("chkHargaGa").checked=true;
                 document.getElementById("chkHargaEn").checked=false;
+                document.getElementById("chkHargaTm").checked=false;
             }else if(data.bahan == 2){
                 document.getElementById("chkHargaGa").checked=false;
                 document.getElementById("chkHargaEn").checked=true;
+                document.getElementById("chkHargaTm").checked=false;
+            }else if(data.bahan == 3){
+                document.getElementById("chkHargaGa").checked=false;
+                document.getElementById("chkHargaEn").checked=false;
+                document.getElementById("chkHargaTm").checked=true;
             }else{
                 document.getElementById("chkHargaGa").checked=true;
                 document.getElementById("chkHargaEn").checked=true;
+                document.getElementById("chkHargaTm").checked=true;
             }
             if (data.model != 'bawang') {
                 $("#dt :input").prop("readonly", true);
@@ -258,13 +267,16 @@ $(document).ready(function () {
         var m = $("#idmargin").val();
         var h1 = $("#idharga1").val();
         var h2 = $("#idharga2").val();
+        var h3 = $("#idharga3").val();
         var chkEnGa = '';
-        if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked")){
+        if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
         }else if($('#chkHargaEn').is(":checked")){
             chkEnGa = '2';
         }else if($('#chkHargaGa').is(":checked")){
             chkEnGa = '1';
+        }else if($('#chkHargaTm').is(":checked")){
+            chkEnGa = '3';
         }else{
             chkEnGa = '0';
         }
@@ -289,7 +301,9 @@ $(document).ready(function () {
             $("#txtModel_"+$('#validEdit').val()).val($('#cbomodel').val());
             $("#txtHarga1_"+$('#validEdit').val()).val( $("#idharga1").val());
             $("#txtHarga2_"+$('#validEdit').val()).val($('#idharga2').val());
+            $("#txtHarga3_"+$('#validEdit').val()).val($('#idharga3').val());
             $("#txtTransport_"+$('#validEdit').val()).val($('#txtongkir').val());
+            $("#txtBplafon_"+$('#validEdit').val()).val($('#txtBiayaPlafon').val());
             if ($("#txtModel_"+$('#validEdit').val()).val() =='custom'){
                 $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
             }
@@ -387,6 +401,13 @@ td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"></div>';
 trow.appendChild(td);
+//Kolom 12 h3
+var td = document.createElement("TD");
+td.setAttribute("align","right");
+td.setAttribute('onclick','adddetail('+tcounter+');');
+td.style.verticalAlign = 'top';
+td.innerHTML+='<div class="form-group"><input name="txtHarga3_'+tcounter+'" id="txtHarga3_'+tcounter+'" class="form-control" readonly value="'+h3+'"style="min-width: 120px;" ></div>';
+trow.appendChild(td);
 ttable.appendChild(trow);
 }
 }
@@ -452,7 +473,7 @@ function validasiForm(form)
                                 $noSph = "";
                             }
 
-                            $q = "SELECT  ROW_NUMBER() OVER(PARTITION BY ds.model ORDER BY ds.idDsph) AS id,s.*,ds.biaya_plafon,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK ";
+                            $q = "SELECT  ROW_NUMBER() OVER(PARTITION BY ds.model ORDER BY ds.idDsph) AS id,s.*,ds.biaya_plafon,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK ";
                             $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                             $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph."'";
                             $q.= " ORDER BY s.noSph desc ";
@@ -621,21 +642,22 @@ function validasiForm(form)
                 <thead>
                     <tr>
                         <th style="width: 2%"><i class='fa fa-edit'></i></th>
-                        <th style="width: 15%">Information</th>
+                        <th style="width: 10%">Information</th>
                         <th style="width: 3%">Quantity</th>
                         <th style="width: 8%">Model</th>
                         <th style="width: 3%">D</th>
                         <th style="width: 3%">T</th>
                         <th style="width: 3%">Dt</th>
-                        <th style="width: 10%">Transport</th>
-                        <th style="width: 15%">Price&nbspGA&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                        <th style="width: 15%">Price&nbspEN&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">Transport</th>
+                        <th style="width: 13%">Price&nbspGALVALUME&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">Price&nbspENAMEL&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">Price&nbspTITANIUM&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                     </tr>
                 </thead>
                 <tbody id="kendali">
                     <?php
                     if ($_GET['mode']=='edit'){
-                        $q = "SELECT s.*,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
+                        $q = "SELECT s.*,ds.luas,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
                         $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                         $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph;
                         $q.= "' ORDER BY  ds.nomer ";
@@ -657,11 +679,10 @@ function validasiForm(form)
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/></div></td>';
+                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/></div></td>';
                             if ($DetilJurnal["model"] == 'custom') {
-                                echo '<input type="" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
+                                echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
                             }   
-
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"  name="txtTransport_' . $iJurnal . '" id="txtTransport_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" readonly style="text-align:right;min-width: 120px;"></div></td>';
 
@@ -669,7 +690,9 @@ function validasiForm(form)
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
 
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                            <input type="text" class="form-control" name="txtHarga2_' . $iJurnal . '" id="txtHarga2_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga2"]) . '" style="text-align:right;min-width: 120px;" readonly ></div></td></div></tr>';
+                            <input type="text" class="form-control" name="txtHarga2_' . $iJurnal . '" id="txtHarga2_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga2"]) . '" style="text-align:right;min-width: 120px;" readonly ></div></td>';
+                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            <input type="text" class="form-control" name="txtHarga3_' . $iJurnal . '" id="txtHarga3_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga3"]) . '" style="text-align:right;min-width: 120px;" readonly ></div></td></div></tr>';
                             $iJurnal++;
                         }
                     }
@@ -745,48 +768,52 @@ function validasiForm(form)
                                                 <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
                                                     <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
                                                     value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
-                                                        <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
-                                                        value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
-                                                    </div>
-                                                    <div class="col-lg-6" id="dt">
-                                                        <label class="control-label" for="txtKeteranganKas">Plafon Motif</label><div class="input-group"><span class="input-group-addon">Rp</span>
-                                                            <input type="text" name="txtBiayaPlafon" id="txtBiayaPlafon" class="form-control"
-                                                            value="0" onfocus="" placeholder="0" ></div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label class="control-label" for="txtKeteranganKas">Transport</label><div class="input-group"><span class="input-group-addon">Rp</span>
-                                                                <input type="text" name="txtongkir" id="txtongkir" class="form-control"
-                                                                value="" onfocus="" placeholder="0" ></div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <label class="control-label" for="txtKeteranganKas">Luas</label><div class="input-group"><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  type="text" name="idluas" id="idluas" class="form-control" placeholder="0" 
-                                                                    value=""><span class="input-group-addon">m<sup>2</sup></span></div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="text" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0"><span class="input-group-addon">%</span></div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control" value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaEn"checked></span></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="box-footer" style="padding-top: 10%;"></div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input type="button" class="btn btn-primary" value="Save" onclick="addarray();">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
+                                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
+                                                value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                                            </div>
+                                            <div class="col-lg-6" id="dt">
+                                                <label class="control-label" for="txtKeteranganKas">Plafon Motif</label><div class="input-group"><span class="input-group-addon">Rp</span>
+                                                    <input type="text" name="txtBiayaPlafon" id="txtBiayaPlafon" class="form-control"
+                                                    value="0" onfocus="" placeholder="0" ></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Transport</label><div class="input-group"><span class="input-group-addon">Rp</span>
+                                                    <input type="text" name="txtongkir" id="txtongkir" class="form-control"
+                                                    value="" onfocus="" placeholder="0" ></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Luas</label><div class="input-group"><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  type="text" name="idluas" id="idluas" class="form-control" placeholder="0" 
+                                                    value=""><span class="input-group-addon">m<sup>2</sup></span></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="text" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0"><span class="input-group-addon">%</span></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control" value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaEn"checked></span></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="control-label" for="txtKeteranganKas">Harga Titanium</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control" value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaTm"checked></span></div>
                                             </div>
                                         </div>
+                                        <div class="box-footer" style="padding-top: 10%;"></div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-primary" value="Save" onclick="addarray();">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
 
                                 <div class="box-footer">
                                     <tr>
