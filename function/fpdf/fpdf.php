@@ -6,7 +6,7 @@
 * Date:    2019-12-07                                                          *
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
-require_once('../config.php');
+require_once('../config_pdf.php');
 define('FPDF_VERSION','1.82');
 //if (!defined('constant')) define('constant', '1.82');
 class FPDF
