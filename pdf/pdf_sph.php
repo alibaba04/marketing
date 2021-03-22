@@ -1,4 +1,5 @@
 <?php
+error_reporting(error_reporting() & ~E_NOTICE);
 require_once('../config.php');
 require('../function/fpdf/html_table.php');
 require_once ("../function/fungsi_formatdate.php");
