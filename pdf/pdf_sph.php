@@ -1,4 +1,5 @@
 <?php
+require_once('../config.php');
 require('../function/fpdf/html_table.php');
 require_once ("../function/fungsi_formatdate.php");
 require_once ("../function/fungsi_convertNumberToWord.php");
