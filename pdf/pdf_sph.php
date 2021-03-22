@@ -48,7 +48,7 @@ $tharga3 = 0;
 $model ='';
 $bplafon ='';
 $ongkir =0;
-while (  $hasil = mysql_fetch_array($rs2,$dbLink)) {
+while (  $hasil = mysql_fetch_array($rs2)) {
     $bahan = $hasil['bahan'];
     if ($hasil['ket'] == 'Kubah Utama') {
         $model = $hasil['model'];
