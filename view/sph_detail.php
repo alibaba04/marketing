@@ -182,7 +182,7 @@ $(document).ready(function () {
             document.getElementById("txtT").value = data.t;
             document.getElementById("idharga1").value = data.harga;
             document.getElementById("idharga2").value = data.harga2;
-            document.getElementById("idharga3").value = data.harga;
+            document.getElementById("idharga3").value = data.harga3;
             document.getElementById("txtongkir").value = data.transport;
             document.getElementById("txtBiayaPlafon").value = data.biaya_plafon;
             if (data.bahan == 1) {
@@ -197,6 +197,18 @@ $(document).ready(function () {
                 document.getElementById("chkHargaGa").checked=false;
                 document.getElementById("chkHargaEn").checked=false;
                 document.getElementById("chkHargaTm").checked=true;
+            }else if(data.bahan == 4){
+                document.getElementById("chkHargaGa").checked=true;
+                document.getElementById("chkHargaEn").checked=true;
+                document.getElementById("chkHargaTm").checked=false;
+            }else if(data.bahan == 5){
+                document.getElementById("chkHargaGa").checked=false;
+                document.getElementById("chkHargaEn").checked=true;
+                document.getElementById("chkHargaTm").checked=true;
+            }else if(data.bahan == 6){
+                document.getElementById("chkHargaGa").checked=true;
+                document.getElementById("chkHargaEn").checked=false;
+                document.getElementById("chkHargaTm").checked=true;
             }else{
                 document.getElementById("chkHargaGa").checked=true;
                 document.getElementById("chkHargaEn").checked=true;
@@ -206,7 +218,7 @@ $(document).ready(function () {
                 $("#dt :input").prop("readonly", true);
             }
             if (data.model != 'custom') {
-                kalkulatorharga();
+                //kalkulatorharga();
             }else{
                 document.getElementById("idluas").value = data.luas;
             }
@@ -271,10 +283,16 @@ $(document).ready(function () {
         var chkEnGa = '';
         if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
-        }else if($('#chkHargaEn').is(":checked")){
-            chkEnGa = '2';
+        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').is(":checked")){
+            chkEnGa = '4';
+        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaTm').is(":checked")){
+            chkEnGa = '5';
+        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
+            chkEnGa = '6';
         }else if($('#chkHargaGa').is(":checked")){
             chkEnGa = '1';
+        }else if($('#chkHargaEn').is(":checked")){
+            chkEnGa = '2';
         }else if($('#chkHargaTm').is(":checked")){
             chkEnGa = '3';
         }else{
@@ -399,7 +417,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"></div>';
 trow.appendChild(td);
 //Kolom 12 h3
 var td = document.createElement("TD");

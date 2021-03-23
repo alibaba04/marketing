@@ -82,7 +82,7 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     }
     
 //if bahan ga 
-if ($bahan == '1' or $bahan == '0') {
+if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     if ($dt != 0){
         $pdf->SetMargins(34, 10, 10, true);
         $pdf->Ln(10);
@@ -241,16 +241,14 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     ';
     $pdf->writeHTML($tbl);
     $nourut+=1;
-}
-//end bahan ga 
-if ($bahan == '1' or $bahan == '0' ) {
-
     $pdf->addpage();
     $pdf->SetMargins(15, 10, 10, true);
 }
+//end bahan ga 
+
 
 //if bahan en
-if ($bahan == '2' or $bahan == '0') {
+if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
     $pdf->SetAutoPageBreak(TRUE, 0);
@@ -390,7 +388,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
 //end bahan En 
 
 //if bahan Titanium 
-if ($bahan == '3' or $bahan == '0') {
+if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     if ($dt != 0){
         $pdf->SetMargins(34, 10, 10, true);
         $pdf->Ln(10);
