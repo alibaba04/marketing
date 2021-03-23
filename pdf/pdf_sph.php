@@ -562,7 +562,7 @@ $pdf->Ln(6);
     $rs2 = mysql_query($q2, $dbLink);
     $pdf->SetFont('helvetica', 'B', 11);
 
-    if ($bahan == '1' or $bahan == '0') {
+    if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
         $tharga1=0;
         $pdf->Cell(10,6,' ',0,0,'L',0);
         $pdf->Cell(80,7,'Rincian Galvalum',0,1,'L',0);
@@ -580,7 +580,7 @@ $pdf->Ln(6);
         $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
         $pdf->Cell(40,6,number_format($tharga1),'T',1,'R',0);
     }
-    if($bahan == '2' or $bahan == '0'){
+    if($bahan == '2' or $bahan == '4' or $bahan == '5' or $bahan == '0'){
         $tharga2=0;
         $pdf->SetFont('helvetica', 'B', 11);
         $pdf->Cell(10,6,' ',0,0,'L',0);
@@ -600,7 +600,7 @@ $pdf->Ln(6);
         $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
         $pdf->Cell(40,6,number_format($tharga2),'T',1,'R',0);
     }
-    if($bahan == '3' or $bahan == '0'){
+    if($bahan == '3' or $bahan == '5' or $bahan == '6' or $bahan == '0'){
         $tharga3=0;
         $pdf->SetFont('helvetica', 'B', 11);
         $pdf->Cell(10,6,' ',0,0,'L',0);
