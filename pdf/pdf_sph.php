@@ -48,7 +48,9 @@ $tharga3 = 0;
 $model ='';
 $bplafon ='';
 $ongkir =0;
+$plafon='';
 while (  $hasil = mysql_fetch_array($rs2)) {
+    $plafon =$hasil['plafon'];
     $bahan = $hasil['bahan'];
     if ($hasil['ket'] == 'Kubah Utama') {
         $model = $hasil['model'];
@@ -540,7 +542,6 @@ if ($bahan == '2' or $bahan == '3' or $bahan == '0' ) {
     $pdf->addpage();
     $pdf->SetMargins(15, 10, 10, true);
 }
-    $plafon = '';
     
     $tf = '';
     if ($ongkir != 0){
@@ -657,19 +658,34 @@ $pdf->SetMargins(15, 10, 10, true);
 $tbl = '
 <u><b>Rangka Kubah</b></u>    
 ';
+$pdf->Cell(50,6,'asdasd'.$plafon,0,1,'R',0);
 $pdf->writeHTML($tbl);
-if ($model =='bawang') {
-    $imgrangka = '../dist/img/RangkaBawang.jpg';
-}elseif ($model =='pinang') {
-    $imgrangka = '../dist/img/RangkaPinang.jpg';
-}elseif ($model =='madinah') {
-    $imgrangka = '../dist/img/RangkaMadinah.jpg';
-}elseif ($model =='setbola') {
-    $imgrangka = '../dist/img/RangkaSetengahBola.jpg';
+if ($plafon == 1){
+    if ($model =='bawang') {
+        $imgrangka = '../dist/img/bawangtanpaplafon.jpg';
+    }elseif ($model =='pinang') {
+        $imgrangka = '../dist/img/pinangtanpaplafon.jpg';
+    }elseif ($model =='madinah') {
+        $imgrangka = '../dist/img/madinahtanpaplafon.jpg';
+    }elseif ($model =='setbola') {
+        $imgrangka = '../dist/img/sbtanpaplafon.jpg';
+    }else{
+        $imgrangka = '../dist/img/sbtanpaplafon.jpg';
+    }
 }else{
-    $imgrangka = '../dist/img/RangkaSetengahBola.jpg';
-    
+    if ($model =='bawang') {
+    $imgrangka = '../dist/img/RangkaBawang.jpg';
+    }elseif ($model =='pinang') {
+        $imgrangka = '../dist/img/RangkaPinang.jpg';
+    }elseif ($model =='madinah') {
+        $imgrangka = '../dist/img/RangkaMadinah.jpg';
+    }elseif ($model =='setbola') {
+        $imgrangka = '../dist/img/RangkaSetengahBola.jpg';
+    }else{
+        $imgrangka = '../dist/img/RangkaSetengahBola.jpg';
+    }
 }
+
 $pdf->image('../dist/img/ttd.jpg',110,195,83,47);
 $arr = explode('-', $tgl);
 $newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];

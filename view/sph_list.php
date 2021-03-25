@@ -147,25 +147,31 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <section class="col-lg-12 connectedSortable">
             <div class="box box-primary">
                 <?php
-                $filter="";
+                
+                $filter="";$snum="";
                 if(isset($_GET["noSph"]) ){
                     $noSph = secureParam($_GET["noSph"], $dbLink);
+                    $snum = secureParam($_GET["noSph"], $dbLink)." : ";
                     if ($noSph)
-                        $filter = $filter . " AND s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
+                        $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
                 }else{
                     $filter = '';
+                }
+                $filter2 = '';
+                if ($_SESSION['my']->privilege == 'SALES') {
+                    $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
                 $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
                 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-                $q.= "WHERE 1=1 " . $filter."group by s.noSph" ;
+                $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph" ;
                 $q.= " ORDER BY idSph desc ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
                 ?>
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <ul class="pagination pagination-sm inline"><?php echo $rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
+                    <ul class="pagination pagination-sm inline"><?php echo $snum.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
                     if ($_SESSION['my']->privilege == 'ADMIN') {
                         echo '<a href="class/c_exportexcel.php?"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>';
