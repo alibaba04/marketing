@@ -32,21 +32,21 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 </ol>
                 <div class="carousel-inner">
                   <div class="item active">
-                    <img src="http://placehold.it/1800x700/39CCCC/ffffff&text=qoobah" alt="First slide">
+                    <img src="https://placehold.it/1800x700/39CCCC/ffffff&text=qoobah" alt="First slide">
 
                     <div class="carousel-caption">
                       
                     </div>
                   </div>
                   <div class="item">
-                    <img src="http://placehold.it/1800x700/3c8dbc/ffffff&text=Mahal" alt="Second slide">
+                    <img src="https://placehold.it/1800x700/3c8dbc/ffffff&text=Mahal" alt="Second slide">
 
                     <div class="carousel-caption">
                       
                     </div>
                   </div>
                   <div class="item">
-                    <img src="http://placehold.it/1800x700/f39c12/ffffff&text=300 M" alt="Third slide">
+                    <img src="https://placehold.it/1800x700/f39c12/ffffff&text=300 M" alt="Third slide">
 
                     <div class="carousel-caption">
                       
