@@ -34,6 +34,7 @@ require_once('./function/fungsi_formatdate.php');
        <link rel="stylesheet" href="dist/css/skins/skin-qoobah.css">
        <!-- iCheck for checkboxes and radio inputs -->
        <link rel="stylesheet" href="plugins/iCheck/all.css">
+       <link rel="stylesheet" href="plugins/morris/morris.css">
        <!-- jvectormap -->
        <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
        <!-- Date Picker -->
@@ -205,6 +206,7 @@ require_once('./function/fungsi_formatdate.php');
         <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
         <script src="plugins/fastclick/fastclick.js"></script>
+        <script src="plugins/morris/morris.min.js"></script>
         <!-- AdminLTE App -->
         <script src="dist/js/app.min.js"></script>
         <!-- AdminLTE for demo purposes -->

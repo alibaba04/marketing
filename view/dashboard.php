@@ -60,6 +60,40 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <span class="fa fa-angle-right"></span>
                 </a>
               </div>
+              <!-- <div class="col-md-6">
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Data SPH</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="box-body chart-responsive">
+                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Area Chart</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div class="chart">
+                      <canvas id="areaChart" style="height:250px"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
             </div>
             <!-- /.box-body -->
           </div>
@@ -69,50 +103,52 @@ defined( 'validSession' ) or die( 'Restricted access' );
 
 <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="./plugins/chartjs/Chart.min.js"></script>
+
 <script language="JavaScript" TYPE="text/javascript">
-    var data1 =[];
-    $(document).ready(function () { 
-        $.post("function/ajax_function.php",{ fungsi: "chart"},function(data)
-        {
-            data1 = data;
-    $("#as").val(data1);
-            var areaChartData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [
-      {
-        label: "SPH 2020",
-        fillColor: "rgba(210, 214, 222, 1)",
-        strokeColor: "rgba(210, 214, 222, 1)",
-        pointColor: "rgba(210, 214, 222, 1)",
-        pointStrokeColor: "#c1c7d1",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: data1
-    },
+  $(function () {
+    $.post("function/ajax_function.php",{ fungsi: "getcountSPH"},function(data)
     {
-        label: "SPH 2021",
-        fillColor: "rgba(60,141,188,0.9)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: [8,2,2]
-    }
-    ]
-};
-            
-            
-        },"json"); 
-    });
-    
+      var donut = new Morris.Donut({
+        element: 'sales-chart',
+        resize: true,
+        colors: ["#3c8dbc", "#f56954", "#00a65a", "#cbef08"],
+        data: [
+        {label: "Mr. Reza", value: data.reza},
+        {label: "Mr. Antok", value: data.antok},
+        {label: "Mr. Udin", value: data.udin},
+        {label: "Mrs. Tina", value: data.tina}
+        ],
+        hideHover: 'auto'
+      });
+    },"json"); 
+
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
     var areaChart = new Chart(areaChartCanvas);
-
+    var areaChartData =areaChartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
+            datasets: [
+            {
+              label: "Digital Goods",
+              fillColor: "rgba(60,141,188,0.9)",
+              strokeColor: "rgba(60,141,188,0.8)",
+              pointColor: "#3b8bba",
+              pointStrokeColor: "rgba(60,141,188,1)",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(60,141,188,1)",
+              data: [28, 48, 40, 19, 86, 27, 90]
+              
+            }
+            ]
+          };
     
-var areaChartOptions = {
-      //Boolean - If we should show the scale at all
+
+    var areaChartOptions = {
+      //Boolean - If we should show the scale at all data: [data.jan, data.feb, data.maret, data.april, data.jun, data.jul, data.agus, data.sep, data.okt, data.nov, data.des]
       showScale: true,
       //Boolean - Whether grid lines are shown across the chart
       scaleShowGridLines: false,
@@ -148,8 +184,8 @@ var areaChartOptions = {
       maintainAspectRatio: true,
       //Boolean - whether to make the chart responsive to window resizing
       responsive: true
-  };
-
-    //Create the line chart
+    };
     areaChart.Line(areaChartData, areaChartOptions);
+
+  });
 </script>
