@@ -171,6 +171,7 @@ case "noSph":
         break;
     } 
 break;
+
 case "kalkulator":
     $d = $_POST['d'];
     $t = $_POST['t'];
@@ -179,6 +180,7 @@ case "kalkulator":
     $m = $_POST['margin'];
     $transport = $_POST['ongkir'];
     $bplafon = $_POST['bplafon'];
+    
     if ($transport == '') {
         $transport = 0;
     }

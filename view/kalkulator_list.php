@@ -62,20 +62,34 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $('#tglTransaksi').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
     });
+    function convertToRupiah(angka)
+    {
+        var rupiah = '';        
+        var angkarev = angka.toString().split('').reverse().join('');
+        for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+            return rupiah.split('',rupiah.length-1).reverse().join('');
+    }
+    function convertToAngka(rupiah)
+    {
+        var a = rupiah.replace(/[^0-9\.]+/g, '');
+        var result = a.replace(/\./g,'');
+        return (result);
+    }
     function kalkulatorharga(){
         var a = $('#txtongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
-        var d = v.replace(/\./g,'');
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDT').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),jmlh:$("#txtqty").val()},function(data)
+        var d_ongkir = v.replace(/\./g,'');
+
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDT').val(),kel:$('#cbokelengkapan').val(),ongkir:d_ongkir,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
-            //alert(data);
             $('#idluas').val(data.luas);
-            //$('#idmargin').val(data.margin);
             $('#idmargin').attr("placeholder", data.margin);
             $('#idharga1').val(data.harga);
             $('#idharga2').val(data.harga2);
-            $('#idtharga1').val(data.tharga);
             $('#idtharga2').val(data.tharga2);
+            $('#idtharga1').val(convertToRupiah(convertToAngka(data.tharga)*$("#txtqty").val()));
+            $('#idtharga2').val(convertToRupiah(convertToAngka(data.tharga2)*$("#txtqty").val()));
+            
         },"json");
     }
     /* Fungsi formatRupiah */
@@ -107,6 +121,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $("#txtDT").val(0); 
                 }
             });
+            $("#txtqty").change(function(){ 
+                $('#lbltharga').html('Total Harga Galvalum x '+$("#txtqty").val());
+                $('#lbltharga2').html('Total Harga Enamel x '+$("#txtqty").val());
+                kalkulatorharga();
+            });
             $("#txtD").keyup(function(){ 
                 kalkulatorharga();
             });
@@ -116,11 +135,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             $("#idmargin").keyup(function(){ 
                 kalkulatorharga();
             });
-            $("#txtqty").change(function(){ 
-                $('#lbltharga').html('Total Harga Galvalum x '+$("#txtqty").val());
-                $('#lbltharga2').html('Total Harga Enamel x '+$("#txtqty").val());
-                kalkulatorharga();
-            });
+            
             $("#cbokelengkapan").change(function(){ 
                 kalkulatorharga();
             });
