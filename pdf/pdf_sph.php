@@ -658,7 +658,6 @@ $pdf->SetMargins(15, 10, 10, true);
 $tbl = '
 <u><b>Rangka Kubah</b></u>    
 ';
-$pdf->Cell(50,6,'asdasd'.$plafon,0,1,'R',0);
 $pdf->writeHTML($tbl);
 if ($plafon == 1){
     if ($model =='bawang') {
