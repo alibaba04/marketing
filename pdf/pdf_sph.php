@@ -25,11 +25,12 @@ Hal : <b><u>Penawaran Harga Kubah Masjid</u></b><br>
 ';
 $pdf->writeHTML($tbl);
 $nama_cust = $hasil['nama_cust'];
+$masjid = $hasil['masjid'];
 $pdf->SetFont('helvetica', '', 11); 
 $alamat = $hasil['kname'].', '.$hasil['pname'];
 $tbl = '<br>
 Kepada Yth<br><b>'.$nama_cust.'</b><br>
-Panitia Pembangunan Masjid
+Panitia Pembangunan '.$masjid.'
 <br>'.$alamat.'<br><br>
 <ol>Di Tempat</ol><br><br>
 Dengan Hormat,<br><br>
