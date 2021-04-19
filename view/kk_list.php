@@ -2,10 +2,10 @@
 //=======  : Alibaba
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
-$curPage = "view/sph_list";
+$curPage = "view/kk_list";
 
 //Periksa hak user pada modul/menu ini
-$judulMenu = 'Surat Penawaran Harga';
+$judulMenu = 'Kontrak Kerja';
 $hakUser = getUserPrivilege($curPage);
 
 if ($hakUser < 10) {
@@ -18,22 +18,22 @@ if ($hakUser < 10) {
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
 if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
-    require_once("./class/c_sph.php");
-    $tmpsph = new c_sph;
+    require_once("./class/c_kk.php");
+    $tmpkk = new c_kk;
 
 //Jika Mode Tambah/Add
     if ($_POST["txtMode"] == "Add") {
-        $pesan = $tmpsph->add($_POST);
+        $pesan = $tmpkk->add($_POST);
     }
 
 //Jika Mode Ubah/Edit
     if ($_POST["txtMode"] == "Edit") {
-        $pesan = $tmpsph->edit($_POST);
+        $pesan = $tmpkk->edit($_POST);
     }
 
 //Jika Mode Hapus/Delete
     if ($_GET["txtMode"] == "Delete") {
-        $pesan = $tmpsph->delete($_GET["kode"]);
+        $pesan = $tmpkk->delete($_GET["kode"]);
     }
 
 //Seharusnya semua transaksi Add dan Edit Sukses karena data sudah tervalidasi dengan javascript di form detail.
@@ -63,13 +63,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <!-- End of Script Tanggal -->
 <section class="content-header">
     <h1>
-        SURAT PENAWARAN HARGA
-        <small>List SPH</small>
+        KONTRAK KERJA
+        <small>List KK</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Input</li>
-        <li class="active">SPH</li>
+        <li class="active">KK</li>
     </ol>
 </section>
 
@@ -83,17 +83,17 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <div class="box-header">
                     <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Search SPH </h3>
+                    <h3 class="box-title">Search KK </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>"autocomplete="off">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="noSph" id="noSph" placeholder="Cari . . . ."
+                            <input type="text" class="form-control" name="noKK" id="noKK" placeholder="Cari . . . ."
                             <?php
-                            if (isset($_GET["noSph"])) {
-                                echo("value='" . $_GET["noSph"] . "'");
+                            if (isset($_GET["noKK"])) {
+                                echo("value='" . $_GET["noKK"] . "'");
                             }
                             ?>
                             onKeyPress="return handleEnter(this, event)">
@@ -108,7 +108,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <?php
                     if ($hakUser==90 or $hakUser==80){
                         ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPH</button></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/kk_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add KK</button></a>
                         <?php
                     }
                     ?>
@@ -149,11 +149,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <?php
                 
                 $filter="";$snum="";
-                if(isset($_GET["noSph"]) ){
-                    $noSph = secureParam($_GET["noSph"], $dbLink);
-                    $snum = secureParam($_GET["noSph"], $dbLink)." : ";
-                    if ($noSph)
-                        $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
+                if(isset($_GET["noKK"]) ){
+                    $noKK = secureParam($_GET["noKK"], $dbLink);
+                    $snum = secureParam($_GET["noKK"], $dbLink)." : ";
+                    if ($noKK)
+                        $filter = $filter . " AND p.name LIKE '%" . $noKK . "%'  or s.nama_cust LIKE '%" . $noKK . "%'  or s.noKK LIKE '%" . $noKK . "%'  or k.name LIKE '%" . $noKK . "%'";
                 }else{
                     $filter = '';
                 }
@@ -162,10 +162,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
-                $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
-                $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-                $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph" ;
-                $q.= " ORDER BY idSph desc ";
+                $q = "SELECT kk.*,dk.* ,p.name as pn,k.name as kn FROM aki_kk kk right join aki_dkk dk on kk.noKK=dk.noKK left join aki_user u on kk.kodeUser=u.kodeUser  ";
+                $q.= "left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
+                $q.= "WHERE 1=1 " .$filter2. $filter ;
+                $q.= " group by kk.noKK ORDER BY kk.idKk desc ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
                 ?>
@@ -184,7 +184,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 20%">No SPH</th>
+                                <th style="width: 20%">No KK</th>
                                 <th style="width: 10%">Date</th>
                                 <th style="width: 10%">Client</th>
                                 <th style="width: 20%">Address</th>
@@ -204,8 +204,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                             <i class="fa fa-fw fa-angle-double-down"></i></button>
                                             <ul class="dropdown-menu" style="border-color:#000;">';
-                                            echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
-                                            echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus data SPH ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noSph"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
+                                            echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
+                                            echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus data KK ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noKK"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
                                             echo "</ul></div></td>";
                                         }else{
                                             echo '<td><div class="dropdown">
@@ -229,13 +229,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                                         <i class="fa fa-fw fa-check"></i></button>
                                         <ul class="dropdown-menu" style="border-color:#000;">';
-                                        echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
+                                        echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
                                         echo "</ul></div></td>";
                                 }
-                                echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/pdf_sph.php?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
-                                <button type='button' class='btn btn-block btn-info'>".($query_data["noSph"])."</button></a></td>";
+                                echo "<td><a onclick=\"if(confirm('Download data KK ?')){location.href='pdf/pdf_kk.php?&noKK=" . md5($query_data["noKK"]) . "'}\" style='cursor:pointer;'>
+                                <button type='button' class='btn btn-block btn-info'>".($query_data["noKK"])."</button></a></td>";
                                 echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
-                                echo "<td><b>" . ($query_data["nama_cust"]) . "</b></td>";
+                                echo "<td>" . ($query_data["nama_cust"]) . "</td>";
                                 echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
                                 $kel = '';
                                 if ($query_data["plafon"] == 0){
@@ -249,9 +249,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($query_data["dt"] != 0){
                                     $dt = ', DT : '.$query_data["dt"];
                                 }
-                                $spek = '<b>'.$query_data["masjid"].'</b>, MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
+                                $spek = 'MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
                                 echo "<td>" . $spek ."</td>";
-                                echo "<td>" . strtoupper($query_data["nama"]) . "</td>";
+                                echo "<td>" . strtoupper($query_data["kodeUser"]) . "</td>";
                                 echo("</tr>");
                                 $rowCounter++;
                             }

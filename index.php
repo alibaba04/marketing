@@ -212,6 +212,9 @@ require_once('./function/fungsi_formatdate.php');
         <!-- AdminLTE for demo purposes -->
         <script src="dist/js/demo.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="plugins/input-mask/jquery.inputmask.js"></script>
+        <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+        <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
         
     </body>
     </html>

@@ -73,8 +73,7 @@ $(".select2").select2();
         var a = $('#txtongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
         var d = v.replace(/\./g,'');
-        var bplafon = $('#txtBiayaPlafon').val().replace(/\./g,'');
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:bplafon},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
             if ($("#cbomodel").val() != 'custom') {
                 $('#idluas').val(data.luas);
@@ -109,6 +108,8 @@ $(document).ready(function () {
         document.getElementById("simpan").disabled = true;
         document.getElementById("idluas").disabled = true;
     });
+    $("#dt :input").prop("readonly", true);
+            $("#txtDt").val(0);
     $("#cbomodel").change(function(){ 
         var cbomodel = $("#cbomodel").val(); 
         var dt = $("#txtDt").val(); 
@@ -438,6 +439,12 @@ function validasiForm(form)
         form.txtnamacust.focus();
         return false;
     }
+    if(form.txtnmasjid.value=='')
+    {
+        alert("Nama Madjid belum diisi!");
+        $("#txtnmasjid").focus();
+        return false;
+    }
     if(form.provinsi.value=='' )
     {
         alert("Pilih Provinsi !");
@@ -551,7 +558,7 @@ function validasiForm(form)
     </div>
     <label class="control-label" for="txtKeteranganKas">Client</label>
     <div class="form-group">
-        <div class="col-lg-5" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
+        <div class="col-lg-3" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
             <select name="cbosdr" id="cbosdr" class="form-control">
                 <?php
                 $selected = "";
@@ -591,12 +598,40 @@ function validasiForm(form)
                 ?>
             </select>
         </div>
-        <div class="col-lg-7" style="padding-right: 0px;padding-left: 5px;">
+        <div class="col-lg-9" style="padding-right: 0px;padding-left: 5px;">
             <input name="txtnamacust" id="txtnamacust" class="form-control" 
             value="<?php  if($_GET['mode']=='edit'){$n=$dataSph['nama_cust']; $nm=explode(' ',$n);echo $nm[1]; }?>" placeholder="Client Name">
         </div>
     </div>
-    <label class="control-label" for="txtTglTransaksi">&nbsp;&nbsp;</label>
+    <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
+    <div class="form-group">
+        <div class="col-lg-3" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
+            <select name="cbomasjid" id="cbomasjid" class="form-control">
+                <?php
+                $selected = "";
+                $n=$dataSph["masjid"];$nm=explode(' ',$n);
+                if ($_GET['mode'] == 'edit' && $dataSph['masjid']!='') {
+                    if ($nm[0]=="Masjid") {
+                        $selected = " selected";
+                        echo '<option value="Masjid "'.$selected.'>Masjid</option>';
+                        //echo '<option value="Mushola ">Mushola</option>';
+                    }/*elseif ($nm[0]=="Mushola") {
+                        $selected = " selected";
+                        echo '<option value="Masjid ">Masjid</option>';
+                        echo '<option value="Mushola "'.$selected.'>Mushola</option>';
+                    }*/
+                }else{
+                    echo '<option value="Masjid ">Masjid</option>';
+                    //echo '<option value="Mushola ">Mushola</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-lg-9" style="padding-right: 0px;padding-left: 5px;">
+            <input name="txtnmasjid" id="txtnmasjid" class="form-control" 
+            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){$n=$dataSph['masjid']; $nm=explode(' ',$n);echo $nm[1]; }?>">
+        </div>
+    </div>
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
             <?php  
@@ -667,9 +702,9 @@ function validasiForm(form)
                         <th style="width: 3%">T</th>
                         <th style="width: 3%">Dt</th>
                         <th style="width: 13%">Transport</th>
-                        <th style="width: 13%">Price&nbspGALVALUME&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                        <th style="width: 13%">Price&nbspENAMEL&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                        <th style="width: 13%">Price&nbspTITANIUM&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">&nbspGALVALUME&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">&nbspENAMEL&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">&nbspTITANIUM&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                     </tr>
                 </thead>
                 <tbody id="kendali">

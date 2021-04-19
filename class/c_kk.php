@@ -5,22 +5,29 @@
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined( 'validSession' ) or die( 'Restricted access' ); 
 
-class c_sph
+class c_kk
 {
 	var $strResults="";
 	
-	function addsph(&$params){
+	function addkk(&$params){
 		global $dbLink;
 		require_once './function/fungsi_formatdate.php';
         $tglTransaksi = date("Y-m-d");
+        $nokk = secureParam($params["txtnoKk"],$dbLink);
         $namacust = secureParam($params["txtnamacust"],$dbLink);
-        $sdr = secureParam($params["cbosdr"],$dbLink);
+        $jenis_id = secureParam($params["cboJenisid"],$dbLink);
+        $no_id = secureParam($params["txtNoid"],$dbLink);
+        $no_phone = secureParam($params["txtPhone"],$dbLink);
+        $jabatan = secureParam($params["txtPosition"],$dbLink);
         $nmasjid = secureParam($params["txtnmasjid"],$dbLink);
-        $tmasjid = secureParam($params["cbomasjid"],$dbLink);
-        $noSph = secureParam($params["txtnoSph"],$dbLink);
-        $alamat = secureParam($params["provinsi"],$dbLink);
-        $provinsi = substr($alamat,0, 2);
-        $kota = substr($alamat,3, 6);
+        $nproyek = secureParam($params["txtnproyek"],$dbLink);
+        $alamat_proyek = secureParam($params["txtalamatp"],$dbLink);
+        $mproduksi = secureParam($params["txtproduksi"],$dbLink);
+        $mpemasangan = secureParam($params["txtPemasangan"],$dbLink);
+        $alamat = secureParam($params["txtalamat"],$dbLink);
+        $alamat2 = secureParam($params["provinsi"],$dbLink);
+        $provinsi = substr($alamat2,0, 2);
+        $kota = substr($alamat2,3, 6);
         $pembuat = $_SESSION["my"]->id;
 		try
 		{
@@ -30,35 +37,31 @@ class c_sph
 				throw new Exception('Could not begin transaction');
 			}
 			
-			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, tanggal, keterangan_kk, kodeUser) ";
-			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$tglTransaksi."','','".$pembuat."');";
+			$q = "INSERT INTO aki_kk(`noKk`, `nama_cust`, `jenis_id`, `no_id`, `no_phone`, `jabatan`,`nmasjid`, `nproyek`, `alamat_proyek`, `mproduksi`, `mpemasangan`, `alamat`, `provinsi`, `kota`, `tanggal`, `kodeUser`, `aktif`) ";
+			$q.= "VALUES ('".$nokk."','".$namacust."','".$jenis_id."','".$no_id."','".$no_phone."','".$jabatan."','".$nmasjid."','".$nproyek."','".$alamat_proyek."','".$mproduksi."','".$mpemasangan."','".$alamat."','".$provinsi."','".$kota."','".$tglTransaksi."','".$pembuat."','1');";
 			if (!mysql_query($q, $dbLink))
 				throw new Exception('Gagal masukkan data dalam database.');
 			$jumData = $params["jumAddJurnal"];
 			$nomer=0;
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-
-                    $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
-                    $qty = secureParam($params["txtQty_" . $j], $dbLink);
-                    $transport = secureParam($params["txtTransport_" . $j], $dbLink);
-                    $harga1 = secureParam($params["txtHarga1_" . $j], $dbLink);
-                    $harga2 = secureParam($params["txtHarga2_" . $j], $dbLink);
-                    $harga3 = secureParam($params["txtHarga3_" . $j], $dbLink);
-                    $h1 = preg_replace("/\D/", "", $harga1);
-                    $h2 = preg_replace("/\D/", "", $harga2);
-                    $h3 = preg_replace("/\D/", "", $harga3);
-                    $transport = preg_replace("/\D/", "", $transport);
-                    $diameter = secureParam($params["txtD_". $j],$dbLink);
+					$model = secureParam($params["txtModel_". $j],$dbLink);
+					$jkubah = secureParam($params["txtModel_". $j],$dbLink);
+					$diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
                     $dtengah = secureParam($params["txtDt_". $j],$dbLink);
-                    $model = secureParam($params["txtModel_". $j],$dbLink);
-                    $plafon = secureParam($params["txtKel_". $j],$dbLink);
-                    $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
-                    $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
-                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
-					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
+                    $plafon = secureParam($params["txtKel_". $j],$dbLink);
+                    $harga1 = secureParam($params["txtHarga_" . $j], $dbLink);
+                    $h = preg_replace("/\D/", "", $harga1);
+                    $qty = secureParam($params["txtQty_" . $j], $dbLink);
+                    $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
+                    $bahan = secureParam($params["txtQty_" . $j], $dbLink);
+                    $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
+                    $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
+                    
+                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `harga`, `jumlah`, `ket`, `bahan`,`filekubah`, `filekaligrafi`) ";
+					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$h."', '".$qty."', '".$ketkubah."', '".$bahan."', '".$filekubah."', '".$filekaligrafi."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data SPH.');
@@ -105,8 +108,6 @@ class c_sph
 		$tglTransaksi = date("Y-m-d");
         $namacust = secureParam($params["txtnamacust"],$dbLink);
         $sdr = secureParam($params["cbosdr"],$dbLink);
-        $nmasjid = secureParam($params["txtnmasjid"],$dbLink);
-        $tmasjid = secureParam($params["cbomasjid"],$dbLink);
         $alamat = secureParam($params["provinsi"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
@@ -141,7 +142,7 @@ class c_sph
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
 
-			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."' WHERE noSph='".$params["txtnoSph"]."'";
+			$q3 = "UPDATE aki_sph SET `nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."' WHERE noSph='".$params["txtnoSph"]."'";
 			if (!mysql_query( $q3, $dbLink))
 						throw new Exception($q3.'Gagal ubah data SPH. ');
 			$jumData = $params["jumAddJurnal"];
