@@ -128,15 +128,18 @@ $(document).ready(function () {
         $("#myModal").modal({backdrop: false});
         $('#validEdit').val($param);
         $("#chkeditval").val($("#chkEdit_"+$param).val());
-        $.post("function/ajax_function.php",{ fungsi: "idList",id:$('#validEdit').val(),noKk:$('#txtnoKk').val()},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "idListkk",id:$('#validEdit').val(),noKk:$('#txtnoKk').val()},function(data)
         {
-            document.getElementById("txtket").value = data.ket;
-            document.getElementById("cbokelengkapan").value = data.plafon;
+
+            document.getElementById("txtjkubah").value = data.kubah;
+            document.getElementById("cbobahan").value = data.bahan;
             document.getElementById("cbomodel").value = data.model;
+            document.getElementById("cbokelengkapan").value = data.plafon;
             document.getElementById("txtqty").value = data.jumlah;
             document.getElementById("txtD").value = data.d;
             document.getElementById("txtDt").value = data.dt;
             document.getElementById("txtT").value = data.t;
+            document.getElementById("idluas").value = data.luas;
             document.getElementById("idharga1").value = data.harga;
             if (data.model != 'bawang') {
                 $("#dt :input").prop("readonly", true);
@@ -210,14 +213,15 @@ $(document).ready(function () {
         var res = link.match(/mode=edit/g);
         $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
         if (res == 'mode=edit') {
-            $("#txtKet_"+$('#validEdit').val()).val( $("#txtket").val());
+            $("#txtKet_"+$('#validEdit').val()).val($('#txtjkubah').val()+' - '+$('#cbomodel').val()+' - '+$('#cbobahan').val());
             $("#txtQty_"+$('#validEdit').val()).val($('#txtqty ').val());
             $("#txtD_"+$('#validEdit').val()).val( $("#txtD").val());
             $("#txtT_"+$('#validEdit').val()).val($('#txtT').val());
             $("#txtDt_"+$('#validEdit').val()).val( $("#txtDt").val());
             $("#txtModel_"+$('#validEdit').val()).val($('#cbomodel').val());
             $("#txtHarga1_"+$('#validEdit').val()).val( $("#idharga1").val());
-            $("#txtBplafon_"+$('#validEdit').val()).val($('#txtBiayaPlafon').val());
+            $("#txtBahan_"+$('#validEdit').val()).val($('#cbobahan').val());
+            $("#txtKubah_"+$('#validEdit').val()).val($('#txtjkubah').val());
             if ($("#txtModel_"+$('#validEdit').val()).val() =='custom'){
                 $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
             }
@@ -247,7 +251,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtKet_'+tcounter+'" id="txtKet_'+tcounter+'" class="form-control" value="'+ket+' - '+bahan+'" readonly style="min-width: 120px;"></div>';
+td.innerHTML+='<div class="form-group"><input name="txtKet_'+tcounter+'" id="txtKet_'+tcounter+'" class="form-control" value="'+ket+' - '+bahan+' - '+model+'" readonly style="min-width: 120px;"><input name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control" type="hidden" value="'+model+'"><input name="txtBahan_'+tcounter+'" id="txtBahan_'+tcounter+'" class="form-control" type="hidden" value="'+bahan+'"><input name="txtKubah_'+tcounter+'" id="txtKubah_'+tcounter+'" class="form-control" type="hidden" value="'+ket+'"></div>';
 trow.appendChild(td);
 
 //Kolom 4 qty
@@ -256,14 +260,6 @@ td.setAttribute("align","left");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" class="form-control"  value="'+qty+'" readonly style="min-width: 35px;"></div>';
-trow.appendChild(td);
-
-//Kolom 5 Model
-var td = document.createElement("TD");
-td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
-td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control"  value="'+model+'" readonly style="min-width: 35px;"></div>';
 trow.appendChild(td);
 
 //Kolom 6 d
@@ -552,9 +548,8 @@ function validasiForm(form)
                         <thead>
                             <tr>
                                 <th style="width: 2%"><i class='fa fa-edit'></i></th>
-                                <th style="width: 10%">Information</th>
+                                <th style="width: 20%">Information</th>
                                 <th style="width: 3%">Quantity</th>
-                                <th style="width: 8%">Model</th>
                                 <th style="width: 3%">D</th>
                                 <th style="width: 3%">T</th>
                                 <th style="width: 3%">Dt</th>
@@ -567,26 +562,23 @@ function validasiForm(form)
                                 $q = "SELECT kk.* FROM aki_dkk kk ";
                                 $q.= "WHERE 1=1 and MD5(kk.nokk)='" . $noKk;
                                 $q.= "' ORDER BY  kk.nomer ";
-                                echo $q;
                                 $rsDetilJurnal = mysql_query($q, $dbLink);
                                 $iJurnal = 0;
                                 while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                                     $kel = '';
                                     echo '<div><tr id="trid_'.$iJurnal.'" >';
                                     echo '<td align="center" valign="top" ><div class="form-group">
-                                    <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDsph"] . '" /></div></td>';
+                                    <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                    <input readonly type="text" class="form-control"  name="txtKet_' . $iJurnal . '" id="txtKet_' . $iJurnal . '" value="' . $DetilJurnal["ket"] . '"style="min-width: 120px;"></div></td>';
+                                    <input readonly type="text" class="form-control"  name="txtKet_' . $iJurnal . '" id="txtKet_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] .' - '. $DetilJurnal["model"].' - '. $DetilJurnal["bahan"].'"style="min-width: 120px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                                     <input type="text" class="form-control" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '" readonly="" style="min-width: 35px;"></div></td>';
-                                    echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                    <input type="text" class="form-control"name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '" readonly="" style="min-width: 100px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                                     <input type="text" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                                     <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/></div></td>';
+                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '"/><input type="hidden" class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] . '"/></div></td>';
                                     if ($DetilJurnal["model"] == 'custom') {
                                         echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
                                     }   
