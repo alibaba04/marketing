@@ -84,7 +84,6 @@ $(document).ready(function () {
             document.getElementById("idluas").disabled = false;
         }else{
             document.getElementById("idluas").disabled = true;
-            $("#idluas").val(0);
         }
     }); 
     var txtT = document.getElementById('txtT');

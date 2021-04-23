@@ -705,7 +705,7 @@ if ($plafon == 1){
     }
 }
 
-$pdf->image('../dist/img/ttd.jpg',110,195,83,47);
+$pdf->image('../dist/img/ttd.jpg',122,204);
 $arr = explode('-', $tgl);
 $newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];
 $pdf->Ln(140);
