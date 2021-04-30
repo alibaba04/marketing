@@ -164,7 +164,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             //database
                 $q = "SELECT kk.*,dk.* ,p.name as pn,k.name as kn FROM aki_kk kk right join aki_dkk dk on kk.noKK=dk.noKK left join aki_user u on kk.kodeUser=u.kodeUser  ";
                 $q.= "left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
-                $q.= "WHERE 1=1 " .$filter2. $filter ;
+                $q.= "WHERE 1=1 and kk.aktif=1  " .$filter2. $filter ;
                 $q.= " group by kk.noKK ORDER BY kk.idKk desc ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
@@ -205,7 +205,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                             <i class="fa fa-fw fa-angle-double-down"></i></button>
                                             <ul class="dropdown-menu" style="border-color:#000;">';
                                             echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
-                                            echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus data KK ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noKK"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
+                                            echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus KK ".$query_data["noKK"]."?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noKK"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
                                             echo "</ul></div></td>";
                                         }else{
                                             echo '<td><div class="dropdown">

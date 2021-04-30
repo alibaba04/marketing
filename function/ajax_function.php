@@ -144,12 +144,12 @@ break;
 case "idListkk":
     $id = $_POST['id'];
     $no = $_POST['noKk'];
-    $q = "SELECT kk.* FROM aki_dkk kk WHERE 1=1 and nomer ='".$id."' and (noKK)='".$no."' ORDER BY noKK desc";
+    $q = "SELECT kk.*,dp.* FROM aki_dkk kk left join aki_dpembayaran dp on kk.noKK=dp.noKk WHERE 1=1 and nomer ='".$id."' and (kk.noKK)='".$no."' ORDER BY kk.noKK desc";
     $result = mysql_query($q, $dbLink);
     if (mysql_num_rows($result)>0) {
         $idx = 0;
         while ( $data = mysql_fetch_assoc($result)) {
-            echo json_encode(array("model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"bahan"=>$data['bahan'].'',"luas"=>$data['luas'].'',"kubah"=>$data['kubah']));
+            echo json_encode(array("model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"bahan"=>$data['bahan'].'',"luas"=>$data['luas'].'',"kubah"=>$data['kubah'].'',"txtw1"=>$data['wpembayaran1'].'',"txtw2"=>$data['wpembayaran2'].'',"txtw3"=>$data['wpembayaran3'].'',"txtw4"=>$data['wpembayaran4'].'',"txtp1"=>$data['persen1'].'',"txtp2"=>$data['persen2'].'',"txtp3"=>$data['persen3'].'',"txtp4"=>$data['persen4']));
             $idx++;
         } 
         //echo json_encode($output);

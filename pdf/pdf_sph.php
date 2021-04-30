@@ -131,7 +131,11 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     $pdf->SetFont('helvetica', 'B', 11);
     $pdf->Cell(31,6,'Plat Galvalume','T','L',0);
     $pdf->SetFont('helvetica', '', 11);
-    $pdf->Cell(72,6,'0,4  mm','TR',1,'L',0);
+    if ($hasil['d']>=1 ) {
+        $pdf->Cell(72,6,'0,4 - 0,5 mm','TR',1,'L',0);
+    }else{
+        $pdf->Cell(72,6,'0,4  mm','TR',1,'L',0);
+    }
     $pdf->Cell(8,6,'','LR',0,'C',0);
     $pdf->Cell(32,6,'','LR',0,'C',0);
     $pdf->Cell(22,6,'   ~ Finishing ',0,0,'L',0);
@@ -228,7 +232,13 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
     $pdf->Cell(8,6,'','LRB',0,'C',0);
     $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    $lampu='';
+    if ($hasil['d']>=15) {
+        $lampu='8';
+    }else{
+        $lampu='4';
+    }
+    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot '.$lampu.' sisi','LRB',1,'L',0);
     $pdf->SetFont('helvetica', '', 11);
 }else{
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
