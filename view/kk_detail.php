@@ -22,7 +22,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
 //Jika Mode Tambah/Add
     if ($_POST["txtMode"] == "Add") {
-        $folderUpload = "dist/uploads/";
+        $folderUpload = "http://localhost/uploads/";
         $nameimg= array();
 
         $files = $_FILES;
@@ -48,7 +48,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     }
 //Jika Mode Ubah/Edit
     if ($_POST["txtMode"] == "Edit") {
-        $folderUpload = "dist/uploads/";
+        $folderUpload = "../uploads/";
         $nameimg= array();
 
         $files = $_FILES;
