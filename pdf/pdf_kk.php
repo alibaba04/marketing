@@ -18,6 +18,8 @@ $rs = mysql_query($q, $dbLink);
 
 $hasil = mysql_fetch_array($rs);
 $no = $hasil['noKk'];
+$nama_cust = $hasil['nama_cust'];
+$alamat = $hasil['kname'].', '.$hasil['pname'];
 $pdf->SetFont('helvetica', 'B', 14);
 $pdf->Cell(190,8,'PERJANJIAN JUAL BELI DAN PEMASANGAN KUBAH MASJID',0,1,'C',0);
 $pdf->SetFont('helvetica', '', 14);
@@ -1121,7 +1123,7 @@ $pdf->Cell(135,2,'',0,0,'L',0);
 $pdf->Cell(20,10,'',1,0,'C',0);
 $pdf->Cell(20,10,'',1,1,'C',0);;
 
-$pdf->Output('s.pdf','I');
+$pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>
 
 
