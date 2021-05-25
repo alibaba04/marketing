@@ -264,8 +264,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }else{
                                     $pdf = 'pdf_sph.php';
                                 }
+                                $colorr='btn-info';
+                                if (strtoupper($query_data["model"])=='KALIGRAFI') {
+                                    $colorr='btn-primary';
+                                }
                                 echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
-                                <button type='button' class='btn btn-block btn-info'>".($query_data["noSph"])."</button></a></td>";
+                                <button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";
                                 echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b></td>";
                                 echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
