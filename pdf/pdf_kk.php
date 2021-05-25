@@ -105,7 +105,7 @@ $pdf->Cell(39,5,':',0,0,'R',0);
 $pdf->Cell(24,5,$hasil['jabatan'],0,1,'L',0); 
 $pdf->Ln(3);
 $tbl = '
-Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan Masjid '.$hasil['nmasjid'].', selanjutnya disebut <b>Pihak Kedua.</b><br>
+Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan Masjid <b>'.$hasil['nmasjid'].'</b>, selanjutnya disebut <b>Pihak Kedua.</b><br>
 ';
 $pdf->writeHTML($tbl);
 $pdf->Ln(1);
@@ -131,7 +131,9 @@ Bahwa <b>Pihak Kedua</b> adalah perorangan yang memesan dan bertanggung jawab pa
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(40,5,'pemesanan kubah Masjid '.$hasil['nmasjid'].'.',0,0,'L',0);
+$pdf->Cell(45,5,'pemesanan kubah Masjid ',0,0,'L',0);
+$pdf->SetFont('helvetica', 'b', 11);
+$pdf->Cell(50,5,$hasil['nmasjid'].'.',0,0,'L',0);
 $pdf->Ln(15);
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(175,6,'PASAL 1',0,1,'C',0);
@@ -380,7 +382,7 @@ if ($hasil['project_pemerintah']==1) {
   $pdf->Cell(65,6,'Bank Central Asia (BCA)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
   $pdf->Cell(65,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
-  $pdf->Cell(55,6,'033 - 330 - 2558',1,1,'L',0);
+  $pdf->Cell(55,6,'033 - 330 - 2508',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
   $pdf->Cell(65,6,'Bank Mandiri',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
@@ -1078,21 +1080,46 @@ if ($hasil['filekubah']!='') {
   $pdf->image('../../uploads/'.$hasil['filekubah'],12,70,190,143);
 }
 $pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(180);
+$pdf->Ln(170);
 $pdf->SetFont('helvetica', 'b', 14);
 $pdf->Cell(45,2,'',0,0,'L',0);
 $pdf->SetFillColor(174,170,170);
 $pdf->Cell(50,8,'Warna',1,0,'C',1);
 $pdf->Cell(50,8,'Kode',1,1,'C',1); 
-$pdf->Cell(45,2,'',0,0,'L',0);
-$pdf->Cell(50,10,'',1,0,'C',0);
-$pdf->Cell(50,10,'',1,1,'C',0);
-$pdf->Cell(45,2,'',0,0,'L',0);
-$pdf->Cell(50,10,'',1,0,'C',0);
-$pdf->Cell(50,10,'',1,1,'C',0);
+$pdf->SetFont('helvetica', '', 14);
+if ($hasil['color1'] !='-') {
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->SetFillColor( hexdec(substr($hasil['color1'],1, 2)),hexdec(substr($hasil['color1'],3, 2)),hexdec(substr($hasil['color1'],5, 2)));
+  $pdf->Cell(50,10,'',1,0,'C',1);
+  $pdf->Cell(50,10,$hasil['color1'],1,1,'C',0);
+}
+if ($hasil['color2'] !='-') {
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->SetFillColor( hexdec(substr($hasil['color2'],1, 2)),hexdec(substr($hasil['color2'],3, 2)),hexdec(substr($hasil['color2'],5, 2)));
+  $pdf->Cell(50,10,'',1,0,'C',1);
+  $pdf->Cell(50,10,$hasil['color2'],1,1,'C',0);
+}
+if ($hasil['color3'] !='-') {
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->SetFillColor( hexdec(substr($hasil['color3'],1, 2)),hexdec(substr($hasil['color3'],3, 2)),hexdec(substr($hasil['color3'],5, 2)));
+  $pdf->Cell(50,10,'',1,0,'C',1);
+  $pdf->Cell(50,10,$hasil['color3'],1,1,'C',0);
+}
+if ($hasil['color4'] !='-') {
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->SetFillColor( hexdec(substr($hasil['color4'],1, 2)),hexdec(substr($hasil['color4'],3, 2)),hexdec(substr($hasil['color4'],5, 2)));
+  $pdf->Cell(50,10,'',1,0,'C',1);
+  $pdf->Cell(50,10,$hasil['color4'],1,1,'C',0);
+}
+if ($hasil['color5'] !='-') {
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->SetFillColor( hexdec(substr($hasil['color5'],1, 2)),hexdec(substr($hasil['color5'],3, 2)),hexdec(substr($hasil['color5'],5, 2)));
+  $pdf->Cell(50,10,'',1,0,'C',1);
+  $pdf->Cell(50,10,$hasil['color5'],1,1,'C',0);
+}
 
 $pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(38);
+$pdf->Ln(20);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
@@ -1109,7 +1136,7 @@ $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
 if ($hasil['filekaligrafi']!='') {
-  $pdf->image('../../uploads/'.$hasil['filekaligrafi'],12,70,190,143);
+   $pdf->image('../../uploads/'.$hasil['filekaligrafi'],12,70,190,143);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(250);

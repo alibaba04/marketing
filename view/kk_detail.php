@@ -22,9 +22,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
 //Jika Mode Tambah/Add
     if ($_POST["txtMode"] == "Add") {
-        $folderUpload = "http://localhost/uploads/";
+        $folderUpload = "../uploads/";
         $nameimg= array();
-
         $files = $_FILES;
         $jumlahFile = count($files['listGambar']['name']);
 
@@ -50,7 +49,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     if ($_POST["txtMode"] == "Edit") {
         $folderUpload = "../uploads/";
         $nameimg= array();
-
         $files = $_FILES;
         $jumlahFile = count($files['listGambar']['name']);
 
@@ -92,6 +90,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $("[data-mask]").inputmask();
         //Initialize Select2 Elements
         $(".select2").select2();
+        $(".my-colorpicker1").colorpicker();
+        //color picker with addon
+        $(".my-colorpicker2").colorpicker();
     });
 </script>
 <script type="text/javascript" charset="utf-8">
@@ -185,7 +186,9 @@ $(document).ready(function () {
         document.getElementById("pesandel").innerHTML = '<div class="callout callout-info">'+txt+'</div>';
     });
 });
-
+function tnmasjid() {
+    $("#txtnproyek").val('Masjid '+$("#txtnmasjid").val());
+}
 </script>
 <!-- Include script untuk function auto complete -->
 <SCRIPT language="JavaScript" TYPE="text/javascript">
@@ -219,6 +222,16 @@ $(document).ready(function () {
             document.getElementById("txtW2").value = data.txtw2;
             document.getElementById("txtW3").value = data.txtw3;
             document.getElementById("txtW4").value = data.txtw4;
+            document.getElementById("txtP1").value = data.txtp1;
+            document.getElementById("txtP2").value = data.txtp2;
+            document.getElementById("txtP3").value = data.txtp3;
+            document.getElementById("txtP4").value = data.txtp4;
+
+            document.getElementById("color1").value = data.color1;
+            document.getElementById("color2").value = data.color2;
+            document.getElementById("color3").value = data.color3;
+            document.getElementById("color4").value = data.color4;
+            document.getElementById("color5").value = data.color5;
         },"json");
     }
     function addarray() {
@@ -276,6 +289,11 @@ $(document).ready(function () {
         var txtP2 = $("#txtP2").val();
         var txtP3 = $("#txtP3").val();
         var txtP4 = $("#txtP4").val();
+        var color1 = $("#color1").val();
+        var color2 = $("#color2").val();
+        var color3 = $("#color3").val();
+        var color4 = $("#color4").val();
+        var color5 = $("#color5").val();
         var fkubah = $("#filekubah").val();
         var fkaligrafi = $("#filekaligrafi").val();
         var ppn = 1;
@@ -325,6 +343,11 @@ $(document).ready(function () {
             $("#txtP2_"+$('#validEdit').val()).val( $("#txtP2").val());
             $("#txtP3_"+$('#validEdit').val()).val($('#txtP3').val());
             $("#txtP4_"+$('#validEdit').val()).val( $("#txtP4").val());
+            $("#color1_"+$('#validEdit').val()).val($('#color1').val());
+            $("#color2_"+$('#validEdit').val()).val( $("#color2").val());
+            $("#color3_"+$('#validEdit').val()).val($('#color3').val());
+            $("#color4_"+$('#validEdit').val()).val( $("#color4").val());
+            $("#color5_"+$('#validEdit').val()).val($('#color4').val());
         }else{
             var ttable = document.getElementById("kendali");
             var trow = document.createElement("TR");
@@ -390,7 +413,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" readonly value="'+h+'"style="min-width: 120px;" ><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="filekubah_'+tcounter+'" id="filekubah_'+tcounter+'" class="form-control" type="hidden" value="'+fkubah+'"><input name="filekaligrafi_'+tcounter+'" id="filekaligrafi_'+tcounter+'" class="form-control" type="hidden" value="'+fkaligrafi+'"><input name="ppn_'+tcounter+'" id="ppn_'+tcounter+'" class="form-control" type="hidden" value="'+ppn+'"><input name="transport_'+tcounter+'" id="transport_'+tcounter+'" class="form-control" type="hidden" value="'+transport+'"><input name="txtw1_'+tcounter+'" id="txtw1_'+tcounter+'" class="form-control" type="hidden" value="'+txtw1+'"><input name="txtw2_'+tcounter+'" id="txtw2_'+tcounter+'" class="form-control" type="hidden" value="'+txtw2+'"><input name="txtw3_'+tcounter+'" id="txtw3_'+tcounter+'" class="form-control" type="hidden" value="'+txtw3+'"><input name="txtw4_'+tcounter+'" id="txtw4_'+tcounter+'" class="form-control" type="hidden" value="'+txtw4+'"><input name="txtP1_'+tcounter+'" id="txtP1_'+tcounter+'" class="form-control" type="hidden" value="'+txtP1+'"><input name="txtP2_'+tcounter+'" id="txtP2_'+tcounter+'" class="form-control" type="hidden" value="'+txtP2+'"><input name="txtP3_'+tcounter+'" id="txtP3_'+tcounter+'" class="form-control" type="hidden" value="'+txtP3+'"><input name="txtP4_'+tcounter+'" id="txtP4_'+tcounter+'" class="form-control" type="hidden" value="'+txtP4+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" readonly value="'+h+'"style="min-width: 120px;" ><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="filekubah_'+tcounter+'" id="filekubah_'+tcounter+'" class="form-control" type="hidden" value="'+fkubah+'"><input name="filekaligrafi_'+tcounter+'" id="filekaligrafi_'+tcounter+'" class="form-control" type="hidden" value="'+fkaligrafi+'"><input name="ppn_'+tcounter+'" id="ppn_'+tcounter+'" class="form-control" type="hidden" value="'+ppn+'"><input name="transport_'+tcounter+'" id="transport_'+tcounter+'" class="form-control" type="hidden" value="'+transport+'"><input name="txtw1_'+tcounter+'" id="txtw1_'+tcounter+'" class="form-control" type="hidden" value="'+txtw1+'"><input name="txtw2_'+tcounter+'" id="txtw2_'+tcounter+'" class="form-control" type="hidden" value="'+txtw2+'"><input name="txtw3_'+tcounter+'" id="txtw3_'+tcounter+'" class="form-control" type="hidden" value="'+txtw3+'"><input name="txtw4_'+tcounter+'" id="txtw4_'+tcounter+'" class="form-control" type="hidden" value="'+txtw4+'"><input name="txtP1_'+tcounter+'" id="txtP1_'+tcounter+'" class="form-control" type="hidden" value="'+txtP1+'"><input name="txtP2_'+tcounter+'" id="txtP2_'+tcounter+'" class="form-control" type="hidden" value="'+txtP2+'"><input name="txtP3_'+tcounter+'" id="txtP3_'+tcounter+'" class="form-control" type="hidden" value="'+txtP3+'"><input name="txtP4_'+tcounter+'" id="txtP4_'+tcounter+'" class="form-control" type="hidden" value="'+txtP4+'"><input name="color1_'+tcounter+'" id="color1_'+tcounter+'" class="form-control" type="hidden" value="'+color1+'"><input name="color2_'+tcounter+'" id="color2_'+tcounter+'" class="form-control" type="hidden" value="'+color2+'"><input name="color3_'+tcounter+'" id="color3_'+tcounter+'" class="form-control" type="hidden" value="'+color3+'"><input name="color4_'+tcounter+'" id="color4_'+tcounter+'" class="form-control" type="hidden" value="'+color4+'"><input name="color5_'+tcounter+'" id="color5_'+tcounter+'" class="form-control" type="hidden" value="'+color5+'"></div>';
 trow.appendChild(td);
 ttable.appendChild(trow);
 }
@@ -598,7 +621,7 @@ function validasiForm(form)
                             <div class="input-group">
                                 <span class="input-group-addon">Nama Masjid</span>
                                 <input name="txtnmasjid" id="txtnmasjid" maxlength="30" class="form-control" 
-                             value="<?php  if($_GET['mode']=='edit'){echo $dataSph["nmasjid"]; }?>">
+                             value="<?php  if($_GET['mode']=='edit'){echo $dataSph["nmasjid"]; }?>" onkeyup="tnmasjid()">
                             </div>
                         </div>
                         <div class="form-group" >
@@ -703,7 +726,7 @@ function validasiForm(form)
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                                     <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '"/><input type="hidden" class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] . '"/><input type="hidden" name="txtw1_' . $iJurnal . '" id="txtw1_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran1"] . '"/><input type="hidden" name="txtw2_' . $iJurnal . '" id="txtw2_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran2"] . '"/><input type="hidden" name="txtw3_' . $iJurnal . '" id="txtw3_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran3"] . '"/><input type="hidden" name="txtw4_' . $iJurnal . '" id="txtw4_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran4"] . '"/><input type="hidden" name="txtP1_' . $iJurnal . '" id="txtP1_' . $iJurnal . '" value="' . $DetilJurnal["persen1"] . '"/><input type="hidden" name="txtP2_' . $iJurnal . '" id="txtP2_' . $iJurnal . '" value="' . $DetilJurnal["persen2"] . '"/><input type="hidden" name="txtP3_' . $iJurnal . '" id="txtP3_' . $iJurnal . '" value="' . $DetilJurnal["persen3"] . '"/><input type="hidden" name="txtP4_' . $iJurnal . '" id="txtP4_' . $iJurnal . '" value="' . $DetilJurnal["persen4"] . '"/></div></td>';
+                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '"/><input type="hidden" class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] . '"/><input type="hidden" name="txtw1_' . $iJurnal . '" id="txtw1_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran1"] . '"/><input type="hidden" name="txtw2_' . $iJurnal . '" id="txtw2_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran2"] . '"/><input type="hidden" name="txtw3_' . $iJurnal . '" id="txtw3_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran3"] . '"/><input type="hidden" name="txtw4_' . $iJurnal . '" id="txtw4_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran4"] . '"/><input type="hidden" name="txtP1_' . $iJurnal . '" id="txtP1_' . $iJurnal . '" value="' . $DetilJurnal["persen1"] . '"/><input type="hidden" name="txtP2_' . $iJurnal . '" id="txtP2_' . $iJurnal . '" value="' . $DetilJurnal["persen2"] . '"/><input type="hidden" name="txtP3_' . $iJurnal . '" id="txtP3_' . $iJurnal . '" value="' . $DetilJurnal["persen3"] . '"/><input type="hidden" name="txtP4_' . $iJurnal . '" id="txtP4_' . $iJurnal . '" value="' . $DetilJurnal["persen4"] . '"/><input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/></div></td>';
                                     if ($DetilJurnal["model"] == 'custom') {
                                         echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
                                     }   
@@ -720,7 +743,7 @@ function validasiForm(form)
             <input type="hidden" value="" id="validEdit" name="validEdit"/>
             <div class="container">
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="myModal" role="dialog" style="height: 100%;overflow-x: scroll;">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
@@ -769,57 +792,121 @@ function validasiForm(form)
                                             <option value=Titanium>Titanium</option>";
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <label class="control-label" for="txtKeteranganKas">Kelengkapan</label>
-                                            <select name="cbokelengkapan" id="cbokelengkapan" class="form-control">
-                                                <option value=0>Full</option>";
-                                                <option value=1>Tanpa Plafon</option>";
-                                                <option value=2>Waterproof</option>";
-                                            </select>
+                                    
+                                    <div class="panel box box-primary" style="margin-bottom: 0px;">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseDetail">
+                                                Detail
+                                                </a>
+                                            </h4>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <label class="control-label" for="txtKeteranganKas">Jumlah</label>
-                                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1"
-                                            value="">
+                                        <div id="collapseDetail" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Kelengkapan</label>
+                                                            <select name="cbokelengkapan" id="cbokelengkapan" class="form-control">
+                                                                <option value=0>Full</option>";
+                                                                <option value=1>Tanpa Plafon</option>";
+                                                                <option value=2>Waterproof</option>";
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Motifs</label>
+                                                            <select name="cbobahan" id="cbokaligrafi" class="form-control">
+                                                                <option value=awan>Awan</option>";
+                                                                <option value=kaligrafi>Kaligrafi</option>";
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Jumlah</label>
+                                                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1"
+                                                            value="">
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
+                                                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
+                                                                value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
+                                                            <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
+                                                            value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                                                        </div>
+                                                        <div class="col-lg-6" id="dt">
+                                                            <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
+                                                            <input type="text" placeholder="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="" ><span class="input-group-addon">meter</span></div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Luas</label><div class="input-group"><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  type="text" name="idluas" id="idluas" class="form-control" placeholder="0" 
+                                                                value=""><span class="input-group-addon">m<sup>2</sup></span></div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="number" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0" min="0" max="100"><span class="input-group-addon">%</span></div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="control-label" for="txtKeteranganKas">Harga</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
+                                                        </div>                                        
+                                                    <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group"><input type="checkbox" id="chkPPN" checked><label class="control-label" for="chkPPN">&nbsp;&nbsp;Harga termasuk PPN</label></div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group"><input type="checkbox" id="chkTransport"checked><label class="control-label" for="chkTransport">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="box-footer" style="padding-top: 1%;"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        
-                                            <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
-                                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
-                                                    value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
-                                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
-                                                value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
-                                            </div>
-                                            <div class="col-lg-6" id="dt">
-                                                <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
-                                                <input type="text" placeholder="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="" ><span class="input-group-addon">meter</span></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Luas</label><div class="input-group"><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  type="text" name="idluas" id="idluas" class="form-control" placeholder="0" 
-                                                    value=""><span class="input-group-addon">m<sup>2</sup></span></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="text" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0"><span class="input-group-addon">%</span></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Harga</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
-                                            </div>                                        
-                                        <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
-                                        <div class="form-group">
-                                            <div class="col-lg-6">
-                                                <div class="input-group"><input type="checkbox" id="chkPPN" checked><label class="control-label" for="txtKeteranganKas">&nbsp;&nbsp;Harga termasuk PPN</label></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="input-group"><input type="checkbox" id="chkTransport"checked><label class="control-label" for="txtKeteranganKas">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="box-footer" style="padding-top: 1%;"></div>
                                     </div>
-                                    <div class="panel box box-primary">
+                                    <div class="panel box box-primary" style="margin-bottom: 0px;">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseColor">
+                                                Color Picker
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseColor" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="input-group my-colorpicker2">
+                                                      <input type="text" class="form-control" id="color1" placeholder="#00000">
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group my-colorpicker2">
+                                                      <input type="text" class="form-control" id="color2"  placeholder="#00000">
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group my-colorpicker2">
+                                                      <input type="text" class="form-control" id="color3"  placeholder="#00000">
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group my-colorpicker2">
+                                                      <input type="text" class="form-control" id="color4"  placeholder="#00000">
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group my-colorpicker2">
+                                                      <input type="text" class="form-control" id="color5"  placeholder ="#00000">
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box box-primary" style="margin-bottom: 0px;">
                                         <div class="box-header with-border">
                                             <h4 class="box-title">
                                               <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
@@ -839,7 +926,7 @@ function validasiForm(form)
                                                 </div>
                                                 <div class="input-group">
                                                     <div class="col-lg-9">
-                                                        <input type="text" class="form-control"id="txtW2" value="Saat kubah selesai dipabrifikasi">
+                                                        <input type="text" class="form-control"id="txtW2" value="Saat kubah selesai dipabrikasi">
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <div class="input-group"><input type="text" id="txtP2"class="form-control" value="25"><span class="input-group-addon">%</span></div>
@@ -864,6 +951,7 @@ function validasiForm(form)
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-primary" value="Save" onclick="addarray();">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -45,6 +45,7 @@ require_once('./function/fungsi_formatdate.php');
        <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
        <!-- Select2 -->
        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+       <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
        <link rel="stylesheet" href="css/searchInput1.css">
        <link rel="icon" href="dist/img/logo-qoobah.png" type="image/png"/>
        <link rel="stylesheet" href="dist/css/bootstrap.min.css"> 
@@ -215,6 +216,7 @@ require_once('./function/fungsi_formatdate.php');
         <script src="plugins/input-mask/jquery.inputmask.js"></script>
         <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
         <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+        <script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
         
     </body>
     </html>

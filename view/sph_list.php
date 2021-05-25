@@ -105,11 +105,29 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
+                    
                     <?php
                     if ($hakUser==90 or $hakUser==80){
+                        if ($_SESSION["my"]->privilege!='SALES') {
+                            ?>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp SPH</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><i class="fa fa-bars"></i>KUBAH</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sphkaligrafi_detail&mode=add";?>"><i class="fa fa-bars"></i>KALIGRAFI</a></li>
+                                </ul>
+                            </div>
+                            <?php
+                        }else{
                         ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPH</button></a>
+                            <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPH</button></a>
                         <?php
+                        }
                     }
                     ?>
                 </div>
@@ -148,23 +166,29 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <?php
                 
-                $filter="";$snum="";
+                $filter="";$filter3="";$snum="";
                 if(isset($_GET["noSph"]) ){
                     $noSph = secureParam($_GET["noSph"], $dbLink);
                     $snum = secureParam($_GET["noSph"], $dbLink)." : ";
                     if ($noSph)
                         $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
+                        $filter3 = $filter3 . " AND p1.name LIKE '%" . $noSph . "%'  or s1.nama_cust LIKE '%" . $noSph . "%'  or s1.noSph LIKE '%" . $noSph . "%'  or k1.name LIKE '%" . $noSph . "%'";
                 }else{
                     $filter = '';
                 }
                 $filter2 = '';
+                $filter4 = '';
                 if ($_SESSION['my']->privilege == 'SALES') {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
+                    $filter4 =  " AND s1.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
                 $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
                 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-                $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph" ;
+                $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph Union All" ;
+                $q.= " SELECT s1.*,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
+                $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
+                $q.= "WHERE 1=1 " .$filter4. $filter3."group by s1.noSph" ;
                 $q.= " ORDER BY idSph desc ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
@@ -234,7 +258,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
                                         echo "</ul></div></td>";
                                 }
-                                echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/pdf_sph.php?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
+                                $pdf = '';
+                                if ($query_data["model"]=='Kaligrafi') {
+                                    $pdf = 'pdf_kaligrafi.php';
+                                }else{
+                                    $pdf = 'pdf_sph.php';
+                                }
+                                echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' class='btn btn-block btn-info'>".($query_data["noSph"])."</button></a></td>";
                                 echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b></td>";
