@@ -1087,31 +1087,31 @@ $pdf->SetFillColor(174,170,170);
 $pdf->Cell(50,8,'Warna',1,0,'C',1);
 $pdf->Cell(50,8,'Kode',1,1,'C',1); 
 $pdf->SetFont('helvetica', '', 14);
-if ($hasil['color1'] !='-') {
+if ($hasil['color1'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $pdf->SetFillColor( hexdec(substr($hasil['color1'],1, 2)),hexdec(substr($hasil['color1'],3, 2)),hexdec(substr($hasil['color1'],5, 2)));
   $pdf->Cell(50,10,'',1,0,'C',1);
   $pdf->Cell(50,10,$hasil['color1'],1,1,'C',0);
 }
-if ($hasil['color2'] !='-') {
+if ($hasil['color2'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $pdf->SetFillColor( hexdec(substr($hasil['color2'],1, 2)),hexdec(substr($hasil['color2'],3, 2)),hexdec(substr($hasil['color2'],5, 2)));
   $pdf->Cell(50,10,'',1,0,'C',1);
   $pdf->Cell(50,10,$hasil['color2'],1,1,'C',0);
 }
-if ($hasil['color3'] !='-') {
+if ($hasil['color3'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $pdf->SetFillColor( hexdec(substr($hasil['color3'],1, 2)),hexdec(substr($hasil['color3'],3, 2)),hexdec(substr($hasil['color3'],5, 2)));
   $pdf->Cell(50,10,'',1,0,'C',1);
   $pdf->Cell(50,10,$hasil['color3'],1,1,'C',0);
 }
-if ($hasil['color4'] !='-') {
+if ($hasil['color4'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $pdf->SetFillColor( hexdec(substr($hasil['color4'],1, 2)),hexdec(substr($hasil['color4'],3, 2)),hexdec(substr($hasil['color4'],5, 2)));
   $pdf->Cell(50,10,'',1,0,'C',1);
   $pdf->Cell(50,10,$hasil['color4'],1,1,'C',0);
 }
-if ($hasil['color5'] !='-') {
+if ($hasil['color5'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $pdf->SetFillColor( hexdec(substr($hasil['color5'],1, 2)),hexdec(substr($hasil['color5'],3, 2)),hexdec(substr($hasil['color5'],5, 2)));
   $pdf->Cell(50,10,'',1,0,'C',1);
