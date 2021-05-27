@@ -100,10 +100,10 @@ $tbl = '
 <b><U>MOTIF PLAFON KALIGRAFI</U></b><br>
 <br>
 ';
-$pdf->writeHTML($tbl);
+/*$pdf->writeHTML($tbl);
 if ($hasil['filekaligrafi']!='') {
     $pdf->image('../../uploads/'.$hasil['filekaligrafi'],20,55,170,130);
-}
+}*/
 $tbl = '
 Demikian penawaran harga Plafon kubah dari kami, atas perhatian dan kerjasamanya kami sampaikan terima kasih.
 <br>

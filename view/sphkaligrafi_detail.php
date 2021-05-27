@@ -239,11 +239,15 @@ function validasiForm(form)
                             }else{
                                 $noSph = "";
                             }
-
+                            $q= " SELECT s1.*,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
+                            $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
+                            $q.= "WHERE 1=1 and MD5(s1.noSph)='" . $noSph."'";
+                            $q.= " ORDER BY idSph desc ";
+                            /*
                             $q = "SELECT  ROW_NUMBER() OVER(PARTITION BY ds.model ORDER BY ds.idDsph) AS id,s.*,ds.biaya_plafon,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK ";
-                            $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
+                            $q.= "FROM aki_sph s right join aki_dkaligrafi ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                             $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph."'";
-                            $q.= " ORDER BY s.noSph desc ";
+                            $q.= " ORDER BY s.noSph desc ";*/
                             $rsTemp = mysql_query($q, $dbLink);
                             if ($dataSph = mysql_fetch_array($rsTemp)) {
 
@@ -251,7 +255,7 @@ function validasiForm(form)
                             } else {
                                 ?>
                                 <script language="javascript">
-                                    alert("Kode Tidak Valid ");
+                                    alert($q);
 //history.go(-1);
 </script>
 <?php
@@ -417,40 +421,45 @@ function validasiForm(form)
                         <th style="width: 8%">Tinggi</th>
                         <th style="width: 8%">Luas</th>
                         <th style="width: 20%">Harga Kaligrafi</th>
-                        <th style="width: 18%">PPN</th>
+                        <th style="width: 8%">PPN</th>
                         <th style="width: 18%">Transport</th>
-                        <th style="width: 30%">File Desain </th>
+                        <th style="width: 40%">File Desain </th>
                     </tr>
                 </thead>
                 <tbody id="kendali">
                     <?php
                     if ($_GET['mode']=='edit'){
-                        $q = "SELECT s.*,ds.luas,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
+                        $q= " SELECT s1.*,ds1.*";
+                        $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
+                        $q.= "WHERE 1=1 and MD5(s1.noSph)='" . $noSph."'";
+                        $q.= " ORDER BY idSph desc ";
+
+                        /*$q = "SELECT s.*,ds.luas,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
                         $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                         $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph;
-                        $q.= "' ORDER BY  ds.nomer ";
+                        $q.= "' ORDER BY  ds.nomer ";*/
                         $rsDetilJurnal = mysql_query($q, $dbLink);
                         $iJurnal = 0;
                         while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                             $kel = '';
                             echo '<div><tr id="trid_'.$iJurnal.'" >';
                             echo '<td align="center" valign="top" ><div class="form-group">
-                            <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDsph"] . '" /></div></td>';
-                            echo '<td align="center" valign="top" ><div class="form-group">
-                            <input readonly type="text" class="form-control"  name="txtKet_' . $iJurnal . '" id="txtKet_' . $iJurnal . '" value="' . $DetilJurnal["ket"] . '"style="min-width: 120px;"></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '" readonly="" style="min-width: 35px;"></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '" readonly="" style="min-width: 100px;"></div></td>';
+                            <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDkaligrafi"] . '" /></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtTransport_' . $iJurnal . '" id="txtTransport_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" readonly style="text-align:right;min-width: 120px;"></div></td>';
-
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["luas"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            echo '<td align="center" valign="top"><div class="form-group">
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["ppn"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            echo '<td align="center" valign="top"><div class="form-group">
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            echo '<td align="center" valign="top"><div class="form-group">
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . ($DetilJurnal["filekaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+
 
                             $iJurnal++;
                         }

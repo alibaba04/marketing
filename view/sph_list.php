@@ -228,7 +228,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                             <i class="fa fa-fw fa-angle-double-down"></i></button>
                                             <ul class="dropdown-menu" style="border-color:#000;">';
+                                            if ($query_data["model"]=='Kaligrafi') {
+                                            echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sphkaligrafi_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
+                                                $pdf = 'pdf_kaligrafi.php';
+                                            }else{
                                             echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/sph_detail&mode=edit&noSph=" . md5($query_data["noSph"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
+                                                $pdf = 'pdf_sph.php';
+                                            }
                                             if ($_SESSION["my"]->privilege == "GODMODE"|| $_SESSION["my"]->privilege == "ADMIN") {
                                                 echo "<li><a onclick=\"if(confirm('Apakah anda yakin akan menghapus data SPH ?')){location.href='index2.php?page=" . $curPage . "&txtMode=Delete&kode=" . ($query_data["noSph"]) . "'}\" style='cursor:pointer;'><i class='fa fa-trash'></i>&nbsp;Delete</a></li>";
                                             }
