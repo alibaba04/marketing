@@ -1089,45 +1089,45 @@ $pdf->Cell(50,8,'Kode',1,1,'C',1);
 $pdf->SetFont('helvetica', '', 14);
 if ($hasil['color1'] !='') {
   $pdf->Cell(45,2,'',0,0,'L',0);
-  $pdf->SetFillColor( hexdec(substr($hasil['color1'],1, 2)),hexdec(substr($hasil['color1'],3, 2)),hexdec(substr($hasil['color1'],5, 2)));
-  $pdf->Cell(50,10,'',1,0,'C',1);
-  $pdf->Cell(50,10,$hasil['color1'],1,1,'C',0);
+  $clr = explode(" ",$hasil['color1']);
+  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
+  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
   if ($hasil['color2'] =='') {
       $pdf->Ln(40);
   }
 }
-if ($hasil['color2'] !='') {
+if ($hasil['color2'] !=' ') {
   $pdf->Cell(45,2,'',0,0,'L',0);
-  $pdf->SetFillColor( hexdec(substr($hasil['color2'],1, 2)),hexdec(substr($hasil['color2'],3, 2)),hexdec(substr($hasil['color2'],5, 2)));
-  $pdf->Cell(50,10,'',1,0,'C',1);
-  $pdf->Cell(50,10,$hasil['color2'],1,1,'C',0);
+  $clr = explode(" ",$hasil['color2']);
+  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
+  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
   if ($hasil['color3'] =='') {
       $pdf->Ln(30);
   }
 }
-if ($hasil['color3'] !='') {
+if ($hasil['color3'] !=' ') {
   $pdf->Cell(45,2,'',0,0,'L',0);
-  $pdf->SetFillColor( hexdec(substr($hasil['color3'],1, 2)),hexdec(substr($hasil['color3'],3, 2)),hexdec(substr($hasil['color3'],5, 2)));
-  $pdf->Cell(50,10,'',1,0,'C',1);
-  $pdf->Cell(50,10,$hasil['color3'],1,1,'C',0);
+  $clr = explode(" ",$hasil['color3']);
+  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
+  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
   if ($hasil['color4'] =='') {
       $pdf->Ln(20);
   }
 }
-if ($hasil['color4'] !='') {
+if ($hasil['color4'] !=' ') {
   $pdf->Cell(45,2,'',0,0,'L',0);
-  $pdf->SetFillColor( hexdec(substr($hasil['color4'],1, 2)),hexdec(substr($hasil['color4'],3, 2)),hexdec(substr($hasil['color4'],5, 2)));
-  $pdf->Cell(50,10,'',1,0,'C',1);
-  $pdf->Cell(50,10,$hasil['color4'],1,1,'C',0);
+  $clr = explode(" ",$hasil['color4']);
+  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
+  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
   if ($hasil['color5'] =='') {
       $pdf->Ln(10);
   }
 }
-if ($hasil['color5'] !='') {
+if ($hasil['color5'] !=' ') {
   $pdf->Cell(45,2,'',0,0,'L',0);
-  $pdf->SetFillColor( hexdec(substr($hasil['color5'],1, 2)),hexdec(substr($hasil['color5'],3, 2)),hexdec(substr($hasil['color5'],5, 2)));
-  $pdf->Cell(50,10,'',1,0,'C',1);
-  $pdf->Cell(50,10,$hasil['color5'],1,1,'C',0);
+  $clr = explode(" ",$hasil['color5']);
+  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
+  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
 }
 
 $pdf->SetMargins(13, 10, 10, true);

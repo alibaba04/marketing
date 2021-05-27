@@ -244,7 +244,7 @@ class c_kk
 			if (!mysql_query( $q4, $dbLink))
 						throw new Exception($q4.'Gagal ubah data KK. ');
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Ubah Data KK";
+			$this->strResults= "Sukses Ubah Data KK";
 		}
 		catch(Exception $e) 
 		{

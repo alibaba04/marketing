@@ -109,7 +109,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 
 $(document).ready(function () {
     $("#btnModal").click(function(){ 
-         $("#myModal").modal({backdrop: false});
+        $("#myModal").modal({backdrop: false});
         document.getElementById("simpan").disabled = true;
         document.getElementById("idluas").disabled = true;
     });
@@ -207,14 +207,13 @@ function tnmasjid() {
             document.getElementById("txtD").value = data.d;
             document.getElementById("txtDt").value = data.dt;
             document.getElementById("txtT").value = data.t;
-            document.getElementById("idluas").value = data.luas;
             document.getElementById("idharga1").value = data.harga;
 
             if (data.model != 'bawang') {
                 $("#dt :input").prop("readonly", true);
             }
             if (data.model != 'custom') {
-                //kalkulatorharga();
+                kalkulatorharga();
             }else{
                 document.getElementById("idluas").value = data.luas;
             }
@@ -294,6 +293,11 @@ function tnmasjid() {
         var color3 = $("#color3").val();
         var color4 = $("#color4").val();
         var color5 = $("#color5").val();
+        var kcolor1 = $("#kcolor1").val();
+        var kcolor2 = $("#kcolor2").val();
+        var kcolor3 = $("#kcolor3").val();
+        var kcolor4 = $("#kcolor4").val();
+        var kcolor5 = $("#kcolor5").val();
         var fkubah = $("#filekubah").val();
         var fkaligrafi = $("#filekaligrafi").val();
         var ppn = 1;
@@ -330,11 +334,12 @@ function tnmasjid() {
             $("#txtHarga1_"+$('#validEdit').val()).val( $("#idharga1").val());
             $("#txtBahan_"+$('#validEdit').val()).val($('#cbobahan').val());
             $("#txtKubah_"+$('#validEdit').val()).val($('#txtjkubah').val());
-            if ($("#txtModel_"+$('#validEdit').val()).val() =='custom'){
-                $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
-            }
+            $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
             $("#txtKel_"+$('#validEdit').val()).val($('#cbokelengkapan').val());
 
+            /*$("#transport_"+$('#validEdit').val()).val($('#chkTransport').val());
+            $("#ppn_"+$('#validEdit').val()).val( $("#chkPPN").val());
+*/
             $("#txtw1_"+$('#validEdit').val()).val($('#txtW1 ').val());
             $("#txtw2_"+$('#validEdit').val()).val( $("#txtW2").val());
             $("#txtw3_"+$('#validEdit').val()).val($('#txtW3').val());
@@ -343,11 +348,11 @@ function tnmasjid() {
             $("#txtP2_"+$('#validEdit').val()).val( $("#txtP2").val());
             $("#txtP3_"+$('#validEdit').val()).val($('#txtP3').val());
             $("#txtP4_"+$('#validEdit').val()).val( $("#txtP4").val());
-            $("#color1_"+$('#validEdit').val()).val($('#color1').val());
-            $("#color2_"+$('#validEdit').val()).val( $("#color2").val());
-            $("#color3_"+$('#validEdit').val()).val($('#color3').val());
-            $("#color4_"+$('#validEdit').val()).val( $("#color4").val());
-            $("#color5_"+$('#validEdit').val()).val($('#color4').val());
+            $("#color1_"+$('#validEdit').val()).val($('#color1').val()+' '+$('#kcolor1').val());
+            $("#color2_"+$('#validEdit').val()).val( $("#color2").val()+' '+$('#kcolor2').val());
+            $("#color3_"+$('#validEdit').val()).val($('#color3').val()+' '+$('#kcolor3').val());
+            $("#color4_"+$('#validEdit').val()).val( $("#color4").val()+' '+$('#kcolor4').val());
+            $("#color5_"+$('#validEdit').val()).val($('#color5').val()+' '+$('#kcolor5').val());
         }else{
             var ttable = document.getElementById("kendali");
             var trow = document.createElement("TR");
@@ -413,7 +418,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" readonly value="'+h+'"style="min-width: 120px;" ><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="filekubah_'+tcounter+'" id="filekubah_'+tcounter+'" class="form-control" type="hidden" value="'+fkubah+'"><input name="filekaligrafi_'+tcounter+'" id="filekaligrafi_'+tcounter+'" class="form-control" type="hidden" value="'+fkaligrafi+'"><input name="ppn_'+tcounter+'" id="ppn_'+tcounter+'" class="form-control" type="hidden" value="'+ppn+'"><input name="transport_'+tcounter+'" id="transport_'+tcounter+'" class="form-control" type="hidden" value="'+transport+'"><input name="txtw1_'+tcounter+'" id="txtw1_'+tcounter+'" class="form-control" type="hidden" value="'+txtw1+'"><input name="txtw2_'+tcounter+'" id="txtw2_'+tcounter+'" class="form-control" type="hidden" value="'+txtw2+'"><input name="txtw3_'+tcounter+'" id="txtw3_'+tcounter+'" class="form-control" type="hidden" value="'+txtw3+'"><input name="txtw4_'+tcounter+'" id="txtw4_'+tcounter+'" class="form-control" type="hidden" value="'+txtw4+'"><input name="txtP1_'+tcounter+'" id="txtP1_'+tcounter+'" class="form-control" type="hidden" value="'+txtP1+'"><input name="txtP2_'+tcounter+'" id="txtP2_'+tcounter+'" class="form-control" type="hidden" value="'+txtP2+'"><input name="txtP3_'+tcounter+'" id="txtP3_'+tcounter+'" class="form-control" type="hidden" value="'+txtP3+'"><input name="txtP4_'+tcounter+'" id="txtP4_'+tcounter+'" class="form-control" type="hidden" value="'+txtP4+'"><input name="color1_'+tcounter+'" id="color1_'+tcounter+'" class="form-control" type="hidden" value="'+color1+'"><input name="color2_'+tcounter+'" id="color2_'+tcounter+'" class="form-control" type="hidden" value="'+color2+'"><input name="color3_'+tcounter+'" id="color3_'+tcounter+'" class="form-control" type="hidden" value="'+color3+'"><input name="color4_'+tcounter+'" id="color4_'+tcounter+'" class="form-control" type="hidden" value="'+color4+'"><input name="color5_'+tcounter+'" id="color5_'+tcounter+'" class="form-control" type="hidden" value="'+color5+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" readonly value="'+h+'"style="min-width: 120px;" ><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="filekubah_'+tcounter+'" id="filekubah_'+tcounter+'" class="form-control" type="hidden" value="'+fkubah+'"><input name="filekaligrafi_'+tcounter+'" id="filekaligrafi_'+tcounter+'" class="form-control" type="hidden" value="'+fkaligrafi+'"><input name="ppn_'+tcounter+'" id="ppn_'+tcounter+'" class="form-control" type="hidden" value="'+ppn+'"><input name="transport_'+tcounter+'" id="transport_'+tcounter+'" class="form-control" type="hidden" value="'+transport+'"><input name="txtw1_'+tcounter+'" id="txtw1_'+tcounter+'" class="form-control" type="hidden" value="'+txtw1+'"><input name="txtw2_'+tcounter+'" id="txtw2_'+tcounter+'" class="form-control" type="hidden" value="'+txtw2+'"><input name="txtw3_'+tcounter+'" id="txtw3_'+tcounter+'" class="form-control" type="hidden" value="'+txtw3+'"><input name="txtw4_'+tcounter+'" id="txtw4_'+tcounter+'" class="form-control" type="hidden" value="'+txtw4+'"><input name="txtP1_'+tcounter+'" id="txtP1_'+tcounter+'" class="form-control" type="hidden" value="'+txtP1+'"><input name="txtP2_'+tcounter+'" id="txtP2_'+tcounter+'" class="form-control" type="hidden" value="'+txtP2+'"><input name="txtP3_'+tcounter+'" id="txtP3_'+tcounter+'" class="form-control" type="hidden" value="'+txtP3+'"><input name="txtP4_'+tcounter+'" id="txtP4_'+tcounter+'" class="form-control" type="hidden" value="'+txtP4+'"><input name="color1_'+tcounter+'" id="color1_'+tcounter+'" class="form-control" type="hidden" value="'+color1+' '+kcolor1+'"><input name="color2_'+tcounter+'" id="color2_'+tcounter+'" class="form-control" type="hidden" value="'+color2+' '+kcolor2+'"><input name="color3_'+tcounter+'" id="color3_'+tcounter+'" class="form-control" type="hidden" value="'+color3+' '+kcolor3+'"><input name="color4_'+tcounter+'" id="color4_'+tcounter+'" class="form-control" type="hidden" value="'+color4+' '+kcolor4+'"><input name="color5_'+tcounter+'" id="color5_'+tcounter+'" class="form-control" type="hidden" value="'+color5+' '+kcolor5+'"></div>';
 trow.appendChild(td);
 ttable.appendChild(trow);
 }
@@ -726,7 +731,7 @@ function validasiForm(form)
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                                     <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                                     echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '"/><input type="hidden" class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] . '"/><input type="hidden" name="txtw1_' . $iJurnal . '" id="txtw1_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran1"] . '"/><input type="hidden" name="txtw2_' . $iJurnal . '" id="txtw2_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran2"] . '"/><input type="hidden" name="txtw3_' . $iJurnal . '" id="txtw3_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran3"] . '"/><input type="hidden" name="txtw4_' . $iJurnal . '" id="txtw4_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran4"] . '"/><input type="hidden" name="txtP1_' . $iJurnal . '" id="txtP1_' . $iJurnal . '" value="' . $DetilJurnal["persen1"] . '"/><input type="hidden" name="txtP2_' . $iJurnal . '" id="txtP2_' . $iJurnal . '" value="' . $DetilJurnal["persen2"] . '"/><input type="hidden" name="txtP3_' . $iJurnal . '" id="txtP3_' . $iJurnal . '" value="' . $DetilJurnal["persen3"] . '"/><input type="hidden" name="txtP4_' . $iJurnal . '" id="txtP4_' . $iJurnal . '" value="' . $DetilJurnal["persen4"] . '"/><input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/></div></td>';
+                                    <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '"/><input type="hidden" class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . $DetilJurnal["kubah"] . '"/><input type="hidden" name="txtw1_' . $iJurnal . '" id="txtw1_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran1"] . '"/><input type="hidden" name="txtw2_' . $iJurnal . '" id="txtw2_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran2"] . '"/><input type="hidden" name="txtw3_' . $iJurnal . '" id="txtw3_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran3"] . '"/><input type="hidden" name="txtw4_' . $iJurnal . '" id="txtw4_' . $iJurnal . '" value="' . $DetilJurnal["wpembayaran4"] . '"/><input type="hidden" name="txtP1_' . $iJurnal . '" id="txtP1_' . $iJurnal . '" value="' . $DetilJurnal["persen1"] . '"/><input type="hidden" name="txtP2_' . $iJurnal . '" id="txtP2_' . $iJurnal . '" value="' . $DetilJurnal["persen2"] . '"/><input type="hidden" name="txtP3_' . $iJurnal . '" id="txtP3_' . $iJurnal . '" value="' . $DetilJurnal["persen3"] . '"/><input type="hidden" name="txtP4_' . $iJurnal . '" id="txtP4_' . $iJurnal . '" value="' . $DetilJurnal["persen4"] . '"/><input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/><input type="hidden" class="form-control"  name="transport_' . $iJurnal . '" id="transport_' . $iJurnal . '" value="' . $DetilJurnal["transport"] . '"/><input type="hidden" class="form-control"  name="ppn_' . $iJurnal . '" id="ppn_' . $iJurnal . '" value="' . $DetilJurnal["ppn"] . '"/></div></td>';
                                     if ($DetilJurnal["model"] == 'custom') {
                                         echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
                                     }   
@@ -852,10 +857,10 @@ function validasiForm(form)
                                                     <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
                                                     <div class="form-group">
                                                         <div class="col-lg-6">
-                                                            <div class="input-group"><input type="checkbox" id="chkPPN" checked><label class="control-label" for="chkPPN">&nbsp;&nbsp;Harga termasuk PPN</label></div>
+                                                            <div class="input-group"><input type="checkbox" id="chkPPN" <?php if($_GET['mode']=='edit'){if ($dataSph["ppn"]==1) {echo "checked";}} ?> ><label class="control-label" for="chkPPN">&nbsp;&nbsp;Harga termasuk PPN</label></div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="input-group"><input type="checkbox" id="chkTransport"checked><label class="control-label" for="chkTransport">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
+                                                            <div class="input-group"><input type="checkbox" id="chkTransport" <?php if($_GET['mode']=='edit'){if ($dataSph["transport"]==1) {echo "checked";}} ?>><label class="control-label" for="chkTransport">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
                                                         </div>
                                                     </div>
                                                     <div class="box-footer" style="padding-top: 1%;"></div>
@@ -867,40 +872,52 @@ function validasiForm(form)
                                         <div class="box-header with-border">
                                             <h4 class="box-title">
                                               <a data-toggle="collapse" data-parent="#accordion" href="#collapseColor">
-                                                Color Picker
+                                                Color 
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapseColor" class="panel-collapse collapse">
                                             <div class="box-body">
-                                                <div class="input-group my-colorpicker2">
-                                                      <input type="text" class="form-control" id="color1" placeholder="#00000">
-                                                      <div class="input-group-addon">
-                                                        <i></i>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <label class="control-label" for="chkPPN">Warna</label>
+                                                        <input type="text" class="form-control" id="color1"  placeholder="">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <label class="control-label" for="chkPPN">Kode</label>
+                                                        <input type="text" class="form-control" id="kcolor1"  placeholder="#00000">
                                                     </div>
                                                 </div>
-                                                <div class="input-group my-colorpicker2">
-                                                      <input type="text" class="form-control" id="color2"  placeholder="#00000">
-                                                      <div class="input-group-addon">
-                                                        <i></i>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="color2"  placeholder="">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="kcolor2"  placeholder="#00000">
                                                     </div>
                                                 </div>
-                                                <div class="input-group my-colorpicker2">
-                                                      <input type="text" class="form-control" id="color3"  placeholder="#00000">
-                                                      <div class="input-group-addon">
-                                                        <i></i>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="color3"  placeholder="">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="kcolor3"  placeholder="#00000">
                                                     </div>
                                                 </div>
-                                                <div class="input-group my-colorpicker2">
-                                                      <input type="text" class="form-control" id="color4"  placeholder="#00000">
-                                                      <div class="input-group-addon">
-                                                        <i></i>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="color4"  placeholder="">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="kcolor4"  placeholder="#00000">
                                                     </div>
                                                 </div>
-                                                <div class="input-group my-colorpicker2">
-                                                      <input type="text" class="form-control" id="color5"  placeholder ="#00000">
-                                                      <div class="input-group-addon">
-                                                        <i></i>
+                                                <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="color5"  placeholder="">
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="kcolor5"  placeholder="#00000">
                                                     </div>
                                                 </div>
                                             </div>
