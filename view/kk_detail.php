@@ -337,9 +337,8 @@ function tnmasjid() {
             $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
             $("#txtKel_"+$('#validEdit').val()).val($('#cbokelengkapan').val());
 
-            /*$("#transport_"+$('#validEdit').val()).val($('#chkTransport').val());
-            $("#ppn_"+$('#validEdit').val()).val( $("#chkPPN").val());
-*/
+            $("#transport_"+$('#validEdit').val()).val(transport);
+            $("#ppn_"+$('#validEdit').val()).val( ppn);
             $("#txtw1_"+$('#validEdit').val()).val($('#txtW1 ').val());
             $("#txtw2_"+$('#validEdit').val()).val( $("#txtW2").val());
             $("#txtw3_"+$('#validEdit').val()).val($('#txtW3').val());
