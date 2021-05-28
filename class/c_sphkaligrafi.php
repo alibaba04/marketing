@@ -15,9 +15,9 @@ class c_sphkaligrafi
         $tglTransaksi = date("Y-m-d");
         $namacust = secureParam($params["txtnamacust"],$dbLink);
         $sdr = secureParam($params["cbosdr"],$dbLink);
-        $nmasjid = secureParam($params["txtnmasjid"],$dbLink);
-        $tmasjid = secureParam($params["cbomasjid"],$dbLink);
+        $ket = secureParam($params["txtket"],$dbLink);
         $noSph = secureParam($params["txtnoSph"],$dbLink);
+        $alamat = secureParam($params["provinsi"],$dbLink);
         $alamat = secureParam($params["provinsi"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
@@ -31,7 +31,7 @@ class c_sphkaligrafi
 			}
 			
 			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, tanggal, keterangan_kk, kodeUser) ";
-			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$tglTransaksi."','','".$pembuat."');";
+			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$ket."','".$provinsi."','".$kota."','".$tglTransaksi."','','".$pembuat."');";
 			if (!mysql_query($q, $dbLink))
 				throw new Exception('Gagal masukkan data dalam database.');
 			$jumData = $params["jumAddJurnal"];
@@ -45,10 +45,9 @@ class c_sphkaligrafi
                     $h1 = preg_replace("/\D/", "", $harga);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
-                    $luas = secureParam($params["luas_". $j],$dbLink);
                     $filekaligrafi='';
-                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `luas`, `harga`, `ppn`, `transport`, `filekaligrafi`) VALUES";
-					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$luas."', '".$h1."', '".$ppn."', '".$transport."', '".$nameimg."');";
+                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `harga`, `ppn`, `transport`, `filekaligrafi`) VALUES";
+					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$h1."', '".$ppn."', '".$transport."', '".$nameimg."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data SPH.');

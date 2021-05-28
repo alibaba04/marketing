@@ -1077,7 +1077,7 @@ $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KUBAH',0,1,'C',0);
 if ($hasil['filekubah']!='') {
-  $pdf->image('../../uploads/'.$hasil['filekubah'],12,70,190,143);
+  $pdf->image('../../uploads/'.$hasil['filekubah'],12,70,170,130);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(170);
@@ -1148,7 +1148,7 @@ $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
 if ($hasil['filekaligrafi']!='') {
-   $pdf->image('../../uploads/'.$hasil['filekaligrafi'],12,70,190,143);
+   $pdf->image('../../uploads/'.$hasil['filekaligrafi'],12,70,170,130);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(250);

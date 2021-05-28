@@ -21,7 +21,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     $tmpsph = new c_sphkaligrafi;
 //Jika Mode Tambah/Add
     if ($_POST["txtMode"] == "Add") {
-        $folderUpload = "http://localhost/uploads/";
+        $folderUpload = "../uploads/";
         $namaBaru='';
         $files = $_FILES;
         $jumlahFile = count($files['listGambar']['name']);
@@ -158,19 +158,13 @@ trow.appendChild(td);
 var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtLuas_'+tcounter+'" id="txtLuas_'+tcounter+'" class="form-control"  value="0" readonly style="min-width: 120px;" ></div>';
-trow.appendChild(td);
-
-var td = document.createElement("TD");
-td.setAttribute("align","right");
-td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'" class="form-control" onkeydown="return numbersonly(this, event);" value="0"style="min-width: 120px;" ></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkPPN_'+tcounter+'" id="chkPPN_'+tcounter+'" value="1" checked /> <label>Harga termasuk PPN</label></div>';
+td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkPPN_'+tcounter+'" id="chkPPN_'+tcounter+'" value="1" checked /> <label>PPN 10%</label></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
@@ -180,7 +174,7 @@ td.innerHTML+='<div class="form-group" ><input type="checkbox" class="minimal" n
 trow.appendChild(td);
 
 var td = document.createElement("TD");
-td.setAttribute("align","right");
+td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input type="file" name="listGambar[]" accept="image/*" multiple></div>';
 trow.appendChild(td);
@@ -351,8 +345,8 @@ function validasiForm(form)
     </div>
     <label class="con trol-label" for="txtTglTransaksi">&nbsp;</label>
     <div class="form-group">
-            <input name="txtnmasjid" id="txtnmasjid" class="form-control" 
-            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){$n=$dataSph['masjid']; $nm=explode(' ',$n);echo $nm[1]; }?>" placeholder="Keterangan" >
+            <input name="txtket" id="txtket" class="form-control" 
+            value="<?php   if($_GET["mode"]=='edit'){ echo $dataSph["keterangan"]; }?>" placeholder="Keterangan" >
     </div>
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
@@ -419,7 +413,6 @@ function validasiForm(form)
                         <th style="width: 3%"><i class='fa fa-edit'></i></th>
                         <th style="width: 8%">Diameter</th>
                         <th style="width: 8%">Tinggi</th>
-                        <th style="width: 8%">Luas</th>
                         <th style="width: 20%">Harga Kaligrafi</th>
                         <th style="width: 8%">PPN</th>
                         <th style="width: 18%">Transport</th>
@@ -449,8 +442,6 @@ function validasiForm(form)
                             <input type="text" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["luas"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">

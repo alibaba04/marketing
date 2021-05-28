@@ -383,7 +383,7 @@ function AddPage($orientation='', $size='', $rotation=0)
 function Header()
 {
 	$this->SetMargins(12, 20, 10, true);
-    $this->image('../dist/img/cop-aki.jpg',12,12,190,30);
+    $this->image('../dist/img/cop-aki.jpg',17,12,185,30);
     // Line break
     $this->Ln(35);
 }

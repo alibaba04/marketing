@@ -6,6 +6,8 @@ require_once ("../function/fungsi_convertNumberToWord.php");
 $pdf=new PDF();
 $html="";
 $pdf->AddPage();
+$pdf->SetMargins(17, 0, 10, true);
+$pdf->Ln(1);
 //HEADER        
 $tgl = '';
 $noSph = ($_GET["noSph"]);
@@ -95,15 +97,16 @@ $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(55,6,'171 - 00 - 2558002 - 2',0,1,'L',0);
 
 $pdf->addpage();
-$pdf->Ln(-10);
+$pdf->SetMargins(17, 0, 10, true);
+$pdf->Ln(10);
 $tbl = '
 <b><U>MOTIF PLAFON KALIGRAFI</U></b><br>
 <br>
 ';
-/*$pdf->writeHTML($tbl);
+$pdf->writeHTML($tbl);
 if ($hasil['filekaligrafi']!='') {
     $pdf->image('../../uploads/'.$hasil['filekaligrafi'],20,55,170,130);
-}*/
+}
 $tbl = '
 Demikian penawaran harga Plafon kubah dari kami, atas perhatian dan kerjasamanya kami sampaikan terima kasih.
 <br>
