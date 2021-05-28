@@ -274,7 +274,7 @@ if ($hasil['ppn']==1) {
 }
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-( '.convertNumberToWord($hasil['harga']).')<b> '.$ppn.' termasuk PPN</b>
+('.convertNumberToWord($hasil['harga']).'Rupiah)<b> '.$ppn.' termasuk PPN</b>
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(40,5,'.',0,1,'L',0);
@@ -1077,7 +1077,7 @@ $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KUBAH',0,1,'C',0);
 if ($hasil['filekubah']!='') {
-  $pdf->image('../../uploads/'.$hasil['filekubah'],12,70,170,130);
+  $pdf->image('../../uploads/'.$hasil['filekubah'],25,70,170,130);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(170);
@@ -1148,7 +1148,7 @@ $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
 if ($hasil['filekaligrafi']!='') {
-   $pdf->image('../../uploads/'.$hasil['filekaligrafi'],12,70,170,130);
+   $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,70,170,130);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(250);

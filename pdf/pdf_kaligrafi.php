@@ -58,7 +58,7 @@ if ($hasil['transport'] == '1') {
     $transport ='belum';
 }
 $tbl = '<br>
-<b>Harga yang disepakati untuk Plafon kaligrafi tersebut adalah Rp. '.$hasil['harga'].',-<br><br>
+<b>Harga yang disepakati untuk Plafon kaligrafi tersebut adalah Rp. '.number_format($hasil['harga']).',-<br><br>
 NB :<br>
 Harga diatas '.$ppn.' termasuk PPn 10%<br>
 Harga diatas '.$transport.' termasuk transport team kaligrafi.<br><br>
@@ -105,7 +105,7 @@ $tbl = '
 ';
 $pdf->writeHTML($tbl);
 if ($hasil['filekaligrafi']!='') {
-    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],20,55,170,130);
+    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,55,170,130);
 }
 $tbl = '
 Demikian penawaran harga Plafon kubah dari kami, atas perhatian dan kerjasamanya kami sampaikan terima kasih.
