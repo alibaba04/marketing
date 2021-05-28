@@ -226,11 +226,22 @@ function tnmasjid() {
             document.getElementById("txtP3").value = data.txtp3;
             document.getElementById("txtP4").value = data.txtp4;
 
-            document.getElementById("color1").value = data.color1;
-            document.getElementById("color2").value = data.color2;
-            document.getElementById("color3").value = data.color3;
-            document.getElementById("color4").value = data.color4;
-            document.getElementById("color5").value = data.color5;
+            var clr1 = (data.color1).split(' ');
+            var clr2 = (data.color2).split(' ');
+            var clr3 = (data.color3).split(' ');
+            var clr4 = (data.color4).split(' ');
+            var clr5 = (data.color5).split(' ');
+            document.getElementById("color1").value = clr1[0];
+            document.getElementById("color2").value = clr2[0];
+            document.getElementById("color3").value = clr3[0];
+            document.getElementById("color4").value = clr4[0];
+            document.getElementById("color5").value = clr5[0];
+
+            document.getElementById("kcolor1").value = clr1[1];
+            document.getElementById("kcolor2").value = clr2[1];
+            document.getElementById("kcolor3").value = clr3[1];
+            document.getElementById("kcolor4").value = clr4[1];
+            document.getElementById("kcolor5").value = clr5[1];
         },"json");
     }
     function addarray() {
@@ -856,10 +867,10 @@ function validasiForm(form)
                                                     <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
                                                     <div class="form-group">
                                                         <div class="col-lg-6">
-                                                            <div class="input-group"><input type="checkbox" id="chkPPN" <?php if($_GET['mode']=='edit'){if ($dataSph["ppn"]==1) {echo "checked";}} ?> ><label class="control-label" for="chkPPN">&nbsp;&nbsp;Harga termasuk PPN</label></div>
+                                                            <div class="input-group"><input checked type="checkbox" id="chkPPN" <?php if($_GET['mode']=='edit'){if ($dataSph["ppn"]==1) {echo "checked";}} ?> ><label class="control-label" for="chkPPN">&nbsp;&nbsp;Harga termasuk PPN</label></div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="input-group"><input type="checkbox" id="chkTransport" <?php if($_GET['mode']=='edit'){if ($dataSph["transport"]==1) {echo "checked";}} ?>><label class="control-label" for="chkTransport">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
+                                                            <div class="input-group"><input checked type="checkbox" id="chkTransport" <?php if($_GET['mode']=='edit'){if ($dataSph["transport"]==1) {echo "checked";}} ?>><label class="control-label" for="chkTransport">&nbsp;&nbsp;Harga termasuk Biaya Transport</label></div>
                                                         </div>
                                                     </div>
                                                     <div class="box-footer" style="padding-top: 1%;"></div>

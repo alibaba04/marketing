@@ -1076,9 +1076,9 @@ $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KUBAH',0,1,'C',0);
-if ($hasil['filekubah']!='') {
+/*if ($hasil['filekubah']!='') {
   $pdf->image('../../uploads/'.$hasil['filekubah'],25,70,170,130);
-}
+}*/
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(170);
 $pdf->SetFont('helvetica', 'b', 14);
@@ -1087,7 +1087,7 @@ $pdf->SetFillColor(174,170,170);
 $pdf->Cell(50,8,'Warna',1,0,'C',1);
 $pdf->Cell(50,8,'Kode',1,1,'C',1); 
 $pdf->SetFont('helvetica', '', 14);
-if ($hasil['color1'] !='') {
+if ($hasil['color1'] !=' ') {
   $pdf->Cell(45,2,'',0,0,'L',0);
   $clr = explode(" ",$hasil['color1']);
   $pdf->Cell(50,10,$clr[0],1,0,'C',0);
@@ -1147,9 +1147,9 @@ $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
-if ($hasil['filekaligrafi']!='') {
+/*if ($hasil['filekaligrafi']!='') {
    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,70,170,130);
-}
+}*/
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(250);
 $pdf->SetTextColor(130);
