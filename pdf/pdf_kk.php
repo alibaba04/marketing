@@ -99,7 +99,7 @@ $pdf->Cell(2,9,'Alamat',0,0,'L',0);
 $pdf->Cell(39,9,':',0,0,'R',0);
 $pdf->Ln(2.5);
 $pdf->Cell(61,9,'',0,0,'R',0);
-$pdf->MultiCell(120,5,$hasil['alamat'].', '.$hasil['kname'].', '.$hasil['pname'],0,'B',0);
+$pdf->MultiCell(100,5,$hasil['alamat'].', '.$hasil['kname'].', '.$hasil['pname'],0,'B',0);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $pdf->Cell(2,5,'Jabatan',0,0,'L',0);
 $pdf->Cell(39,5,':',0,0,'R',0);
