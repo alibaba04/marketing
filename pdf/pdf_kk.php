@@ -156,7 +156,7 @@ $pdf->Cell(12,2,'Alamat Proyek',0,0,'L',0);
 $pdf->Cell(29,2,':',0,0,'R',0);
 $pdf->SetMargins(81, 10, 10, true);
 $pdf->Ln(-1);
-$pdf->MultiCell(120,4,$hasil['alamat_proyek'],0,'B',0);
+$pdf->MultiCell(120,5,$hasil['alamat_proyek'],0,'B',0);
 
 $pdf->Ln(55);
 $pdf->SetTextColor(130);
