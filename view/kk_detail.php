@@ -364,10 +364,6 @@ function tnmasjid() {
             $("#color4_"+$('#validEdit').val()).val( $("#color4").val()+' '+$('#kcolor4').val());
             $("#color5_"+$('#validEdit').val()).val($('#color5').val()+' '+$('#kcolor5').val());
         }else{
-            var ttable = document.getElementById("kendali");
-            var trow = document.createElement("TR");
-
-            trow.setAttribute('id','trid_'+tcounter);
 //        
 //Kolom 1 Checkbox
 var td = document.createElement("TD");
