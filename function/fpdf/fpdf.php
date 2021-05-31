@@ -388,6 +388,8 @@ function Header()
     $this->Ln(35);
 }
 
+
+
 function Footer()
 {
 	$this->SetY(-15);

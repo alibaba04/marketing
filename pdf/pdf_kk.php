@@ -5,6 +5,7 @@ require_once ("../function/fungsi_formatdate.php");
 require_once ("../function/fungsi_convertNumberToWord.php");
 $pdf=new PDF('P','mm',array(210,330));
 $html="";
+
 $pdf->AddPage();
 $pdf->SetMargins(20, 10, 10, true);
 //HEADER        
@@ -52,7 +53,7 @@ function hariIndo ($hariInggris) {
 }
 
 $tbl = '<br>
-Pada hari ini '.hariIndo(strftime('%A', strtotime($hasil['tanggal']))).' tanggal '.date("d",strtotime($hasil['tanggal'])).' bulan '.date("F",strtotime($hasil['tanggal'])).' tahun '.date("Y",strtotime($hasil['tanggal'])).' kami yang bertanda tangan dibawah ini: <br>';
+Pada hari ini '.(strftime('%A', strtotime($hasil['tanggal']))).' tanggal '.date("d",strtotime($hasil['tanggal'])).' bulan '.date("F",strtotime($hasil['tanggal'])).' tahun '.date("Y",strtotime($hasil['tanggal'])).' kami yang bertanda tangan dibawah ini: <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,10,'1.',0,0,'R',0);
 $pdf->Cell(1,10,'Nama',0,0,'L',0);
