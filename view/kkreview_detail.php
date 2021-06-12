@@ -119,7 +119,7 @@ if ($_GET["mode"] == "addNote") {
     <div class="col-sm-4 invoice-col">
       <u>Pihak Kedua</u>
       <address>
-        <strong><?php  echo $dataSph["nama"]; ?></strong><br>
+        <strong><?php  echo $dataSph["nama_cust"]; ?></strong><br>
         <?php  echo $dataSph["no_id"].' ('.$dataSph["jenis_id"].')'; ?><br>
         <?php  echo $dataSph["alamat"].' '.$dataSph["kn"].', '.$dataSph["pn"]; ?><br>
         <?php  echo $dataSph["no_phone"]; ?><br>
@@ -424,7 +424,6 @@ if ($_GET["mode"] == "addNote") {
   <div class="row no-print">
     <div class="col-xs-12">
       <?php 
-      echo $hakUser;
         if ($hakUser > 60) {
           echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-credit-card"></i>Approve KK</button>';
         }
