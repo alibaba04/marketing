@@ -388,7 +388,7 @@ if ($hasil["jml"]==2) {
   $pdf->Ln(10);
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(15);
+  $pdf->Ln(0);
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);
@@ -504,7 +504,7 @@ $pdf->Cell(188,6,'PASAL 5',0,1,'C',0);
 $pdf->Cell(188,4, 'JANGKA WAKTU PEKERJAAN',0,1,'C',0);
 $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
-$pdf->Cell(12,5,'1. ',0,0,'R',0);
+$pdf->Cell(5,5,'1. ',0,0,'R',0);
 $tbl = '
 Dalam menyelesaikan pekerjaan yang disepakati oleh Para Pihak, <b>Pihak Pertama</b> harus <br>
 ';
