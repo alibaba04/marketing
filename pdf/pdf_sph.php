@@ -560,7 +560,9 @@ if ($bahan == '2' or $bahan == '3' or $bahan == '0' ) {
     }else{
         $tf = 'belum';
     }
-    $nourut++;
+    if ($bahan == '3' or $bahan == '0'  ) {
+        $nourut++;
+    }
      
 }
 // bahan galvalume = 1

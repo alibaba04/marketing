@@ -143,7 +143,7 @@ class c_sph
 
 			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."' WHERE noSph='".$params["txtnoSph"]."'";
 			if (!mysql_query( $q3, $dbLink))
-						throw new Exception($q3.'Gagal ubah data SPH. ');
+						throw new Exception('Gagal ubah data SPH. ');
 			$jumData = $params["jumAddJurnal"];
 			$nomer =0;
 			for ($j = 0; $j < $jumData ; $j++){
@@ -183,7 +183,7 @@ class c_sph
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-						throw new Exception($q4.'Gagal ubah data SPH. ');
+						throw new Exception('Gagal ubah data SPH. ');
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Ubah Data SPH";
 		}

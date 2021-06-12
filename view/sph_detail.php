@@ -510,45 +510,45 @@ function validasiForm(form)
                                 ?>
                                 <script language="javascript">
                                     alert("Kode Tidak Valid ");
-//history.go(-1);
-</script>
-<?php
-}
-} else {
-    $q = "SELECT * FROM aki_sph where idSph=( SELECT max(idSph) FROM aki_sph )";
-    $rsTemp = mysql_query($q, $dbLink);
-    $tglTransaksi = date("Y-m-d");
-    if ($kode_ = mysql_fetch_array($rsTemp)) {
-        $urut = "";
-        $noSph = "";
-        $tglTr = substr($tglTransaksi, 0,4);
-        $bulan = bulanRomawi(substr($tglTransaksi,5,2));
-        if ($kode_['noSph'] != ''){
-            $urut = substr($kode_['noSph'],0, 4);
-            $tahun = substr($kode_['noSph'],-4);
-            $kode = $urut + 1;
-            if (strlen($kode)==1) {
-                $kode = '000'.$kode;
-            }else if (strlen($kode)==2){
-                $kode = '00'.$kode;
-            }else if (strlen($kode)==3){
-                $kode = '0'.$kode;
-            }
+                            //history.go(-1);
+                            </script>
+                            <?php
+                            }
+                            } else {
+                                $q = "SELECT * FROM aki_sph where idSph=( SELECT max(idSph) FROM aki_sph )";
+                                $rsTemp = mysql_query($q, $dbLink);
+                                $tglTransaksi = date("Y-m-d");
+                                if ($kode_ = mysql_fetch_array($rsTemp)) {
+                                    $urut = "";
+                                    $noSph = "";
+                                    $tglTr = substr($tglTransaksi, 0,4);
+                                    $bulan = bulanRomawi(substr($tglTransaksi,5,2));
+                                    if ($kode_['noSph'] != ''){
+                                        $urut = substr($kode_['noSph'],0, 4);
+                                        $tahun = substr($kode_['noSph'],-4);
+                                        $kode = $urut + 1;
+                                        if (strlen($kode)==1) {
+                                            $kode = '000'.$kode;
+                                        }else if (strlen($kode)==2){
+                                            $kode = '00'.$kode;
+                                        }else if (strlen($kode)==3){
+                                            $kode = '0'.$kode;
+                                        }
 
-            if ($tglTr != $tahun) {
-                $kode = '0001';
-            }
-            $noSph = $kode.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                        if ($tglTr != $tahun) {
+                                            $kode = '0001';
+                                        }
+                                        $noSph = $kode.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
 
-        }else{
-            $noSph = '0001'.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
-        }
+                                    }else{
+                                        $noSph = '0001'.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                    }
 
-    }
-    echo '<h3 class="box-title">Add SPH</h3>';
-    echo "<input type='hidden' name='txtMode'  value='Add'>";
-}
-?>
+                                }
+                                echo '<h3 class="box-title">Add SPH</h3>';
+                                echo "<input type='hidden' name='txtMode'  value='Add'>";
+                            }
+                            ?>
 </div>
 <div class="box-body">
     <div class="form-group" >

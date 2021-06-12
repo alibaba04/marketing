@@ -232,10 +232,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-fw fa-money'></i>SPK Sudah Jadi KK</a></li>";
                                         echo "</ul></div></td>";
                                 }
-                                echo "<td><a onclick=\"if(confirm('Download data KK ?')){location.href='pdf/pdf_kk.php?&noKK=" . md5($query_data["noKK"]) . "'}\" style='cursor:pointer;'>
-                                <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";
-                                /*echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_review&noKK=" . md5($query_data["noKK"])."'>
-                                <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";*/
+                                if ($query_data["approve"]==1) {
+                                    echo "<td><a onclick=\"if(confirm('Download data KK ?')){location.href='pdf/pdf_kk.php?&noKK=" . md5($query_data["noKK"]) . "'}\" style='cursor:pointer;'>
+                                    <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";
+                                }else{
+                                    echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kkreview_detail&mode=addNote&noKK=" . md5($query_data["noKK"])."'>
+                                    <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";
+                                }
                                 echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td>" . ($query_data["nama_cust"]) . "</td>";
                                 echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";

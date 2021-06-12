@@ -48,7 +48,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   </div>
                   <div class="item">
                     <center>
-                    <img src="./dist/img/madinahtanpaplafon.jpg" alt="First slide">
+                    <img src="./dist/img/madinahtanpaplafon.jpg" alt="First slide" width="500" height="600">
                     </center>
                     <div class="carousel-caption">
                       

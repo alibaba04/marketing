@@ -11,7 +11,7 @@ $pdf->SetMargins(20, 10, 10, true);
 //HEADER        
 $tgl = '';
 $noKk = ($_GET["noKK"]);
-$q = "SELECT s.*,dkk.*,dp.*,u.nama,p.name as pname,k.name as kname ";
+$q = "SELECT count(s.idKk) as jml,s.*,dkk.*,dp.*,u.nama,p.name as pname,k.name as kname ";
 $q.= "FROM aki_kk s left join aki_dkk dkk on s.noKk=dkk.noKK left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id left join aki_dpembayaran dp on s.noKk=dp.noKk ";
 $q.= "WHERE 1=1 and MD5(s.noKk)='". $noKk."'";
 $q.= " ORDER BY s.noKk asc ";
@@ -158,6 +158,7 @@ $pdf->SetMargins(81, 10, 10, true);
 $pdf->Ln(-1);
 $pdf->MultiCell(120,5,$hasil['alamat_proyek'],0,'B',0);
 
+$pdf->SetMargins(20, 10, 10, true);
 $pdf->Ln(55);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
@@ -179,87 +180,126 @@ $tbl = '
 Pekerjaan tersebut dalam Pasal 1 Perjanjian ini harus dilaksanakan oleh <b>Pihak Pertama</b> dengan spesifikasi rincian pekerjaan sebagai berikut : 
 <br>
 ';
+$pdf->SetMargins(20, 10, 10, true);
 $pdf->Ln(10);
 $pdf->writeHTML($tbl);
+$pdf->SetMargins(10, 10, 10, true);
 $pdf->Ln(3);
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(1,5,'Jenis Pekerjaan',0,0,'L',0);
-$pdf->Cell(40,5,':',0,0,'R',0);
-$pdf->Cell(1,5,strtoupper($hasil['kubah']),0,1,'L',0); 
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(12,5,'Bahan',0,0,'L',0);
-$pdf->Cell(29,5,':',0,0,'R',0);
-$pdf->Cell(23,5,$hasil['bahan'],0,1,'L',0); 
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(2,5,'Ukuran',0,0,'L',0);
-$pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->MultiCell(120,5,'Diameter '.$hasil['d'].' m Tinggi '.$hasil['t'].' m Luas '.$hasil['luas'].' m'.chr(178),0,'B',0);
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(2,5,'Jumlah Kubah',0,0,'L',0);
-$pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->Cell(24,5,$hasil['jumlah'],0,1,'L',0); 
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(2,5,'Design Kubah',0,0,'L',0);
-$pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->MultiCell(120,5,'Terlampir.',0,'B',0);
-$pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(2,5,'Spesifikasi',0,0,'L',0);
-$pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->Ln(3);
-$pdf->SetMargins(30, 10, 10, true);
-$pdf->MultiCell(120,5,'',0,'B',0);
-$rangka='';
-if ($hasil['dt'] != 0){
-  $rangka = cekrangka($hasil['dt']);
-}else{
-  $rangka = cekrangka($hasil['d']);
-}
-$rangkad='';
-if ($hasil['d']>=6) {
-  $rangkad=chr(149).'  Model Rangka <b>Double Frame (Kremona)</b><br>';
-}
-$bahan='';
-$Finishing='';
-if ($hasil['bahan']>='Galvalume') {
-  $Finishing=chr(149).'  Finishing coating Enamel dengan suhu 800-900'.chr(176).' Celcius<br>';
-  $bahan=chr(149).'  Bahan terbuat dari plat besi SPCC SD 0,9 - 1 mm (Spek Enamel Grade)<br>';
-}else{
-  if ($hasil['d']>=1 ) {
-    $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 - 0,5 mm<br>';
-  }else{
-    $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 mm<br>';
+$q2 = "SELECT dkk.* FROM aki_dkk dkk WHERE 1=1 and MD5(dkk.noKK)='".$noKk."'";
+$rs2 = mysql_query($q2, $dbLink);
+
+//Spek
+while (  $hasil2 = mysql_fetch_array($rs2)) {
+  if ($hasil["jml"]==2) {
+    $pdf->Cell(15,5,'-',0,0,'R',0);
+    $tbl = '
+    <b>Pekerjaan '.($hasil2["nomer"]+1).' </b><br>';
+    $pdf->writeHTML($tbl);
+    $pdf->Ln(2);
   }
-  $Finishing=chr(149).'  Finishing <b>Cat PU</b> dengan 2 komponen pengecatan :<br><ul>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Epoxy<br>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Cat PU 2 Komponen </ul><br>';
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(1,5,'Jenis Pekerjaan',0,0,'L',0);
+    $pdf->Cell(40,5,':',0,0,'R',0);
+    $pdf->Cell(1,5,strtoupper($hasil2['kubah']),0,1,'L',0); 
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(12,5,'Bahan',0,0,'L',0);
+    $pdf->Cell(29,5,':',0,0,'R',0);
+    $pdf->Cell(23,5,$hasil2['bahan'],0,1,'L',0); 
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(2,5,'Ukuran',0,0,'L',0);
+    $pdf->Cell(39,5,':',0,0,'R',0);
+    $pdf->MultiCell(120,5,'Diameter '.$hasil2['d'].' m Tinggi '.$hasil2['t'].' m Luas '.$hasil2['luas'].' m'.chr(178),0,'B',0);
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(2,5,'Jumlah Kubah',0,0,'L',0);
+    $pdf->Cell(39,5,':',0,0,'R',0);
+    $pdf->Cell(24,5,$hasil2['jumlah'],0,1,'L',0); 
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(2,5,'Design Kubah',0,0,'L',0);
+    $pdf->Cell(39,5,':',0,0,'R',0);
+    $pdf->MultiCell(120,5,'Terlampir.',0,'B',0);
+    $pdf->Cell(20,5,'',0,0,'R',0);
+    $pdf->Cell(2,5,'Spesifikasi',0,0,'L',0);
+    $pdf->Cell(39,5,':',0,0,'R',0);
+    $pdf->Ln(3);
+    $pdf->SetMargins(30, 10, 10, true);
+    $pdf->MultiCell(120,5,'',0,'B',0);
+    $rangka='';
+    if ($hasil2['dt'] != 0){
+      $rangka = cekrangka($hasil2['dt']);
+    }else{
+      $rangka = cekrangka($hasil2['d']);
+    }
+    $rangkad='';
+    if ($hasil2['d']>=6) {
+      $rangkad=chr(149).'  Model Rangka <b>Double Frame (Kremona)</b><br>';
+    }
+    $bahan='';
+    $Finishing='';
+    if ($hasil2['bahan']>='Galvalume') {
+      $Finishing=chr(149).'  Finishing coating Enamel dengan suhu 800-900'.chr(176).' Celcius<br>';
+      $bahan=chr(149).'  Bahan terbuat dari plat besi SPCC SD 0,9 - 1 mm (Spek Enamel Grade)<br>';
+    }else{
+      if ($hasil2['d']>=1 ) {
+        $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 - 0,5 mm<br>';
+      }else{
+        $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 mm<br>';
+      }
+      $Finishing=chr(149).'  Finishing <b>Cat PU</b> dengan 2 komponen pengecatan :<br><ul>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Epoxy<br>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Cat PU 2 Komponen </ul><br>';
+    }
+
+    $plafon='';
+    if ($hasil2['plafon']==0) {
+      $plafon=chr(149).'  Plafon kalsiboard 3 mm motif <b>AWAN</b>.<br>'.chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
+    }else if($hasil2['plafon']==2){
+      $plafon=chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
+    }
+    $aksesoris='';
+    if ($hasil2['d']>=5 ){
+      $aksesoris=chr(149).'  Makara bahan galvalume bola full warna gold bentuk <b>Lafadz Allah</b><br>'.chr(149).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
+      if ($hasil2['d']>=6){
+        $lampu='';
+        if ($hasil2['d']>=15) {
+          $lampu='8';
+        }else{
+          $lampu='4';
+        }
+        $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
+      }
+    }else{
+      $aksesoris=chr(149).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
+    }
+    $tbl = 
+    chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
+    $pdf->writeHTML($tbl);
+    
+    if ($hasil["jml"]==2) {
+      $pdf->SetMargins(10, 10, 10, true);
+      $pdf->Ln(2);
+    }
+}
+if ($hasil["jml"]==2) {
+  $pdf->SetMargins(14, 10, 10, true);
+  if ($hasil['d']>=5 ){
+    $pdf->Ln(30);
+  }else{
+    $pdf->Ln(24);
+  }
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}else{
+  $pdf->SetMargins(10, 10, 10, true);
+  $pdf->Ln(15);
 }
 
-$plafon='';
-if ($hasil['plafon']==0) {
-  $plafon=chr(149).'  Plafon kalsiboard 3 mm motif <b>AWAN</b>.<br>'.chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
-}else if($hasil['plafon']==2){
-  $plafon=chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
-}
-$aksesoris='';
-if ($hasil['d']>=5 ){
-    $aksesoris=chr(149).'  Makara bahan galvalume bola full warna gold bentuk <b>Lafadz Allah</b><br>'.chr(149).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
-    if ($hasil['d']>=6){
-      $lampu='';
-      if ($hasil['d']>=15) {
-          $lampu='8';
-      }else{
-          $lampu='4';
-      }
-      $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
-    }
-}else{
-  $aksesoris=chr(149).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
-}
-$tbl = 
-chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>
-'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>
-'.$bahan.$Finishing.$plafon.$aksesoris;
-$pdf->writeHTML($tbl);
-$pdf->SetMargins(10, 10, 10, true);
-$pdf->Ln(15);
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(190,6,'PASAL 3',0,1,'C',0);
 $pdf->Cell(190,4, 'HARGA BORONGAN DAN CARA PEMBAYARAN',0,1,'C',0);
@@ -343,30 +383,32 @@ $tbl = '
 ';
 $pdf->writeHTML($tbl);
   
-$pdf->SetMargins(13, 10, 10, true);
-if ($hasil['d']>=5 ){
-  $pdf->Ln(12);
+if ($hasil["jml"]==2) {
+  $pdf->SetMargins(22, 10, 10, true);
+  $pdf->Ln(10);
 }else{
-  $pdf->Ln(28);
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(15);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetMargins(22, 10, 10, true);
+  $pdf->Ln(1);
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
 }
-
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
 
 $pdf->SetFont('helvetica', '', 11);
 $tbl = '
 Pembayaran dilakukan melalui rekening resmi sebagai Berikut: <br>
 ';
-$pdf->SetMargins(15, 10, 10, true);
+
 $pdf->writeHTML($tbl);
 $pdf->Ln(4);
 
@@ -374,43 +416,48 @@ $pdf->Ln(4);
 if ($hasil['project_pemerintah']==1) {
   $pdf->SetFont('helvetica', 'B', 11);
   $pdf->SetFillColor(244,176,131);
-  $pdf->Cell(65,8,'Nama Bank',1,0,'C',1);
-  $pdf->Cell(65,8,'Nama Akun',1,0,'C',1);
+  $pdf->Cell(60,8,'Nama Bank',1,0,'C',1);
+  $pdf->Cell(60,8,'Nama Akun',1,0,'C',1);
   $pdf->Cell(55,8,'No. Rekening',1,1,'C',1);
-  $pdf->Cell(65,6,'Bank Rakyat Indonesia (BRI)',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Rakyat Indonesia (BRI)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
+  $pdf->Cell(60,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
   $pdf->Cell(55,6,'0033 - 01 - 003664 - 30 - 5',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'Bank Central Asia (BCA)',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Central Asia (BCA)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
+  $pdf->Cell(60,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
   $pdf->Cell(55,6,'033 - 330 - 2508',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'Bank Mandiri',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Mandiri',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
+  $pdf->Cell(60,6,'PT. Anugerah Kubah Indonesia',1,0,'L',0);
   $pdf->Cell(55,6,'171 - 00 - 2558002 - 2',1,1,'L',0);
 }else{
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'BSI (BNI Syariah)',1,0,'L',0);
+  $pdf->SetFillColor(244,176,131);
+  $pdf->Cell(60,8,'Nama Bank',1,0,'C',1);
+  $pdf->Cell(60,8,'Nama Akun',1,0,'C',1);
+  $pdf->Cell(55,8,'No. Rekening',1,1,'C',1);
+  $pdf->SetFont('helvetica', 'B', 11);
+  $pdf->Cell(60,6,'BSI (BNI Syariah)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'Andik Nur Setiawan ',1,0,'L',0);
+  $pdf->Cell(60,6,'Andik Nur Setiawan',1,0,'L',0);
   $pdf->Cell(55,6,'11722 - 91744',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'Bank Mandiri',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Mandiri',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'Andik Nur Setiawan ',1,0,'L',0);
+  $pdf->Cell(60,6,'Andik Nur Setiawan ',1,0,'L',0);
   $pdf->Cell(55,6,'171 - 00 - 0743525 - 1',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'Bank Rakyat Indonesia (BRI)',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Rakyat Indonesia (BRI)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'Andik Nur Setiawan ',1,0,'L',0);
+  $pdf->Cell(60,6,'Andik Nur Setiawan ',1,0,'L',0);
   $pdf->Cell(55,6,'2289 - 01 - 000402 - 56 - 7',1,1,'L',0);
   $pdf->SetFont('helvetica', 'B', 11);
-  $pdf->Cell(65,6,'Bank Central Asia (BCA)',1,0,'L',0);
+  $pdf->Cell(60,6,'Bank Central Asia (BCA)',1,0,'L',0);
   $pdf->SetFont('helvetica', '', 11);
-  $pdf->Cell(65,6,'Andik Nur Setiawan ',1,0,'L',0);
+  $pdf->Cell(60,6,'Andik Nur Setiawan ',1,0,'L',0);
   $pdf->Cell(55,6,'033 - 245 - 9846 ',1,1,'L',0);
 }
 
@@ -434,7 +481,24 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(12,5,'',0,0,'R',0);
 $pdf->Cell(40,5,'Perjanjian ini telah dipenuhi.',0,0,'L',0);
 
-$pdf->Ln(15);
+if ($hasil['jml']==2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(40);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}else{
+  $pdf->Ln(15);
+}
+
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(188,6,'PASAL 5',0,1,'C',0);
 $pdf->Cell(188,4, 'JANGKA WAKTU PEKERJAAN',0,1,'C',0);
@@ -479,19 +543,24 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(12,5,'',0,0,'R',0);
 $pdf->Cell(40,5,'dan Hari Libur yang ditentukan oleh Perusahaan.',0,1,'L',0);
 
-$pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(48);
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
+if ($hasil['jml']==2) {
+  
+}else{
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(40);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
+
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(190,6,'PASAL 6',0,1,'C',0);
 $pdf->Cell(190,4, 'HAK DAN KEWAJIBAN PIHAK PERTAMA',0,1,'C',0);
@@ -515,6 +584,7 @@ $tbl = '
 Memberikan informasi kepada <b>Pihak Kedua</b> terkait perkembangan Pekerjaan.<br>
 ';
 $pdf->writeHTML($tbl);
+
 $pdf->Cell(20,5,'c. ',0,0,'R',0);
 $tbl = '
 Menyelesaikan Pekerjaan sesuai dengan spesifikasi yang tercantum dalam Pasal 2 <br>
@@ -573,6 +643,23 @@ Menyelesaikan administrasi kelengkapan pekerjaan seperti desain, motif, warna, d
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $pdf->Cell(40,5,'sebagainya setelah dilakukan pembayaran uang panjar atau uang termin I.',0,1,'L',0);
+
+if ($hasil['jml']==2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(10);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
+
 $pdf->Cell(20,5,'b. ',0,0,'R',0);
 $tbl = '
 Membuat dudukan kubah dan menginformasikan penyelesaian dudukan kubah kepada <br>';
@@ -585,6 +672,7 @@ $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
 arahan dari <b>Pihak Pertama</b> untuk pembuatan dudukan kubah.<br>';
 $pdf->writeHTML($tbl);
+
 $pdf->Cell(20,5,'c. ',0,0,'R',0);
 $tbl = '
 Memberikan ukuran lubang dalam dudukan disertai dengan foto/gambar dan ukurannya <br>';
@@ -643,20 +731,24 @@ $tbl = '
 pemasangan pulang dengan menandatangani Berita Acara yang disediakan <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 
-$pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(18);
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
+if ($hasil['jml']==2) {
+  
+}else{
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(18);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
 
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
 $pdf->SetMargins(12, 10, 10, true);
 $pdf->Ln(2);
 $pdf->Cell(20,5,'2. ',0,0,'R',0);
@@ -744,6 +836,23 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(27,5,'',0,0,'R',0);
 $tbl = 'akan diberikan berdasarkan hak prerogative <b>Pihak Pertama</b>. <br>';
 $pdf->writeHTML($tbl);
+
+if ($hasil['jml']==2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(10);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
+
 $pdf->Cell(19,5,'3.',0,0,'R',0);
 $tbl = 'Garansi tidak berlaku apabila penyebab kerusakan adalah karena keadaan memaksa <i>(force<br>';
 $pdf->writeHTML($tbl);
@@ -805,20 +914,23 @@ $tbl = '
 siap pembongkaran muatan);<br>';
 $pdf->writeHTML($tbl);
 
-$pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(18);
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
+if ($hasil['jml']!=2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(10);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
 
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
+
 $pdf->Cell(25,5,'d.',0,0,'R',0);
 $tbl = '
 Pemberontakan, kerusuhan massal, huru hara, perebutan kekuasaan, gangguan sosial, <br>';
@@ -917,7 +1029,24 @@ $tbl = '
 yang telah dibayarkan akan dikembalikan kepada <b>Pihak Kedua</b>. <br>';
 $pdf->writeHTML($tbl);
 
-$pdf->Ln(8);
+if ($hasil['jml']==2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(18);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}else{
+  $pdf->Ln(8);
+}
+
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(190,6,'PASAL 11',0,1,'C',0);
 $pdf->Cell(190,4, 'RESIKO - RESIKO',0,1,'C',0);
@@ -988,20 +1117,21 @@ $tbl = '
 pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh <b>Pihak Pertama</b><br>';
 $pdf->writeHTML($tbl);
 
-$pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(3);
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
-
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
+if ($hasil['jml']!=2) {
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(2);
+  $pdf->SetTextColor(130);
+  $pdf->SetDrawColor(130);
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+  $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+  $pdf->Cell(135,2,'',0,0,'L',0);
+  $pdf->Cell(20,10,'',1,0,'C',0);
+  $pdf->Cell(20,10,'',1,1,'C',0);
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+}
 
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(190,6,'PASAL 14',0,1,'C',0);
@@ -1062,9 +1192,12 @@ $pdf->Cell(2,5,'',0,0,'L',0);
 $pdf->Cell(55,5,'Direktur PT  Anugerah Kubah Indonesia',0,0,'L',0);
 $pdf->Cell(130,5,'',0,0,'R',0);
 
-
 $pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(147);
+if ($hasil['jml']==2) {
+  $pdf->Ln(35);
+}else{
+  $pdf->Ln(147);
+}
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(135,2,'',0,0,'L',0);
@@ -1090,49 +1223,51 @@ $pdf->SetFillColor(174,170,170);
 $pdf->Cell(50,8,'Warna',1,0,'C',1);
 $pdf->Cell(50,8,'Kode',1,1,'C',1); 
 $pdf->SetFont('helvetica', '', 14);
-if ($hasil['color1'] !=' ') {
-  $pdf->Cell(45,2,'',0,0,'L',0);
-  $clr = explode(" ",$hasil['color1']);
-  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
-  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
-  if ($hasil['color2'] =='') {
+$q2 = "SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
+$rs2 = mysql_query($q2, $dbLink);
+while (  $hasil1 = mysql_fetch_array($rs2)) {
+  if ($hasil1['color1'] !='-') {
+    $pdf->Cell(45,2,'',0,0,'L',0);
+    $pdf->Cell(50,10,$hasil1['color1'] ,1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor1'] ,1,1,'C',0);
+    if ($hasil1['color2'] =='-' && $hasil['jml']!=2) {
       $pdf->Ln(40);
+    }
   }
-}
-if ($hasil['color2'] !=' ') {
-  $pdf->Cell(45,2,'',0,0,'L',0);
-  $clr = explode(" ",$hasil['color2']);
-  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
-  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
-  if ($hasil['color3'] =='') {
+  if ($hasil1['color2'] !='-') {
+    $pdf->Cell(45,2,'',0,0,'L',0);
+    $pdf->Cell(50,10,$hasil1['color2'],1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor2'],1,1,'C',0);
+    if ($hasil1['color3'] =='-') {
       $pdf->Ln(30);
+    }
   }
-}
-if ($hasil['color3'] !=' ') {
-  $pdf->Cell(45,2,'',0,0,'L',0);
-  $clr = explode(" ",$hasil['color3']);
-  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
-  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
-  if ($hasil['color4'] =='') {
+  if ($hasil1['color3'] !='-') {
+    $pdf->Cell(45,2,'',0,0,'L',0);
+    $pdf->Cell(50,10,$hasil1['color3'],1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor3'],1,1,'C',0);
+    if ($hasil1['color4'] =='-') {
       $pdf->Ln(20);
+    }
   }
-}
-if ($hasil['color4'] !=' ') {
-  $pdf->Cell(45,2,'',0,0,'L',0);
-  $clr = explode(" ",$hasil['color4']);
-  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
-  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
-  if ($hasil['color5'] =='') {
+  if ($hasil1['color4'] !='-') {
+    $pdf->Cell(45,2,'',0,0,'L',0);
+    $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
+    if ($hasil1['color5'] =='-') {
       $pdf->Ln(10);
+    }
   }
-}
-if ($hasil['color5'] !=' ') {
-  $pdf->Cell(45,2,'',0,0,'L',0);
-  $clr = explode(" ",$hasil['color5']);
-  $pdf->Cell(50,10,$clr[0],1,0,'C',0);
-  $pdf->Cell(50,10,$clr[1],1,1,'C',0);
+  if ($hasil1['color5'] !='-') {
+    $pdf->Cell(45,2,'',0,0,'L',0);
+    $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
+  }
 }
 
+if ($hasil['jml']==2) {
+  $pdf->Ln(30);
+}
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(20);
 $pdf->SetFont('helvetica', '', 11);
@@ -1163,10 +1298,7 @@ $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
 $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
 $pdf->Cell(135,2,'',0,0,'L',0);
 $pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);;
+$pdf->Cell(20,10,'',1,1,'C',0);
 
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>
-
-
-
