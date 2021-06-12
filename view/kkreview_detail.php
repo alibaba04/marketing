@@ -80,10 +80,13 @@ $q.= "FROM aki_kk kk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_us
 $q.= "WHERE 1=1 and MD5(kk.noKk)='" . $noKk."'";
 $q.= " ORDER BY kk.noKk desc ";
 $txtnokk='';
+
 $rsTemp = mysql_query($q, $dbLink);
 if ($dataSph = mysql_fetch_array($rsTemp)) {
 echo "<input type='hidden' name='txtnoKk' value='" . $dataSph["noKk"] . "'>";
 $txtnokk=$dataSph["noKk"];
+$filekubah=$dataSph["filekubah"];
+$filekaligrafi=$dataSph["filekaligrafi"];
 }
 
 if ($_GET["mode"] == "addNote") {
@@ -251,6 +254,7 @@ if ($_GET["mode"] == "addNote") {
             echo chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>
             '.$bahan.$Finishing.$plafon.$aksesoris; 
             $i++;
+            echo $dataSph["filekubah"];
         }
         ?><br>
     </div>
@@ -258,8 +262,10 @@ if ($_GET["mode"] == "addNote") {
     <div class="col-sm-6 invoice-col">
       <p class="lead">Desain </p>
       <center>
-        <img src="./dist/img/madinahtanpaplafon.jpg" alt="First slide" width="300" height="200">
-        <img src="./dist/img/madinahtanpaplafon.jpg" alt="First slide" width="300" height="200">
+        <?php 
+          echo '<img src="../uploads/'.$filekubah.'" alt="First slide" width="300" height="200">'; 
+          echo '<img src="../uploads/'.$filekaligrafi.'" alt="First slide" width="300" height="200">'; 
+        ?>
       </center>
     </div>
     <div class="col-sm-6 invoice-col">

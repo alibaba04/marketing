@@ -355,7 +355,7 @@ return true;
     </h1>
 </section>
 
-<form action="index2.php?page=view/kk_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off">
+<form action="index2.php?page=view/kk_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off" enctype="multipart/form-data"> 
     <section class="content">
         <!-- Main row -->
         <div class="row">
