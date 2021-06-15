@@ -185,6 +185,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             <tr>
                                 <th width="3%">Action</th>
                                 <th style="width: 20%">No KK</th>
+                                <th style="width: 3%">Approve</th>
                                 <th style="width: 10%">Date</th>
                                 <th style="width: 10%">Client</th>
                                 <th style="width: 20%">Address</th>
@@ -235,9 +236,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($query_data["approve"]==1) {
                                     echo "<td><a onclick=\"if(confirm('Download data KK ?')){location.href='pdf/pdf_kk.php?&noKK=" . md5($query_data["noKK"]) . "'}\" style='cursor:pointer;'>
                                     <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";
+                                    echo "<td><center><button class='btn btn-success dropdown-toggle' type='button' data-toggle='dropdown'><i class='fa fa-fw fa-check-square-o'></i></button></center></td>";
                                 }else{
                                     echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kkreview_detail&mode=addNote&noKK=" . md5($query_data["noKK"])."'>
                                     <button type='button' class='btn btn-block btn-info'>".($query_data["noKk"])."</button></a></td>";
+                                    echo "<td><center></center></td>";
                                 }
                                 echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td>" . ($query_data["nama_cust"]) . "</td>";

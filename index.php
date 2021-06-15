@@ -89,13 +89,43 @@ require_once('./function/fungsi_formatdate.php');
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu">
+                            <li class="dropdown messages-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <!--            tampilkan nama user di   -->
-                                </a>
+                                  <i class="fa fa-envelope-o"></i>
+                            <?php
+                                $q3= "SELECT count(id) as jml FROM `aki_report` WHERE ket like '% read by ".$_SESSION["my"]->privilege."=1%'";
+                                $rsTemp3 = mysql_query($q3, $dbLink);
+                                if ($dataSph3 = mysql_fetch_array($rsTemp3)) {
+                                    echo '<span class="label label-success">'.$dataSph3['jml'].'</span></a>';
+                                }
+                            ?>
+                              <ul class="dropdown-menu">
+                                  <li class="header">You have new messages</li>
+                                  <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                      
+                                          
+                                        <?php
+                                            $q= "SELECT * FROM `aki_report` WHERE ket like '%read by ".$_SESSION["my"]->privilege."=1%'";
+                                            $rsTemp = mysql_query($q, $dbLink);
+                                            while ($dataSph = mysql_fetch_array($rsTemp)) {
+                                                $ket = explode(',', $dataSph['ket']);
+                                                $nokk = explode('=', $ket[1]);
+                                                $ket = explode('=', $ket[2]);
+                                                echo '<li><a href="'.$_SERVER['PHP_SELF'].'?page=view/kkreview_detail&mode=addNote&noKK='.md5($nokk[1]).'"><div class="pull-left"><img src="dist/img/avatar3.png" class="img-circle" alt="User Image"></div>';
+                                                echo '<h4>'.$dataSph['kodeUser'].'</h4>';
+                                               
+                                                echo '<p>No KK : '.$nokk[1].'<br>'.$ket[1].'</p></a></li>';
+                                            }
+                                        ?>
+                                        
+                                    </ul>
+                                   </li>
+                              </ul>
                             </li>
-                            <!-- Control Sidebar Toggle Button -->
                             <li>
+                            <!-- Control Sidebar Toggle Button -->
                                 <a href="logout.php?page=login_detail&eventCode=20">Logout&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true" title="Logout"></i></a>
                             </li>
                         </ul>

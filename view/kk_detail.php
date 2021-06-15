@@ -102,7 +102,10 @@ $(document).ready(function () {
         }else{
             $("#mySph").modal({backdrop: 'static'});
             $("#createKk").click(function(){ 
-                location.href=link+"&noSph="+ $("#snosph").val();
+                if ($("#snosph").val()!='') {
+                    $("#snosph").focus();
+                    location.href=link+"&noSph="+ $("#snosph").val();
+                }
             });
         }
     }
@@ -113,6 +116,37 @@ $(document).ready(function () {
             $("#txtppemerintah").val(0);
         }
     });
+    $("#color1").click(function(){ 
+        $("#color1").val('');
+    });
+    $("#color2").click(function(){ 
+        $("#color2").val('');
+    });
+    $("#color3").click(function(){ 
+        $("#color3").val('');
+    });
+    $("#color4").click(function(){ 
+        $("#color4").val('');
+    });
+    $("#color5").click(function(){ 
+        $("#color5").val('');
+    });
+    $("#kcolor1").click(function(){ 
+        $("#kcolor1").val('');
+    });
+    $("#kcolor2").click(function(){ 
+        $("#kcolor2").val('');
+    });
+    $("#kcolor3").click(function(){ 
+        $("#kcolor3").val('');
+    });
+    $("#kcolor4").click(function(){ 
+        $("#kcolor4").val('');
+    });
+    $("#kcolor5").click(function(){ 
+        $("#kcolor5").val('');
+    });
+
 });
 function cmodal($param) {
     $("#myModal").modal({backdrop: 'static'});
@@ -149,6 +183,14 @@ function cmodal($param) {
         $("#myModal").modal('hide');
     });
 }
+function chkadddetail(tcounter) {
+    if ($("#chkAddJurnal_"+tcounter).val()==1) {
+        $("#chkAddJurnal_"+tcounter).val(0);
+    }else{
+        $("#chkAddJurnal_"+tcounter).val(1);
+    }
+}
+
 function omodal() {
     $("#myNote").modal({backdrop: 'static'});
     var link = window.location.href;
@@ -190,10 +232,12 @@ function addJurnal(){
 
     var ttable = document.getElementById("kendali");
     var trow = document.createElement("TR");
+    trow.setAttribute("id", "trid_"+tcounter);
 
     //Kolom 1 Checkbox
     var td = document.createElement("TD");
     td.setAttribute("align","center");
+    td.setAttribute('onclick','chkadddetail('+tcounter+');');
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkAddJurnal_'+tcounter+'" id="chkAddJurnal_'+tcounter+'" value="1" checked /></div>';
     trow.appendChild(td);
@@ -216,6 +260,12 @@ function addJurnal(){
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><select class="form-control" name="txtBahan_'+tcounter+'" id="txtBahan_'+tcounter+'"><option value="Enamel">Enamel</option><option value="Galvalume">Galvalume</option><option value="Titanium">Titanium</option></select></div>';
+    trow.appendChild(td);
+
+    var td = document.createElement("TD");
+    td.setAttribute("align","left");
+    td.style.verticalAlign = 'top';
+    td.innerHTML+='<div class="form-group"><select class="form-control" name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'"><option value="0">Full</option><option value="1">Tanpa Plafon</option><option value="2">Waterproof</option></select></div>';
     trow.appendChild(td);
 
     //Kolom 5 qty
@@ -641,7 +691,7 @@ return true;
                                         $kel = '';
                                         echo '<div><tr id="trid_'.$iJurnal.'" >';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
+                                        <input onclick="chkadddetail('.$iJurnal.')" type="checkbox" class="minimal" checked name="chkAddJurnal_' . $iJurnal . '" id="chkAddJurnal_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <select class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '">';
                                         if ($DetilJurnal["kubah"]=='Mahrab') {

@@ -16,7 +16,7 @@ if ($hakUser < 10) {
 }
 
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
-if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
+if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 
     require_once("./class/c_kkreview.php");
     $tmpkk = new c_kkreview;
@@ -27,11 +27,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     }
 
 //Jika Mode Approve
-    if ($_POST["txtMode"] == "approve") {
+    if ($hakUser == 90) {
+      if ($_POST["txtMode"] == "approve") {
         $pesan = $tmpkk->approve($_POST);
+      }
     }
-
-
+    
 //Seharusnya semua transaksi Add dan Edit Sukses karena data sudah tervalidasi dengan javascript di form detail.
 //Jika masih ada masalah, berarti ada exception/masalah yang belum teridentifikasi dan harus segera diperbaiki!
     if (strtoupper(substr($pesan, 0, 5)) == "GAGAL") {
@@ -72,6 +73,7 @@ function accmodal() {
 <?php
 if (isset($_GET["noKK"])){
     $noKk = secureParam($_GET["noKK"], $dbLink);
+    
 }else{
     $noKk = "";
 }
@@ -263,13 +265,52 @@ if ($_GET["mode"] == "addNote") {
       <p class="lead">Desain </p>
       <center>
         <?php 
+        if ($filekubah!='') {
           echo '<img src="../uploads/'.$filekubah.'" alt="First slide" width="300" height="200">'; 
+        }
+        if ($filekubah!='') {
           echo '<img src="../uploads/'.$filekaligrafi.'" alt="First slide" width="300" height="200">'; 
+        }
         ?>
       </center>
     </div>
     <div class="col-sm-6 invoice-col">
       <p class="lead"> </p>
+        <!-- <table class="table">
+            <tr>
+              <th =><center>Warna</center></th>
+              <th ><center>Kode</center></th>
+            </tr>
+            
+              <?php 
+                  $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
+                  $rsTemp2 = mysql_query($q2, $dbLink);
+                  $i=1;
+                  while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
+                    if ($dataSph2['color1']!='-') {
+                      echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
+                      echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
+                    }
+                    if ($dataSph2['color2']!='-') {
+                      echo '<tr><td style="text-align: center;">'.$dataSph2['color2'];
+                      echo '<td style="text-align: center;">'.$dataSph2['kcolor2'].'</tr>';
+                    }
+                    if ($dataSph2['color3']!='-') {
+                      echo '<tr><td style="text-align: center;">'.$dataSph2['color3'];
+                      echo '<td style="text-align: center;">'.$dataSph2['kcolor3'].'</tr>';
+                    }
+                    if ($dataSph2['color4']!='-') {
+                      echo '<tr><td style="text-align: center;">'.$dataSph2['color4'];
+                      echo '<td style="text-align: center;">'.$dataSph2['kcolor4'].'</tr>';
+                    }
+                    if ($dataSph2['color5']!='-') {
+                      echo '<tr><td style="text-align: center;">'.$dataSph2['color5'];
+                      echo '<td style="text-align: center;">'.$dataSph2['kcolor5'].'</tr>';
+                    }
+                  }
+              ?>
+            
+        </table> -->
         <table class="table">
             <tr>
               <th colspan="2"><center>Masa Produksi</center></th>
@@ -282,6 +323,7 @@ if ($_GET["mode"] == "addNote") {
               <td >Hari</td>
             </tr>
         </table>
+        
     </div>
     <!-- /.col -->
   </div>
@@ -373,19 +415,26 @@ if ($_GET["mode"] == "addNote") {
                 <?php
                 $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'KK Note, nokk=%".$txtnokk."%'";
                 $rsTemp3 = mysql_query($q3, $dbLink);
+                $txtket = '';
                 while ($dataSph3 = mysql_fetch_array($rsTemp3)) {
                   $ket = explode("=",$dataSph3["ket"]);
+                  $ket = explode(",",$ket[2]);
+                  $txtket = $dataSph3["ket"];
                   if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
                     echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-left">'.$dataSph3["datetime"].'</span></div>';
-                    echo '<img src="dist/img/avatar3.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[2].'</div></div>';
+                    echo '<img src="dist/img/avatar3.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }else{
                     echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-right">'.$dataSph3["datetime"].'</span></div>';
-                    echo '<img src="dist/img/avatar5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[2].'</div></div>';
+                    echo '<img src="dist/img/avatar5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }
-                  
                 }
+                date_default_timezone_set("Asia/Jakarta");
+                $tgl = date("Y-m-d H:i:s");
+                $txtket = explode($_SESSION["my"]->privilege."=",$txtket);
+                $q11 = "UPDATE `aki_report` SET `datetime`='".$tgl."',`ket`='".$txtket[0].$_SESSION["my"]->privilege."=0' WHERE ket like '%".$txtnokk."%read by ".$_SESSION["my"]->privilege."=1%'";
+                $result=mysql_query($q11 , $dbLink);
                 ?>
               </div>
               <!--/.direct-chat-messages-->

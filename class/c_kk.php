@@ -63,7 +63,7 @@ class c_kk
 			$nomer=0;
 			$files = $_FILES;
 			for ($j = 0; $j < $jumData ; $j++){
-				//if (!empty($params['chkAddJurnal_'.$j])){
+				if (($params['chkAddJurnal_'.$j])!=0){
 					$color1 = secureParam($params["color1_". $j],$dbLink);
 					$color2 = secureParam($params["color2_". $j], $dbLink);
 					$color3 = secureParam($params["color3_". $j ], $dbLink);
@@ -106,10 +106,10 @@ class c_kk
 						throw new Exception('Gagal tambah data KK.');
 
 					$nomer++;
-				//}
+				}
 			}
 				date_default_timezone_set("Asia/Jakarta");
-				$tgl = date("Y-m-d h:i:sa");
+				$tgl = date("Y-m-d H:i:s");
 				$ket = "KK Note, nokk=".$nokk.", note=".$treport;
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
@@ -172,6 +172,7 @@ class c_kk
         $kota = substr($alamat2,3, 6);
         $pembuat = $_SESSION["my"]->id;
 		$q3='';
+		$qimg='';
 		try
 		{
 			$result = @mysql_query('SET AUTOCOMMIT=0', $dbLink);
@@ -222,8 +223,8 @@ class c_kk
 			$jumData = $params["jumAddJurnal"];
 			$nomer =0;
 			for ($j = 0; $j < $jumData ; $j++){
-				if (!empty($params['chkEdit_'.$j])){
-					$idKk = secureParam($params["chkEdit_" . $j], $dbLink);
+				if (!empty($params['chkAddJurnal_'.$j])){
+					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
                     $model = secureParam($params["txtModel_". $j],$dbLink);
 					$jkubah = secureParam($params["txtKubah_". $j],$dbLink);
 					$diameter = secureParam($params["txtD_". $j],$dbLink);
@@ -238,7 +239,7 @@ class c_kk
                     $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
 					$ppn = secureParam($params["ppn_" . $j], $dbLink);
 					
-                    $qimg='';
+                    
                     if ($nameimg[0]!=''){
                     	$qimg=",`filekubah`='".$nameimg[0]."',`filekaligrafi`='".$nameimg[1]."'";
                     }
@@ -253,7 +254,7 @@ class c_kk
 				}
 			}
 			date_default_timezone_set("Asia/Jakarta");
-			$tgl = date("Y-m-d h:i:sa");
+			$tgl = date("Y-m-d H:i:s");
 			$ket = "`nomer`=".$params["txtnoKk"]."  -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";

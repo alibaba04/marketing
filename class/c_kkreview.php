@@ -24,7 +24,13 @@ class c_kkreview
 			}
 				date_default_timezone_set("Asia/Jakarta");
 				$tgl = date("Y-m-d h:i:sa");
-				$ket = "KK Note, nokk=".$nokk.", note=".$treport;
+				$readby = '';
+				if ($_SESSION["my"]->privilege == 'ADMIN') {
+					$readby = 'kpenjualan';
+				}else{
+					$readby = 'ADMIN';
+				}
+				$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by ".$readby."=1";
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))

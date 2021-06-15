@@ -178,7 +178,7 @@ class c_sph
 				}
 			}
 			date_default_timezone_set("Asia/Jakarta");
-			$tgl = date("Y-m-d h:i:sa");
+			$tgl = date("Y-m-d H:i:s");
 			$ket = "`nomer`=".$params["txtnoSph"]."  -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
@@ -260,7 +260,7 @@ class c_sph
 			$tempBahan  = $temp['bahan'];
 
 			date_default_timezone_set("Asia/Jakarta");
-			$tgl = date("Y-m-d h:i:sa");
+			$tgl = date("Y-m-d H:i:s");
 			$ket = "`nomer`=".$noSph." -has delete, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembatal."','".$tgl."','".$ket."');";
