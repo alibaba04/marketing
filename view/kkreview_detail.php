@@ -62,13 +62,7 @@ function accmodal() {
 </SCRIPT>
 <!-- Main content -->
 <!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Review KK
-    <small>#007612</small>
-  </h1>
-  
-</section>
+
 <form action="index2.php?page=view/kkreview_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off">
 <?php
 if (isset($_GET["noKK"])){
@@ -95,6 +89,13 @@ if ($_GET["mode"] == "addNote") {
   echo "<input type='hidden' name='txtMode' id='txtMode' value='addNote'>";
 }
 ?>
+<section class="content-header">
+  <h1>
+    Preview KK
+    <small>Date: <?php  echo $dataSph["tanggal"]; ?></small>
+  </h1>
+  
+</section>
 <!-- Main content -->
 <section class="invoice">
   <!-- title row -->
@@ -103,7 +104,6 @@ if ($_GET["mode"] == "addNote") {
       <h2 class="page-header">
         <i class="fa fa-globe"></i> <?php  echo $dataSph["noKk"]; ?>
         <small>No SPH: <?php  echo $dataSph["noSph"]; ?></small>
-        <small class="pull-right">Date: <?php  echo $dataSph["tanggal"]; ?></small>
           <input type="hidden" name="txtNote" id="txtNote" class="form-control" value="" placeholder="Empty" >
       </h2>
     </div>
