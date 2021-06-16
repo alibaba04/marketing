@@ -268,7 +268,7 @@ if ($_GET["mode"] == "addNote") {
         if ($filekubah!='') {
           echo '<img src="../uploads/'.$filekubah.'" alt="First slide" width="300" height="200">'; 
         }
-        if ($filekubah!='') {
+        if ($filekaligrafi!='') {
           echo '<img src="../uploads/'.$filekaligrafi.'" alt="First slide" width="300" height="200">'; 
         }
         ?>
