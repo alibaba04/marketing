@@ -45,6 +45,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 ?>
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
+$(document).ready(function () {
+    $("#myNoteAcc").modal({backdrop: 'static'});
+});
 function omodal() {
   $("#myNoteAcc").modal({backdrop: 'static'});
     $('#btnSend').click(function(){
