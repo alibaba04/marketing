@@ -452,12 +452,13 @@ return true;
                             if ($dataSph = mysql_fetch_array($rsTemp)) {
                                 echo "<input type='hidden' name='noSph' value='" . $dataSph["noSph"] . "'>";
                             } 
+                            $noKk = "";
                             $q = "SELECT * FROM aki_kk where idKk=( SELECT max(idKk) FROM aki_kk where aktif='1')";
                             $rsTemp = mysql_query($q, $dbLink);
                             $tglTransaksi = date("Y-m-d");
                             if ($kode_ = mysql_fetch_array($rsTemp)) {
                                 $urut = "";
-                                $noKk = "";
+                                
                                 $tglTr = substr($tglTransaksi, 0,4);
                                 $bulan = bulanRomawi(substr($tglTransaksi,5,2));
                                 if ($kode_['noKk'] != ''){
