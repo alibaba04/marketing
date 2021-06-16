@@ -423,11 +423,11 @@ if ($_GET["mode"] == "addNote") {
                   if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
                     echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-left">'.$dataSph3["datetime"].'</span></div>';
-                    echo '<img src="dist/img/avatar3.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
+                    echo '<img src="dist/img/'.$_SESSION["my"]->avt.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }else{
                     echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-right">'.$dataSph3["datetime"].'</span></div>';
-                    echo '<img src="dist/img/avatar5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
+                    echo '<img src="dist/img/avt5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }
                 }
                 date_default_timezone_set("Asia/Jakarta");

@@ -458,7 +458,6 @@ return true;
                             $tglTransaksi = date("Y-m-d");
                             if ($kode_ = mysql_fetch_array($rsTemp)) {
                                 $urut = "";
-                                
                                 $tglTr = substr($tglTransaksi, 0,4);
                                 $bulan = bulanRomawi(substr($tglTransaksi,5,2));
                                 if ($kode_['noKk'] != ''){
@@ -520,7 +519,7 @@ return true;
                                 </select>
                             </div>
                             <div class="col-lg-10" style="padding-right: 0px;padding-left: 5px;">
-                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtNoid" id="txtNoid" class="form-control" value="<?php  if($_GET['mode']=='edit'){echo $dataKk["no_id"]; }?>"></div>
+                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="txtNoid" id="txtNoid" class="form-control" value="<?php  if($_GET['mode']=='edit'){echo $dataKk["no_id"]; }?>"></div>
                         </div>
                         <label class="control-label" for="txtTglTransaksi">&nbsp;&nbsp;</label>
                         <div class="form-group" >

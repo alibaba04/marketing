@@ -113,7 +113,7 @@ require_once('./function/fungsi_formatdate.php');
                                                 $ket = explode(',', $dataSph['ket']);
                                                 $nokk = explode('=', $ket[1]);
                                                 $ket = explode('=', $ket[2]);
-                                                echo '<li><a href="'.$_SERVER['PHP_SELF'].'?page=view/kkreview_detail&mode=addNote&noKK='.md5($nokk[1]).'"><div class="pull-left"><img src="dist/img/avatar3.png" class="img-circle" alt="User Image"></div>';
+                                                echo '<li><a href="'.$_SERVER['PHP_SELF'].'?page=view/kkreview_detail&mode=addNote&noKK='.md5($nokk[1]).'"><div class="pull-left"><img src="dist/img/avt04.png" class="img-circle" alt="User Image"></div>';
                                                 echo '<h4>'.$dataSph['kodeUser'].'</h4>';
                                                
                                                 echo '<p>No KK : '.$nokk[1].'<br>'.$ket[1].'</p></a></li>';
@@ -156,7 +156,7 @@ require_once('./function/fungsi_formatdate.php');
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="dist/img/avatar5.png" class="img-circle" alt="User Image">
+                            <?php echo '<img src="dist/img/'.$_SESSION["my"]->avt.'" class="img-circle" alt="User Image">'; ?>
                         </div>
                         <div class="pull-left info">
                             <p style="font-size: 17px;"><?php echo $_SESSION["my"]->name; ?></p>
