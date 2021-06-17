@@ -259,7 +259,6 @@ if ($_GET["mode"] == "addNote") {
             echo chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>
             '.$bahan.$Finishing.$plafon.$aksesoris; 
             $i++;
-            echo $dataSph["filekubah"];
         }
         ?><br>
     </div>
@@ -483,10 +482,10 @@ if ($_GET["mode"] == "addNote") {
     <div class="col-xs-12">
       <?php 
         if ($hakUser > 60) {
-          echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-credit-card"></i>Approve KK</button>';
+          echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-thumbs-up"></i> Approve KK</button>';
         }
       ?>
-      <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-credit-card" ></i> Note
+      <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-pencil-square-o" ></i> Note
       </button>
     </div>
   </div>
