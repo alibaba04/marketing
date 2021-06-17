@@ -422,13 +422,14 @@ if ($_GET["mode"] == "addNote") {
                   $ket = explode("=",$dataSph3["ket"]);
                   $ket = explode(",",$ket[2]);
                   $txtket = $dataSph3["ket"];
+                  $date=date_create($dataSph3["datetime"]);
                   if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
                     echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
-                    echo '</span><span class="direct-chat-timestamp pull-left">'.$dataSph3["datetime"].'</span></div>';
+                    echo '</span><span class="direct-chat-timestamp pull-left">'.date_format($date,"H:i d-m-Y").'</span></div>';
                     echo '<img src="dist/img/'.$_SESSION["my"]->avt.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }else{
                     echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
-                    echo '</span><span class="direct-chat-timestamp pull-right">'.$dataSph3["datetime"].'</span></div>';
+                    echo '</span><span class="direct-chat-timestamp pull-right">'.date_format($date,"H:i d-m-Y").'</span></div>';
                     echo '<img src="dist/img/avt5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }
                 }
