@@ -38,7 +38,7 @@ Sehubungan dengan pembangunan Masjid, Kami selaku kontraktor Kubah Masjid mengaj
 ';
 $pdf->writeHTML($tbl);
 $pdf->SetFont('helvetica', '', 11); 
-$q2 = "SELECT ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
+$q2 = "SELECT ds.gold,ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
 $rs2 = mysql_query($q2, $dbLink);
 $nourut = 1;
 $rincian = '';
@@ -138,17 +138,47 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     }
     $pdf->Cell(8,6,'','LR',0,'C',0);
     $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(22,6,'   ~ Finishing ',0,0,'L',0);
+    $pdf->Cell(22,6,'   ~ Finishing ','L',0,'L',0);
     $pdf->SetFont('helvetica', 'B', 11);
     $pdf->Cell(15,6,' Cat PU ',0,0,'L',0);
     $pdf->SetFont('helvetica', '', 11);
-    $pdf->Cell(106,6,'dengan 2 komponen pengecatan :','R',1,'L',0);
+    $gold='';
+    $gold1='';
+    if ($hasil['gold']==1 ) {
+        $gold = '4';
+        $gold1=' Primer';
+    }else{
+        $gold = '2';
+    }
+    $pdf->Cell(106,6,'dengan '.$gold.' komponen pengecatan :','R',1,'L',0);
     $pdf->Cell(8,6,'2.','LR',0,'C',0);
     $pdf->Cell(32,6,'Atap Kubah','LR',0,'C',0);
-    $pdf->Cell(143,6,'         - Epoxy','LR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'         - Cat PU 2 Komponen','LR',1,'L',0);
+    $pdf->Cell(143,6,'         - Epoxy'.$gold1,'LR',1,'L',0);
+    
+    if ($hasil['gold']==1 ) {
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(55,6,'         - Cat Dasar warna kuning',0,0,'L',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(88,6,'Solid PU','R',1,'LR',0);
+        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(54,6,'         - Cat Dasar warna pokok','L',0,'L',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(89,6,'Xiralic Gold','R',1,'LR',0);
+        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(57,6,'         - Pelapis anti gores / Clear','L',0,'L',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(86,6,'MS PU','R',1,'LR',0);
+        $pdf->SetFont('helvetica', '', 11);
+    }else{
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'         - Cat PU 2 Komponen','LR',1,'L',0);
+    }
     $pdf->Cell(8,6,'','LR',0,'C',0);
     $pdf->Cell(32,6,'','LR',0,'C',0);
     $pdf->Cell(143,6,'   ~ Garansi warna dan konstruksi 5 tahun, bisa di cat ulang','LR',1,'L',0);

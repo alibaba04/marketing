@@ -282,6 +282,7 @@ $(document).ready(function () {
         var h2 = $("#idharga2").val();
         var h3 = $("#idharga3").val();
         var chkEnGa = '';
+        var gold = '0';
         if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
         }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').is(":checked")){
@@ -298,6 +299,10 @@ $(document).ready(function () {
             chkEnGa = '3';
         }else{
             chkEnGa = '0';
+        }
+
+        if ($('#chkGold').is(":checked")){
+            gold = '1';
         }
 
         tcounter++;
@@ -328,6 +333,7 @@ $(document).ready(function () {
             }
             $("#txtKel_"+$('#validEdit').val()).val($('#cbokelengkapan').val());
             $("#chkEnGa_"+$('#validEdit').val()).val(chkEnGa);
+            $("#chkGold_"+$('#validEdit').val()).val(gold);
         }else{
 
             var ttable = document.getElementById("kendali");
@@ -418,7 +424,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="chkGold_'+tcounter+'" id="chkGold_'+tcounter+'" class="form-control" type="hidden" value="'+gold+'"></div>';
 trow.appendChild(td);
 //Kolom 12 h3
 var td = document.createElement("TD");
@@ -673,6 +679,32 @@ function validasiForm(form)
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
+            <select name="cboAffiliate" id="cboAffiliate" class="form-control select2">
+                <?php
+                $selected = "";
+                $n=$dataSph["affiliate"];
+                if ($_GET['mode'] == 'edit') {
+                    echo '<option value="'.$n.'">'.$n.'</option>';
+                }else{
+                    echo '<option value="">Affiliate</option>';
+                }
+                    echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
+                    echo '<option value="Web Contractor">Web Contractor</option>';
+                    echo '<option value="Offline">Offline</option>';
+                    echo '<option value="Edy">Edy</option>';
+                    echo '<option value="Ibnu">Ibnu</option>';
+                    echo '<option value="Sigit">Sigit</option>';
+                    echo '<option value="Isaq">Isaq</option>';
+                    echo '<option value="Fendy">Fendy</option>';
+                    echo '<option value="Habibi">Habibi</option>';
+                    echo '<option value="Rizal">Rizal</option>';
+                    echo '<option value="Bekasi">Bekasi</option>';
+                ?>
+            </select>
+        </div>
+    </div>
 </div>
 </div>
 </div>    
@@ -732,7 +764,7 @@ function validasiForm(form)
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/></div></td>';
+                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/><input type="hidden" class="form-control"  name="chkGold_' . $iJurnal . '" id="chkGold_' . $iJurnal . '" value="' . $DetilJurnal["gold"] . '"/></div></td>';
                             if ($DetilJurnal["model"] == 'custom') {
                                 echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
                             }   
@@ -808,7 +840,11 @@ function validasiForm(form)
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
+                                            <label class="control-label" for="txtKeteranganKas">Warna</label>
+                                            <div class="input-group"><span class="input-group-addon">Gold</span><span class="input-group-addon"><input type="checkbox" id="chkGold"></span></div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <label class="control-label" for="txtKeteranganKas">Jumlah</label>
                                             <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1"
                                             value="">

@@ -208,12 +208,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 20%">No SPH</th>
+                                <th style="width: 18%">No SPH</th>
                                 <th style="width: 10%">Date</th>
                                 <th style="width: 10%">Client</th>
                                 <th style="width: 20%">Address</th>
-                                <th style="width: 30%">Information</th>
-                                <th style="width: 15%">Operator</th>
+                                <th style="width: 28%">Information</th>
+                                <th style="width: 18%">Operator</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -293,7 +293,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 $spek = '<b>'.$query_data["masjid"].'</b>, MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
                                 echo "<td>" . $spek ."</td>";
-                                echo "<td>" . strtoupper($query_data["nama"]) . "</td>";
+                                echo "<td><center>" . strtoupper($query_data["nama"]) ." <br>(".$query_data["affiliate"].")</center></td>";
                                 echo("</tr>");
                                 $rowCounter++;
                             }

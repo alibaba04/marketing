@@ -96,7 +96,7 @@ require_once('./function/fungsi_formatdate.php');
                                 $q3= "SELECT count(id) as jml FROM `aki_report` WHERE ket like '% read by ".$_SESSION["my"]->privilege."=1%'";
                                 $rsTemp3 = mysql_query($q3, $dbLink);
                                 if ($dataSph3 = mysql_fetch_array($rsTemp3)) {
-                                    echo '<span class="label label-success">'.$dataSph3['jml'].'</span></a>';
+                                    echo '<span class="label label-warning">'.$dataSph3['jml'].'</span></a>';
                                 }
                             ?>
                               <ul class="dropdown-menu">

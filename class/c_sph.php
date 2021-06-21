@@ -19,6 +19,7 @@ class c_sph
         $tmasjid = secureParam($params["cbomasjid"],$dbLink);
         $noSph = secureParam($params["txtnoSph"],$dbLink);
         $alamat = secureParam($params["provinsi"],$dbLink);
+        $affiliate = secureParam($params["cboAffiliate"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
         $pembuat = $_SESSION["my"]->id;
@@ -30,8 +31,8 @@ class c_sph
 				throw new Exception('Could not begin transaction');
 			}
 			
-			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, tanggal, keterangan_kk, kodeUser) ";
-			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$tglTransaksi."','','".$pembuat."');";
+			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, affiliate, tanggal, keterangan_kk, kodeUser) ";
+			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$affiliate."','".$tglTransaksi."','','".$pembuat."');";
 			if (!mysql_query($q, $dbLink))
 				throw new Exception('Gagal masukkan data dalam database.');
 			$jumData = $params["jumAddJurnal"];
@@ -57,8 +58,9 @@ class c_sph
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
-                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
-					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
+                    $gold = secureParam($params["chkGold_". $j],$dbLink);
+                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, gold, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
+					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$gold."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data SPH.');
