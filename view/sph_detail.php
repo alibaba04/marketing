@@ -742,7 +742,7 @@ function validasiForm(form)
                 <tbody id="kendali">
                     <?php
                     if ($_GET['mode']=='edit'){
-                        $q = "SELECT s.*,ds.luas,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
+                        $q = "SELECT s.*,ds.gold,ds.luas,ds.bahan,ds.biaya_plafon,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
                         $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                         $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph;
                         $q.= "' ORDER BY  ds.nomer ";
