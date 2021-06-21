@@ -47,14 +47,15 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
-});
-function omodal() {
-  $("#myNoteAcc").modal({backdrop: 'static'});
     $('#btnSend').click(function(){
         var link = window.location.href;
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
     });
+});
+function omodal() {
+  $("#myNoteAcc").modal({backdrop: 'static'});
+    
 }
 function accmodal() {
   $("#myAcc").modal({backdrop: 'static'});
