@@ -104,6 +104,18 @@ $(document).ready(function () {
 
     ambilProv();ambilKota();
     $("#btnModal").click(function(){ 
+        var idP = $('#provinsi').val();
+        idP = idP.split("-");
+        var link = window.location.href;
+        var res = link.match(/mode=edit/g);
+        $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
+        if (res != 'mode=edit') {
+            $.post("function/ajax_function.php",{ fungsi: "getOngkir",idP:idP[0]},function(data)
+            {
+                document.getElementById("txtongkir").value = data.transport;
+            },"json");
+        }
+        
         $("#myModal").modal({backdrop: false});
         document.getElementById("simpan").disabled = true;
         document.getElementById("idluas").disabled = true;

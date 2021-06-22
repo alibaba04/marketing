@@ -94,6 +94,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <script type="text/javascript" src="js/autoCompletebox.js"></script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
+
     var link = window.location.href;
     var res = link.match(/mode=edit/g);
     if (res != 'mode=edit') {
@@ -108,6 +109,7 @@ $(document).ready(function () {
                 }
             });
         }
+        getpabrikasi();getpemasangan();
     }
     $("#chkppemerintah").click(function(){ 
         if ($('#chkppemerintah').is(":checked")) {
@@ -148,6 +150,19 @@ $(document).ready(function () {
     });
 
 });
+
+function getpabrikasi(){
+    $.post("function/ajax_function.php",{ fungsi: "getpabrikasi",bahan:$("#txtBahan_0").val(),d:$("#txtD_0").val()},function(data)
+        {
+            $('#txtproduksi').val(data.pabrikasi);
+        },"json"); 
+}
+function getpemasangan(){
+    $.post("function/ajax_function.php",{ fungsi: "getpemasangan",d:$("#txtD_0").val()},function(data)
+        {
+            $('#txtPemasangan').val(data.pemasangan);
+        },"json"); 
+}
 function cmodal($param) {
     $("#myModal").modal({backdrop: 'static'});
     $('#txtnomer').val($param);

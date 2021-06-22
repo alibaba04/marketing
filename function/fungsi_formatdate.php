@@ -32,6 +32,7 @@ function luas($d,$t,$dt){
 	}
 	return $luas;
 }
+
 function kalkulatorharga($d,$luas,$pmargin,$kel,$t)
 {
     //GA

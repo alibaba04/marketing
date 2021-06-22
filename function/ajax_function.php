@@ -31,6 +31,15 @@ case "checkKodeUser":
         echo "no";
     }
 break;
+case "getOngkir":
+    $result = mysql_query("select * FROM provinsi WHERE id ='" . secureParamAjax($_POST['idP'], $dbLink) . "'", $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            echo json_encode(array("transport"=>number_format($data['transport'])));
+        } 
+        break;
+    } 
+break;
 
 case "getcountSPH":
     $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'udin', kodeUser, NULL)) AS udin,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE 1", $dbLink);
@@ -186,7 +195,77 @@ case "noSph":
         break;
     } 
 break;
-
+case "getpemasangan":
+    $d = $_POST['d'];
+    $return = '';
+    if ($d > '0.5' and $d<='4'){
+        $return = '8';
+    }elseif ($d > '4' and $d<='6') {
+        $return = '10';
+    }
+    elseif ($d > '6' and $d<='8') {
+        $return = '15';
+    }
+    elseif ($d > '8' and $d<='9') {
+        $return = '18';
+    }
+    elseif ($d > '9' and $d<='11') {
+        $return = '20';
+    }
+    elseif ($d > '11' and $d<='13') {
+        $return = '25';
+    }
+    elseif ($d > '13' and $d<='14') {
+        $return = '30';
+    }
+    else{
+        $return = '30';
+    }
+    echo json_encode(array("pemasangan"=>$return));
+break;
+case "getpabrikasi":
+    $d = $_POST['d'];
+    $bahan = $_POST['bahan'];
+    $return = '';
+    if ($bahan == 1){
+        if ($d > '0.5' and $d<='3'){
+            $return = '28';
+        }elseif ($d > '3' and $d<='5') {
+            $return = '38';
+        }
+        elseif ($d > '5' and $d<='7') {
+            $return = '58';
+        }
+        elseif ($d > '7' and $d<='9') {
+            $return = '78';
+        }
+        elseif ($d > '9' and $d<='12') {
+            $return = '83';
+        }
+        elseif ($d > '12' and $d<='14') {
+            $return = '103';
+        }
+        elseif ($d > '14' and $d<='18') {
+            $return = '123';
+        }
+        else{
+            $return = '123';
+        }
+    }else{
+        if ($d > '0.5' and $d<'3'){
+            $return = '80';
+        }elseif ($d > '3' and $d<'6') {
+            $return = '110';
+        }
+        elseif ($d > '6' and $d<'12') {
+            $return = '125';
+        }
+        else{
+            $return = '125';
+        }
+    }
+    echo json_encode(array("pabrikasi"=>$return));
+break;
 case "kalkulator":
     $d = $_POST['d'];
     $t = $_POST['t'];
