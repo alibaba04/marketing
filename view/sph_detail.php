@@ -704,6 +704,7 @@ function validasiForm(form)
                 }
                     echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
                     echo '<option value="Web Contractor">Web Contractor</option>';
+                    echo '<option value="Representative">Representative</option>';
                     echo '<option value="Offline">Offline</option>';
                     echo '<option value="Edy">Edy</option>';
                     echo '<option value="Ibnu">Ibnu</option>';
