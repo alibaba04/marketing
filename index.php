@@ -107,7 +107,7 @@ require_once('./function/fungsi_formatdate.php');
                                       
                                           
                                         <?php
-                                            $q= "SELECT * FROM `aki_report` WHERE ket like '%read by ".$_SESSION["my"]->privilege."=1%'";
+                                            $q= "SELECT * FROM `aki_report` WHERE ket like '%read by ".$_SESSION["my"]->privilege."=1%' order by id desc";
                                             $rsTemp = mysql_query($q, $dbLink);
                                             while ($dataSph = mysql_fetch_array($rsTemp)) {
                                                 $ket = explode(',', $dataSph['ket']);
