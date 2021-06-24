@@ -27,6 +27,8 @@ class c_kkreview
 				$readby = '';
 				if ($_SESSION["my"]->privilege == 'ADMIN') {
 					$readby = 'kpenjualan';
+				}elseif($_SESSION["my"]->privilege == 'kpenjualan'){
+					$readby = 'ADMIN';
 				}else{
 					$readby = 'ADMIN';
 				}
@@ -34,11 +36,32 @@ class c_kkreview
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
-							throw new Exception($q4.'Gagal ubah data KK. ');
+							throw new Exception('Gagal ubah data KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
 				$this->strResults="Sukses Note";
-			
+				$destination = 0; 
+				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='".$readby."'";
+				$result=mysql_query($q, $dbLink);
+
+				if($dataMenu=mysql_fetch_row($result))
+				{
+					$destination = $dataMenu[0]; 
+				}
+				//API send WA
+				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
+				
+				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Review Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
+				$api_url = "http://panel.rapiwha.com/send_message.php"; 
+				$api_url .= "?apikey=". urlencode ($my_apikey); 
+				$api_url .= "&number=". urlencode ($destination); 
+				$api_url .= "&text=". urlencode ($message); 
+				$my_result_object = json_decode(file_get_contents($api_url, false)); 
+				if ($my_result_object->success != 0) {
+					echo "yes";
+				}else{
+					echo $my_result_object->description;
+				}
 		}
 		catch(Exception $e) 
 		{
@@ -73,7 +96,7 @@ class c_kkreview
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
-							throw new Exception($q4.'Gagal ubah data KK. ');
+							throw new Exception('Gagal ubah data KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
 				$this->strResults="Sukses Approve";

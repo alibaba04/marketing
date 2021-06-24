@@ -156,7 +156,7 @@ require_once('./function/fungsi_formatdate.php');
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <?php echo '<img src="dist/img/'.$_SESSION["my"]->avt.'" class="img-circle" alt="User Image">'; ?>
+                            <?php echo '<img src="dist/img/'.$_SESSION["my"]->avatar.'" class="img-circle" alt="User Image">'; ?>
                         </div>
                         <div class="pull-left info">
                             <p style="font-size: 17px;"><?php echo $_SESSION["my"]->name; ?></p>

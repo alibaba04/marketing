@@ -47,10 +47,24 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
+    var link = window.location.href;
     $('#btnSend').click(function(){
-        var link = window.location.href;
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
+        /*var relink = 'https://bit.ly/2SpMdIo';
+        var apikey = "ZDMMOCURFXUCNH8EEK36"; 
+        var phone = '6282257758857';
+        var name = 'Admin';
+        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
+        
+        $.post("function/ajax_function.php",{ fungsi: "sendwa",to:phone,text:Message},function(data)
+        {
+          if (data =='yes') {
+            location.href=link+"&note="+ $("#txtNote").val();
+          }else{
+            alert(data);
+          }
+        },"json");*/
     });
 });
 function omodal() {
@@ -83,7 +97,7 @@ $txtnokk='';
 
 $rsTemp = mysql_query($q, $dbLink);
 if ($dataSph = mysql_fetch_array($rsTemp)) {
-echo "<input type='hidden' name='txtnoKk' value='" . $dataSph["noKk"] . "'>";
+echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataSph["noKk"] . "'>";
 $txtnokk=$dataSph["noKk"];
 $filekubah=$dataSph["filekubah"];
 $filekaligrafi=$dataSph["filekaligrafi"];
@@ -427,7 +441,7 @@ if ($_GET["mode"] == "addNote") {
                   if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
                     echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-left">'.date_format($date,"H:i d-m-Y").'</span></div>';
-                    echo '<img src="dist/img/'.$_SESSION["my"]->avt.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
+                    echo '<img src="dist/img/'.$_SESSION["my"]->avatar.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }else{
                     echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-right">'.date_format($date,"H:i d-m-Y").'</span></div>';
