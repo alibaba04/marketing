@@ -111,7 +111,7 @@ class c_kk
 			}
 				date_default_timezone_set("Asia/Jakarta");
 				$tgl = date("Y-m-d H:i:s");
-				$ket = "KK Note, nokk=".$nokk.", note=".$treport;
+				$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
@@ -135,7 +135,7 @@ class c_kk
 				$api_url .= "?apikey=". urlencode ($my_apikey); 
 				$api_url .= "&number=". urlencode ($destination); 
 				$api_url .= "&text=". urlencode ($message); 
-				$my_result_object = json_decode(file_get_contents($api_url, false)); 
+				//$my_result_object = json_decode(file_get_contents($api_url, false)); 
 				if ($my_result_object->success != 0) {
 					$this->strResults="Sukses Note";
 				}else{
