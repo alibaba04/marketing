@@ -98,9 +98,10 @@ class c_kk
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
                     $ppn = secureParam($params["ppn_" . $j], $dbLink);
                     $transport = secureParam($params["transport_" . $j], $dbLink);
+                    $kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
                     
-                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `harga`, `jumlah`, `bahan`,`ppn`, `transport`,`filekubah`, `filekaligrafi`) ";
-					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$h."', '".$qty."', '".$bahan."', '".$ppn."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
+                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`, `transport`,`filekubah`, `filekaligrafi`) ";
+					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$ppn."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data KK.');
@@ -117,7 +118,29 @@ class c_kk
 							throw new Exception($q4.'Gagal ubah data KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
-				$this->strResults="Sukses Tambah Data KK";
+
+				//API send WA
+				$destination = 0; 
+				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='kpenjualan'";
+				$result=mysql_query($q, $dbLink);
+
+				if($dataMenu=mysql_fetch_row($result))
+				{
+					$destination = $dataMenu[0]; 
+				}
+				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
+				
+				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check '-Review Kontrak Kerja-'. Number KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
+				$api_url = "http://panel.rapiwha.com/send_message.php"; 
+				$api_url .= "?apikey=". urlencode ($my_apikey); 
+				$api_url .= "&number=". urlencode ($destination); 
+				$api_url .= "&text=". urlencode ($message); 
+				$my_result_object = json_decode(file_get_contents($api_url, false)); 
+				if ($my_result_object->success != 0) {
+					$this->strResults="Sukses Note";
+				}else{
+					$this->strResults=$my_result_object->description;
+				}
 			
 		}
 		catch(Exception $e) 
@@ -171,6 +194,8 @@ class c_kk
         $provinsi = substr($alamat2,0, 2);
         $kota = substr($alamat2,3, 6);
         $pembuat = $_SESSION["my"]->id;
+		$treport = secureParam($params["treport"],$dbLink);
+
 		$q3='';
 		$qimg='';
 		try
@@ -230,7 +255,7 @@ class c_kk
 					$diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
                     $dtengah = secureParam($params["txtDt_". $j],$dbLink);
-                    $luas = secureParam($params["luas_". $j],$dbLink);
+                    $luas = 0;
                     $plafon = secureParam($params["txtPlafon_". $j],$dbLink);
                     $harga1 = secureParam($params["txtHarga_" . $j], $dbLink);
                     $h = preg_replace("/\D/", "", $harga1);
@@ -238,14 +263,19 @@ class c_kk
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
                     $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
 					$ppn = secureParam($params["ppn_" . $j], $dbLink);
-					
+					$kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+					if ($dtengah == 0) {
+                    	$luas = ($diameter * $tinggi * 3.14);
+                    }else{
+                    	$luas = ($dtengah * $tinggi * 3.14);
+                    }
                     
                     if ($nameimg[0]!=''){
                     	$qimg=",`filekubah`='".$nameimg[0]."',`filekaligrafi`='".$nameimg[1]."'";
                     }
 
                     $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
-                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`ppn`='".$ppn."',`harga`='".$h."'".$qimg;
+                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`jumlah`='".$qty."',`ppn`='".$ppn."',`harga`='".$h."'".$qimg;
 					$q.= " WHERE idKk='".$idKk."' ;";
 
 					if (!mysql_query( $q, $dbLink))
@@ -260,8 +290,35 @@ class c_kk
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
 						throw new Exception($q4.'Gagal ubah data KK. ');
+
+			$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
+			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
+			if (!mysql_query( $q4, $dbLink))
+				throw new Exception('Gagal ubah data KK. ');
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults= "Sukses Ubah Data KK";
+			//API send WA
+			$destination = 0; 
+			$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='kpenjualan'";
+			$result=mysql_query($q, $dbLink);
+
+			if($dataMenu=mysql_fetch_row($result))
+			{
+				$destination = $dataMenu[0]; 
+			}
+			$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
+
+			$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check '-Review Kontrak Kerja-'. Number KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
+			$api_url = "http://panel.rapiwha.com/send_message.php"; 
+			$api_url .= "?apikey=". urlencode ($my_apikey); 
+			$api_url .= "&number=". urlencode ($destination); 
+			$api_url .= "&text=". urlencode ($message); 
+			$my_result_object = json_decode(file_get_contents($api_url, false)); 
+			if ($my_result_object->success != 0) {
+				$this->strResults="Sukses Ubah Data KK";
+			}else{
+				$this->strResults=$my_result_object->description;
+			}
 		}
 		catch(Exception $e) 
 		{

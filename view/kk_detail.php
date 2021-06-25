@@ -314,6 +314,12 @@ function addJurnal(){
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
+    td.innerHTML+='<div class="form-group"><input name="txtKaligrafi_'+tcounter+'" id="txtKaligrafi_'+tcounter+'" class="form-control" " onkeydown="return numbersonly(this, event);" value="0" style="text-align:right"></div>';
+    trow.appendChild(td);
+
+    var td = document.createElement("TD");
+    td.setAttribute("align","left");
+    td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" " onkeydown="return numbersonly(this, event);" value="0" style="text-align:right"></div>';
     trow.appendChild(td);
 
@@ -677,14 +683,16 @@ return true;
                         <table class="table table-bordered table-striped table-hover"  >
                             <thead>
                                 <tr>
-                                   <th style="width: 2%"><i class='fa fa-edit'></i></th>
-                                   <th style="width: 20%" colspan="4">Information</th>
-                                   <th style="width: 3%">Quantity</th>
-                                   <th style="width: 3%">D</th>
-                                   <th style="width: 3%">T</th>
-                                   <th style="width: 3%">Dt</th>
-                                   <th style="width: 13%">Price&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                                   <th style="width: 3%">Color</th>
+                                   <th style="width: 1%"><i class='fa fa-edit'></i></th>
+                                   <th style="width: 25%" colspan="4">Information</th>
+                                   <th style="width: 1%">Quantity</th>
+                                   <th style="width: 1%">D</th>
+                                   <th style="width: 1%">T</th>
+                                   <th style="width: 1%">Dt</th>
+                                   <th style="width: 8%">Kaligrafi</th>
+                                   <th style="width: 8%">Price&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                                   <th style="width: 8%">Total</th>
+                                   <th style="width: 1%">Color</th>
                                 </tr>
                             </thead>
                             <tbody id="kendali">
@@ -696,7 +704,7 @@ return true;
                                         $q.= "WHERE 1=1 and MD5(kk.nokk)='" . $noKk;
                                         $q.= "' ORDER BY  kk.nomer ";
                                     }else{
-                                        $q = "SELECT idDsph AS 'idKk',ket as 'kubah',jumlah,d,t,dt,plafon,transport,luas,harga,harga2,harga3,bahan,biaya_plafon,model FROM aki_dsph ";
+                                        $q = "SELECT idDsph AS 'idKk',ket as 'kubah',jumlah,d,t,dt,plafon,transport,luas,harga,harga2,harga3,bahan,biaya_plafon,model,biaya_plafon as kaligrafi FROM aki_dsph ";
                                         $q.= "WHERE 1=1 and MD5(noSph)='" . $noSph;
                                         $q.= "' ORDER BY idDsph ";
                                     }
@@ -791,19 +799,23 @@ return true;
                                         $harga = 0;
                                         if ($_GET['mode']!='edit'){
                                             if($DetilJurnal["bahan"]=='1'){
-                                                $harga= number_format($DetilJurnal["harga"]+$DetilJurnal["transport"]);
+                                                $harga= ($DetilJurnal["harga"]+$DetilJurnal["transport"]);
                                             }else if($DetilJurnal["bahan"]=='2'){
-                                                $harga= number_format($DetilJurnal["harga2"]+$DetilJurnal["transport"]);
+                                                $harga= ($DetilJurnal["harga2"]+$DetilJurnal["transport"]);
                                             }else{
-                                                $harga= number_format($DetilJurnal["harga3"]+$DetilJurnal["transport"]);
+                                                $harga= ($DetilJurnal["harga3"]+$DetilJurnal["transport"]);
                                             }
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value=""/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value=""/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value=""/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value=""/>';
                                         }else{
-                                            $harga= number_format($DetilJurnal["harga"]+$DetilJurnal["transport"]);
+                                            $harga= ($DetilJurnal["harga"]+$DetilJurnal["transport"]);
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="' . $DetilJurnal["kcolor1"] . '"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="' . $DetilJurnal["kcolor2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="' . $DetilJurnal["kcolor3"] . '"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="' . $DetilJurnal["kcolor4"] . '"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="' . $DetilJurnal["kcolor5"] . '"/>';
                                         }
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.$harga.'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input type="text" class="form-control"  name="txtKaligrafi_' . $iJurnal . '" id="txtKaligrafi_' . $iJurnal . '" value="'.number_format($DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        echo '<td align="center" valign="top" ><div class="form-group">
+                                        <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format($harga).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        echo '<td align="center" valign="top" ><div class="form-group">
+                                        <input type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format($harga+$DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div></td>';
                                         $iJurnal++;

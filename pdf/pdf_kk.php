@@ -19,6 +19,8 @@ $rs = mysql_query($q, $dbLink);
 
 $hasil = mysql_fetch_array($rs);
 $no = $hasil['noKk'];
+$tharga = $hasil['harga']+$hasil['kaligrafi'];
+$kaligrafi = $hasil['kaligrafi'];
 $nama_cust = $hasil['nama_cust'];
 $alamat = $hasil['kname'].', '.$hasil['pname'];
 $pdf->SetFont('helvetica', 'B', 14);
@@ -308,7 +310,7 @@ $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(20,5,'1. ',0,0,'R',0);
 $tbl = '
-Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($hasil['harga']).' <br>
+Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($tharga).' <br>
 ';
 $pdf->writeHTML($tbl);
 $ppn='belum';
@@ -317,7 +319,7 @@ if ($hasil['ppn']==1) {
 }
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-('.convertNumberToWord($hasil['harga']).'Rupiah)<b> '.$ppn.' termasuk PPN</b>
+('.convertNumberToWord($tharga).'Rupiah)<b> '.$ppn.' termasuk PPN</b>
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(40,5,'.',0,1,'L',0);
@@ -355,28 +357,28 @@ $pdf->MultiCell(75, 5, $hasil['wpembayaran1'], '', 'C', 0);
 $pdf->SetXY($x + 75, $y);
 $pdf->MultiCell(30, 5, $hasil['persen1'].' x Harga Borongan', 'LRB','C', 0);
 $pdf->SetXY($x + 105, $y);
-$pdf->MultiCell(40, 10, 'Rp.   '.number_format($hasil['harga']*($hasil['persen1']/100)), 'RB','R', 0);
+$pdf->MultiCell(40, 10, 'Rp.   '.number_format($tharga*($hasil['persen1']/100)), 'RB','R', 0);
 $pdf->Cell(15,10,'II','LBR',0,'C',0);
 $pdf->MultiCell(75, 5, $hasil['wpembayaran2'], 'T', 'C', 0);
 $pdf->SetXY($x + 75, $y+10);
 $pdf->MultiCell(30, 5, $hasil['persen2'].' x Harga Borongan', 'LRB', 'C', 0);
 $pdf->SetXY($x + 105, $y+10);
-$pdf->MultiCell(40, 10, 'Rp.   '.number_format($hasil['harga']*($hasil['persen2']/100)), 'RB','R', 0);
+$pdf->MultiCell(40, 10, 'Rp.   '.number_format($tharga*($hasil['persen2']/100)), 'RB','R', 0);
 $pdf->Cell(15,10,'III','LBR',0,'C',0);
 $pdf->MultiCell(75, 5, $hasil['wpembayaran3'], 'T', 'C', 0);
 $pdf->SetXY($x + 75, $y+20);
 $pdf->MultiCell(30, 5, $hasil['persen3'].' x Harga Borongan', 'LRB', 'C', 0);
 $pdf->SetXY($x + 105, $y+20);
-$pdf->MultiCell(40, 10, 'Rp.   '.number_format($hasil['harga']*($hasil['persen3']/100)), 'RB','R', 0);
+$pdf->MultiCell(40, 10, 'Rp.   '.number_format($tharga*($hasil['persen3']/100)), 'RB','R', 0);
 $pdf->Cell(15,10,'IV','LBR',0,'C',0);
 $pdf->MultiCell(75, 5, $hasil['wpembayaran4'], 'T', 'C', 0);
 $pdf->SetXY($x + 75, $y+30);
 $pdf->MultiCell(30, 5, $hasil['persen4'].' x Harga Borongan', 'LRB', 'C', 0);
 $pdf->SetXY($x + 105, $y+30);
-$pdf->MultiCell(40, 10, 'Rp.   '.number_format($hasil['harga']*($hasil['persen4']/100)), 'RB','R', 0);
+$pdf->MultiCell(40, 10, 'Rp.   '.number_format($tharga*($hasil['persen4']/100)), 'RB','R', 0);
 $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(120,10,'TOTAL',1,0,'C',1);
-$pdf->Cell(40,10,'Rp.   '.number_format($hasil['harga']),1,1,'R',1);
+$pdf->Cell(40,10,'Rp.   '.number_format($tharga),1,1,'R',1);
 $pdf->SetFont('helvetica', 'i', 11);
 $tbl = '
 *Berlaku sebagai uang panjar<br>
@@ -1280,25 +1282,28 @@ $pdf->Cell(135,2,'',0,0,'L',0);
 $pdf->Cell(20,10,'',1,0,'C',0);
 $pdf->Cell(20,10,'',1,1,'C',0);
 
-$pdf->addpage();
-$pdf->SetTextColor(0);
-$pdf->SetDrawColor(0);
-$pdf->SetFont('helvetica', 'bu', 11);
-$pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
-if ($hasil['filekaligrafi']!='') {
+if ($kaligrafi != 0) {
+  $pdf->addpage();
+  $pdf->SetTextColor(0);
+  $pdf->SetDrawColor(0);
+  $pdf->SetFont('helvetica', 'bu', 11);
+  $pdf->Cell(190,6,'DESAIN KALIGRAFI',0,1,'C',0);
+  if ($hasil['filekaligrafi']!='') {
    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,70,170,130);
+ }
+ $pdf->SetMargins(13, 10, 10, true);
+ $pdf->Ln(250);
+ $pdf->SetTextColor(130);
+ $pdf->SetDrawColor(130);
+ $pdf->SetFont('helvetica', '', 11);
+ $pdf->Cell(135,2,'',0,0,'L',0);
+ $pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+ $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
+ $pdf->Cell(135,2,'',0,0,'L',0);
+ $pdf->Cell(20,10,'',1,0,'C',0);
+ $pdf->Cell(20,10,'',1,1,'C',0);
 }
-$pdf->SetMargins(13, 10, 10, true);
-$pdf->Ln(250);
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->SetFont('helvetica', '', 11);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
+
 
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

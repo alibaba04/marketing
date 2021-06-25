@@ -39,7 +39,7 @@ class c_kkreview
 							throw new Exception('Gagal ubah data KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
-				$this->strResults="Sukses Note";
+				
 				$destination = 0; 
 				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='".$readby."'";
 				$result=mysql_query($q, $dbLink);
@@ -51,16 +51,16 @@ class c_kkreview
 				//API send WA
 				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
 				
-				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Review Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
+				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Review Kontrak Kerja'. Number KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
 				$api_url = "http://panel.rapiwha.com/send_message.php"; 
 				$api_url .= "?apikey=". urlencode ($my_apikey); 
 				$api_url .= "&number=". urlencode ($destination); 
 				$api_url .= "&text=". urlencode ($message); 
 				$my_result_object = json_decode(file_get_contents($api_url, false)); 
 				if ($my_result_object->success != 0) {
-					echo "yes";
+					$this->strResults="Sukses Note";
 				}else{
-					echo $my_result_object->description;
+					$this->strResults=$my_result_object->description;
 				}
 		}
 		catch(Exception $e) 
@@ -99,7 +99,28 @@ class c_kkreview
 							throw new Exception('Gagal ubah data KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
-				$this->strResults="Sukses Approve";
+				$destination = 0; 
+				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='ADMIN'";
+				$result=mysql_query($q, $dbLink);
+
+				if($dataMenu=mysql_fetch_row($result))
+				{
+					$destination = $dataMenu[0]; 
+				}
+				//API send WA
+				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
+				
+				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Kontrak Kerja'. Number KK : '".$nokk."', Note : 'Has Been Approved' https://bit.ly/2SpMdIo"; 
+				$api_url = "http://panel.rapiwha.com/send_message.php"; 
+				$api_url .= "?apikey=". urlencode ($my_apikey); 
+				$api_url .= "&number=". urlencode ($destination); 
+				$api_url .= "&text=". urlencode ($message); 
+				$my_result_object = json_decode(file_get_contents($api_url, false)); 
+				if ($my_result_object->success != 0) {
+					$this->strResults="Sukses Approve";
+				}else{
+					$this->strResults=$my_result_object->description;
+				}
 			
 		}
 		catch(Exception $e) 
