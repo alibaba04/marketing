@@ -135,7 +135,7 @@ class c_kk
 				$api_url .= "?apikey=". urlencode ($my_apikey); 
 				$api_url .= "&number=". urlencode ($destination); 
 				$api_url .= "&text=". urlencode ($message); 
-				//$my_result_object = json_decode(file_get_contents($api_url, false)); 
+				$my_result_object = json_decode(file_get_contents($api_url, false)); 
 				if ($my_result_object->success != 0) {
 					$this->strResults="Sukses Note";
 				}else{
