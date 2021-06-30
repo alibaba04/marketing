@@ -54,7 +54,6 @@ require_once('./function/fungsi_formatdate.php');
        <script src="js/angka.js"></script>
        <script type="text/javascript" src="js/autoCompletebox.js"></script>
        <link rel="stylesheet" href="ionicons/css/ionicons.min.css">
-
    </head>
    <?php
    if ((isset($_SESSION["my"]) === false) || (isset($_GET["page"]) === "login_detail")) {

@@ -150,7 +150,14 @@ $(document).ready(function () {
     });
 
 });
-
+function hitungtotal($param) {
+    var kaligrafi =  parseFloat($('#txtKaligrafi_'+$param).val().replace(/,/g, ''));
+    var hkubah = parseFloat($('#txtHargaKubah_'+$param).val().replace(/,/g, ''));
+    $.post("function/ajax_function.php",{ fungsi: "hitungtotal",kaligrafi:kaligrafi,hkubah:hkubah},function(data)
+    {
+        $('#txtHarga_'+$param).val(data.total);
+    },"json");
+}
 function getpabrikasi(){
     $.post("function/ajax_function.php",{ fungsi: "getpabrikasi",bahan:$("#txtBahan_0").val(),d:$("#txtD_0").val()},function(data)
         {
@@ -678,13 +685,13 @@ return true;
                         <h3 class="box-title">DETAILS</h3>
                         <span id="msgbox"> </span>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body" style="width: 100%;overflow-x: scroll;">
 
                         <table class="table table-bordered table-striped table-hover"  >
                             <thead>
                                 <tr>
                                    <th style="width: 1%"><i class='fa fa-edit'></i></th>
-                                   <th style="width: 25%" colspan="4">Information</th>
+                                   <th style="" colspan="4">Information</th>
                                    <th style="width: 1%">Quantity</th>
                                    <th style="width: 1%">D</th>
                                    <th style="width: 1%">T</th>
@@ -715,8 +722,8 @@ return true;
                                         echo '<div><tr id="trid_'.$iJurnal.'" >';
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <input onclick="chkadddetail('.$iJurnal.')" type="checkbox" class="minimal" checked name="chkAddJurnal_' . $iJurnal . '" id="chkAddJurnal_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
-                                        echo '<td align="center" valign="top" ><div class="form-group">
-                                        <select class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '">';
+                                        echo '<td align="center" valign="top" ><div class="form-group" >
+                                        <select class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" style="min-width: 135px;">';
                                         if ($DetilJurnal["kubah"]=='Mahrab') {
                                             echo '<option value="Kubah Utama">Kubah Utama</option>';
                                             echo '<option value="Anakan">Anakan</option>';
@@ -730,8 +737,8 @@ return true;
                                             echo '<option value="Anakan">Anakan</option>';
                                             echo '<option value="Mahrab">Mahrab</option>';
                                         }
-                                        echo '</select></div></td><td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                        <select class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '"> ';
+                                        echo '</select></div></td><td align="center" valign="top" ><div class="form-group">
+                                        <select class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" style="min-width: 140px;"> ';
                                         if ($DetilJurnal["model"]=='setbola') {
                                             echo '<option value="setbola" selected>Setengah Bola</option>';
                                             echo '<option value="pinang">Pinang</option>';
@@ -753,8 +760,8 @@ return true;
                                             echo '<option value="madinah">Madinah</option>';
                                             echo '<option value="bawang" selected>Bawang</option>';
                                         }
-                                        echo '</select></div></td><td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                        <select class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '"> ';
+                                        echo '</select></div></td><td align="center" valign="top" ><div class="form-group">
+                                        <select class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '"style="min-width: 135px;"> ';
                                         if ($DetilJurnal["bahan"]=='3') {
                                             echo '<option value="1">Galvalume</option>';
                                             echo '<option value="2">Enamel</option>';
@@ -772,8 +779,8 @@ return true;
                                             echo '<option value="2" >Enamel</option>';
                                             echo '<option value="3">Titanium</option>';
                                         }
-                                        echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                                        <select class="form-control"  name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '"> ';
+                                        echo '<td align="center" valign="top"><div class="form-group">
+                                        <select class="form-control"  name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '"style="min-width: 130px;"> ';
                                         if ($DetilJurnal["plafon"]=='0') {
                                             echo '<option value="0" selected>Full</option>';
                                             echo '<option value="1">Tanpa Plafon</option>';
@@ -789,13 +796,13 @@ return true;
                                         }
                                         echo '</select></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="number" class="form-control" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '" ="" style="min-width: 35px;"></div></td>';
-                                        echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" ="" style="min-width: 45px;"></div></td>';
-                                        echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" ="" style="min-width: 45px;"></div></td>';
-                                        echo '<td align="center" valign="top"><div class="form-group">
-                                        <input type="number" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" ="" style="min-width: 45px;"></div></td>';
+                                        <input type="number" class="form-control" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '"></div></td>';
+                                        echo '<td align="center" valign="top" ><div class="form-group" style="min-width: 50px;">
+                                        <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '"></div></td>';
+                                        echo '<td align="center" valign="top" ><div class="form-group"style="min-width: 50px;">
+                                        <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" ></div></td>';
+                                        echo '<td align="center" valign="top"><div class="form-group"style="min-width: 50px;">
+                                        <input type="number" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" ></div></td>';
                                         $harga = 0;
                                         if ($_GET['mode']!='edit'){
                                             if($DetilJurnal["bahan"]=='1'){
@@ -811,11 +818,11 @@ return true;
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="' . $DetilJurnal["kcolor1"] . '"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="' . $DetilJurnal["kcolor2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="' . $DetilJurnal["kcolor3"] . '"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="' . $DetilJurnal["kcolor4"] . '"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="' . $DetilJurnal["kcolor5"] . '"/>';
                                         }
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtKaligrafi_' . $iJurnal . '" id="txtKaligrafi_' . $iJurnal . '" value="'.number_format($DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input type="text" class="form-control"  name="txtKaligrafi_' . $iJurnal . '" id="txtKaligrafi_' . $iJurnal . '" value="'.number_format($DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format($harga).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format($harga).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format($harga+$DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format($harga+$DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div></td>';
                                         $iJurnal++;

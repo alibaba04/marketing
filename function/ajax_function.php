@@ -31,22 +31,11 @@ case "checkKodeUser":
         echo "no";
     }
 break;
-case "sendwa":
-
-    //API send WA
-    $my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
-    $destination = $_POST['to']; 
-    $message = $_POST['text']; 
-    $api_url = "http://panel.rapiwha.com/send_message.php"; 
-    $api_url .= "?apikey=". urlencode ($my_apikey); 
-    $api_url .= "&number=". urlencode ($destination); 
-    $api_url .= "&text=". urlencode ($message); 
-    $my_result_object = json_decode(file_get_contents($api_url, false)); 
-    if ($my_result_object->success != 0) {
-        echo "yes";
-    }else{
-        echo $my_result_object->description;
-    }
+case "hitungtotal":
+    $kaligrafi = $_POST['kaligrafi'];
+    $hkubah = $_POST['hkubah'];
+    $total = $kaligrafi+$hkubah;
+    echo json_encode(array("total"=>number_format($total)));
 break;
 case "getOngkir":
     $result = mysql_query("select * FROM provinsi WHERE id ='" . secureParamAjax($_POST['idP'], $dbLink) . "'", $dbLink);
