@@ -618,14 +618,14 @@ return true;
                         <div class="form-group" >
                             <div class="input-group">
                                 <span class="input-group-addon">Nama Masjid</span>
-                                <input name="txtnmasjid" id="txtnmasjid" maxlength="30" class="form-control" 
+                                <input name="txtnmasjid" id="txtnmasjid" maxlength="50" class="form-control" 
                              value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nmasjid"]; }?>" onkeyup="tnmasjid()">
                             </div>
                         </div>
                         <div class="form-group" >
                             <div class="input-group">
                                 <span class="input-group-addon">Nama Proyek</span>
-                                <input name="txtnproyek" id="txtnproyek" maxlength="30" class="form-control" 
+                                <input name="txtnproyek" id="txtnproyek" maxlength="50" class="form-control" 
                              value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nproyek"]; }?>">
                              <input type="hidden" name="txtppemerintah" id="txtppemerintah" class="form-control" 
                              value="<?php  if($_GET['mode']=='edit'){echo $dataKk["project_pemerintah"]; }else{echo '0';}?>">
