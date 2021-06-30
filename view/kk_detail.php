@@ -246,9 +246,7 @@ function omodal() {
             $('#txtP4').val($("#mtxtP4").val());
     });
 }
-function tnmasjid() {
-    $("#txtnproyek").val('Masjid '+$("#txtnmasjid").val());
-}
+
 function addJurnal(){    
     tcounter = $("#jumAddJurnal").val();
 
@@ -619,7 +617,7 @@ return true;
                             <div class="input-group">
                                 <span class="input-group-addon">Nama Masjid</span>
                                 <input name="txtnmasjid" id="txtnmasjid" maxlength="30" class="form-control" 
-                             value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nmasjid"]; }?>" onkeyup="tnmasjid()">
+                             value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nmasjid"]; }?>">
                             </div>
                         </div>
                         <div class="form-group" >

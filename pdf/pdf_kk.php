@@ -88,7 +88,7 @@ $pdf->Cell(39,5,':',0,0,'R',0);
 $pdf->Cell(24,5,$hasil['jabatan'],0,1,'L',0); 
 $pdf->Ln(3);
 $tbl = '
-Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan Masjid <b>'.$hasil['nmasjid'].'</b>, selanjutnya disebut <b>Pihak Kedua.</b><br>
+Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan <b>'.$hasil['nmasjid'].'</b>, selanjutnya disebut <b>Pihak Kedua.</b><br>
 ';
 $pdf->writeHTML($tbl);
 $pdf->Ln(1);
