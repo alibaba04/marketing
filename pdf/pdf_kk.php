@@ -33,29 +33,9 @@ $pdf->SetAutoPageBreak(TRUE, 0);
 $pdf->SetFont('helvetica', '', 11); 
 $pdf->Ln(10);
 
-function hariIndo ($hariInggris) {
-  switch ($hariInggris) {
-    case 'Sunday':
-      return 'Minggu';
-    case 'Monday':
-      return 'Senin';
-    case 'Tuesday':
-      return 'Selasa';
-    case 'Wednesday':
-      return 'Rabu';
-    case 'Thursday':
-      return 'Kamis';
-    case 'Friday':
-      return 'Jumat';
-    case 'Saturday':
-      return 'Sabtu';
-    default:
-      return 'hari tidak valid';
-  }
-}
 
 $tbl = '<br>
-Pada hari ini '.(strftime('%A', strtotime($hasil['tanggal']))).' tanggal '.date("d",strtotime($hasil['tanggal'])).' bulan '.date("F",strtotime($hasil['tanggal'])).' tahun '.date("Y",strtotime($hasil['tanggal'])).' kami yang bertanda tangan dibawah ini: <br>';
+Pada hari ini '.hariIndo(strftime('%A', strtotime($hasil['tanggal']))).' tanggal '.date("d",strtotime($hasil['tanggal'])).' bulan '.namaBulan_id(date("m",strtotime($hasil['tanggal']))).' tahun '.date("Y",strtotime($hasil['tanggal'])).' kami yang bertanda tangan dibawah ini: <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,10,'1.',0,0,'R',0);
 $pdf->Cell(1,10,'Nama',0,0,'L',0);
@@ -1303,7 +1283,6 @@ if ($kaligrafi != 0) {
  $pdf->Cell(20,10,'',1,0,'C',0);
  $pdf->Cell(20,10,'',1,1,'C',0);
 }
-
 
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>
