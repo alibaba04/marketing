@@ -36,7 +36,7 @@ class c_kkreview
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
-							throw new Exception('Gagal ubah data KK. ');
+							throw new Exception('Gagal note KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
 				
@@ -96,7 +96,7 @@ class c_kkreview
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
-							throw new Exception('Gagal ubah data KK. ');
+							throw new Exception('Gagal approve KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
 				$destination = 0; 
