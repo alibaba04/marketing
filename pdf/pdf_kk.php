@@ -81,11 +81,11 @@ $pdf->Cell(2,9,'Alamat',0,0,'L',0);
 $pdf->Cell(39,9,':',0,0,'R',0);
 $pdf->Ln(2.5);
 $pdf->Cell(61,9,'',0,0,'R',0);
-$pdf->MultiCell(120,5,$hasil['alamat'].', '.$hasil['kname'].', '.$hasil['pname'],0,'B',0);
+$pdf->MultiCell(120,5,$hasil['alamat'].', '.ucwords(strtolower($hasil['kname'])).', '.ucwords(strtolower($hasil['pname'])),0,'B',0);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $pdf->Cell(2,5,'Jabatan',0,0,'L',0);
 $pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->Cell(24,5,$hasil['jabatan'],0,1,'L',0); 
+$pdf->Cell(24,5,ucfirst($hasil['jabatan']),0,1,'L',0); 
 $pdf->Ln(3);
 $tbl = '
 Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan <b>'.$hasil['nmasjid'].'</b>, selanjutnya disebut <b>Pihak Kedua.</b><br>
@@ -138,7 +138,7 @@ $pdf->Cell(12,2,'Alamat Proyek',0,0,'L',0);
 $pdf->Cell(29,2,':',0,0,'R',0);
 $pdf->SetMargins(81, 10, 10, true);
 $pdf->Ln(-1);
-$pdf->MultiCell(120,5,$hasil['alamat_proyek'],0,'B',0);
+$pdf->MultiCell(120,5,ucfirst($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
 $pdf->Ln(55);
@@ -186,7 +186,15 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(12,5,'Bahan',0,0,'L',0);
     $pdf->Cell(29,5,':',0,0,'R',0);
-    $pdf->Cell(23,5,$hasil2['bahan'],0,1,'L',0); 
+    $bahan = '';
+    if ($hasil2["bahan"]=='3') {
+      $bahan = 'Titanium';
+    }else if($hasil2["bahan"]=='2'){
+      $bahan = 'Enamel';
+    }else {
+      $bahan = 'Galvalume';
+    }
+    $pdf->Cell(23,5,$bahan,0,1,'L',0); 
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(2,5,'Ukuran',0,0,'L',0);
     $pdf->Cell(39,5,':',0,0,'R',0);
@@ -198,7 +206,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(2,5,'Design Kubah',0,0,'L',0);
     $pdf->Cell(39,5,':',0,0,'R',0);
-    $pdf->MultiCell(120,5,'Terlampir.',0,'B',0);
+    $pdf->MultiCell(120,5,'Terlampir',0,'B',0);
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(2,5,'Spesifikasi',0,0,'L',0);
     $pdf->Cell(39,5,':',0,0,'R',0);
@@ -245,7 +253,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
         }else{
           $lampu='4';
         }
-        $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
+        $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m).<br>';
       }
     }else{
       $aksesoris=chr(149).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
@@ -442,12 +450,11 @@ if ($hasil['project_pemerintah']==1) {
   $pdf->Cell(60,6,'Andik Nur Setiawan ',1,0,'L',0);
   $pdf->Cell(55,6,'033 - 245 - 9846 ',1,1,'L',0);
 }
-
-
+$pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(15);
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Cell(185,6,'PASAL 4',0,1,'C',0);
-$pdf->Cell(175,4, 'MASA BERLAKU PERJANJIAN',0,1,'C',0);
+$pdf->Cell(185,4, 'MASA BERLAKU PERJANJIAN',0,1,'C',0);
 $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(12,5,'1. ',0,0,'R',0);
@@ -480,10 +487,10 @@ if ($hasil['jml']==2) {
 }else{
   $pdf->Ln(15);
 }
-
+$pdf->SetMargins(13, 10, 10, true);
 $pdf->SetFont('helvetica', 'b', 11);
-$pdf->Cell(188,6,'PASAL 5',0,1,'C',0);
-$pdf->Cell(188,4, 'JANGKA WAKTU PEKERJAAN',0,1,'C',0);
+$pdf->Cell(185,6,'PASAL 5',0,1,'C',0);
+$pdf->Cell(185,4, 'JANGKA WAKTU PEKERJAAN',0,1,'C',0);
 $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(5,5,'1. ',0,0,'R',0);
