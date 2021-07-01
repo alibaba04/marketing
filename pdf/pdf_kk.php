@@ -85,7 +85,7 @@ $pdf->MultiCell(120,5,$hasil['alamat'].', '.ucwords(strtolower($hasil['kname']))
 $pdf->Cell(20,5,'',0,0,'R',0);
 $pdf->Cell(2,5,'Jabatan',0,0,'L',0);
 $pdf->Cell(39,5,':',0,0,'R',0);
-$pdf->Cell(24,5,ucfirst($hasil['jabatan']),0,1,'L',0); 
+$pdf->Cell(24,5,ucwords($hasil['jabatan']),0,1,'L',0); 
 $pdf->Ln(3);
 $tbl = '
 Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan <b>'.$hasil['nmasjid'].'</b>, selanjutnya disebut <b>Pihak Kedua.</b><br>
@@ -138,7 +138,7 @@ $pdf->Cell(12,2,'Alamat Proyek',0,0,'L',0);
 $pdf->Cell(29,2,':',0,0,'R',0);
 $pdf->SetMargins(81, 10, 10, true);
 $pdf->Ln(-1);
-$pdf->MultiCell(120,5,ucfirst($hasil['alamat_proyek']),0,'B',0);
+$pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
 $pdf->Ln(55);
