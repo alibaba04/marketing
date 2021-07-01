@@ -1194,8 +1194,9 @@ $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetFont('helvetica', 'bu', 11);
 $pdf->Cell(190,6,'DESAIN KUBAH',0,1,'C',0);
+$pdf->SetX(100);
 if ($hasil['filekubah']!='') {
-  $pdf->image('../../uploads/'.$hasil['filekubah'],25,70,170,130);
+  $pdf->image('../../uploads/'.$hasil['filekubah'],30,60,155,155);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(170);
