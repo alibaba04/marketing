@@ -64,7 +64,7 @@ $pdf->Cell(39,5,':',0,0,'R',0);
 $pdf->Cell(24,5,'Direktur PT. Anugerah Kubah Indonesia',0,1,'L',0); 
 $pdf->Ln(3);
 $tbl = '
-Dalam hal ini bertindak untuk dan atas nama Direksi PT. Anugerah Kubah Indonesia selaku pihak yang akan  menjadi  Pemborong  Kerja dan Pemasangan Kubah Masjid, selanjutnya disebut  sebagai  <b>Pihak Pertama.</b><br>';
+Dalam hal ini bertindak untuk dan atas nama Direksi PT. Anugerah Kubah Indonesia selaku pihak yang akan  menjadi  Pemborong Kerja dan Pemasangan Kubah Masjid, selanjutnya disebut  sebagai  <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,10,'2.',0,0,'R',0);
 $pdf->Cell(1,10,'Nama',0,0,'L',0);
@@ -93,7 +93,7 @@ Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan <b>'.$hasil['nma
 $pdf->writeHTML($tbl);
 $pdf->Ln(1);
 $tbl = '
-Selanjutnya <b>Pihak Pertama </b>dan <b>Pihak Kedua</b> secara bersama-sama disebut "Para Pihak". Bahwa Para Pihak sepakat untuk membuat dan mengikatkan diri dalam Perjanjian Jual  Beli dan Pemasangan Kubah Masjid <b>("Perjanjian")</b> ini dan terlebih dahulu menjelaskan hal-hal sebagai berikut :
+Selanjutnya  <b>Pihak  Pertama </b> dan <b> Pihak  Kedua</b>  secara bersama-sama disebut "Para Pihak". Bahwa Para Pihak sepakat untuk membuat dan mengikatkan diri dalam Perjanjian Jual  Beli dan Pemasangan Kubah Masjid <b>("Perjanjian")</b> ini dan terlebih dahulu menjelaskan hal-hal sebagai berikut :
 <br>
 ';
 $pdf->writeHTML($tbl); 
@@ -105,11 +105,11 @@ Bahwa <b>Pihak Pertama </b> adalah suatu Perseroan Terbatas yang berdiri berdasa
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
-$pdf->Cell(40,5,'Republik Indonesia, berkedudukan di Kediri, Jawa Timur yang memproduksi kubah masjid.',0,0,'L',0);
+$pdf->Cell(40,5,'Republik Indonesia, berkedudukan di Kediri,  Jawa Timur yang memproduksi kubah masjid.',0,0,'L',0);
 $pdf->Ln(5);
 $pdf->Cell(20,5,'2). ',0,0,'R',0);
 $tbl = '
-Bahwa <b>Pihak Kedua</b> adalah perorangan yang memesan dan bertanggung jawab pada 
+Bahwa  <b>Pihak  Kedua</b>  adalah  perorangan  yang  memesan  dan bertanggung jawab pada 
 <br>
 ';
 $pdf->writeHTML($tbl);
@@ -298,14 +298,13 @@ $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(15,5,'1. ',0,0,'R',0);
 $tbl = '
-Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($tharga).' <br>
-';
+Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($tharga).'<br>';
 $pdf->writeHTML($tbl);
 $ppn='belum';
 if ($hasil['ppn']==1) {
   $ppn='sudah';
 }
-$pdf->Cell(20,5,'',0,0,'R',0);
+$pdf->Cell(15,5,'',0,0,'R',0);
 $tbl = '
 ('.convertNumberToWord($tharga).'Rupiah)<b> '.$ppn.' termasuk PPN</b>
 ';
@@ -513,13 +512,13 @@ $pdf->Cell(85,6,' ','LRB',1,'C',1);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(45,30,'Masa Produksi','LT',0,'C',0);
 $pdf->Cell(30,30,$hasil['mproduksi'].' hari','LT',0,'C',0);
-$pdf->MultiCell(85,5,'Waktu pengerjaan terhitung sejak terpenuhinya hal berikut:
-a).  Uang Muka Lunas 
-b).  Konfirmasi Pihak Kedua atas desain, motif, warna, ukuran dan spesifikasi serta sudah selesai atau belumnya dudukan kubah.
+$pdf->MultiCell(85,5,' Waktu pengerjaan terhitung sejak terpenuhinya  hal berikut:
+ a).  Uang Muka Lunas 
+ b).  Konfirmasi Pihak Kedua atas desain, motif,   warna,  ukuran  dan  spesifikasi  serta  sudah     selesai  atau  belumnya  dudukan  kubah.
 ',1,'B',0);
 $pdf->Cell(45,25,'Masa Pemasangan','LTB',0,'C',0);
 $pdf->Cell(30,25,$hasil['mpemasangan'].' hari','LTB',0,'C',0);
-$pdf->MultiCell(85,5,'Terhitung sejak tim pemasangan sampai di lokasi dengan ketentuan dudukan kubah sudah diselesaikan dan peralatan yang dibutuhkan (scaffolding dsb.) telah disiapkan oleh Pihak Kedua.
+$pdf->MultiCell(85,5,' Terhitung  sejak  tim  pemasangan  sampai di     lokasi dengan ketentuan dudukan kubah sudah  diselesaikan  dan  peralatan  yang  dibutuhkan   (scaffolding dsb.) telah disiapkan oleh Pihak       Kedua.
 ','LRB','B',0);
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(2);
@@ -575,11 +574,11 @@ $pdf->writeHTML($tbl);
 
 $pdf->Cell(14,5,'c. ',0,0,'R',0);
 $tbl = '
-Menyelesaikan Pekerjaan sesuai dengan spesifikasi yang tercantum dalam Pasal 2 <br>
+Menyelesaikan Pekerjaan sesuai dengan spesifikasi yang tercantum dalam Pasal 2 Perjanjian<br>
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
-$pdf->Cell(40,5,'Perjanjian ini.',0,1,'L',0);
+$pdf->Cell(40,5,'ini.',0,1,'L',0);
 
 $pdf->SetMargins(12, 10, 10, true);
 $pdf->Ln(1);
@@ -627,7 +626,7 @@ $pdf->SetMargins(18, 10, 10, true);
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'a. ',0,0,'R',0);
 $tbl = '
-Menyelesaikan administrasi kelengkapan pekerjaan seperti desain, motif, warna, dan lain <br>';
+Menyelesaikan  administrasi  kelengkapan  pekerjaan  seperti  desain,  motif,  warna,  dan  lain <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $pdf->Cell(40,5,'sebagainya setelah dilakukan pembayaran uang panjar atau uang termin I.',0,1,'L',0);
@@ -650,40 +649,40 @@ if ($hasil['jml']==2) {
 
 $pdf->Cell(14,5,'b. ',0,0,'R',0);
 $tbl = '
-Membuat dudukan kubah dan menginformasikan penyelesaian dudukan kubah kepada <br>';
+Membuat dudukan kubah dan menginformasikan penyelesaian dudukan kubah  kepada  <b>Pihak<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-<b>Pihak Pertama</b>. Apabila dudukan kubah belum selesai, maka <b>Pihak Kedua</b> wajib mengikuti <br>';
+Pertama</b>. Apabila dudukan kubah belum selesai, maka  <b>Pihak  Kedua</b>  wajib mengikuti arahan<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-arahan dari <b>Pihak Pertama</b> untuk pembuatan dudukan kubah.<br>';
+dari <b>Pihak Pertama</b> untuk pembuatan dudukan kubah.<br>';
 $pdf->writeHTML($tbl);
 
 $pdf->Cell(14,5,'c. ',0,0,'R',0);
 $tbl = '
-Memberikan ukuran lubang dalam dudukan disertai dengan foto/gambar dan ukurannya <br>';
+Memberikan ukuran lubang dalam  dudukan  disertai  dengan foto/gambar dan ukurannya agar<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-agar dapat disesuaikan dengan Kubah buatan <b>Pihak Pertama.</b><br>';
+dapat disesuaikan dengan Kubah buatan <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'d. ',0,0,'R',0);
 $tbl = '
-Melakukan pembayaran sesuai dengan harga pekerjaan dan cara pembayaran yang  <br>';
+Melakukan pembayaran sesuai dengan  harga  pekerjaan dan cara pembayaran yang terdapat<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-terdapat pada Pasal 3 surat Perjanjian ini.<br>';
+pada Pasal 3 surat Perjanjian ini.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'e. ',0,0,'R',0);
 $tbl = '
-Mengirimkan foto dudukan yang sudah jadi dan foto masjid yang akan dipasang kubah <br>';
+Mengirimkan foto dudukan yang sudah jadi dan foto masjid yang akan dipasang kubah kepada<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-kepada <b>Pihak Pertama</b> sebelum pembayaran termin ketiga.<br>';
+<b>Pihak Pertama</b> sebelum pembayaran termin ketiga.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'f. ',0,0,'R',0);
 $tbl = '
@@ -691,11 +690,11 @@ Menjaga keamanan material bahan yang telah terkirim di lokasi <b>Pihak Kedua.</b
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'g. ',0,0,'R',0);
 $tbl = '
-Melakukan  pengecekan barang yang telah terkirim di lokasi <b>Pihak Kedua</b> dengan <br>';
+Melakukan pengecekan  barang  yang  telah  terkirim  di  lokasi <b>Pihak  Kedua</b> dengan mengisi<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-mengisi Surat Jalan yang telah disediakan  <b>Pihak Pertama.</b><br>';
+Surat Jalan yang telah disediakan  <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'h. ',0,0,'R',0);
 $pdf->SetMargins(35, 10, 10, true);
@@ -712,11 +711,11 @@ $pdf->SetMargins(18, 10, 10, true);
 $pdf->Ln(0);
 $pdf->Cell(14,5,'i. ',0,0,'R',0);
 $tbl = '
-Melakukan pengecekan terakhir pada hasil pekerjaan <b>Pihak Pertama</b> sebelum tim <br>';
+Melakukan   pengecekan   terakhir   pada    hasil    pekerjaan   <b>Pihak   Pertama</b>   sebelum   tim <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-pemasangan pulang dengan menandatangani Berita Acara yang disediakan <b>Pihak Pertama.</b><br>';
+pulang dengan menandatangani Berita Acara yang disediakan <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 
 if ($hasil['jml']==2) {
@@ -747,11 +746,11 @@ $pdf->SetMargins(18, 10, 10, true);
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'a. ',0,0,'R',0);
 $tbl = '
-Mendapatkan arahan pembuatan dudukan Kubah yang benar dari <b>Pihak Pertama</b> jika <br>';
+Mendapatkan arahan pembuatan dudukan Kubah yang benar dari <b>Pihak Pertama</b> jika dudukan<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-dudukan belum selesai dibuat.<br>';
+belum selesai dibuat.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'b. ',0,0,'R',0);
 $tbl = '
@@ -788,11 +787,11 @@ $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1. ',0,0,'R',0);
 $tbl = '
-Masa Garansi yang  ditetapkan adalah selama 5 (lima) tahun kalender masehi terhitung sejak<br>';
+Masa Garansi yang  ditetapkan adalah selama 5 (lima) tahun kalender masehi terhitung sejak telah <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-telah selesainya penyelesaian Pekerjaan oleh <b>Pihak Pertama</b>.<br>';
+selesainya penyelesaian Pekerjaan oleh <b>Pihak Pertama</b>.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2. ',0,0,'R',0);
 $tbl = '
@@ -806,7 +805,17 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(6,5,'',0,0,'R',0);
 $pdf->Cell(14,5,'b. ',0,0,'R',0);
 $tbl = '
-Kerusakan Kubah disebabkan karena kesalahan <b>Pihak Pertama</b> atau kualitas kubah yang<br>';
+Kerusakan Kubah disebabkan karena kesalahan <b>Pihak Pertama</b> atau kualitas kubah yang tidak<br>';
+$pdf->writeHTML($tbl);
+$pdf->Cell(6,5,'',0,0,'R',0);
+$pdf->Cell(14,5,' ',0,0,'R',0);
+$tbl = '
+baik. Kerusakan yang disebabkan karena kelalaian  <b>Pihak  Kedua</b>  atau Pihak Ketiga tidak bisa <br>';
+$pdf->writeHTML($tbl);
+$pdf->Cell(6,5,'',0,0,'R',0);
+$pdf->Cell(14,5,' ',0,0,'R',0);
+$tbl = '
+mendapatkan garansi dari Pihak Pertama. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(6,5,'',0,0,'R',0);
 $pdf->Cell(14,5,'c. ',0,0,'R',0);
@@ -819,10 +828,10 @@ $pdf->MultiCell(120,5,'- Ketahanan Konstruksi
 - Kobocoran Kubah 
 ',0,'B',0);
 $pdf->Cell(20,5,'',0,0,'R',0);
-$tbl = 'Pemberian garansi selain daripada hal sebagaimana tersebut pada point c ayat (i) s/d (iii) <br>';
+$tbl = 'Pemberian garansi selain daripada hal sebagaimana tersebut pada point c  ayat (i) s/d (iii) akan<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
-$tbl = 'akan diberikan berdasarkan hak prerogative <b>Pihak Pertama</b>. <br>';
+$tbl = 'diberikan berdasarkan hak prerogative <b>Pihak Pertama</b>. <br>';
 $pdf->writeHTML($tbl);
 
 if ($hasil['jml']==2) {
@@ -842,9 +851,9 @@ if ($hasil['jml']==2) {
 }
 
 $pdf->Cell(13,5,'3.',0,0,'R',0);
-$tbl = 'Garansi tidak berlaku apabila penyebab kerusakan adalah karena keadaan memaksa <i>(force<br>';
+$tbl = 'Garansi  tidak  berlaku  apabila   penyebab   kerusakan  adalah  karena  keadaan  memaksa  <i>(force<br>';
 $pdf->writeHTML($tbl);
-$pdf->Cell(20,5,'',0,0,'R',0);
+$pdf->Cell(13,5,'',0,0,'R',0);
 $tbl = '
 majeure)</i> sebagaimana dimaksud pada Pasal 9 Perjanjian ini.<br>';
 $pdf->writeHTML($tbl);
@@ -859,11 +868,11 @@ $pdf->Ln(10);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1. ',0,0,'R',0);
 $tbl = '
-Para Pihak dapat diberikan keringanan atau dibebaskan dari tanggung jawab dalam Perjanjian <br>';
+Para  Pihak dapat diberikan keringanan atau dibebaskan dari tanggung jawab dalam Perjanjian  ini<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-ini apabila terjadi keadaan memaksa <i>(force majeure)</i>.<br>';
+apabila terjadi keadaan memaksa <i>(force majeure)</i>.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2. ',0,0,'R',0);
 $tbl = '
@@ -871,35 +880,35 @@ Keadaan memaksa <i>(force majeure)</i> yang dimaksud dalam ayat  (1) pasal ini a
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'a.',0,0,'R',0);
 $tbl = '
-Hujan  saat  pemasangan  dan  bencana  alam (gempa  bumi, tsunami,  angin  topan, tanah<br>';
+ Hujan  saat  pemasangan  dan  bencana   alam   (gempa  bumi, tsunami,  angin  topan,  tanah<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-longsor, banjir, gunung meletus), Wabah penyakit baik yangmenular maupun tidak menular  <br>';
+ longsor,  banjir,  gunung meletus), Wabah penyakit baik yangmenular  maupun  tidak  menular<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-yang dinyatakan oleh pemerintah sebagai pandemi,  kebakaran, Kerusuhan, Teror, Perang <br>';
+ yang dinyatakan  oleh  pemerintah  sebagai  pandemi,  kebakaran,  Kerusuhan, Teror, Perang <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-yang dapat mengakibatkan kerusakan dan terlambatnya pelaksanaan pekerjaan.<br>';
+ yang dapat mengakibatkan kerusakan dan terlambatnya pelaksanaan pekerjaan.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'b.',0,0,'R',0);
 $tbl = '
-Adanya pemogokan pekerja yang bukan disebabkan oleh kesalahan <b>Pihak Kedua</b>.<br>';
+ Adanya pemogokan pekerja yang bukan disebabkan oleh kesalahan <b>Pihak Kedua</b>.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'c.',0,0,'R',0);
 $tbl = '
-Keterlambatan  pengiriman  barang  yang  disebabkan  oleh  Pihak  Ekspedisi,  Embargo <br>';
+ Keterlambatan   pengiriman   barang   yang   disebabkan   oleh   Pihak   Ekspedisi,   Embargo <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-(didefinisikan sebagai waktu melebihi 30 hari sejak hari kedatangan dari kapal-kapal yang<br>';
+ (didefinisikan sebagai waktu  melebihi  30  hari  sejak  hari  kedatangan dari kapal-kapal yang<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-siap pembongkaran muatan);<br>';
+ siap pembongkaran muatan);<br>';
 $pdf->writeHTML($tbl);
 
 if ($hasil['jml']!=2) {
@@ -921,27 +930,27 @@ if ($hasil['jml']!=2) {
 
 $pdf->Cell(20,5,'d.',0,0,'R',0);
 $tbl = '
-Pemberontakan, kerusuhan massal, huru hara, perebutan kekuasaan, gangguan sosial, <br>';
+ Pemberontakan,  kerusuhan  massal,  huru  hara,   perebutan   kekuasaan,  gangguan  sosial, <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-pemogokan atau <i>lock out</i>, pemblokiran oleh orang-orang selain personil Kontraktor atau <br>';
+ pemogokan  atau  <i>lock  out</i>,  pemblokiran  oleh  orang-orang  selain  personil  Kontraktor  atau<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
-subkontraktor;<br>';
+ subkontraktor;<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'e.',0,0,'R',0);
 $tbl = '
-Perubahan peraturan perundang-undangan nasional maupun daerah secara material;<br>';
+ Perubahan peraturan perundang-undangan nasional maupun daerah secara material;<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
-Pihak yang menjadi terhambat pemenuhan kewajibannya karena <i>force majeure</i> harus <br>';
+Pihak   yang   menjadi   terhambat    pemenuhan   kewajibannya    karena   <i>force   majeure</i>   harus<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-memberitahukan secara tertulis kepada pihak lainnya dalam Perjanjian ini paling lambat 7 x 24 <br>';
+memberitahukan secara tertulis kepada  pihak  lainnya  dalam  Perjanjian  ini  paling lambat 7 x 24 <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -949,7 +958,7 @@ jam setelah kejadian tersebut.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'4.',0,0,'R',0);
 $tbl = '
-Pihak yang menerima pemberitahuan <i>force majeure</i>, wajib memberikan jawaban  paling lambat <br>';
+Pihak yang menerima pemberitahuan  <i>force  majeure</i>,  wajib  memberikan jawaban  paling lambat <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -957,19 +966,19 @@ waktu 7 x 24 jam. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'5.',0,0,'R',0);
 $tbl = '
-Apabila Pihak yang menerima pemberitahuan <i>force majeure</i> tidak memberikan jawaban <br>';
+Apabila   Pihak   yang   menerima   pemberitahuan   <i>force   majeure</i>   tidak   memberikan  jawaban <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-sebagaimana tersebut pada ayat (4) maka pihak tersebut menerima kondisi <i>force majeure</i>.<br>';
+tersebut pada ayat (4) maka pihak tersebut menerima kondisi <i>force majeure</i>.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'6.',0,0,'R',0);
 $tbl = '
-<b>Pihak Pertama</b> berhak untuk tetap menerima pembayaran dari <b>Pihak Kedua</b> atas pekerjaan <br>';
+<b>Pihak Pertama</b>  berhak  untuk  tetap  menerima  pembayaran  dari  <b>Pihak  Kedua</b>  atas pekerjaan <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-yang sebagian atau seluruhnya sudah diselesaikan oleh <b>Pihak Kedua</b> meski terjadi <i>Force  <br>';
+yang  sebagian  atau  seluruhnya  sudah   diselesaikan   oleh  <b>Pihak  Kedua</b>  meski  terjadi  <i>Force<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -986,7 +995,7 @@ $pdf->Ln(5);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1.',0,0,'R',0);
 $tbl = '
-Pemutusan Perjanjian ini dapat dilakukan oleh Para Pihak tanpa perlu meminta putusan  <br>';
+Pemutusan  Perjanjian  ini   dapat   dilakukan   oleh   Para   Pihak   tanpa  perlu  meminta  putusan<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -994,27 +1003,27 @@ pengadilan.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2.',0,0,'R',0);
 $tbl = '
-Apabila <b>Pihak Kedua</b> memutuskan kontrak kerja ini secara sepihak maka <b>Pihak Kedua</b>  <br>';
+Apabila <b>Pihak Kedua</b> memutuskan kontrak kerja ini secara sepihak maka <b>Pihak Kedua</b> dikenakan <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-dikenakan denda 5% (Lima perseratus) dari Harga Borongan dan uang yang telah dibayarkan <br>';
+denda 5% (Lima perseratus) dari Harga  Borongan  dan uang yang telah dibayarkan kepada <b>Pihak<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-kepada <b>Pihak Pertama</b> tidak dapat diminta kembali. <br>';
+Pertama</b> tidak dapat diminta kembali. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
-Dalam hal <b>Pihak Pertama</b> yang memutuskan Perjanjian ini secara sepihak, maka <b>Pihak  <br>';
+Dalam hal <b>Pihak Pertama</b>  yang memutuskan Perjanjian ini secara sepihak, maka <b>Pihak Pertama</b><br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-Pertama</b> dikenakan denda 5% (Lima perseratus) dari Harga Borongan  dan semua pembayaran<br>';
+dikenakan denda 5% (Lima perseratus)  dari Harga Borongan  dan semua pembayaran yang telah<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-yang telah dibayarkan akan dikembalikan kepada <b>Pihak Kedua</b>. <br>';
+dibayarkan akan dikembalikan kepada <b>Pihak Kedua</b>. <br>';
 $pdf->writeHTML($tbl);
 
 if ($hasil['jml']==2) {
@@ -1044,27 +1053,27 @@ $pdf->Ln(5);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1.',0,0,'R',0);
 $tbl = '
-Jika terjadi kesalahan pekerjaan yang disebabkan karena kesalahan <b>Pihak Kedua</b> seperti <br>';
+Jika  terjadi  kesalahan   pekerjaan   yang   disebabkan   karena   kesalahan  <b>Pihak  Kedua</b>  seperti<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-misalnya kesalahan pembuatan dudukan tidak sesuai arahan <b>Pihak Pertama</b>, maka <b>Pihak  <br>';
+misalnya kesalahan pembuatan dudukan tidak sesuai  arahan <b>Pihak Pertama</b>, maka <b>Pihak Kedua</b><br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '
-Kedua</b> bertanggung jawab sepenuhnya atas segala biaya yang timbul. <br>';
+bertanggung jawab sepenuhnya atas segala biaya yang timbul. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2.',0,0,'R',0);
 $tbl = '
-Jika hasil pekerjaan musnah, rusak, tidak memenuhi spesifikasi teknik atau tidak rapi dengan <br>';
+Jika hasil pekerjaan musnah, rusak, tidak  memenuhi  spesifikasi teknik atau tidak rapi dengan cara<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-cara apapun sebelum diserahkan kepada <b>Pihak Kedua</b>, kecuali keadaan <i>force majeure</i>, maka <br>';
+apapun sebelum diserahkan kepada  <b>Pihak  Kedua</b>,   kecuali  keadaan <i>force majeure</i>, maka <b>Pihak<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-<b>Pihak Pertama</b> bertanggung jawab sepenuhnya atas segala kerugian yang timbul.<br>';
+Pertama</b> bertanggung jawab sepenuhnya atas segala kerugian yang timbul.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Ln(8);
 $pdf->SetFont('helvetica', 'b', 11);
@@ -1078,7 +1087,7 @@ $pdf->Ln(5);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1.',0,0,'R',0);
 $tbl = '
-Apabila terdapat rencana penambahan atau pengurangan Pekerjaan, maka Pihak yang  <br>';
+Apabila  terdapat   rencana    penambahan    atau    pengurangan    Pekerjaan,   maka  Pihak  yang<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -1086,23 +1095,23 @@ mengusulkan hal tersebut wajib memberitahukannya kepada Pihak lain. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2.',0,0,'R',0);
 $tbl = '
-Biaya atas penambahan atau pengurangan Pekerjaan tidak termasuk dalam Harga Borongan <br>';
+Biaya atas penambahan atau pengurangan Pekerjaan tidak termasuk dalam Harga Borongan pada<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-pada Perjanjian ini dan akan disepakati bersama oleh Para Pihak baik melalui Adendum <br>';
+Perjanjian ini dan akan disepakati bersama  oleh Para Pihak baik melalui Adendum Perjanjian atau<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-Perjanjian atau pembuatan perjanjian baru.<br>';
+pembuatan perjanjian baru.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
-Jika <b>Pihak Kedua</b> berkehendak untuk mengganti salah satu atau beberapa material dari setiap.<br>';
+Jika <b>Pihak Kedua</b> berkehendak  untuk   mengganti   salah  satu atau beberapa material dari setiap<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh <b>Pihak Pertama</b><br>';
+pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh <b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 
 if ($hasil['jml']!=2) {
@@ -1130,7 +1139,7 @@ $pdf->Ln(5);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(14,5,'1.',0,0,'R',0);
 $tbl = '
-Hal-hal yang belum ditetapkan dalam Perjanjian ini akan ditentukan kemudian atas persetujuan <br>';
+Hal-hal yang belum ditetapkan  dalam  Perjanjian  ini  akan  ditentukan  kemudian atas persetujuan <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
@@ -1138,23 +1147,19 @@ Para Pihak. <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'2.',0,0,'R',0);
 $tbl = '
-Demikian Surat Perjanjian ini dibuat rangkap 2 (dua) masing-masing bermaterai cukup yang <br>';
+Demikian  Surat  Perjanjian  ini  dibuat  rangkap  2  (dua)  masing-masing  bermaterai  cukup  yang<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
-mempunyai kekuatan hukum yang sama yang dipegang oleh masing-masing pihak dan berlaku <br>';
+mempunyai  kekuatan  hukum  yang  sama yang dipegang oleh  masing-masing pihak dan berlaku <br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 $tbl = '
 sejak ditandatangani Surat Perjanjian ini.<br>';
 $pdf->writeHTML($tbl);
-$pdf->Cell(14,5,' ',0,0,'R',0);
-$tbl = '
-disetujui oleh kedua belah pihak.<br>';
-$pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
-Para Pihak beritikad baik untuk melaksanakan Surat Perjanjian Kerja ini sesuai dengan isinya.<br>';
+Para Pihak beritikad baik  untuk  melaksanakan  Surat  Perjanjian  Kerja  ini  sesuai dengan isinya.<br>';
 $pdf->writeHTML($tbl);
 $pdf->Ln(5);
 $arr = explode('-', $hasil['tanggal']);
