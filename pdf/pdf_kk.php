@@ -141,7 +141,7 @@ $pdf->Ln(-1);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
-$pdf->Ln(57);
+$pdf->Ln(55);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(128,2,'',0,0,'L',0);
