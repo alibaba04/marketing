@@ -141,7 +141,7 @@ $pdf->Ln(-1);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
-$pdf->Ln(55);
+$pdf->Ln(57);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(128,2,'',0,0,'L',0);
@@ -913,7 +913,7 @@ $pdf->writeHTML($tbl);
 
 if ($hasil['jml']!=2) {
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(18);
+  $pdf->Ln(10);
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);
@@ -1189,7 +1189,7 @@ $pdf->SetMargins(13, 10, 10, true);
 if ($hasil['jml']==2) {
   $pdf->Ln(35);
 }else{
-  $pdf->Ln(147);
+  $pdf->Ln(155);
 }
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
