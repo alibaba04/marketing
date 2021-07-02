@@ -141,7 +141,7 @@ $pdf->Ln(-1);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
-$pdf->Ln(55);
+$pdf->Ln(52);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(128,2,'',0,0,'L',0);
@@ -1161,7 +1161,7 @@ $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
 Para Pihak beritikad baik  untuk  melaksanakan  Surat  Perjanjian  Kerja  ini  sesuai dengan isinya.<br>';
 $pdf->writeHTML($tbl);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $arr = explode('-', $hasil['tanggal']);
 $newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];
 $tbl = '
@@ -1171,25 +1171,24 @@ Tanggal   : '.$newDate.'
 $pdf->writeHTML($tbl);
 
 $pdf->SetFont('helvetica', 'b', 11);
-$pdf->Ln(5);
-$pdf->Cell(40,5,'Pihak Pertama',0,0,'R',0);
-$pdf->Cell(105,5,' ',0,0,'R',0);
+$pdf->Ln(10);
+$pdf->Cell(50,5,'Pihak Pertama',0,0,'L',0);
+$pdf->Cell(85,5,' ',0,0,'R',0);
 $pdf->Cell(20,5,'Pihak Kedua',0,0,'L',0);
-$pdf->Ln(30);
+$pdf->Ln(35);
 $pdf->SetFont('helvetica','BU');
-$pdf->Cell(50,5,'ANDIK NUR SETIAWAN',0,0,'C',0);
-$pdf->Cell(98,5,'',0,0,'R',0);
-$pdf->Cell(20,5,strtoupper($hasil['nama_cust']),0,1,'C',0);
+$pdf->Cell(50,5,'ANDIK NUR SETIAWAN',0,0,'L',0);
+$pdf->Cell(85,5,'',0,0,'R',0);
+$pdf->Cell(20,5,strtoupper($hasil['nama_cust']),0,1,'L',0);
 $pdf->SetFont('helvetica','');
-$pdf->Cell(2,5,'',0,0,'L',0);
-$pdf->Cell(55,5,'Direktur PT  Anugerah Kubah Indonesia',0,0,'L',0);
-$pdf->Cell(130,5,'',0,0,'R',0);
-
+$pdf->Cell(50,5,'Direktur PT  Anugerah Kubah Indonesia',0,0,'L',0);
+$pdf->Cell(85,5,'',0,0,'R',0);
+$pdf->Cell(20,5,ucwords($hasil['jabatan']),0,1,'L',0);
 $pdf->SetMargins(13, 10, 10, true);
 if ($hasil['jml']==2) {
-  $pdf->Ln(35);
+  $pdf->Ln(15);
 }else{
-  $pdf->Ln(155);
+  $pdf->Ln(135);
 }
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
