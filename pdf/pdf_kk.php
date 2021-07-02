@@ -300,9 +300,9 @@ $pdf->Cell(15,5,'1. ',0,0,'R',0);
 $tbl = '
 Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($tharga).'<br>';
 $pdf->writeHTML($tbl);
-$ppn='belum';
+$ppn='sudah';
 if ($hasil['ppn']==1) {
-  $ppn='sudah';
+  $ppn='belum';
 }
 $pdf->Cell(15,5,'',0,0,'R',0);
 $tbl = '
@@ -534,7 +534,11 @@ if ($hasil['jml']==2) {
   
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(40);
+  if ($hasil['project_pemerintah']==1) {
+    $pdf->Ln(48);
+  }else{
+    $pdf->Ln(40);
+  }
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);

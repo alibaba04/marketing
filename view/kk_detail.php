@@ -118,6 +118,13 @@ $(document).ready(function () {
             $("#txtppemerintah").val(0);
         }
     });
+    $("#chktransport").click(function(){ 
+        if ($('#chktransport').is(":checked")) {
+            $("#txttransport").val(1);
+        }else{
+            $("#txttransport").val(0);
+        }
+    });
     $("#color1").click(function(){ 
         $("#color1").val('');
     });
@@ -629,6 +636,8 @@ return true;
                              value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nproyek"]; }?>">
                              <input type="hidden" name="txtppemerintah" id="txtppemerintah" class="form-control" 
                              value="<?php  if($_GET['mode']=='edit'){echo $dataKk["project_pemerintah"]; }else{echo '0';}?>">
+                             <input type="hidden" name="txttransport" id="txttransport" class="form-control" 
+                             value="<?php  if($_GET['mode']=='edit'){echo $dataKk["transport"]; }else{echo '0';}?>">
                             </div>
 
                         </div>
@@ -638,7 +647,13 @@ return true;
                             <textarea class="form-control" rows="3" placeholder="Enter ..." name="txtalamatp" id="txtalamatp"><?php  if($_GET['mode']=='edit'){echo $dataKk["alamat_proyek"]; }?></textarea>
                         </div>
                         <div class="form-group" >
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <label><input type="checkbox" id="chktransport"<?php if($_GET['mode']=='edit'){if ($dataKk["transport"]>0) {
+                                            echo "checked";
+                                        }} ?> >&nbsp;&nbsp;Biaya Transportasi</label>
+                                    </div>
+                                </div><div class="col-lg-3">
                                     <div class="input-group">
                                         <label><input type="checkbox" id="chkppemerintah"<?php if($_GET['mode']=='edit'){if ($dataKk["project_pemerintah"]==1) {
                                             echo "checked";
@@ -820,9 +835,9 @@ return true;
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <input type="text" class="form-control"  name="txtKaligrafi_' . $iJurnal . '" id="txtKaligrafi_' . $iJurnal . '" value="'.number_format($DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format($harga).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
+                                        <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format(round($harga,-6)).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format($harga+$DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format(round($harga+$DetilJurnal["kaligrafi"],-6)).'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div></td>';
                                         $iJurnal++;
