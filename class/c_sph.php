@@ -112,6 +112,7 @@ class c_sph
         $alamat = secureParam($params["provinsi"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
+        $affiliate = secureParam($params["cboAffiliate"],$dbLink);
         $pembuat = $_SESSION["my"]->id;
 		$q3='';
 		try
@@ -143,7 +144,7 @@ class c_sph
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
 
-			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."' WHERE noSph='".$params["txtnoSph"]."'";
+			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."',`affiliate`='".$affiliate."' WHERE noSph='".$params["txtnoSph"]."'";
 			if (!mysql_query( $q3, $dbLink))
 						throw new Exception('Gagal ubah data SPH. ');
 			$jumData = $params["jumAddJurnal"];
