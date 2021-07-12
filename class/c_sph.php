@@ -20,6 +20,9 @@ class c_sph
         $noSph = secureParam($params["txtnoSph"],$dbLink);
         $alamat = secureParam($params["provinsi"],$dbLink);
         $affiliate = secureParam($params["cboAffiliate"],$dbLink);
+        $rangka1 = secureParam($params["rangka1"],$dbLink);
+        $rangka2 = secureParam($params["rangka2"],$dbLink);
+        $rangka3 = secureParam($params["rangka3"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
         $pembuat = $_SESSION["my"]->id;
@@ -59,6 +62,12 @@ class c_sph
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
                     $gold = secureParam($params["chkGold_". $j],$dbLink);
+                    if ($model=='custom') {
+                    	$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka1`, `rangka2`, `rangka3`) ";
+                    	$q7.= "VALUES ('".$noSph."','".$rangka1."', '".$rangka2."', '".$rangka3."');";
+                    	if (!mysql_query( $q7, $dbLink))
+                    		throw new Exception('Gagal tambah data SPH.');
+                    }
                     $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, gold, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
 					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$gold."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
 
@@ -112,6 +121,9 @@ class c_sph
         $alamat = secureParam($params["provinsi"],$dbLink);
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
+        $rangka1 = secureParam($params["rangka1"],$dbLink);
+        $rangka2 = secureParam($params["rangka2"],$dbLink);
+        $rangka3 = secureParam($params["rangka3"],$dbLink);
         $affiliate = secureParam($params["cboAffiliate"],$dbLink);
         $pembuat = $_SESSION["my"]->id;
 		$q3='';
@@ -171,6 +183,11 @@ class c_sph
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
+                    if ($model=='custom') {
+                    	$q7 = "UPDATE `aki_rangka` SET `rangka1`='".$rangka1."',`rangka2`='".$rangka2."',`rangka3`='".$rangka3."' WHERE noSph='".$params["txtnoSph"]."'";
+                    	if (!mysql_query( $q7, $dbLink))
+                    		throw new Exception('Gagal ubah data SPH.');
+                    }
                     $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";
 					$q.= " WHERE idDsph='".$idSph."' ;";
 

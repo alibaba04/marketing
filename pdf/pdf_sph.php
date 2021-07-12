@@ -6,6 +6,8 @@ require_once ("../function/fungsi_convertNumberToWord.php");
 $pdf=new PDF();
 $html="";
 $pdf->AddPage();
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 //HEADER        
 $tgl = '';
 $noSph = ($_GET["noSph"]);
@@ -63,8 +65,16 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     $jumlah = $hasil['jumlah'];
     $luas = '';
     $ongkir += $hasil['transport'];
+    $txtrangka1=$txtrangka2=$txtrangka3='';
     if ($hasil['model'] =='custom') {
         $luas = $hasil['luas'];
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+        $rs3 = mysql_query($q3, $dbLink);
+        while (  $hasil2 = mysql_fetch_array($rs3)) {
+            $txtrangka1 = $hasil2['rangka1'];
+            $txtrangka2 = $hasil2['rangka2'];
+            $txtrangka3 = $hasil2['rangka3'];
+        }
     }else{
         $luas = luas($hasil['d'],$hasil['t'],$hasil['dt']);
     }
@@ -113,18 +123,28 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     $pdf->SetFont('helvetica', '', 11);
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
-    if ($hasil['d']>=6) {
+    if ($hasil['model']=='custom') {
+        $pdf->Cell(143,6,'   '.$txtrangka1,'LR',1,'L',0);
         $pdf->Cell(8,6,'','LR',0,'C',0);
         $pdf->Cell(32,6,'','LR',0,'C',0);
-        $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
-        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(143,6,'   '.$txtrangka2,'LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   '.$txtrangka3,'LR',1,'L',0);
+    }else{
+        $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
+        if ($hasil['d']>=6) {
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
+            $pdf->SetFont('helvetica', '', 11);
+        }
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     }
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     $pdf->Cell(8,6,'','LTR',0,'C',0);
     $pdf->Cell(32,6,'','LTR',0,'C',0);
     $pdf->Cell(40,6,'   ~ Bahan terbuat dari','LT',0,'L',0);
@@ -321,18 +341,28 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
     $pdf->SetFont('helvetica', '', 11);
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
-    if ($hasil['d']>=6) {
+    if ($hasil['model']=='custom') {
+        $pdf->Cell(143,6,'   '.$txtrangka1,'LR',1,'L',0);
         $pdf->Cell(8,6,'','LR',0,'C',0);
         $pdf->Cell(32,6,'','LR',0,'C',0);
-        $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
-        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(143,6,'   '.$txtrangka2,'LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   '.$txtrangka3,'LR',1,'L',0);
+    }else{
+        $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
+        if ($hasil['d']>=6) {
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
+            $pdf->SetFont('helvetica', '', 11);
+        }
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     }
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     $pdf->Cell(8,6,'','LTR',0,'C',0);
     $pdf->Cell(32,6,'','LTR',0,'C',0);
     $pdf->Cell(38,6,'   ~ Bahan terbuat dari','LT',0,'L',0);
@@ -459,18 +489,28 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->SetFont('helvetica', '', 11);
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
-    if ($hasil['d']>=6) {
+    if ($hasil['model']=='custom') {
+        $pdf->Cell(143,6,'   '.$txtrangka1,'LR',1,'L',0);
         $pdf->Cell(8,6,'','LR',0,'C',0);
         $pdf->Cell(32,6,'','LR',0,'C',0);
-        $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
-        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(143,6,'   '.$txtrangka2,'LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   '.$txtrangka3,'LR',1,'L',0);
+    }else{
+        $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
+        if ($hasil['d']>=6) {
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Cell(35,6,'   ~ System Rangka ','L',0,'L',0);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(108,6,'Double Frame (Kremona)','R',1,'L',0);
+            $pdf->SetFont('helvetica', '', 11);
+        }
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     }
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7  mm','LR',1,'L',0);
     $pdf->Cell(8,6,'','LTR',0,'C',0);
     $pdf->Cell(32,6,'','LTR',0,'C',0);
     $pdf->Cell(40,6,'   ~ Bahan terbuat dari','LT',0,'L',0);
@@ -685,11 +725,12 @@ $pdf->Ln(6);
     }
 
 if ($bahan != '0') {
-    if ($nourut<3) {
+    /*if ($nourut<3) {
         $pdf->addpage();
         $pdf->SetMargins(15, 10, 10, true);
-    }
-        $pdf->Ln(6);
+    }*/
+    $pdf->SetMargins(17, 10, 10, true);
+    $pdf->Ln(6);
 }
 
 $pdf->SetFont('helvetica', 'B', 11);
@@ -716,7 +757,8 @@ if ($bahan != '0') {
 }
 
 $pdf->addpage();
-$pdf->SetMargins(15, 10, 10, true);
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 $tbl = '
 <u><b>Rangka Kubah</b></u>    
 ';
@@ -751,8 +793,7 @@ $pdf->image('../dist/img/ttd.jpg',122,204);
 $arr = explode('-', $tgl);
 $newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];
 $pdf->Ln(140);
-
-$pdf->image($imgrangka,12,60,190,120);
+$pdf->image($imgrangka,17,60,184,120);
 $pdf->SetFont('helvetica', '', 12);
 $tbl = '
 Demikian penawaran harga kubah dari kami, atas perhatian dan kerjasamanya kami sampaikan terima kasih.<br>
@@ -769,30 +810,40 @@ $pdf->Cell(120,6,'',0,0,'C',0);
 $pdf->Cell(50,6,'Direktur PT. Anugerah Kubah Indonesia',0,1,'C',0);
 $pdf->addpage();
 $pdf->SetFont('helvetica', 'B', 11);
+$pdf->SetMargins(17, 10, 10, true);
 $pdf->Cell(0,6,'CONTOH MOTIF KUBAH MASJID',0,1,'C',0);
 $pdf->Cell(0,6,'A.  KUBAH MODEL SETENGAH BOLA',0,1,'L',0);
-$pdf->image('../dist/img/setbola.png',12,60,190,202);
+$pdf->image('../dist/img/setbola.png',17,60,184,202);
 $pdf->addpage();
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 $pdf->Cell(0,6,'B.   KUBAH MODEL MADINAH',0,1,'L',0);
-$pdf->image('../dist/img/madinah.png',12,70,190,202);
+$pdf->image('../dist/img/madinah.png',17,70,184,202);
 $pdf->addpage();
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 $pdf->Cell(0,6,'C.   KUBAH MODEL BAWANG',0,1,'L',0);
-$pdf->image('../dist/img/bawang.png',12,70,190,202);
+$pdf->image('../dist/img/bawang.png',17,70,184,202);
 $pdf->addpage();
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 $pdf->Cell(0,6,'D.   KUBAH MODEL PINANG',0,1,'L',0);
-$pdf->image('../dist/img/pinang.png',12,70,190,45);
-$pdf->Ln(58);
+$pdf->image('../dist/img/pinang.png',17,70,184,45);
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(65);
 $pdf->Cell(0,6,'E.  KUBAH CUSTOM',0,1,'L',0);
 $pdf->Ln(45);
 $pdf->image('../dist/img/custom.png',20,130,170,120);
 $pdf->addpage();
 $pdf->Cell(0,6,'CONTOH MOTIF PLAFON AWAN',0,1,'C',0);
 $pdf->SetFont('helvetica', '', 11);
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
 $pdf->Cell(0,6,'*) Motif Plafon Standart adalah Motif Awan, untuk Motif Plafon Kaligrafi dikenakan biaya tambahan.',0,1,'L',0);
-$pdf->image('../dist/img/plafon.png',12,70,190,202);
+$pdf->image('../dist/img/plafon.png',17,70,184,202);
 $pdf->addpage();
 $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(0,6,'CONTOH MOTIF PLAFON KALIGRAFI',0,1,'C',0);
-$pdf->image('../dist/img/plafon2.png',12,70,190,202);
+$pdf->image('../dist/img/plafon2.png',17,70,184,202);
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

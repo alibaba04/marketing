@@ -174,6 +174,10 @@ $(document).ready(function () {
         }
         document.getElementById("pesandel").innerHTML = '<div class="callout callout-info">'+txt+'</div>';
     });
+    $("#closemyCModal").click(function(){ 
+        $("#myCModal").modal('hide');
+    });
+    
 });
 
 </script>
@@ -237,6 +241,29 @@ $(document).ready(function () {
             }
         },"json");
     }
+    function checkKubah() {
+        if ($("#cbomodel").val()=='custom'){
+            $("#myCModal").modal({backdrop: false});
+            var link = window.location.href;
+            var res = link.match(/mode=edit/g);
+            $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
+            if (res == 'mode=edit') {
+                $("#txtrangka1").val($('#rangka1').val());
+                $("#txtrangka2").val($('#rangka2').val());
+                $("#txtrangka3").val($('#rangka3').val());
+            }
+            $('#btnrangka').click(function(){
+                $("#rangka1").val($('#txtrangka1').val());
+                $("#rangka2").val($('#txtrangka2').val());
+                $("#rangka3").val($('#txtrangka3').val());
+                $("#myCModal").modal('hide');
+                $("#myModal").modal('hide');
+                addarray();
+            });
+        }else{
+            addarray();
+        }
+    }
     function addarray() {
         if($("#txtket").val()=='0' )
         {
@@ -278,6 +305,7 @@ $(document).ready(function () {
             $("#txtongkir").focus();
             return false;
         }
+        
 
         var bplafon = $("#txtBiayaPlafon").val().replace(/\./g,'');
         var ket = $("#txtket").val();
@@ -618,7 +646,20 @@ function validasiForm(form)
         </div>
         <div class="col-lg-9" style="padding-right: 0px;padding-left: 5px;">
             <input name="txtnamacust" id="txtnamacust" class="form-control" 
-            value="<?php  if($_GET['mode']=='edit'){$n=$dataSph['nama_cust']; $nm=explode(' ',$n);echo $nm[1]; }?>" placeholder="Client Name">
+            value="<?php  if($_GET['mode']=='edit'){
+                $n=$dataSph['nama_cust'];
+                $nm=[];
+                if(strpos($n, 'Bapak') !== FALSE){
+                    $nm=explode('Bapak',$n);
+                }elseif(strpos($n, 'Ibu') !== FALSE){
+                    $nm=explode('Ibu',$n);
+                }elseif(strpos($n, 'Perusahaan') !== FALSE){
+                    $nm=explode('Perusahaan',$n);
+                }else{
+                    $nm=explode('Panitia',$n);
+                }
+                echo $nm[1]; 
+            }?>" placeholder="Client Name">
         </div>
     </div>
     <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
@@ -647,15 +688,25 @@ function validasiForm(form)
         </div>
         <div class="col-lg-9" style="padding-right: 0px;padding-left: 5px;">
             <input name="txtnmasjid" id="txtnmasjid" class="form-control" 
-            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){$n=$dataSph['masjid']; $nm=explode(' ',$n);echo $nm[1]; }?>">
+            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){$n=$dataSph['masjid']; $nm=explode('Masjid',$n);echo $nm[1]; }?>">
         </div>
     </div>
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
             <?php  
+            $q = "SELECT * from aki_rangka where MD5(noSph)='" . $noSph."'";
+            $sql_rangka = mysql_query($q,$dbLink);
+            $rs_rangka = mysql_fetch_array($sql_rangka);
+           /* echo'<input type="hidden" name="rangka1" id="rangka1" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka1']}.'"/>';
+            echo '<input type="hidden" name="rangka2" id="rangka2" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka2']}.'"/>';
+            echo '<input type="hidden" name="rangka3" id="rangka3" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka3']}.'"/>';*/
+            
             $q = 'SELECT provinsi.id as idP,provinsi.name as pname,kota.id as idK, kota.name as kname FROM provinsi left join kota on provinsi.id=kota.provinsi_id ORDER BY kota.name ASC';
             $sql_provinsi = mysql_query($q,$dbLink);
             ?>
+            <input type="hidden" name="rangka1" id="rangka1" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka1'];} ?>"/>
+            <input type="hidden" name="rangka2" id="rangka2" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka2'];} ?>"/>
+            <input type="hidden" name="rangka3" id="rangka3" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka3'];} ?>"/>
             <select class="form-control select2" name="provinsi" id="provinsi">
                 <?php
                 $selected = "";
@@ -698,7 +749,11 @@ function validasiForm(form)
                 $selected = "";
                 $n=$dataSph["affiliate"];
                 if ($_GET['mode'] == 'edit') {
-                    echo '<option value="'.$n.'">'.$n.'</option>';
+                    if ($n=='') {
+                        echo '<option value="">Affiliate</option>';
+                    }else{
+                        echo '<option value="'.$n.'">'.$n.'</option>';
+                    }
                 }else{
                     echo '<option value="">Affiliate</option>';
                 }
@@ -905,9 +960,31 @@ function validasiForm(form)
                                         </div>
                                         <div class="box-footer" style="padding-top: 10%;"></div>
                                     </div>
-
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myCModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" id="closemyCModal">&times;</button>
+                                                    <h4 class="modal-title">Rangka Kubah <label id="labelclr"></label></h4>
+                                                    <input type="hidden" class="form-control" id="txtnomer" value="">
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" id="txtrangka1" value="~ Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
+                                                        <input type="text" class="form-control" id="txtrangka2" value="~ System Rangka Double Frame (Kremona)" placeholder="#00000">
+                                                        <input type="text" class="form-control" id="txtrangka3" value="~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="button" class="btn btn-primary" value="Add" id="btnrangka">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-primary" value="Save" onclick="addarray();">
+                                        <input type="button" class="btn btn-primary" value="Save" onclick="checkKubah();">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                     </form>
