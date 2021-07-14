@@ -264,6 +264,19 @@ $(document).ready(function () {
             addarray();
         }
     }
+    function prangka() {
+        alert('W A I T');
+        /*var ttable = document.getElementById("rangka");
+        var trow = document.createElement("TR");
+
+        trow.setAttribute('id','trid_'+tcounter);
+        var td = document.createElement("TD");
+        td.setAttribute("align","center");
+        td.innerHTML+='<div class="form-group"><input type="text" class="form-control" id="txtrangka1" value="~ Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder=""></div>';
+        td.style.verticalAlign = 'top';
+        trow.appendChild(td);
+        ttable.appendChild(trow);*/
+    }
     function addarray() {
         if($("#txtket").val()=='0' )
         {
@@ -277,14 +290,14 @@ $(document).ready(function () {
             $("#cbomodel").focus();
             return false;
         }
-        if($("#txtD").val()=='0' )
+        if($("#txtD").val()=='' )
         {
             alert("Diameter harus diisi!");
             $("#txtD").focus();
             return false;
         }
 
-        if($("#txtT").val()=='0' )
+        if($("#txtT").val()=='' )
         {
             alert("Tinggi harus diisi!");
             $("#txtT").focus();
@@ -673,15 +686,15 @@ function validasiForm(form)
                     if ($nm[0]=="Masjid") {
                         $selected = " selected";
                         echo '<option value="Masjid "'.$selected.'>Masjid</option>';
-                        //echo '<option value="Mushola ">Mushola</option>';
-                    }/*elseif ($nm[0]=="Mushola") {
+                        echo '<option value="Atap ">Atap</option>';
+                    }elseif ($nm[0]=="Atap") {
                         $selected = " selected";
                         echo '<option value="Masjid ">Masjid</option>';
-                        echo '<option value="Mushola "'.$selected.'>Mushola</option>';
-                    }*/
+                        echo '<option value="Atap "'.$selected.'>Atap</option>';
+                    }
                 }else{
                     echo '<option value="Masjid ">Masjid</option>';
-                    //echo '<option value="Mushola ">Mushola</option>';
+                    echo '<option value="Atap ">Atap</option>';
                 }
                 ?>
             </select>
@@ -884,6 +897,11 @@ function validasiForm(form)
                                             <option value='Mahrab'>Mahrab</option>;
                                             <option value='Anakan'>Anakan</option>;
                                             <option value='Menara'>Menara</option>;
+                                            <?php
+                                            if ($_SESSION['my']->privilege == 'ADMIN') {
+                                                echo '<option value=Atap>Atap</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="form-group" >
@@ -919,17 +937,17 @@ function validasiForm(form)
                                         </div>
                                         <div class="col-lg-6" id="dt">
                                             <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
-                                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="" ><span class="input-group-addon">meter</span></div>
+                                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="0" ><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
                                                     <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
-                                                    value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                                                    value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
                                                 <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
-                                                value="" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                                                value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6" id="dt">
                                                 <label class="control-label" for="txtKeteranganKas">Plafon Motif</label><div class="input-group"><span class="input-group-addon">Rp</span>
@@ -939,7 +957,7 @@ function validasiForm(form)
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Transport</label><div class="input-group"><span class="input-group-addon">Rp</span>
                                                     <input type="text" name="txtongkir" id="txtongkir" class="form-control"
-                                                    value="" onfocus="" placeholder="0" ></div>
+                                                    value="0" onfocus="" placeholder="0" ></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Luas</label><div class="input-group"><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  type="text" name="idluas" id="idluas" class="form-control" placeholder="0" 
@@ -949,13 +967,13 @@ function validasiForm(form)
                                                 <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="text" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0"><span class="input-group-addon">%</span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control" value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaEn"checked></span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control" value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaEn"checked></span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Harga Titanium</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control" value=""><span class="input-group-addon"><input type="checkbox" id="chkHargaTm"checked></span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Harga Titanium</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control" value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaTm"checked></span></div>
                                             </div>
                                         </div>
                                         <div class="box-footer" style="padding-top: 10%;"></div>
@@ -975,7 +993,8 @@ function validasiForm(form)
                                                         <input type="text" class="form-control" id="txtrangka1" value="~ Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
                                                         <input type="text" class="form-control" id="txtrangka2" value="~ System Rangka Double Frame (Kremona)" placeholder="#00000">
                                                         <input type="text" class="form-control" id="txtrangka3" value="~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">
-                                                    </div>
+                                                    </div><center>
+                                                    <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <input type="button" class="btn btn-primary" value="Add" id="btnrangka">

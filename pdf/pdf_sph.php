@@ -96,17 +96,25 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     
 //if bahan ga 
 if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
-    if ($dt != 0){
-        $pdf->SetMargins(34, 10, 10, true);
+    if ($hasil['model'] =='custom') {
+        $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+        $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
-        $pdf->SetMargins(50, 10, 10, true);
-        $pdf->Ln(7);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
-        $pdf->subWrite(5,'2','',6,4);
+        if ($dt != 0){
+            $pdf->SetMargins(34, 10, 10, true);
+            $pdf->Ln(10);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }else{
+            $pdf->SetMargins(50, 10, 10, true);
+            $pdf->Ln(7);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }
     }
+    
     $pdf->Ln(2);
     $pdf->SetMargins(13, 10, 10, true);
     $tbl = '<br>
@@ -315,16 +323,23 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
     $pdf->SetAutoPageBreak(TRUE, 0);
-    if ($dt != 0){
-        $pdf->SetMargins(35, 10, 10, true);
-        $pdf->Ln(1);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+    if ($hasil['model'] =='custom') {
+        $pdf->SetMargins(74, 10, 10, true);
+        $pdf->Ln(0);
+        $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
-        $pdf->SetMargins(50, 10, 10, true);
-        $pdf->Ln(1);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
-        $pdf->subWrite(5,'2','',6,4);
+        if ($dt != 0){
+            $pdf->SetMargins(34, 10, 10, true);
+            $pdf->Ln(10);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }else{
+            $pdf->SetMargins(50, 10, 10, true);
+            $pdf->Ln(7);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }
     }
     $pdf->Ln(5);
     $pdf->SetMargins(13, 10, 10, true);
@@ -462,16 +477,23 @@ if ($hasil['d']>=5 && $hasil['d']<6){
 
 //if bahan Titanium 
 if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
-    if ($dt != 0){
-        $pdf->SetMargins(34, 10, 10, true);
+    if ($hasil['model'] =='custom') {
+        $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+        $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
-        $pdf->SetMargins(50, 10, 10, true);
-        $pdf->Ln(7);
-        $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
-        $pdf->subWrite(5,'2','',6,4);
+        if ($dt != 0){
+            $pdf->SetMargins(34, 10, 10, true);
+            $pdf->Ln(10);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter Diameter Tengah '.$dt.' dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }else{
+            $pdf->SetMargins(50, 10, 10, true);
+            $pdf->Ln(7);
+            $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
+            $pdf->subWrite(5,'2','',6,4);
+        }
     }
     $pdf->Ln(2);
     $pdf->SetMargins(13, 10, 10, true);
