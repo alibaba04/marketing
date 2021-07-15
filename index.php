@@ -60,7 +60,7 @@ require_once('./function/fungsi_formatdate.php');
     echo '<body class="hold-transition login-page">';
 } else {
     ?>
-    <body class="hold-transition skin-green sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini fixed">
         <?php
     }
     ?>
