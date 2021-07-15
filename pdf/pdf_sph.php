@@ -90,7 +90,7 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     
 //if bahan ga 
 if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
-    if ($hasil['model'] =='custom') {
+    if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
         $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
@@ -323,7 +323,7 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
     $pdf->SetAutoPageBreak(TRUE, 0);
-    if ($hasil['model'] =='custom') {
+    if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(0);
         $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
@@ -483,7 +483,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
 
 //if bahan Titanium 
 if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
-    if ($hasil['model'] =='custom') {
+    if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
         $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
