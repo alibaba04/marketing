@@ -248,11 +248,19 @@ $(document).ready(function () {
             var res = link.match(/mode=edit/g);
             $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
             if (res == 'mode=edit') {
+                var jumrangka = parseInt($("#norangka").val())-3;
+                for (var $k = 0; $k < jumrangka ; $k++){
+                    $("#txtrangka"+$k).val($('#rangka'+$k).val());
+                }
                 $("#txtrangka1").val($('#rangka1').val());
                 $("#txtrangka2").val($('#rangka2').val());
                 $("#txtrangka3").val($('#rangka3').val());
             }
             $('#btnrangka').click(function(){
+                var jumrangka = parseInt($("#norangka").val())-3;
+                for (var $k = 1; $k <= jumrangka ; $k++){
+                    $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
+                }
                 $("#rangka1").val($('#txtrangka1').val());
                 $("#rangka2").val($('#txtrangka2').val());
                 $("#rangka3").val($('#txtrangka3').val());
@@ -265,17 +273,16 @@ $(document).ready(function () {
         }
     }
     function prangka() {
-        alert('W A I T');
-        /*var ttable = document.getElementById("rangka");
-        var trow = document.createElement("TR");
-
-        trow.setAttribute('id','trid_'+tcounter);
-        var td = document.createElement("TD");
-        td.setAttribute("align","center");
-        td.innerHTML+='<div class="form-group"><input type="text" class="form-control" id="txtrangka1" value="~ Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder=""></div>';
-        td.style.verticalAlign = 'top';
-        trow.appendChild(td);
-        ttable.appendChild(trow);*/
+        var norangka = parseInt($("#norangka").val())+1;
+        var trow = document.createElement("DIV");
+        var trow2 = document.createElement("DIV");
+        var inp = document.getElementById("rangka");
+        var inp2 = document.getElementById("nrangka");
+        trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'" value="">';
+        trow2.innerHTML+='<input type="hidden" class="form-control" id="rangka'+norangka+'" name="rangka'+norangka+'" value="">';
+        inp.appendChild(trow);
+        inp2.appendChild(trow2);
+        $("#norangka").val(norangka);
     }
     function addarray() {
         if($("#txtket").val()=='0' )
@@ -709,17 +716,27 @@ function validasiForm(form)
             <?php  
             $q = "SELECT * from aki_rangka where MD5(noSph)='" . $noSph."'";
             $sql_rangka = mysql_query($q,$dbLink);
-            $rs_rangka = mysql_fetch_array($sql_rangka);
-           /* echo'<input type="hidden" name="rangka1" id="rangka1" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka1']}.'"/>';
-            echo '<input type="hidden" name="rangka2" id="rangka2" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka2']}.'"/>';
-            echo '<input type="hidden" name="rangka3" id="rangka3" value="'if($_GET['mode']=='edit'){echo $rs_rangka['rangka3']}.'"/>';*/
-            
+            $nor=1;
+            while ($rs_rangka = mysql_fetch_array($sql_rangka)) {
+                if($_GET['mode']=='edit'){
+                    echo '<input type="hidden" name="rangka'.$nor.'" id="rangka'.$nor.'" value="'.$rs_rangka["rangka"].'" />';
+                }
+                $nor++;
+            }
             $q = 'SELECT provinsi.id as idP,provinsi.name as pname,kota.id as idK, kota.name as kname FROM provinsi left join kota on provinsi.id=kota.provinsi_id ORDER BY kota.name ASC';
             $sql_provinsi = mysql_query($q,$dbLink);
+            if($_GET['mode']!='edit'){
+                echo ' <input type="hidden" name="rangka1" id="rangka1" value=""/>
+                <input type="hidden" name="rangka2" id="rangka2" value=""/>
+                <input type="hidden" name="rangka3" id="rangka3" value=""/>
+                <div id="nrangka"></div>';
+            }
             ?>
-            <input type="hidden" name="rangka1" id="rangka1" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka1'];} ?>"/>
-            <input type="hidden" name="rangka2" id="rangka2" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka2'];} ?>"/>
-            <input type="hidden" name="rangka3" id="rangka3" value="<?php if($_GET['mode']=='edit'){echo $rs_rangka['rangka3'];} ?>"/>
+           
+            <?php 
+                
+            ?>
+            
             <select class="form-control select2" name="provinsi" id="provinsi">
                 <?php
                 $selected = "";
@@ -866,6 +883,7 @@ function validasiForm(form)
                 </tbody>
             </table>
             <input type="hidden" value="<?php if($_GET['mode']=='edit'){echo $iJurnal;}else{echo '0';} ?>" id="jumAddJurnal" name="jumAddJurnal"/>
+            
             <input type="hidden" value="" id="chkeditval" name="chkeditval"/>
             <input type="hidden" value="" id="validEdit" name="validEdit"/>
             <div class="container">
@@ -990,9 +1008,30 @@ function validasiForm(form)
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="txtrangka1" value="~ Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
-                                                        <input type="text" class="form-control" id="txtrangka2" value="~ System Rangka Double Frame (Kremona)" placeholder="#00000">
-                                                        <input type="text" class="form-control" id="txtrangka3" value="~ Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">
+                                                        <?php 
+                                                        $q="SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+                                                        $rsDetilJurnal = mysql_query($q, $dbLink);
+                                                        $nor=0;
+                                                        while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
+                                                            $nor++;
+                                                            if ($_GET["mode"] == "edit") {
+                                                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
+                                                                
+                                                            }
+                                                        }
+
+                                                        if ($_GET["mode"] != "edit") {
+                                                            echo '<input type="text" class="form-control" id="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
+                                                            <input type="text" class="form-control" id="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
+                                                            <input type="text" class="form-control" id="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
+                                                            echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
+                                                        }else{
+                                                            echo '<input type="hidden"  id="norangka" name="norangka" value="'.$nor.'" >';
+                                                        }
+                                                        ?>
+                                                        
+                                                        
+                                                        <div id="rangka"></div>
                                                     </div><center>
                                                     <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
                                                 </div>
