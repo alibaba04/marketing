@@ -98,9 +98,10 @@ class c_kk
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
                     $transport = secureParam($params["txttransport"], $dbLink);
                     $kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+                    $hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
                     
-                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`, `transport`,`filekubah`, `filekaligrafi`) ";
-					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
+                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`,`filekubah`, `filekaligrafi`) ";
+					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('Gagal tambah data KK.');
@@ -265,6 +266,7 @@ class c_kk
                     $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
 					$kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
 					$transport = secureParam($params["txttransport"], $dbLink);
+					$hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
 					if ($dtengah == 0) {
                     	$luas = ($diameter * $tinggi * 3.14);
                     }else{
@@ -276,7 +278,7 @@ class c_kk
                     }
 
                     $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
-                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`ppn`='".$project_pemerintah."',`harga`='".$h."'".$qimg;
+                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`ppn`='".$project_pemerintah."',`hppn`='".$hppn."',`harga`='".$h."'".$qimg;
 					$q.= " WHERE idKk='".$idKk."' ;";
 
 					if (!mysql_query( $q, $dbLink))

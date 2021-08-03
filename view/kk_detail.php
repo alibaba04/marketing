@@ -167,8 +167,10 @@ function hitungtotal($param) {
             var ppn = (parseInt(parseFloat(data.total.replace(/,/g, '')))*0.1)+parseInt(parseFloat(data.total.replace(/,/g, '')))
             var hasil = ppn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $('#txtHarga_'+$param).val(hasil);
+            $('#txtHargappn_'+$param).val((parseInt(parseFloat(data.total.replace(/,/g, '')))*0.1));
         }else{
             $('#txtHarga_'+$param).val(data.total);
+            $('#txtHargappn_'+$param).val(0);
         }
         
     },"json");
@@ -840,10 +842,16 @@ return true;
                                         }
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <input type="text" class="form-control"  name="txtKaligrafi_' . $iJurnal . '" id="txtKaligrafi_' . $iJurnal . '" value="'.number_format($DetilJurnal["kaligrafi"]).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
+                                        if ($_GET['mode']!='edit') {
+                                            echo '<input type="hidden" name="txtHargappn_' . $iJurnal . '" id="txtHargappn_' . $iJurnal . '" value=""/>';
+                                        }else{
+                                            echo '<input type="hidden" name="txtHargappn_' . $iJurnal . '" id="txtHargappn_' . $iJurnal . '" value="'.$DetilJurnal["hppn"].'"/>';
+                                            $harga = $harga-$DetilJurnal["hppn"];
+                                        }
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format(round($harga,-6)).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group">
-                                        <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format(round($harga+$DetilJurnal["kaligrafi"],-6)).'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.number_format(($harga+$DetilJurnal["kaligrafi"]+$DetilJurnal["hppn"])).'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div></td>';
                                         $iJurnal++;
