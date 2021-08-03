@@ -24,7 +24,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
           <div class="box box-solid">
             <!-- /.box-header -->
             <div class="box-body">
-              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                   <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                   <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
@@ -69,8 +69,8 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
                   <span class="fa fa-angle-right"></span>
                 </a>
-              </div>
-              <!-- <div class="col-md-6">
+              </div> -->
+              <div class="col-md-6">
                 <div class="box box-danger">
                   <div class="box-header with-border">
                     <h3 class="box-title">Data SPH</h3>
@@ -89,7 +89,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
               <div class="col-md-6">
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Area Chart</h3>
+                    <h3 class="box-title">Area Chart SPH</h3>
 
                     <div class="box-tools pull-right">
                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -103,7 +103,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -125,7 +125,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
         data: [
         {label: "Mr. Reza", value: data.reza},
         {label: "Mr. Antok", value: data.antok},
-        {label: "Mr. Udin", value: data.udin},
+        {label: "Mr. Agus", value: data.agus},
         {label: "Mrs. Tina", value: data.tina}
         ],
         hideHover: 'auto'

@@ -48,10 +48,10 @@ case "getOngkir":
 break;
 
 case "getcountSPH":
-    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'udin', kodeUser, NULL)) AS udin,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE 1", $dbLink);
+    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'agus', kodeUser, NULL)) AS agus,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE 1", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
-            echo json_encode( array("reza"=>$data['reza'],"antok"=>$data['antok'],"udin"=>$data['udin'],"tina"=>$data['tina']));
+            echo json_encode( array("reza"=>$data['reza'],"antok"=>$data['antok'],"agus"=>$data['agus'],"tina"=>$data['tina']));
         } 
         break;
     }
