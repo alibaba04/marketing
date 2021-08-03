@@ -117,6 +117,7 @@ $(document).ready(function () {
         }else{
             $("#txtppemerintah").val(0);
         }
+        hitungtotal(0);
     });
     $("#chktransport").click(function(){ 
         if ($('#chktransport').is(":checked")) {
@@ -162,7 +163,14 @@ function hitungtotal($param) {
     var hkubah = parseFloat($('#txtHargaKubah_'+$param).val().replace(/,/g, ''));
     $.post("function/ajax_function.php",{ fungsi: "hitungtotal",kaligrafi:kaligrafi,hkubah:hkubah},function(data)
     {
-        $('#txtHarga_'+$param).val(data.total);
+        if ($('#chkppemerintah').is(":checked")) {
+            var ppn = (parseInt(parseFloat(data.total.replace(/,/g, '')))*0.1)+parseInt(parseFloat(data.total.replace(/,/g, '')))
+            var hasil = ppn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $('#txtHarga_'+$param).val(hasil);
+        }else{
+            $('#txtHarga_'+$param).val(data.total);
+        }
+        
     },"json");
 }
 function getpabrikasi(){
@@ -346,9 +354,7 @@ function addJurnal(){
 
     ttable.appendChild(trow);
     tcounter = $("#jumAddJurnal").val();
-    $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
-
-    
+    $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);  
 }
 
 function validasiForm(form)

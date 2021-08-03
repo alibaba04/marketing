@@ -301,7 +301,7 @@ $tbl = '
 Harga Borongan untuk pelaksanaan pekerjaan Kubah Masjid adalah Rp '.number_format($tharga).'<br>';
 $pdf->writeHTML($tbl);
 $ppn='sudah';
-if ($hasil['ppn']==1) {
+if ($hasil['ppn']==0) {
   $ppn='belum';
 }
 $pdf->Cell(15,5,'',0,0,'R',0);
