@@ -418,7 +418,7 @@ function validasiForm(form)
         form.txtPemasangan.focus();
         return false;
     }
-    if(form.color1_0.value=='-' )
+    /*if(form.color1_0.value=='-' )
     {
         $("#myNote").modal('hide');
         alert("Data cannot Empty!");
@@ -433,7 +433,7 @@ function validasiForm(form)
         $("#myModal").modal({backdrop: 'static'});
         form.kcolor1_0.focus();
         return false;
-    }
+    }*/
 
 
 return true;
