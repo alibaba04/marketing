@@ -56,6 +56,15 @@ case "getcountSPH":
         break;
     }
 break;
+case "getcountAffiliate":
+    $result = mysql_query("SELECT COUNT(IF( affiliate = 'Web Qoobah Official', affiliate, NULL)) AS office,COUNT(IF( affiliate = 'Web Contractor', affiliate, NULL)) AS contr,COUNT(IF( affiliate = 'Representative', affiliate, NULL)) AS repre,COUNT(IF( affiliate = 'Offline', affiliate, NULL)) AS offline,COUNT(IF( affiliate = 'Edy', affiliate, NULL)) AS edy,COUNT(IF( affiliate = 'Ibnu', affiliate, NULL)) AS ibnu,COUNT(IF( affiliate = 'Sigit', affiliate, NULL)) AS sigit,COUNT(IF( affiliate = 'Isaq', affiliate, NULL)) AS isaq,COUNT(IF( affiliate = 'Fendy', affiliate, NULL)) AS fendy,COUNT(IF( affiliate = 'Habibi', affiliate, NULL)) AS habibi,COUNT(IF( affiliate = 'Rizal', affiliate, NULL)) AS rizal,COUNT(IF( affiliate = 'Bekasi', affiliate, NULL)) AS bekasi FROM `aki_sph` WHERE 1", $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            echo json_encode( array("office"=>$data['office'],"contr"=>$data['contr'],"repre"=>$data['repre'],"offline"=>$data['offline'],"edy"=>$data['edy'],"ibnu"=>$data['ibnu'],"sigit"=>$data['sigit'],"isaq"=>$data['isaq'],"fendy"=>$data['fendy'],"habibi"=>$data['habibi'],"rizal"=>$data['rizal'],"bekasi"=>$data['bekasi']));
+        } 
+        break;
+    }
+break;
 
 case "getcountSPHm":
     $result = mysql_query("SELECT COUNT(IF( month(tanggal) = 01, kodeUser, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, kodeUser, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, kodeUser, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, kodeUser, NULL)) AS april,COUNT(IF( month(tanggal) = 05, kodeUser, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, kodeUser, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, kodeUser, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, kodeUser, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, kodeUser, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, kodeUser, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, kodeUser, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, kodeUser, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE())", $dbLink);

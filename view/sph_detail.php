@@ -730,6 +730,8 @@ function validasiForm(form)
                 <input type="hidden" name="rangka2" id="rangka2" value=""/>
                 <input type="hidden" name="rangka3" id="rangka3" value=""/>
                 <div id="nrangka"></div>';
+            }else{
+                echo '<div id="nrangka"></div>';
             }
             ?>
            

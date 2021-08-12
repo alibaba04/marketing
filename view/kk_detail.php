@@ -165,11 +165,14 @@ function hitungtotal($param) {
     {
         if ($('#chkppemerintah').is(":checked")) {
             var ppn = (parseInt(parseFloat(data.total.replace(/,/g, '')))*0.1)+parseInt(parseFloat(data.total.replace(/,/g, '')))
-            var hasil = ppn.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var pra=Math.round(ppn / 1000) * 1000;
+            var hasil = pra.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $('#txtHarga_'+$param).val(hasil);
             $('#txtHargappn_'+$param).val((parseInt(parseFloat(data.total.replace(/,/g, '')))*0.1));
         }else{
-            $('#txtHarga_'+$param).val(data.total);
+            var pra = parseFloat(data.total.replace(/,/g, ''));
+            var harga=Math.round(pra / 1000) * 1000;
+            $('#txtHarga_'+$param).val(harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             $('#txtHargappn_'+$param).val(0);
         }
         
@@ -266,12 +269,40 @@ function omodal() {
 function tnmasjid() {
     $("#txtnproyek").val($("#txtnmasjid").val());
 }
+function opendmodal(tcounter) {
+    $("#myCModal").modal({backdrop: 'static'});
+    $('#txtket').val($("#txtKubah_"+tcounter).val());
+    $('#cbomodel').val($("#txtModel_"+tcounter).val());
+    $('#cbokelengkapan').val($("#txtPlafon_"+tcounter).val());
+    $('#cbobahan').val($("#txtBahan_"+tcounter).val());
+    $('#txtqty').val($("#txtQty_"+tcounter).val());
+    $('#txtD').val($("#txtD_"+tcounter).val());
+    $('#txtT').val($("#txtT_"+tcounter).val());
+    $('#txtDt').val($("#txtDt_"+tcounter).val());
+    $('#txtkaligrafi').val($("#txtKaligrafi_"+tcounter).val());
+    $('#idharga1').val($("#txtHargaKubah_"+tcounter).val());
+    $("#btnAdd").click(function(){ 
+        $("#txtKubah_"+tcounter).val($('#txtket').val());
+        $("#txtModel_"+tcounter).val($('#cbomodel').val());
+        $("#txtPlafon_"+tcounter).val($('#cbokelengkapan').val());
+        $("#txtBahan_"+tcounter).val($('#cbobahan').val());
+        $("#txtQty_"+tcounter).val($('#txtqty').val());
+        $("#txtD_"+tcounter).val($('#txtD').val());
+        $("#txtT_"+tcounter).val($('#txtT').val());
+        $("#txtDt_"+tcounter).val($('#txtDt').val());
+        $("#txtKaligrafi_"+tcounter).val($('#txtkaligrafi').val());
+        $("#txtHargaKubah_"+tcounter).val($('#idharga1').val());
+        hitungtotal(tcounter);
+        $("#myCModal").modal('hide');
+    });
+}
 function addJurnal(){    
     tcounter = $("#jumAddJurnal").val();
 
     var ttable = document.getElementById("kendali");
     var trow = document.createElement("TR");
     trow.setAttribute("id", "trid_"+tcounter);
+    trow.setAttribute('onclick','opendmodal('+tcounter+');');
 
     //Kolom 1 Checkbox
     var td = document.createElement("TD");
@@ -714,11 +745,11 @@ return true;
                             <thead>
                                 <tr>
                                    <th style="width: 1%"><i class='fa fa-edit'></i></th>
-                                   <th style="" colspan="4">Information</th>
-                                   <th style="width: 1%">Quantity</th>
-                                   <th style="width: 1%">D</th>
-                                   <th style="width: 1%">T</th>
-                                   <th style="width: 1%">Dt</th>
+                                   <th style="width: 20%" colspan="4">Information</th>
+                                   <th style="width: 5%">Quantity</th>
+                                   <th style="width: 5%">D</th>
+                                   <th style="width: 5%">T</th>
+                                   <th style="width: 5%">Dt</th>
                                    <th style="width: 8%">Kaligrafi</th>
                                    <th style="width: 8%">Price&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                                    <th style="width: 8%">Total</th>
@@ -742,11 +773,11 @@ return true;
                                     $iJurnal = 0;
                                     while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                                         $kel = '';
-                                        echo '<div><tr id="trid_'.$iJurnal.'" >';
+                                        echo '<div><tr id="trid_'.$iJurnal.'" onclick="opendmodal('.$iJurnal.')">';
                                         echo '<td align="center" valign="top" ><div class="form-group">
                                         <input onclick="chkadddetail('.$iJurnal.')" type="checkbox" class="minimal" checked name="chkAddJurnal_' . $iJurnal . '" id="chkAddJurnal_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group" >
-                                        <select class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" style="min-width: 135px;">';
+                                        <select readonly class="form-control"  name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" style="min-width: 135px;">';
                                         if ($DetilJurnal["kubah"]=='Mahrab') {
                                             echo '<option value="Kubah Utama">Kubah Utama</option>';
                                             echo '<option value="Anakan">Anakan</option>';
@@ -761,7 +792,7 @@ return true;
                                             echo '<option value="Mahrab">Mahrab</option>';
                                         }
                                         echo '</select></div></td><td align="center" valign="top" ><div class="form-group">
-                                        <select class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" style="min-width: 140px;"> ';
+                                        <select readonly class="form-control"  name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" style="min-width: 140px;"> ';
                                         if ($DetilJurnal["model"]=='setbola') {
                                             echo '<option value="setbola" selected>Setengah Bola</option>';
                                             echo '<option value="pinang">Pinang</option>';
@@ -784,7 +815,7 @@ return true;
                                             echo '<option value="bawang" selected>Bawang</option>';
                                         }
                                         echo '</select></div></td><td align="center" valign="top" ><div class="form-group">
-                                        <select class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '"style="min-width: 135px;"> ';
+                                        <select readonly class="form-control"  name="txtBahan_' . $iJurnal . '" id="txtBahan_' . $iJurnal . '"style="min-width: 135px;"> ';
                                         if ($DetilJurnal["bahan"]=='3') {
                                             echo '<option value="1">Galvalume</option>';
                                             echo '<option value="2">Enamel</option>';
@@ -803,7 +834,7 @@ return true;
                                             echo '<option value="3">Titanium</option>';
                                         }
                                         echo '<td align="center" valign="top"><div class="form-group">
-                                        <select class="form-control"  name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '"style="min-width: 130px;"> ';
+                                        <select readonly class="form-control"  name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '"style="min-width: 130px;"> ';
                                         if ($DetilJurnal["plafon"]=='0') {
                                             echo '<option value="0" selected>Full</option>';
                                             echo '<option value="1">Tanpa Plafon</option>';
@@ -823,7 +854,7 @@ return true;
                                         echo '<td align="center" valign="top" ><div class="form-group" style="min-width: 50px;">
                                         <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '"></div></td>';
                                         echo '<td align="center" valign="top" ><div class="form-group"style="min-width: 50px;">
-                                        <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" ></div></td>';
+                                        <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" ></div></td>';
                                         echo '<td align="center" valign="top"><div class="form-group"style="min-width: 50px;">
                                         <input type="number" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" ></div></td>';
                                         $harga = 0;
@@ -1026,5 +1057,91 @@ return true;
         </div>
     </section>
     
+    <!-- Modal -->
+    <div class="modal fade" id="myCModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Rangka Kubah <label id="labelclr"></label></h4>
+                    <input type="hidden" class="form-control" id="txtnomer" value="">
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select name="txtket" id="txtket" class="form-control">
+                            <option value='Kubah Utama'>Kubah Utama</option>;
+                            <option value='Mahrab'>Mahrab</option>;
+                            <option value='Anakan'>Anakan</option>;
+                            <option value='Menara'>Menara</option>;
+                            <?php
+                            if ($_SESSION['my']->privilege == 'ADMIN') {
+                                echo '<option value=Atap>Atap</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group" >
+                        <select name="cbomodel" id="cbomodel" class="form-control">
+                            <option value=setbola>Setengah Bola</option>";
+                            <option value=pinang>Pinang</option>";
+                            <option value=madinah>Madinah</option>";
+                            <option value=bawang>Bawang</option>";
+                            <?php
+                            if ($_SESSION['my']->privilege == 'ADMIN') {
+                                echo '<option value=custom>Custom</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="cbobahan" id="cbobahan" class="form-control">
+                            <option value="1">Galvalume</option>';
+                            <option value="2">Enamel</option>';
+                            <option value="3" selected>Titanium</option>';
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="cbokelengkapan" id="cbokelengkapan" class="form-control">
+                            <option value=0>Full</option>";
+                            <option value=1>Tanpa Plafon</option>";
+                            <option value=2>Waterproof</option>";
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Jumlah</label>
+                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1"
+                            value="">
+                        </div>
+                        <div class="col-lg-6" id="dt">
+                            <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
+                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="0" ><span class="input-group-addon">meter</span></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
+                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
+                                value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
+                            <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0" value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Kaligrafi</label><div class="input-group"><span class="input-group-addon">Rp</span>
+                            <input type="text" name="txtkaligrafi" id="txtkaligrafi" class="form-control" value="0" onfocus="" placeholder="0" ></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Harga</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value="0"></div>
+                        </div>
+                    </div>
+                    <div class="box-footer" style="padding-top: 10%;"></div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" value="Add" id="btnAdd">
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
