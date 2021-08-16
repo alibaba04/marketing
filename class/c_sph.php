@@ -160,7 +160,7 @@ class c_sph
 
 			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."',`affiliate`='".$affiliate."' WHERE noSph='".$params["txtnoSph"]."'";
 			if (!mysql_query( $q3, $dbLink))
-						throw new Exception('Gagal ubah data SPH. ');
+						throw new Exception('Gagal ubah data SPH. 1');
 			$jumData = $params["jumAddJurnal"];
 			$nomer =0;
 			$q7='';
@@ -187,16 +187,16 @@ class c_sph
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
                     $luas = secureParam($params["luas_". $j],$dbLink);
                     if ($model=='custom') {
-                    	$q = "DELETE FROM aki_rangka ";
+                    	$q = "UPDATE `aki_rangka` SET `aktif`=0 ";
                     	$q.= "WHERE (noSph)='".$params["txtnoSph"]."';";
                     	if (!mysql_query( $q, $dbLink))
-                    		throw new Exception('Gagal hapus data SPH.');
+                    		throw new Exception('Gagal hapus data SPH.2');
                     	for ($k = 1; $k <= $jumRangka ; $k++){
                     		$rangka = secureParam($params["rangka". $k],$dbLink);
-                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
-                    		$q7.= "VALUES ('".$params["txtnoSph"]."','".$rangka."');";
+                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`,`aktif`) ";
+                    		$q7.= "VALUES ('".$params["txtnoSph"]."','".$rangka."','1');";
                     		if (!mysql_query( $q7, $dbLink))
-                    			throw new Exception('Gagal tambah data SPH.');
+                    			throw new Exception('Gagal tambah data SPH.3');
                     	}
                     }
                     $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";
@@ -214,7 +214,7 @@ class c_sph
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-						throw new Exception('Gagal ubah data SPH. ');
+						throw new Exception('Gagal tambah data SPH.4');
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Ubah Data SPH";
 		}

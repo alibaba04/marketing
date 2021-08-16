@@ -714,7 +714,7 @@ function validasiForm(form)
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
             <?php  
-            $q = "SELECT * from aki_rangka where MD5(noSph)='" . $noSph."'";
+            $q = "SELECT * from aki_rangka where `aktif`=1 and MD5(noSph)='" . $noSph."'";
             $sql_rangka = mysql_query($q,$dbLink);
             $nor=1;
             while ($rs_rangka = mysql_fetch_array($sql_rangka)) {
@@ -1011,7 +1011,7 @@ function validasiForm(form)
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <?php 
-                                                        $q="SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+                                                        $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and MD5(noSph)='".$noSph."'";
                                                         $rsDetilJurnal = mysql_query($q, $dbLink);
                                                         $nor=0;
                                                         while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {

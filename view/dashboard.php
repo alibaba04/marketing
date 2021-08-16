@@ -24,52 +24,6 @@ defined( 'validSession' ) or die( 'Restricted access' );
           <div class="box box-solid">
             <!-- /.box-header -->
             <div class="box-body">
-              <!-- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                  <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-                </ol>
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <center>
-                    <img src="./dist/img/bawangtanpaplafon.jpg" alt="First slide">
-                    </center>
-                    <div class="carousel-caption">
-                    </div>
-                  </div>
-                  <div class="item">
-                    <center>
-                    <img src="./dist/img/pinangtanpaplafon.jpg" alt="First slide">
-                    </center>
-                    <div class="carousel-caption">
-                      
-                    </div>
-                  </div>
-                  <div class="item">
-                    <center>
-                    <img src="./dist/img/madinahtanpaplafon.jpg" alt="First slide" width="500" height="600">
-                    </center>
-                    <div class="carousel-caption">
-                      
-                    </div>
-                  </div>
-                  <div class="item">
-                    <center>
-                    <img src="./dist/img/sbtanpaplafon.jpg" alt="First slide">
-                    </center>
-                    <div class="carousel-caption">
-                      
-                    </div>
-                  </div>
-                </div>
-                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                  <span class="fa fa-angle-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                  <span class="fa fa-angle-right"></span>
-                </a>
-              </div> -->
               <div class="col-md-6">
                 <div class="box box-danger">
                   <div class="box-header with-border">
@@ -104,6 +58,22 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   </div>
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Data Affiliate</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="box-body chart-responsive">
+                    <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
+                  </div>
+                </div>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -121,12 +91,35 @@ defined( 'validSession' ) or die( 'Restricted access' );
       var donut = new Morris.Donut({
         element: 'sales-chart',
         resize: true,
-        colors: ["#3c8dbc", "#f56954", "#00a65a", "#cbef08"],
+        colors: ["#F45091", "#EA40A7", "#D420D3", "#BF00FF"],
         data: [
         {label: "Mr. Reza", value: data.reza},
         {label: "Mr. Antok", value: data.antok},
         {label: "Mr. Agus", value: data.agus},
         {label: "Mrs. Tina", value: data.tina}
+        ],
+        hideHover: 'auto'
+      });
+    },"json"); 
+    $.post("function/ajax_function.php",{ fungsi: "getcountAffiliate"},function(data)
+    {
+      var donut = new Morris.Donut({
+        element: 'aff-chart',
+        resize: true,
+        colors: ["#F45091", "#EA40A7", "#D420D3", "#BF00FF", "#833ab4", "#fd1d1d", "#fcb045", "#FEAC5E", "#C779D0", "#fcb045", "#6441A5", "#2a0845"],
+        data: [
+        {label: "Web Qoobah Official", value: data.office},
+        {label: "Web Contractor", value: data.contr},
+        {label: "Representative", value: data.repre},
+        {label: "Offline", value: data.offline},
+        {label: "Edy", value: data.edy},
+        {label: "Ibnu", value: data.ibnu},
+        {label: "Sigit", value: data.sigit},
+        {label: "Isaq", value: data.isaq},
+        {label: "Fendy", value: data.fendy},
+        {label: "Habibi", value: data.habibi},
+        {label: "Rizal", value: data.rizal},
+        {label: "Bekasi", value: data.bekasi}
         ],
         hideHover: 'auto'
       });
@@ -146,7 +139,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
         datasets: [
         {
           label: "Digital Goods",
-          fillColor: "rgba(60,141,188,0.9)",
+          fillColor: "#00c0ef",
           strokeColor: "rgba(60,141,188,0.8)",
           pointColor: "#3b8bba",
           pointStrokeColor: "rgba(60,141,188,1)",
