@@ -396,7 +396,7 @@ function Footer()
     // Arial italic 8
     $this->SetFont('Arial','I',8);
     // Page number
-    $this->Cell(0,10,'Halaman '.$this->PageNo(),0,0,'C');
+    $this->Cell(0,10,'Halaman '.$this->PageNo(),0,0,'R');
 }
 
 function PageNo()
