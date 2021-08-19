@@ -782,12 +782,12 @@ function validasiForm(form)
                 $n=$dataSph["affiliate"];
                 if ($_GET['mode'] == 'edit') {
                     if ($n=='') {
-                        echo '<option value="">Affiliate</option>';
+                        echo '<option value="Affiliate">Affiliate</option>';
                     }else{
                         echo '<option value="'.$n.'">'.$n.'</option>';
                     }
                 }else{
-                    echo '<option value="">Affiliate</option>';
+                    echo '<option value="Affiliate">Affiliate</option>';
                 }
                     echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
                     echo '<option value="Web Contractor">Web Contractor</option>';

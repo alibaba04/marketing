@@ -126,7 +126,7 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
         $rs3 = mysql_query($q3, $dbLink);
         $jumrangka=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {
@@ -357,7 +357,7 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
         $rs3 = mysql_query($q3, $dbLink);
         $jumrangka=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {
@@ -518,7 +518,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
         $rs3 = mysql_query($q3, $dbLink);
         $jumrangka=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {

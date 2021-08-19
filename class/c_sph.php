@@ -184,7 +184,8 @@ class c_sph
                     $model = secureParam($params["txtModel_". $j],$dbLink);
                     $plafon = secureParam($params["txtKel_". $j],$dbLink);
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
-                    $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
+                    $bp = secureParam($params["txtBplafon_". $j],$dbLink);
+                    $bplafon = preg_replace("/\D/", "", $bp);
                     $luas = secureParam($params["luas_". $j],$dbLink);
                     if ($model=='custom') {
                     	$q = "UPDATE `aki_rangka` SET `aktif`=0 ";
