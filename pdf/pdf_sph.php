@@ -336,7 +336,7 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
             $pdf->subWrite(5,'2','',6,4);
         }else{
             $pdf->SetMargins(50, 10, 10, true);
-            $pdf->Ln(7);
+            $pdf->Ln(-1);
             $pdf->Write(5,'Diameter '.$d.' meter dan Tinggi '.$t.' meter dengan Luas '.$luas.' meter');
             $pdf->subWrite(5,'2','',6,4);
         }
