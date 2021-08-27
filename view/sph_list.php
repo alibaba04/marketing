@@ -171,8 +171,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $noSph = secureParam($_GET["noSph"], $dbLink);
                     $snum = secureParam($_GET["noSph"], $dbLink)." : ";
                     if ($noSph)
-                        $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%'";
-                        $filter3 = $filter3 . " AND p1.name LIKE '%" . $noSph . "%'  or s1.nama_cust LIKE '%" . $noSph . "%'  or s1.noSph LIKE '%" . $noSph . "%'  or k1.name LIKE '%" . $noSph . "%'";
+                        if (strpos($noSph, '=') !== FALSE) {
+                            $filter = $filter . " AND s.kodeUser LIKE '%" . substr($noSph,1) . "%'";
+                            $filter3 = $filter3 . " AND s1.kodeUser LIKE '%" . substr($noSph,1) . "%'";
+                        }else{
+                            $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%' or s.affiliate LIKE '%" . $noSph . "%'";
+                            $filter3 = $filter3 . " AND p1.name LIKE '%" . $noSph . "%'  or s1.nama_cust LIKE '%" . $noSph . "%'  or s1.noSph LIKE '%" . $noSph . "%'  or k1.name LIKE '%" . $noSph . "%'or s1.affiliate LIKE '%" . $noSph . "%'";
+                        }
                 }else{
                     $filter = '';
                 }
