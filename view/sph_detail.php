@@ -130,6 +130,12 @@ $(document).ready(function () {
             document.getElementById("txtDt").disabled = true;
             document.getElementById("txtT").disabled = true;
             document.getElementById("txtBiayaPlafon").disabled = true;
+        }else{
+            document.getElementById("idluas").disabled = true;
+            document.getElementById("txtD").disabled = false;
+            document.getElementById("txtDt").disabled = false;
+            document.getElementById("txtT").disabled = false;
+            document.getElementById("txtBiayaPlafon").disabled = false;
         }
     });
     $("#cbomodel").change(function(){ 
