@@ -111,16 +111,16 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         if ($_SESSION["my"]->privilege!='SALES') {
                             ?>
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp SPH</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                    <span class="sr-only">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><i class="fa fa-bars"></i>KUBAH</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sphkaligrafi_detail&mode=add";?>"><i class="fa fa-bars"></i>KALIGRAFI</a></li>
-                                </ul>
+                                <div class="btn-group dropright">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-plus"></i>&nbsp SPH
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sph_detail&mode=add";?>"><i class="fa fa-bars"></i>KUBAH</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?php echo $_SERVER['PHP_SELF']."?page=html/sphkaligrafi_detail&mode=add";?>"><i class="fa fa-bars"></i>KALIGRAFI</a></li>
+                                    </div>
+                                </div>
                             </div>
                             <?php
                         }else{

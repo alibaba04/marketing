@@ -93,7 +93,7 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
-        $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
+        $pdf->Write(5,'Dengan Luas Atap '.$hasil['luas'].' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
         if ($dt != 0){

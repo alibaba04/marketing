@@ -53,7 +53,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   </div>
                   <div class="box-body">
                     <div class="chart">
-                      <canvas id="areaChart" style="height:250px"></canvas>
+                      <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                   </div>
                 </div>
@@ -135,7 +135,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
     {
       var areaChart = new Chart(areaChartCanvas);
       var areaChartData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec"],
         datasets: [
         {
           label: "Digital Goods",

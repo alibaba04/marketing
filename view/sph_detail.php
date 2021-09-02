@@ -122,6 +122,16 @@ $(document).ready(function () {
     });
     $("#dt :input").prop("readonly", true);
             $("#txtDt").val(0);
+    $("#txtket").change(function(){
+        var cboket = $("#txtket").val();  
+        if(cboket == 'Atap'){
+            document.getElementById("idluas").disabled = false;
+            document.getElementById("txtD").disabled = true;
+            document.getElementById("txtDt").disabled = true;
+            document.getElementById("txtT").disabled = true;
+            document.getElementById("txtBiayaPlafon").disabled = true;
+        }
+    });
     $("#cbomodel").change(function(){ 
         var cbomodel = $("#cbomodel").val(); 
         var dt = $("#txtDt").val(); 
@@ -152,7 +162,9 @@ $(document).ready(function () {
     });
     var idmargin = document.getElementById('idmargin');
     idmargin.addEventListener('keyup', function(e){
-        kalkulatorharga();
+        if($("#txtket").val() != 'Atap'){
+            kalkulatorharga();
+        }
     });
     var rupiah = document.getElementById('txtongkir');
     rupiah.addEventListener('keyup', function(e){
