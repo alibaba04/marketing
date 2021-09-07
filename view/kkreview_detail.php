@@ -58,11 +58,7 @@ $(document).ready(function () {
         var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
         $.post("function/ajax_function.php",{ fungsi: "sendnotif",title:Title,message:Message},function(data)
         {
-          if (data =='yes') {
-            location.href=link+"&note="+ $("#txtNote").val();
-          }else{
             alert(data);
-          }
         },"json");
         /*var relink = 'https://bit.ly/2SpMdIo';
         var apikey = "ZDMMOCURFXUCNH8EEK36"; 

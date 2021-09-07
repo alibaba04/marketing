@@ -270,7 +270,7 @@ require_once('./function/fungsi_formatdate.php');
                     return messaging.getToken();
                 })
                 .then(function (token) {
-                    console.log("Token : "+token);
+                    //console.log("Token : "+token);
                     document.getElementById("token").value=token;
                 })
                 .catch(function (reason) {

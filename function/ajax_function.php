@@ -23,29 +23,33 @@ case "checkKodeMenu":
     }
 break;
 case 'sendnotif':
-        $url ="https://fcm.googleapis.com/fcm/send";
-        $fields=array(
-            "to"=>'eTvEXpDTFRVG0YDsnh9llZ:APA91bGJjtC-n7_V61LTaZ3gMByePebiCLU4LLxOYdl2Ja8cqwQ-MyLOefbWdkVDrRMz_YTzjPOAAJKmKUTcnNdQ3Hb7Jw3ycHMtSNTL7rVa2-nrbakVsZvq2TZuQB5ae4wSgoo6fY3m',
-            "notification"=>array(
-                "body"=>$_POST['message'],
-                "title"=>$_POST['title'],
-                "click_action"=>"https://sikubah.com"
-            )
-        );
-        $headers=array(
-            'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
-            'Content-Type:application/json'
-        );
-        $ch=curl_init();
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_POST,true);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
-        $result=curl_exec($ch);
-        print_r($result);
-        curl_close($ch);
-        echo "yes";
+    $url ="https://fcm.googleapis.com/fcm/send";
+    $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup!='SALES'", $dbLink) . "'", $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            $fields=array(
+                "to"=>$data['token'],
+                "notification"=>array(
+                    "body"=>$_POST['message'],
+                    "title"=>$_POST['title'],
+                    "click_action"=>"https://sikubah.com"
+                )
+            );
+            $headers=array(
+                'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+                'Content-Type:application/json'
+            );
+            $ch=curl_init();
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch,CURLOPT_POST,true);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+            $result=curl_exec($ch);
+            print_r($result);
+            curl_close($ch);
+        } 
+    } 
 break;
 case "checkKodeUser":
     $result = mysql_query("select kodeUser FROM aki_user WHERE kodeUser ='" . secureParamAjax($_POST['kodeUser'], $dbLink) . "'", $dbLink);
