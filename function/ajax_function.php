@@ -24,7 +24,7 @@ case "checkKodeMenu":
 break;
 case 'sendnotif':
     $url ="https://fcm.googleapis.com/fcm/send";
-    $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup!='SALES'", $dbLink) . "'", $dbLink);
+    $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='GODMODE'", $dbLink) . "'", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             $fields=array(
