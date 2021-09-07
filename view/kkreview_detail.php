@@ -52,11 +52,10 @@ $(document).ready(function () {
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
         var relink = 'https://bit.ly/2SpMdIo';
-        var Token = "c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC"; 
         var Title = 'SIKUBAH';
         var name = 'Admin';
         var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-        $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,title:Title,message:Message},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "sendnotif",title:Title,message:Message},function(data)
         {
             alert(data);
         },"json");

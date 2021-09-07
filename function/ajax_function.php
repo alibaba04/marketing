@@ -25,9 +25,19 @@ break;
 case "sendnotif":
     $token = '';
     if ($_SESSION["my"]->privilege == 'ADMIN') {
-        $token = 'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC';
+        $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='kpenjualan'", $dbLink);
+        if (mysql_num_rows($result)>0) {
+            while ( $data = mysql_fetch_assoc($result)) {
+                $token= $data['token'];
+            } 
+        } 
     }elseif($_SESSION["my"]->privilege == 'kpenjualan'){
-        $token = 'eTvEXpDTFRVG0YDsnh9llZ:APA91bGJjtC-n7_V61LTaZ3gMByePebiCLU4LLxOYdl2Ja8cqwQ-MyLOefbWdkVDrRMz_YTzjPOAAJKmKUTcnNdQ3Hb7Jw3ycHMtSNTL7rVa2-nrbakVsZvq2TZuQB5ae4wSgoo6fY3m';
+        $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='ADMIN'", $dbLink);
+        if (mysql_num_rows($result)>0) {
+            while ( $data = mysql_fetch_assoc($result)) {
+                $token= $data['token'];
+            } 
+        } 
     }else{
         $token = 'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC';
     }
