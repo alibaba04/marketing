@@ -46,7 +46,7 @@ case "sendnotif":
         "to"=>$token,
         "notification"=>array(
             "body"=>$message,
-            "title"=>$title,
+            "title"=>$_SESSION["my"]->privilege,
             "click_action"=>"https://sikubah.com"
         )
     );
