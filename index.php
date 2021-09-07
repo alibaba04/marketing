@@ -271,7 +271,7 @@ require_once('./function/fungsi_formatdate.php');
                     return messaging.getToken();
                 })
                 .then(function (token) {
-                    console.log("Token : "+token);
+                    //console.log("Token : "+token);
                     document.getElementById("token").innerHTML=token;
                 })
                 .catch(function (reason) {
@@ -300,7 +300,7 @@ require_once('./function/fungsi_formatdate.php');
             messaging.onTokenRefresh(function () {
                 messaging.getToken()
                 .then(function (newtoken) {
-                    console.log("New Token : "+ newtoken);
+                    //console.log("New Token : "+ newtoken);
                 })
                 .catch(function (reason) {
                     console.log(reason);
