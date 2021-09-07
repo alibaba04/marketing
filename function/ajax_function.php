@@ -39,7 +39,7 @@ case "sendnotif":
             } 
         } 
     }else{
-        $token = 'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC';
+        $token = 'fCMjesCR_JKOgr1IPiAs5N:APA91bFQNpyefhKoiy_J74ai1Hx5m0a_TQrdTu2dq7bdiFcuM_HhGcNWkxfjlnHYWUMWjjopgD9RAnLAq3GiKbAWdVa_gAxilmjPRs98cOzagokBAdaRuDv6iG3H2zLjcXbmc6-URhIE';
     }
     $url ="https://fcm.googleapis.com/fcm/send";
     $fields=array(
@@ -47,7 +47,7 @@ case "sendnotif":
         "notification"=>array(
             "body"=>$message,
             "title"=>$_SESSION["my"]->privilege,
-            "click_action"=>"https://sikubah.com"
+            "click_action"=>"https://sikubah.com/marketing"
         )
     );
     $headers=array(
