@@ -51,28 +51,6 @@ $(document).ready(function () {
     $('#btnSend').click(function(){
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
-        var relink = 'https://bit.ly/2SpMdIo';
-        var Title = 'SIKUBAH';
-        var name = 'Admin';
-        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-        $.post("function/ajax_function.php",{ fungsi: "sendnotif",title:Title,message:Message},function(data)
-        {
-            alert(data);
-        },"json");
-        /*var relink = 'https://bit.ly/2SpMdIo';
-        var apikey = "ZDMMOCURFXUCNH8EEK36"; 
-        var phone = '6282257758857';
-        var name = 'Admin';
-        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-        
-        $.post("function/ajax_function.php",{ fungsi: "sendwa",to:phone,text:Message},function(data)
-        {
-          if (data =='yes') {
-            location.href=link+"&note="+ $("#txtNote").val();
-          }else{
-            alert(data);
-          }
-        },"json");*/
     });
 });
 function omodal() {

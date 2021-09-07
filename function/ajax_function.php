@@ -22,48 +22,6 @@ case "checkKodeMenu":
         echo "no";
     }
 break;
-case "sendnotif":
-    $token = '';
-    if ($_SESSION["my"]->privilege == 'ADMIN') {
-        $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='kpenjualan'", $dbLink);
-        if (mysql_num_rows($result)>0) {
-            while ( $data = mysql_fetch_assoc($result)) {
-                $token= $data['token'];
-            } 
-        } 
-    }elseif($_SESSION["my"]->privilege == 'kpenjualan'){
-        $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='ADMIN'", $dbLink);
-        if (mysql_num_rows($result)>0) {
-            while ( $data = mysql_fetch_assoc($result)) {
-                $token= $data['token'];
-            } 
-        } 
-    }else{
-        $token = 'fCMjesCR_JKOgr1IPiAs5N:APA91bFQNpyefhKoiy_J74ai1Hx5m0a_TQrdTu2dq7bdiFcuM_HhGcNWkxfjlnHYWUMWjjopgD9RAnLAq3GiKbAWdVa_gAxilmjPRs98cOzagokBAdaRuDv6iG3H2zLjcXbmc6-URhIE';
-    }
-    $url ="https://fcm.googleapis.com/fcm/send";
-    $fields=array(
-        "to"=>$token,
-        "notification"=>array(
-            "body"=>$message,
-            "title"=>$_SESSION["my"]->privilege,
-            "click_action"=>"https://sikubah.com/marketing"
-        )
-    );
-    $headers=array(
-        'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
-        'Content-Type:application/json'
-    );
-    $ch=curl_init();
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_POST,true);
-    curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
-    $result=curl_exec($ch);
-    print_r($result);
-    curl_close($ch);
-break;
 case "checkKodeUser":
     $result = mysql_query("select kodeUser FROM aki_user WHERE kodeUser ='" . secureParamAjax($_POST['kodeUser'], $dbLink) . "'", $dbLink);
     if (mysql_num_rows($result)) {
