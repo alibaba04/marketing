@@ -11,7 +11,35 @@ function getkota($id){
 	}
 	return json_encode($data);
 }
-
+function sendNotification($message,$title)
+{
+    $url ="https://fcm.googleapis.com/fcm/send";
+    $sql = "SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='GODMODE'";
+	$query = mysql_query($sql,$dbLink);
+    while ( $data = mysql_fetch_assoc($result)) {
+        $fields=array(
+            "to"=>$data['token'],
+            "notification"=>array(
+                "body"=>$message,
+                "title"=>$title,
+                "click_action"=>"https://sikubah.com"
+            )
+        );
+        $headers=array(
+            'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+            'Content-Type:application/json'
+        );
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+        $result=curl_exec($ch);
+        print_r($result);
+        curl_close($ch);
+    } 
+}
 function margin($d,$t,$dt)
 {
 	$margin = '';

@@ -71,6 +71,7 @@ require_once('./function/fungsi_formatdate.php');
             <!-- Logo -->
             <?php
             
+   
             if ((isset($_SESSION["my"]) !== false) && (isset($_GET["page"]) !== "login_detail")) {
                 ?>
                 <a href="index.php" class="logo">
@@ -135,7 +136,6 @@ require_once('./function/fungsi_formatdate.php');
                 ?>
             </nav>
         </header>
-        
         <?php
         /* Periksa session $my, jika belum teregistrasi load modul login */
         if (isset($_SESSION["my"]) == false || isset($_GET["page"]) === "login_detail") {
@@ -195,8 +195,9 @@ require_once('./function/fungsi_formatdate.php');
         if (isset($_SESSION["my"]) != false && isset($_GET["page"]) != "login_detail") {
             ?>
             <footer class="main-footer">
-                <input type="hidden" id="token">
+
                 <div class="pull-right hidden-xs">
+                    <p id="token"></p>
                     <b>Marketing App</b> 2.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial">alibaba</a>.
                     </div>
                     <strong>.</strong>
@@ -270,8 +271,8 @@ require_once('./function/fungsi_formatdate.php');
                     return messaging.getToken();
                 })
                 .then(function (token) {
-                    //console.log("Token : "+token);
-                    document.getElementById("token").value=token;
+                    console.log("Token : "+token);
+                    document.getElementById("token").innerHTML=token;
                 })
                 .catch(function (reason) {
                     console.log(reason);
