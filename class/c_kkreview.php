@@ -62,8 +62,8 @@ class c_kkreview
 				$fields=array(
 					"to"=>$token,
 					"notification"=>array(
-						"body"=>$message,
-						"title"=>$_SESSION["my"]->privilege,
+						"body"=>'$message',
+						"title"=>'test',
 						"click_action"=>"https://sikubah.com/marketing"
 					)
 				);
