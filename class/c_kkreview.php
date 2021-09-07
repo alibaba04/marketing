@@ -8,6 +8,33 @@ defined( 'validSession' ) or die( 'Restricted access' );
 class c_kkreview
 {
 	var $strResults="";
+	function sendNotification($token,$body,$title){
+	    $url ="https://fcm.googleapis.com/fcm/send";
+
+	    $fields=array(
+	        "to"=>$token,
+	        "notification"=>array(
+	            "body"=>$body,
+	            "title"=>$title,
+	            "click_action"=>"https://google.com"
+	        )
+	    );
+
+	    $headers=array(
+	        'Authorization: key=YOUR_SERVER_KEY',
+	        'Content-Type:application/json'
+	    );
+
+	    $ch=curl_init();
+	    curl_setopt($ch,CURLOPT_URL,$url);
+	    curl_setopt($ch,CURLOPT_POST,true);
+	    curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+	    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+	    curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+	    $result=curl_exec($ch);
+	    print_r($result);
+	    curl_close($ch);
+	}
 	
 	function addnote(&$params){
 		global $dbLink;
@@ -29,17 +56,17 @@ class c_kkreview
 				if ($_SESSION["my"]->privilege == 'ADMIN') {
 					$readby = 'kpenjualan';
 					$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='kpenjualan'", $dbLink);
-					$token  = $temp['token'];
 				$temp = mysql_fetch_array($rsTemp);
 				}elseif($_SESSION["my"]->privilege == 'kpenjualan'){
 					$readby = 'ADMIN';
 					$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='ADMIN'", $dbLink);
-					$token  = $temp['token'];
 				}else{
 					$readby = 'ADMIN';
 					$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='GODMODE'", $dbLink);
-					$token  = $temp['token'];
+
 				}
+				$temp = mysql_fetch_array($rsTemp);
+				$token  = $temp['token'];
 				$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by ".$readby."=1";
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
@@ -58,33 +85,12 @@ class c_kkreview
 				}
 
 				//API send web push
-				$url ="https://fcm.googleapis.com/fcm/send";
-				$fields=array(
-					"to"=>$token,
-					"notification"=>array(
-						"body"=>'$message',
-						"title"=>'test',
-						"click_action"=>"https://sikubah.com/marketing"
-					)
-				);
-				$headers=array(
-					'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
-					'Content-Type:application/json'
-				);
-				$ch=curl_init();
-				curl_setopt($ch,CURLOPT_URL,$url);
-				curl_setopt($ch,CURLOPT_POST,true);
-				curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-				curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-				curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
-				$result=curl_exec($ch);
-				print_r($result);
-				curl_close($ch); 
-				if ($result->success != 0) {
-					$this->strResults="Sukses Note";
-				}else{
-					$this->strResults=$result->description;
-				}
+				sendNotification($token,'test','testt');
+				//if ($result->success != 0) {
+					$this->strResults='Sukses Note';
+				//}else{
+				//	$this->strResults=$token;
+				//}
 		}
 		catch(Exception $e) 
 		{
