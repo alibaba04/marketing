@@ -18,9 +18,10 @@ class c_user
 	var $privilege="";
 	var $avatar="";
 	var $phone=0;
+	var $token="";
 	
 	//Constructor
-	function c_user( $newId=0, $newName="", $newGroups="", $newMenus="", $newPrivilege="", $newAvatar="",$newPhone=0) 
+	function c_user( $newId=0, $newName="", $newGroups="", $newMenus="", $newPrivilege="", $newAvatar="",$newPhone=0,$newToken='') 
 	{
 		$this->id=$newId;
 		$this->name=$newName;
@@ -30,6 +31,7 @@ class c_user
 		$this->privilege = $newPrivilege;
 		$this->avatar = $newAvatar;
 		$this->phone = $newPhone;
+		$this->token = $newToken;
 	}
 	
 	// Fungsi untuk manajemen User

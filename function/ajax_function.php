@@ -22,7 +22,31 @@ case "checkKodeMenu":
         echo "no";
     }
 break;
-
+case 'sendnotif':
+        $url ="https://fcm.googleapis.com/fcm/send";
+        $fields=array(
+            "to"=>'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC',
+            "notification"=>array(
+                "body"=>$_POST['message'],
+                "title"=>$_POST['title'],
+                "click_action"=>"https://sikubah.com"
+            )
+        );
+        $headers=array(
+            'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+            'Content-Type:application/json'
+        );
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+        $result=curl_exec($ch);
+        print_r($result);
+        curl_close($ch);
+        echo "yes";
+break;
 case "checkKodeUser":
     $result = mysql_query("select kodeUser FROM aki_user WHERE kodeUser ='" . secureParamAjax($_POST['kodeUser'], $dbLink) . "'", $dbLink);
     if (mysql_num_rows($result)) {

@@ -54,6 +54,8 @@ require_once('./function/fungsi_formatdate.php');
        <script src="js/angka.js"></script>
        <script type="text/javascript" src="js/autoCompletebox.js"></script>
        <link rel="stylesheet" href="ionicons/css/ionicons.min.css">
+       <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
    </head>
    <?php
    if ((isset($_SESSION["my"]) === false) || (isset($_GET["page"]) === "login_detail")) {
@@ -69,7 +71,6 @@ require_once('./function/fungsi_formatdate.php');
             <!-- Logo -->
             <?php
             
-   
             if ((isset($_SESSION["my"]) !== false) && (isset($_GET["page"]) !== "login_detail")) {
                 ?>
                 <a href="index.php" class="logo">
@@ -134,6 +135,7 @@ require_once('./function/fungsi_formatdate.php');
                 ?>
             </nav>
         </header>
+        
         <?php
         /* Periksa session $my, jika belum teregistrasi load modul login */
         if (isset($_SESSION["my"]) == false || isset($_GET["page"]) === "login_detail") {
@@ -193,7 +195,7 @@ require_once('./function/fungsi_formatdate.php');
         if (isset($_SESSION["my"]) != false && isset($_GET["page"]) != "login_detail") {
             ?>
             <footer class="main-footer">
-
+                <input type="hidden" id="token">
                 <div class="pull-right hidden-xs">
                     <b>Marketing App</b> 2.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial">alibaba</a>.
                     </div>
@@ -204,6 +206,7 @@ require_once('./function/fungsi_formatdate.php');
             }
             ?>
         </div>
+
         <!-- ./wrapper -->
         <!-- jQuery 2.2.3 -->
         <script src="js/jquery.bestupper.min.js" type="text/javascript"></script>
@@ -246,6 +249,63 @@ require_once('./function/fungsi_formatdate.php');
         <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
         <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
         <script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-        
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyCmTZroIbWCnevV3O3vz-VMDWJaYY-hexs",
+                authDomain: "sikubah-ce3f1.firebaseapp.com",
+                projectId: "sikubah-ce3f1",
+                storageBucket: "sikubah-ce3f1.appspot.com",
+                messagingSenderId: "1073118020070",
+                appId: "1:1073118020070:web:3fe92396be45a17ca11627",
+                measurementId: "G-7251WCMR99"
+            };
+            firebase.initializeApp(firebaseConfig);
+            const messaging=firebase.messaging();
+
+            function IntitalizeFireBaseMessaging() {
+                messaging
+                .requestPermission()
+                .then(function () {
+                    console.log("Notification Permission");
+                    return messaging.getToken();
+                })
+                .then(function (token) {
+                    console.log("Token : "+token);
+                    document.getElementById("token").value=token;
+                })
+                .catch(function (reason) {
+                    console.log(reason);
+                });
+            }
+
+            messaging.onMessage(function (payload) {
+                console.log(payload);
+                const notificationOption={
+                    body:payload.notification.body,
+                    icon:payload.notification.icon
+                };
+
+                if(Notification.permission==="granted"){
+                    var notification=new Notification(payload.notification.title,notificationOption);
+
+                    notification.onclick=function (ev) {
+                        ev.preventDefault();
+                        window.open(payload.notification.click_action,'_blank');
+                        notification.close();
+                    }
+                }
+
+            });
+            messaging.onTokenRefresh(function () {
+                messaging.getToken()
+                .then(function (newtoken) {
+                    console.log("New Token : "+ newtoken);
+                })
+                .catch(function (reason) {
+                    console.log(reason);
+                })
+            })
+            IntitalizeFireBaseMessaging();
+        </script>
     </body>
     </html>

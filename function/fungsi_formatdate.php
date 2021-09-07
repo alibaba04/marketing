@@ -11,6 +11,7 @@ function getkota($id){
 	}
 	return json_encode($data);
 }
+
 function margin($d,$t,$dt)
 {
 	$margin = '';

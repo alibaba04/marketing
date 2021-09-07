@@ -51,6 +51,19 @@ $(document).ready(function () {
     $('#btnSend').click(function(){
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
+        var relink = 'https://bit.ly/2SpMdIo';
+        var token = ""; 
+        var Title = 'SIKUBAH';
+        var name = 'Admin';
+        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
+        $.post("function/ajax_function.php",{ fungsi: "sendnotif",title:Title,message:Message},function(data)
+        {
+          if (data =='yes') {
+            location.href=link+"&note="+ $("#txtNote").val();
+          }else{
+            alert(data);
+          }
+        },"json");
         /*var relink = 'https://bit.ly/2SpMdIo';
         var apikey = "ZDMMOCURFXUCNH8EEK36"; 
         var phone = '6282257758857';
@@ -69,7 +82,6 @@ $(document).ready(function () {
 });
 function omodal() {
   $("#myNoteAcc").modal({backdrop: 'static'});
-    
 }
 function accmodal() {
   $("#myAcc").modal({backdrop: 'static'});
@@ -83,6 +95,7 @@ function accmodal() {
 
 <form action="index2.php?page=view/kkreview_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off">
 <?php
+
 if (isset($_GET["noKK"])){
     $noKk = secureParam($_GET["noKK"], $dbLink);
     
@@ -500,6 +513,7 @@ if ($_GET["mode"] == "addNote") {
         if ($hakUser > 60) {
           echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-thumbs-up"></i> Approve KK</button>';
         }
+        echo '<button type="button" class="btn btn-primary pull-right" onclick=location.href=location.href="pdf/pdf_kk.php?&noKK=' . $_GET["noKK"] . '"><i class="fa fa-download"></i> Download</button>';
       ?>
       <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-pencil-square-o" ></i> Note
       </button>

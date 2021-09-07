@@ -25,7 +25,7 @@ class c_login
             //Ambil semua data user yang perlu dimasukkan ke Session 		
             $result=mysql_query("SELECT kodeUser, nama FROM aki_user WHERE kodeUser='".$userId."' and aktif='Y'" , $dbLink);
             if($query_data=mysql_fetch_row($result)){
-                $result=mysql_query("SELECT kodeUser, nama, avatar,phone FROM aki_user WHERE kodeUser='".$userId."' AND  password='".HASH('SHA512',$passSalt.$_POST[txtPassword])."' AND aktif='Y'" , $dbLink);
+                $result=mysql_query("SELECT kodeUser, nama, avatar,phone,token FROM aki_user WHERE kodeUser='".$userId."' AND  password='".HASH('SHA512',$passSalt.$_POST[txtPassword])."' AND aktif='Y'" , $dbLink);
 
                 if($query_data=mysql_fetch_row($result))
                 {
@@ -64,7 +64,7 @@ class c_login
                     require_once('./class/c_user.php');
                     session_name("akunkobama");
 
-                    $_SESSION["my"] = new c_user($query_data[0], $query_data[1], $tempGroup, $tempMenu,"",$query_data[2],$query_data[3]);
+                    $_SESSION["my"] = new c_user($query_data[0], $query_data[1], $tempGroup, $tempMenu,"",$query_data[2],$query_data[3],$query_data[4]);
                     $_SESSION["my"]->timeout =  time();
                     
                     $rsGroup = mysql_query("SELECT kodeGroup FROM aki_usergroup WHERE kodeUser='".$query_data[0]."';", $dbLink);
