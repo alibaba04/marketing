@@ -22,6 +22,30 @@ case "checkKodeMenu":
         echo "no";
     }
 break;
+case "sendnotif":
+    $url ="https://fcm.googleapis.com/fcm/send";
+    $fields=array(
+        "to"=>$_POST['token'],
+        "notification"=>array(
+            "body"=>$_POST['message'],
+            "title"=>'Sikubah',
+            "click_action"=>"https://sikubah.com/marketing"
+        )
+    );
+    $headers=array(
+        'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+        'Content-Type:application/json'
+    );
+    $ch=curl_init();
+    curl_setopt($ch,CURLOPT_URL,$url);
+    curl_setopt($ch,CURLOPT_POST,true);
+    curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+    $result=curl_exec($ch);
+    print_r($result);
+    curl_close($ch);
+break;
 case "checkKodeUser":
     $result = mysql_query("select kodeUser FROM aki_user WHERE kodeUser ='" . secureParamAjax($_POST['kodeUser'], $dbLink) . "'", $dbLink);
     if (mysql_num_rows($result)) {
