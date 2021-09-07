@@ -51,13 +51,19 @@ $(document).ready(function () {
     $('#btnSend').click(function(){
         $('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();
+        var user = $('#txtuser').val();
+        var Token = '';
+        $.post("function/ajax_function.php",{ fungsi: "gettoken",user:user},function(data)
+        {
+          alert(data['token']);
+          Token = data['token'];
+        },"json");
         var relink = 'https://bit.ly/2SpMdIo';
-        var Token = 'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC';
+        
         var name = 'Admin';
         var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
         $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message},function(data)
         {
-            alert(data);
         },"json");
         /*var relink = 'https://bit.ly/2SpMdIo';
         var apikey = "ZDMMOCURFXUCNH8EEK36"; 
@@ -114,6 +120,7 @@ $filekaligrafi=$dataSph["filekaligrafi"];
 if ($_GET["mode"] == "addNote") {
   echo "<input type='hidden' name='txtMode' id='txtMode' value='addNote'>";
 }
+echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"]->privilege . "'>";
 ?>
 <section class="content-header">
   <h1>
