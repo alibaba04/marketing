@@ -23,9 +23,17 @@ case "checkKodeMenu":
     }
 break;
 case "sendnotif":
+    $token = '';
+    if ($_SESSION["my"]->privilege == 'ADMIN') {
+        $token = 'kpenjualan';
+    }elseif($_SESSION["my"]->privilege == 'kpenjualan'){
+        $token = 'eTvEXpDTFRVG0YDsnh9llZ:APA91bGJjtC-n7_V61LTaZ3gMByePebiCLU4LLxOYdl2Ja8cqwQ-MyLOefbWdkVDrRMz_YTzjPOAAJKmKUTcnNdQ3Hb7Jw3ycHMtSNTL7rVa2-nrbakVsZvq2TZuQB5ae4wSgoo6fY3m';
+    }else{
+        $token = 'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC';
+    }
     $url ="https://fcm.googleapis.com/fcm/send";
     $fields=array(
-        "to"=>['c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC'],['eTvEXpDTFRVG0YDsnh9llZ:APA91bGJjtC-n7_V61LTaZ3gMByePebiCLU4LLxOYdl2Ja8cqwQ-MyLOefbWdkVDrRMz_YTzjPOAAJKmKUTcnNdQ3Hb7Jw3ycHMtSNTL7rVa2-nrbakVsZvq2TZuQB5ae4wSgoo6fY3m'],
+        "to"=>$token,
         "notification"=>array(
             "body"=>$message,
             "title"=>$title,
