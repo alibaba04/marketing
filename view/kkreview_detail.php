@@ -67,7 +67,7 @@ $(document).ready(function () {
           Token = data['token'];
           var name = 'Admin';
           var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' ";
-          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,nokk:'https://bit.ly/3hhyPiB'},function(data)
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,nokk:url},function(data)
           {
           },"json");
         },"json");
