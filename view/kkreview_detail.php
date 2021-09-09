@@ -46,8 +46,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
-    $("#myNoteAcc").modal({backdrop: 'static'});
-    var link = window.location.href;
+    // $("#myNoteAcc").modal({backdrop: 'static'});
+    // var link = window.location.href;
     $('#btnSend').click(function(){
         
         var user = $('#txtuser').val();
@@ -64,10 +64,10 @@ $(document).ready(function () {
         $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
         {
           Token = data['token'];
-          var relink = 'https://bit.ly/2SpMdIo';
+          var relink = 'https://bit.ly/3hhyPiB';
           var name = 'Admin';
-
-          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
+          alert(Token);
+          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink+$('#txtnoKkEn').val();;
           /*var url = 'http://localhost/marketing/send_notification.php?message='+Message+'&token='+Token; 
           $.ajax({ url : url, 
             type: 'GET', 
@@ -130,6 +130,7 @@ $txtnokk='';
 $rsTemp = mysql_query($q, $dbLink);
 if ($dataSph = mysql_fetch_array($rsTemp)) {
 echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataSph["noKk"] . "'>";
+echo "<input type='hidden' name='txtnoKkEn' id='txtnoKkEn' value='" . $_GET["noKK"] . "'>";
 $txtnokk=$dataSph["noKk"];
 $filekubah=$dataSph["filekubah"];
 $filekaligrafi=$dataSph["filekaligrafi"];

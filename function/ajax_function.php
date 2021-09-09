@@ -45,7 +45,6 @@ case "sendnotif":
     $result=curl_exec($ch);
     print_r($result);
     curl_close($ch);
-    echo "s";
 break;
 case "gettoken":
     $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$_POST['user']."'", $dbLink);
