@@ -61,7 +61,7 @@ $(document).ready(function () {
         }else{
           privilegeU = 'GODMODE';
         }
-        var url = 'https://sikubah.com/marketingindex.php?page=view/'+$('#txtnoKkEn').val();
+        var url = 'https://sikubah.com/marketing/index.php?page=view/kkreview_detail&mode=addNote&noKK='+$('#txtnoKkEn').val();
         $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
         {
           Token = data['token'];
