@@ -46,8 +46,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
-    // $("#myNoteAcc").modal({backdrop: 'static'});
-    // var link = window.location.href;
+    $("#myNoteAcc").modal({backdrop: 'static'});
+    var link = window.location.href;
     $('#btnSend').click(function(){
         
         var user = $('#txtuser').val();
@@ -64,39 +64,13 @@ $(document).ready(function () {
         $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
         {
           Token = data['token'];
-          var relink = 'https://bit.ly/3hhyPiB';
           var name = 'Admin';
           alert(Token);
-          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink+$('#txtnoKkEn').val();;
-          /*var url = 'http://localhost/marketing/send_notification.php?message='+Message+'&token='+Token; 
-          $.ajax({ url : url, 
-            type: 'GET', 
-            dataType : 'json', 
-            success : function(result){
-              alert('d');
-            } 
-          }); */
-          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:'Message'},function(data)
+          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' ";
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,nokk:$('#txtnoKkEn').val()},function(data)
           {
           },"json");
         },"json");
-        /*$('#txtNote').val($('#txtmNote').val());
-        location.href=link+"&note="+ $("#txtNote").val();*/
-        
-        /*var relink = 'https://bit.ly/2SpMdIo';
-        var apikey = "ZDMMOCURFXUCNH8EEK36"; 
-        var phone = '6282257758857';
-        var name = 'Admin';
-        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-        
-        $.post("function/ajax_function.php",{ fungsi: "sendwa",to:phone,text:Message},function(data)
-        {
-          if (data =='yes') {
-            location.href=link+"&note="+ $("#txtNote").val();
-          }else{
-            alert(data);
-          }
-        },"json");*/
     });
 });
 function omodal() {
