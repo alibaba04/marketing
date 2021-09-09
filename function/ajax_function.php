@@ -29,7 +29,7 @@ case "sendnotif":
         "notification"=>array(
             "body"=>$_POST['message'],
             "title"=>'Sikubah',
-            "click_action"=>'https://sikubah.com/marketing/index.php?page=view/kkreview_detail&mode=addNote&noKK=8a7d92da4b229501b8c81ef252e850a5'
+            "click_action"=>$_POST['url']
         )
     );
     $headers=array(
