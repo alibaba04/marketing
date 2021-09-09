@@ -13,7 +13,7 @@ if (isset($_POST[txtUserID])) {
 //        header("Location:index.php?page=login_detail&eventCode=30"); 	
 //        exit;
 //    } 
-    $tempResult = $tmpLogin->validateUser($_POST[txtUserID]);
+    $tempResult = $tmpLogin->validateUser($_POST[txtUserID],$_POST[txtToken]);
     if ($tempResult == 'Sukses') {
         header("Location:index.php");
         exit;
@@ -66,7 +66,6 @@ if (isset($_POST[txtUserID])) {
                 ?>
                 </font>
             </p>
-
             <form id="loginform" name="loginform" action="index2.php?page=login_detail" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" name="txtUserID" id="txtUserID" class="form-control" placeholder="Username" style="border-radius: 4px;">
@@ -76,6 +75,7 @@ if (isset($_POST[txtUserID])) {
                     <input type="password" name="txtPassword" id="txtPassword" class="form-control" placeholder="Password" style="border-radius: 4px;">
                     <span class="glyphicon glyphicon-wrench form-control-feedback"></span>
                 </div>
+                <input type="hidden" name="txtToken" id="txtToken" >
                 <div class="row">
                     <div class="col-xs-8">
                     </div>
@@ -104,3 +104,61 @@ if (isset($_POST[txtUserID])) {
 }
 
 ?>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyCmTZroIbWCnevV3O3vz-VMDWJaYY-hexs",
+        authDomain: "sikubah-ce3f1.firebaseapp.com",
+        projectId: "sikubah-ce3f1",
+        storageBucket: "sikubah-ce3f1.appspot.com",
+        messagingSenderId: "1073118020070",
+        appId: "1:1073118020070:web:3fe92396be45a17ca11627",
+        measurementId: "G-7251WCMR99"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging=firebase.messaging();
+
+    function IntitalizeFireBaseMessaging() {
+        messaging
+        .requestPermission()
+        .then(function () {
+            console.log("Notification Permission");
+            return messaging.getToken();
+        })
+        .then(function (token) {
+                    //console.log("Token : "+token);
+                    document.getElementById("txtToken").value=token;
+                })
+        .catch(function (reason) {
+            console.log(reason);
+        });
+    }
+
+    messaging.onMessage(function (payload) {
+        console.log(payload);
+        const notificationOption={
+            body:payload.notification.body,
+            icon:payload.notification.icon
+        };
+
+        if(Notification.permission==="granted"){
+            var notification=new Notification(payload.notification.title,notificationOption);
+
+            notification.onclick=function (ev) {
+                ev.preventDefault();
+                window.open(payload.notification.click_action,'_blank');
+                notification.close();
+            }
+        }
+
+    });
+    messaging.onTokenRefresh(function () {
+        messaging.getToken()
+        .then(function (newtoken) {
+                    //console.log("New Token : "+ newtoken);
+                })
+        .catch(function (reason) {
+            console.log(reason);
+        })
+    })
+    IntitalizeFireBaseMessaging();
+</script>

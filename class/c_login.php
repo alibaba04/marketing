@@ -12,7 +12,7 @@ class c_login
 	{
 
 	}
-	function validateUser($userId=0)
+	function validateUser($userId=0,$token)
 	{
             global $dbLink;
             global $SITUS;
@@ -21,6 +21,7 @@ class c_login
             //Secure all parameters from SQL injection
 
            $userId= secureParam($userId,$dbLink);
+           $token= secureParam($token,$dbLink);
 
             //Ambil semua data user yang perlu dimasukkan ke Session 		
             $result=mysql_query("SELECT kodeUser, nama FROM aki_user WHERE kodeUser='".$userId."' and aktif='Y'" , $dbLink);
@@ -74,18 +75,17 @@ class c_login
                         $_SESSION["my"]->privilege = $group["0"];
                     }
                     
-                    //update ip
-                    $result=mysql_query("UPDATE `aki_user` SET `ip`='".$_SERVER['REMOTE_ADDR']."' where kodeUser='".$userId."'" , $dbLink);
-                    if($query_data=mysql_fetch_row($result))
-                    {
-                        //alert($ip);
-                    }
+                    //update token,ip
+                    $qIp = "UPDATE `aki_user` SET `ip`='".$_SERVER['REMOTE_ADDR']."',`token`='".$token."' where kodeUser='".$userId."'";
+                    if (!mysql_query($qIp, $dbLink))
+                        throw new Exception($qIp.'Gagal update token. ');
+
                     date_default_timezone_set("Asia/Jakarta");
                     $tgl = date("Y-m-d h:i:sa");
                     $q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
                     $q4.= "('".$userId."','".$tgl."','User Login ip : ".$_SERVER['REMOTE_ADDR']."');";
                     if (!mysql_query( $q4, $dbLink))
-                        throw new Exception($q4.'Gagal update report. ');
+                        throw new Exception('Gagal update report. ');
                     return "Sukses";
                 }
                 else
