@@ -68,7 +68,7 @@ $(document).ready(function () {
           var name = 'Admin';
 
           var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-          var url = 'http://localhost/marketing/send_notification.php?message='+Token+'&token='+Message; 
+          var url = 'http://localhost/marketing/send_notification.php?message='+Message+'&token='+Token; 
           $.ajax({ url : url, 
             type: 'GET', 
             dataType : 'json', 
