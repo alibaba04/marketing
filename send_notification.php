@@ -6,14 +6,13 @@ function sendNotification(){
         "to"=>$_REQUEST['token'],
         "notification"=>array(
             "body"=>$_REQUEST['message'],
-            "title"=>'Sikubah.com',
+            "title"=>'sikubah',
             "click_action"=>"https://sikubah.com/marketing"
         )
     );
 
     $headers=array(
-        'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o    
-',
+        'Authorization:key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
         'Content-Type:application/json'
     );
 
