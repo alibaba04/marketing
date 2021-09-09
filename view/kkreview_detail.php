@@ -49,22 +49,31 @@ $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
     $('#btnSend').click(function(){
-        $('#txtNote').val($('#txtmNote').val());
-        location.href=link+"&note="+ $("#txtNote").val();
+        
         var user = $('#txtuser').val();
         var Token = '';
-        $.post("function/ajax_function.php",{ fungsi: "gettoken",user:user},function(data)
+        var privilegeU = '';
+
+        if (user == 'ADMIN') {
+          privilegeU = 'kpenjualan';
+        }else if(user == 'kpenjualan'){
+          privilegeU = 'ADMIN';
+        }else{
+          privilegeU = 'GODMODE';
+        }
+        $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
         {
-          alert(data['token']);
           Token = data['token'];
+          var relink = 'https://bit.ly/2SpMdIo';
+          var name = 'Admin';
+          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message},function(data)
+          {
+          },"json");
         },"json");
-        var relink = 'https://bit.ly/2SpMdIo';
+        $('#txtNote').val($('#txtmNote').val());
+        location.href=link+"&note="+ $("#txtNote").val();
         
-        var name = 'Admin';
-        var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-        $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message},function(data)
-        {
-        },"json");
         /*var relink = 'https://bit.ly/2SpMdIo';
         var apikey = "ZDMMOCURFXUCNH8EEK36"; 
         var phone = '6282257758857';
