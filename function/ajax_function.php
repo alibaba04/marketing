@@ -47,7 +47,7 @@ case "sendnotif":
     curl_close($ch);
 break;
 case "gettoken":
-    $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$_POST['user']."'", $dbLink);
+    $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$_POST['user']."' limit 1", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             echo json_encode(array("token"=>$data['token'],"nama"=>$data['nama']));
