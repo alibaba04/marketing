@@ -68,17 +68,17 @@ $(document).ready(function () {
           var name = 'Admin';
 
           var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-          var url = 'http://localhost/marketing/send_notification.php?message='+Message+'&token='+Token; 
+          /*var url = 'http://localhost/marketing/send_notification.php?message='+Message+'&token='+Token; 
           $.ajax({ url : url, 
             type: 'GET', 
             dataType : 'json', 
             success : function(result){
               alert('d');
             } 
-          }); 
-          /*$.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:'Message'},function(data)
+          }); */
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:'Message'},function(data)
           {
-          },"json");*/
+          },"json");
         },"json");
         /*$('#txtNote').val($('#txtmNote').val());
         location.href=link+"&note="+ $("#txtNote").val();*/

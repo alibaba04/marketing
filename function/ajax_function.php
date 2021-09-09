@@ -25,11 +25,11 @@ break;
 case "sendnotif":
     $url ="https://fcm.googleapis.com/fcm/send";
     $fields=array(
-        "to"=>'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC',
+        "to"=>$_POST['token'],
         "notification"=>array(
             "body"=>$_POST['message'],
             "title"=>'Sikubah',
-            "click_action"=>'https://sikubah.com/marketing'
+            "click_action"=>"https://sikubah.com/marketing"
         )
     );
     $headers=array(
