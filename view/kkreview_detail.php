@@ -66,13 +66,15 @@ $(document).ready(function () {
           Token = data['token'];
           var relink = 'https://bit.ly/2SpMdIo';
           var name = 'Admin';
+            alert(Token);
+          
           var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' "+relink;
-          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message},function(data)
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:'Message'},function(data)
           {
           },"json");
         },"json");
-        $('#txtNote').val($('#txtmNote').val());
-        location.href=link+"&note="+ $("#txtNote").val();
+        /*$('#txtNote').val($('#txtmNote').val());
+        location.href=link+"&note="+ $("#txtNote").val();*/
         
         /*var relink = 'https://bit.ly/2SpMdIo';
         var apikey = "ZDMMOCURFXUCNH8EEK36"; 

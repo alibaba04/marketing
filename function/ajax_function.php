@@ -25,7 +25,7 @@ break;
 case "sendnotif":
     $url ="https://fcm.googleapis.com/fcm/send";
     $fields=array(
-        "to"=>$_POST['token'],
+        "to"=>'c9DZ3uTKaPaar-EOaVJMWo:APA91bH_2DnASkJ3ExQskgW7PKjDmGL0ah0iVbW4t5-FpobJq-UdvckZSwQz2AvIuTrTYDy7cOZhxBC4pkQoOF6xwmG7-AY-qomTRlLkMVDj9ZaOYDLg_-M_eqx5rcVFD3_8Fm0gfLTC',
         "notification"=>array(
             "body"=>$_POST['message'],
             "title"=>'Sikubah',
@@ -45,6 +45,7 @@ case "sendnotif":
     $result=curl_exec($ch);
     print_r($result);
     curl_close($ch);
+    echo "s";
 break;
 case "gettoken":
     $result = mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$_POST['user']."'", $dbLink);
