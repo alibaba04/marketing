@@ -39,8 +39,8 @@ class c_kkreview
 							throw new Exception('Gagal note KK. ');
 
 				@mysql_query("COMMIT", $dbLink);
-				
-				$destination = 0; 
+					$this->strResults="Sukses Note";
+				/*$destination = 0; 
 				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='".$readby."'";
 				$result=mysql_query($q, $dbLink);
 
@@ -61,7 +61,7 @@ class c_kkreview
 					$this->strResults="Sukses Note";
 				}else{
 					$this->strResults=$my_result_object->description;
-				}
+				}*/
 		}
 		catch(Exception $e) 
 		{

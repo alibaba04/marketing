@@ -49,7 +49,7 @@ $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
     $('#btnSend').click(function(){
-        
+        $('#txtNote').val($('#txtmNote').val());
         var user = $('#txtuser').val();
         var Token = '';
         var privilegeU = '';
