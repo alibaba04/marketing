@@ -61,13 +61,14 @@ $(document).ready(function () {
         }else{
           privilegeU = 'GODMODE';
         }
+        var url = 'https://sikubah.com/marketingindex.php?page=view/'+$('#txtnoKkEn').val();
         $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
         {
           Token = data['token'];
           var name = 'Admin';
           alert(Token);
           var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' ";
-          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,nokk:$('#txtnoKkEn').val()},function(data)
+          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,nokk:url},function(data)
           {
           },"json");
         },"json");
