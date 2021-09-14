@@ -73,11 +73,7 @@ $(".select2").select2();
         var a = $('#txtongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
         var d = v.replace(/\./g,'');
-
-        var a2 = $('#txtBiayaPlafon').val();
-        var v2 = a2.replace(/[^0-9\.]+/g, '');
-        var kaligrafi = v2.replace(/\./g,'');
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:kaligrafi},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
             if ($("#cbomodel").val() != 'custom') {
                 $('#idluas').val(data.luas);
@@ -87,7 +83,7 @@ $(".select2").select2();
                 $('#idharga3').val(data.tharga2);
             }
         },"json");
-        
+
     }
     /* Fungsi formatRupiah */
     function formatRupiah(angka, prefix){
