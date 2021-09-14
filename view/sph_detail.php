@@ -343,7 +343,6 @@ $(document).ready(function () {
             $("#txtongkir").focus();
             return false;
         }
-        
 
         var bplafon = $("#txtBiayaPlafon").val().replace(/\./g,'');
         var ket = $("#txtket").val();
@@ -363,17 +362,17 @@ $(document).ready(function () {
         var gold = '0';
         if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
-        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').is(":checked")){
+        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').is(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '4';
-        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaTm').is(":checked")){
+        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaTm').is(":checked") && $('#chkHargaEn').not(":checked")){
             chkEnGa = '5';
-        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
+        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked") && $('#chkHargaGa').not(":checked")){
             chkEnGa = '6';
-        }else if($('#chkHargaGa').is(":checked")){
+        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '1';
-        }else if($('#chkHargaEn').is(":checked")){
+        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').not(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '2';
-        }else if($('#chkHargaTm').is(":checked")){
+        }else if($('#chkHargaTm').is(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaGa').not(":checked")){
             chkEnGa = '3';
         }else{
             chkEnGa = '0';
@@ -413,12 +412,9 @@ $(document).ready(function () {
             $("#chkEnGa_"+$('#validEdit').val()).val(chkEnGa);
             $("#chkGold_"+$('#validEdit').val()).val(gold);
         }else{
-
             var ttable = document.getElementById("kendali");
             var trow = document.createElement("TR");
-
             trow.setAttribute('id','trid_'+tcounter);
-//        
 //Kolom 1 Checkbox
 var td = document.createElement("TD");
 td.setAttribute("align","center");
@@ -502,7 +498,7 @@ var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.setAttribute('onclick','adddetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="chkGold_'+tcounter+'" id="chkGold_'+tcounter+'" class="form-control" type="hidden" value="'+gold+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="chkGold_'+tcounter+'" id="chkGold_'+tcounter+'" class="form-control" type="hidden" value="'+gold+'"></div>';
 trow.appendChild(td);
 //Kolom 12 h3
 var td = document.createElement("TD");

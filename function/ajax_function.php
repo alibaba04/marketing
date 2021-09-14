@@ -98,7 +98,11 @@ case "getcountAffiliate":
 break;
 
 case "getcountSPHm":
-    $result = mysql_query("SELECT COUNT(IF( month(tanggal) = 01, kodeUser, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, kodeUser, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, kodeUser, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, kodeUser, NULL)) AS april,COUNT(IF( month(tanggal) = 05, kodeUser, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, kodeUser, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, kodeUser, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, kodeUser, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, kodeUser, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, kodeUser, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, kodeUser, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, kodeUser, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE())", $dbLink);
+    $filter = '';
+    if ($_POST['user']!='-') {
+        $filter = "and kodeUser='".$_POST['user']."'";
+    }
+    $result = mysql_query("SELECT COUNT(IF( month(tanggal) = 01, kodeUser, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, kodeUser, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, kodeUser, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, kodeUser, NULL)) AS april,COUNT(IF( month(tanggal) = 05, kodeUser, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, kodeUser, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, kodeUser, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, kodeUser, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, kodeUser, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, kodeUser, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, kodeUser, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, kodeUser, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE()) ".$filter, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             echo json_encode( array("jan"=>$data['jan'],"feb"=>$data['feb'],"maret"=>$data['maret'],"april"=>$data['april'],"mei"=>$data['mei'],"jun"=>$data['jun'],"jul"=>$data['jul'],"agus"=>$data['agus'],"sep"=>$data['sep'],"okt"=>$data['okt'],"nov"=>$data['nov'],"des"=>$data['des']));
