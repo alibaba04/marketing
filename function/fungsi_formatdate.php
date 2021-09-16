@@ -101,29 +101,29 @@ function cekrangka($d)
 	$return = '';
 	if ($d >= '0.5' and $d<='0.9'){
 		$return = '1 inchi tebal 1,6 mm';
-	}elseif ($d >= '1' and $d<='2.5') {
+	}elseif ($d >= '1' and $d<='2.9') {
 		$return = '1,25 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '2.6' and $d<='4.5') {
+	elseif ($d >= '3' and $d<='4.9') {
 		$return = '1,5 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '4.6' and $d<='5.5') {
+	elseif ($d >= '5' and $d<='5.9') {
 		$return = '2 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '5.6' and $d<='10.5') {
+	elseif ($d >= '6' and $d<='10.9') {
 		$return = '1,5 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '10.5' and $d<='14.5') {
+	elseif ($d >= '11' and $d<='16.9') {
 		$return = '2 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '14.6' and $d<='17.5') {
+	elseif ($d >= '17' and $d<='20.9') {
 		$return = '2,5 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '17.6' and $d<='23.5') {
+	elseif ($d >= '21' and $d<='27.9') {
 		$return = '3 inchi tebal 1,6 mm';
 	}
-	elseif ($d >= '23.6' and $d<='30') {
-		$return = '3,5 inchi tebal 1,6 mm';
+	elseif ($d >= '28' and $d<='30') {
+		$return = '4 inchi tebal 1,6 mm';
 	}
 	return $return;
 }
