@@ -108,7 +108,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     
                     <?php
                     if ($hakUser==90 or $hakUser==80){
-                        if ($_SESSION["my"]->privilege!='SALES') {
+                        if ($_SESSION["my"]->privilege!='SALES' && $_SESSION["my"]->privilege!='kpenjualan') {
                             ?>
                             <div class="btn-group pull-right">
                                 <div class="btn-group dropright">
