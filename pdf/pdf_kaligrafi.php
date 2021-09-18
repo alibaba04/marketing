@@ -42,7 +42,7 @@ Sehubungan dengan pembangunan Masjid, Kami selaku kontraktor Kubah Masjid mengaj
 $pdf->writeHTML($tbl);
 $q2 = 'SELECT * FROM `aki_dkaligrafi` WHERE MD5(noSph)="' . $noSph.'"';
 $rs2 = mysql_query($q2, $dbLink);
-$jml=1;
+$jml=0;
 while (  $hasil2 = mysql_fetch_array($rs2)) {
 	$pdf->writeHTML('Spesifikasi :<br>');
 	$pdf->Cell(10,5,'',0,0,'R',0);
