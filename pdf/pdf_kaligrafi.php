@@ -104,8 +104,8 @@ $tbl = '
 <br>
 ';
 $pdf->writeHTML($tbl);
-if ($hasil['filekaligrafi']!='') {
-    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,55,170,130);
+if ($hasil['kaligrafi']!='') {
+    $pdf->image('../../uploads/'.$hasil['kaligrafi'],25,55,170,130);
 }
 $tbl = '
 Demikian penawaran harga Plafon kubah dari kami, atas perhatian dan kerjasamanya kami sampaikan terima kasih.

@@ -46,13 +46,13 @@ class c_sphkaligrafi
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
                     $filekaligrafi='';
-                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `harga`, `ppn`, `transport`, `filekaligrafi`) VALUES";
+                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `harga`, `ppn`, `transport`, `kaligrafi`) VALUES";
 					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$h1."', '".$ppn."', '".$transport."', '".$nameimg."');";
 
 					if (!mysql_query( $q2, $dbLink))
-						throw new Exception('Gagal tambah data SPH.');
+						throw new Exception($q2.'Gagal tambah data Kaligrafi.');
 					@mysql_query("COMMIT", $dbLink);
-					$this->strResults="Sukses Tambah Data SPH";
+					$this->strResults="Sukses Tambah Data Kaligrafi";
 					$nomer++;
 				}
 			}
