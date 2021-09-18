@@ -139,29 +139,18 @@ class c_sphkaligrafi
 				if (!empty($params['chkEdit_'.$j])){
 
                     $idSph = secureParam($params["chkEdit_" . $j], $dbLink);
-                    $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
-                    $qty = secureParam($params["txtQty_" . $j], $dbLink);
-                    $transport = secureParam($params["txtTransport_" . $j], $dbLink);
                     $harga1 = secureParam($params["txtHarga1_" . $j], $dbLink);
-                    $harga2 = secureParam($params["txtHarga2_" . $j], $dbLink);
-                    $harga3 = secureParam($params["txtHarga3_" . $j], $dbLink);
                     $h1 = preg_replace("/\D/", "", $harga1);
-                    $h2 = preg_replace("/\D/", "", $harga2);
-                    $h3 = preg_replace("/\D/", "", $harga3);
-                    $transport = preg_replace("/\D/", "", $transport);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
-                    $dtengah = secureParam($params["txtDt_". $j],$dbLink);
-                    $model = secureParam($params["txtModel_". $j],$dbLink);
-                    $plafon = secureParam($params["txtKel_". $j],$dbLink);
-                    $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
-                    $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
-                    $luas = secureParam($params["luas_". $j],$dbLink);
-                    $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";
-					$q.= " WHERE idDsph='".$idSph."' ;";
+                    $kaligrafi = secureParam($params["txtkaligrafi_". $j],$dbLink);
+                    $chkppn = secureParam($params["chkPPN_". $j],$dbLink);
+                    $chktransport = secureParam($params["chkTransport_". $j],$dbLink);
+                    $q = "UPDATE aki_dkaligrafi SET `noSph`='".$params["txtnoSph"]."',`d`='".$diameter."',`t`='".$tinggi."',`harga`='".$h1."',`ppn`='".$chkppn."',`transport`='".$chktransport."',`kaligrafi`='".$kaligrafi."'";
+					$q.= " WHERE nosph='".$params["txtnoSph"]."' ;";
 
 					if (!mysql_query( $q, $dbLink))
-						throw new Exception('Gagal ubah data transaksi Jurnal Kas Keluar.');
+						throw new Exception('Gagal ubah data Kaligrafi.');
                     $nomer++;
 					
 				}
@@ -172,9 +161,9 @@ class c_sphkaligrafi
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-						throw new Exception($q4.'Gagal ubah data SPH. ');
+						throw new Exception($q4.'Gagal ubah data Kaligrafi. ');
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Ubah Data SPH";
+			$this->strResults="Sukses Ubah Data Kaligrafi";
 		}
 		catch(Exception $e) 
 		{
@@ -262,14 +251,14 @@ class c_sphkaligrafi
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data SPH.');
 
-			$q2 = "DELETE FROM aki_dsph ";
-			$q2.= "WHERE (noSph)='".$noSph."';";
+			$q2 = "DELETE FROM aki_dkaligrafi ";
+			$q2.= "WHERE MD5(noSph)='".$noSph."';";
 
 			if (!mysql_query( $q2, $dbLink))
 				throw new Exception('Gagal hapus data SPH.');
 
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Hapus Data SPH ";
+			$this->strResults=$q2."Sukses Hapus Data SPH ";
 		}
 		catch(Exception $e) 
 		{

@@ -106,7 +106,7 @@ $pdf->Cell(65,6,'a/n PT. Anugerah Kubah Indonesia',0,0,'L',0);
 $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(55,6,'171 - 00 - 2558002 - 2',0,1,'L',0);
 
-/*$pdf->addpage();
+$pdf->addpage();
 $pdf->SetMargins(17, 0, 10, true);
 $pdf->Ln(10);
 $tbl = '
@@ -136,7 +136,7 @@ $pdf->Cell(120,6,'',0,0,'C',0);
 $pdf->Cell(50,6,'ANDIK NUR SETIAWAN',0,1,'C',0);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(120,6,'',0,0,'C',0);
-$pdf->Cell(50,6,'Direktur PT. Anugerah Kubah Indonesia',0,1,'C',0);*/
+$pdf->Cell(50,6,'Direktur PT. Anugerah Kubah Indonesia',0,1,'C',0);
 
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

@@ -312,9 +312,13 @@ class c_sph
 
 			$q2 = "DELETE FROM aki_dsph ";
 			$q2.= "WHERE (noSph)='".$noSph."';";
-
 			if (!mysql_query( $q2, $dbLink))
 				throw new Exception('Gagal hapus data SPH.');
+
+			$q2 = "DELETE FROM aki_dkaligrafi ";
+			$q2.= "WHERE (noSph)='".$noSph."';";
+			if (!mysql_query( $q2, $dbLink))
+				throw new Exception('Gagal hapus data Kaligrafi.');
 
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Hapus Data SPH ";

@@ -438,19 +438,27 @@ function validasiForm(form)
                             echo '<td align="center" valign="top" ><div class="form-group">
                             <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDkaligrafi"] . '" /></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" readonly="" style="min-width: 45px;"></div></td>';
+                            <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
+                            <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" ></div></td>';
+                            $chk = '';
+                            if ($DetilJurnal["ppn"] == 1) {
+                                $chk = 'checked';
+                            }
+                            $chkt = '';
+                            if ($DetilJurnal["transport"] == 1) {
+                                $chkt = 'checked';
+                            }
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["ppn"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            <input type="checkbox" class="minimal" name="chkPPN_' . $iJurnal . '" id="chkPPN_' . $iJurnal . '" value="'.$DetilJurnal["ppn"].'" '.$chk.'/> <label>PPN 10%</label></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            <input type="checkbox" class="minimal" name="chkTransport_' . $iJurnal . '" id="chkTransport_' . $iJurnal . '" value="'.$DetilJurnal["transport"].'" '.$chkt.'/> <label>Harga termasuk Biaya Transport</label></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . ($DetilJurnal["kaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
-
-
+                            <input type="text" class="form-control"  name="txtkaligrafi_' . $iJurnal . '" id="txtkaligrafi_' . $iJurnal . '" value="' . ($DetilJurnal["kaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            /*echo '<input type="text" name="txtppn_' . $iJurnal . '" id="txtppn_' . $iJurnal . '" value="">';
+                            echo '<input type="text" name="txttrans_' . $iJurnal . '" id="txttrans_' . $iJurnal . '" value="">';*/
                             $iJurnal++;
                         }
                     }
