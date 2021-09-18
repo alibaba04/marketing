@@ -63,7 +63,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
 		$transport ='belum';
 	}
 	$tbl = '<br>
-	<b>Harga yang disepakati untuk Plafon kaligrafi tersebut adalah Rp. '.number_format($hasil['harga']).',-<br><br></b>';
+	<b>Harga untuk Plafon kaligrafi tersebut adalah Rp. '.number_format($hasil['harga']).',-<br><br></b>';
 	$pdf->writeHTML($tbl);
 	$jml++;
 }
