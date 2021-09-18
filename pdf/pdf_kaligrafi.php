@@ -37,33 +37,39 @@ Kepada Yth<br><b>'.$nama_cust.'</b><br>
 Dengan Hormat,<br>
 Sehubungan dengan pembangunan Masjid, Kami selaku kontraktor Kubah Masjid mengajukan penawaran harga untuk Plafon Kubah.<br><br>
 <b>KALIGRAFI PLAFON</b><br><br>
-Spesifikasi :<br>
 ';
-$pdf->writeHTML($tbl);
-$pdf->Cell(10,5,'',0,0,'R',0);
-$pdf->MultiCell(150,7,'-    Diameter '.$hasil['d'].' m dan Tinggi '.$hasil['t'].' m
--    Plafon Motif Kaligrafi Asmaul Husna (Motif Terlampir)
--    Finishing menggunakan Cat Tembok Merk "Mowilex"'
-,0,'B',0);
-$ppn ='';
-if ($hasil['ppn'] == '1') {
-    $ppn ='sudah';
-}else{
-    $ppn ='belum';
-}
-$transport ='';
-if ($hasil['transport'] == '1') {
-    $transport ='sudah';
-}else{
-    $transport ='belum';
-}
-$tbl = '<br>
-<b>Harga yang disepakati untuk Plafon kaligrafi tersebut adalah Rp. '.number_format($hasil['harga']).',-<br><br>
-NB :<br>
-Harga diatas '.$ppn.' termasuk PPn 10%<br>
-Harga diatas '.$transport.' termasuk transport team kaligrafi.<br><br>
 
-Sistem pembayaran :</b><br>
+$pdf->writeHTML($tbl);
+$q2 = 'SELECT * FROM `aki_dkaligrafi` WHERE MD5(noSph)="' . $noSph.'"';
+$rs2 = mysql_query($q2, $dbLink);
+$jml=1;
+while (  $hasil2 = mysql_fetch_array($rs2)) {
+	$pdf->writeHTML('Spesifikasi :<br>');
+	$pdf->Cell(10,5,'',0,0,'R',0);
+	$pdf->MultiCell(130,6,'  -    Diameter '.$hasil2['d'].' meter dan Tinggi '.$hasil2['t'].' meter
+		-    Plafon Motif Kaligrafi Asmaul Husna (Motif Terlampir)
+		-    Finishing menggunakan Cat Tembok Merk "Mowilex"'
+		,0,'B',0);
+	$ppn ='';
+	if ($hasil['ppn'] == '1') {
+		$ppn ='sudah';
+	}else{
+		$ppn ='belum';
+	}
+	$transport ='';
+	if ($hasil['transport'] == '1') {
+		$transport ='sudah';
+	}else{
+		$transport ='belum';
+	}
+	$tbl = '<br>
+	<b>Harga yang disepakati untuk Plafon kaligrafi tersebut adalah Rp. '.number_format($hasil['harga']).',-<br><br></b>';
+	$pdf->writeHTML($tbl);
+	$jml++;
+}
+$tbl = '<b>NB :<br>
+	Harga diatas '.$ppn.' termasuk PPn 10%<br>
+	Harga diatas '.$transport.' termasuk transport team kaligrafi.<br><br>Sistem pembayaran :</b><br>
 <br>
 ';
 $pdf->writeHTML($tbl);
@@ -73,6 +79,10 @@ $pdf->MultiCell(190,7,chr(149).'   Pembayaran pertama sebesar 30 % sebagai uang 
 '.chr(149).'   Pembayaran ketiga 35 % diberikan saat barang & tukang pemasang sampai di lokasi.
 '.chr(149).'   Pembayaran keempat 10% diberikan saat makara siap terpasang.'
 ,0,'B',0);
+if ($jml>1) {
+	$pdf->addpage();
+	$pdf->Ln(10);
+}
 $tbl = '<br>
 Dibayarkan melalui :<br>
 <br>
@@ -96,7 +106,7 @@ $pdf->Cell(65,6,'a/n PT. Anugerah Kubah Indonesia',0,0,'L',0);
 $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(55,6,'171 - 00 - 2558002 - 2',0,1,'L',0);
 
-$pdf->addpage();
+/*$pdf->addpage();
 $pdf->SetMargins(17, 0, 10, true);
 $pdf->Ln(10);
 $tbl = '
@@ -126,7 +136,7 @@ $pdf->Cell(120,6,'',0,0,'C',0);
 $pdf->Cell(50,6,'ANDIK NUR SETIAWAN',0,1,'C',0);
 $pdf->SetFont('helvetica', '', 11);
 $pdf->Cell(120,6,'',0,0,'C',0);
-$pdf->Cell(50,6,'Direktur PT. Anugerah Kubah Indonesia',0,1,'C',0);
+$pdf->Cell(50,6,'Direktur PT. Anugerah Kubah Indonesia',0,1,'C',0);*/
 
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

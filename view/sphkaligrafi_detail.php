@@ -176,7 +176,7 @@ trow.appendChild(td);
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input type="file" name="listGambar[]" accept="image/*" multiple></div>';
+td.innerHTML+='<div class="form-group"><input disabled type="file" name="listGambar[]" accept="image/*" multiple></div>';
 trow.appendChild(td);
 
 ttable.appendChild(trow);
@@ -227,7 +227,6 @@ function validasiForm(form)
                             echo '<h3 class="box-title">UBAH SPH</h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
 
-//Secure parameter from SQL injection
                             if (isset($_GET["noSph"])){
                                 $noSph = secureParam($_GET["noSph"], $dbLink);
                             }else{
@@ -346,7 +345,7 @@ function validasiForm(form)
     <label class="con trol-label" for="txtTglTransaksi">&nbsp;</label>
     <div class="form-group">
             <input name="txtket" id="txtket" class="form-control" 
-            value="<?php   if($_GET["mode"]=='edit'){ echo $dataSph["keterangan"]; }?>" placeholder="Keterangan" >
+            value="<?php   if($_GET["mode"]=='edit'){ echo $dataSph["masjid"]; }?>" placeholder="Keterangan" >
     </div>
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
@@ -449,7 +448,7 @@ function validasiForm(form)
                             echo '<td align="center" valign="top"><div class="form-group">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
                             echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . ($DetilJurnal["filekaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
+                            <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . ($DetilJurnal["kaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
 
 
                             $iJurnal++;
