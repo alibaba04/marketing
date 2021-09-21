@@ -114,7 +114,7 @@ $tbl = '
 <br>
 ';
 $pdf->writeHTML($tbl);
-if ($hasil['kaligrafi']!='') {
+if ($hasil['kaligrafi']!='' && $hasil['kaligrafi']!='empty') {
     $pdf->image('../../uploads/'.$hasil['kaligrafi'],25,55,170,130);
 }
 $tbl = '

@@ -723,7 +723,17 @@ function validasiForm(form)
         </div>
         <div class="col-lg-9" style="padding-right: 0px;padding-left: 5px;">
             <input name="txtnmasjid" id="txtnmasjid" class="form-control" 
-            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){$n=$dataSph['masjid']; $nm=explode('Masjid',$n);echo $nm[1]; }?>">
+            value="<?php  if($_GET['mode']=='edit' && $dataSph['masjid']!=''){
+                $n=$dataSph['masjid'];
+                $nm=explode(' ',$n);
+                if($nm[0]== 'Masjid'){
+                    $nm=explode('Masjid',$n);
+                    echo $nm[1];
+                }else{
+                    $nm=explode('Atap',$n);
+                    echo $nm[1];
+                }
+               }?>">
         </div>
     </div>
     <div class="form-group">

@@ -68,6 +68,21 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <!-- Include script untuk function auto complete -->
 <SCRIPT language="JavaScript" TYPE="text/javascript">
     var tcounter = 0;
+    function chkval($param){
+        if ($('#chkPpn_'+$param).is(":checked")) {
+            $("#txtppn_"+$param).val(1);
+        }else{
+            $("#txtppn_"+$param).val(0);
+        }
+       
+    }
+    function chkvalt($param){
+        if ($('#chkTransport_'+$param).is(":checked")) {
+            $("#txttrans_"+$param).val(1);
+        }else{
+            $("#txttrans_"+$param).val(0);
+        }
+    }
     function hitluas(tcounter){
         var luas = $("#txtD_"+tcounter).val() * $("#txtT_"+tcounter).val() * 3.14;
         $("#txtLuas_"+tcounter).val(luas);
@@ -134,11 +149,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 var td = document.createElement("TD");
 td.setAttribute("align","center");
 if ($("#chkmode").val()=='edit') {
-    td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkEdit_'+tcounter+'" id="chkEdit_'+tcounter+'" value="'+$("#chkeditval").val()+'" checked /></div>';
+    td.innerHTML+='<div class=""><input type="checkbox" class="minimal" name="chkEdit_'+tcounter+'" id="chkEdit_'+tcounter+'" value="'+$("#chkeditval").val()+'" checked /></div>';
     var tr = document.getElementById("trid_"+tcounter);
     tr.remove();
 }else{
-    td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkAddJurnal_'+tcounter+'" id="chkAddJurnal_'+tcounter+'" value="1" checked /></div>';
+    td.innerHTML+='<div class=""><input type="checkbox" class="minimal" name="chkAddJurnal_'+tcounter+'" id="chkAddJurnal_'+tcounter+'" value="1" checked /></div>';
 }
 td.style.verticalAlign = 'top';
 trow.appendChild(td);
@@ -146,37 +161,37 @@ trow.appendChild(td);
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","right");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'" class="form-control" onkeydown="return numbersonly(this, event);" value="0"style="min-width: 120px;" ></div>';
+td.innerHTML+='<div class=""><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'" class="form-control" onkeydown="return numbersonly(this, event);" value="0"style="min-width: 120px;" ></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkPPN_'+tcounter+'" id="chkPPN_'+tcounter+'" value="1" checked /> <label>PPN 10%</label></div>';
+td.innerHTML+='<div class=""><input type="checkbox" class="custom-control-input" name="chkPPN_'+tcounter+'" id="chkPPN_'+tcounter+'" value="1" checked /> <label class="custom-control-label" for="chkPPN_' +tcounter+ '">PPN 10%</label></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input type="checkbox" class="minimal" name="chkTransport_'+tcounter+'" id="chkTransport_'+tcounter+'" value="1" checked /> <label>Harga termasuk Biaya Transport</label></div>';
+td.innerHTML+='<div class="" ><input type="checkbox" class="custom-control-input" name="chkTransport_'+tcounter+'" id="chkTransport_'+tcounter+'" value="1" checked /> <label class="custom-control-label" for="chkTransport_' +tcounter+ '">Harga termasuk Biaya Transport</label></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input disabled type="file" name="listGambar[]" accept="image/*" multiple></div>';
+td.innerHTML+='<div class=""><input disabled type="file" name="listGambar[]" accept="image/*" multiple></div>';
 trow.appendChild(td);
 
 ttable.appendChild(trow);
@@ -232,7 +247,7 @@ function validasiForm(form)
                             }else{
                                 $noSph = "";
                             }
-                            $q= " SELECT s1.*,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
+                            $q= " SELECT s1.*,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn,p1.id as idP,k1.name as kn,k1.id as idK ";
                             $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
                             $q.= "WHERE 1=1 and MD5(s1.noSph)='" . $noSph."'";
                             $q.= " ORDER BY idSph desc ";
@@ -412,10 +427,10 @@ function validasiForm(form)
                         <th style="width: 3%"><i class='fa fa-edit'></i></th>
                         <th style="width: 8%">Diameter</th>
                         <th style="width: 8%">Tinggi</th>
-                        <th style="width: 20%">Harga Kaligrafi</th>
-                        <th style="width: 8%">PPN</th>
-                        <th style="width: 18%">Transport</th>
-                        <th style="width: 40%">File Desain </th>
+                        <th style="width: 25%">Harga Kaligrafi</th>
+                        <th style="width: 10%">PPN</th>
+                        <th style="width: 20%">Transport</th>
+                        <th style="width: 25%">File Desain </th>
                     </tr>
                 </thead>
                 <tbody id="kendali">
@@ -435,13 +450,13 @@ function validasiForm(form)
                         while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                             $kel = '';
                             echo '<div><tr id="trid_'.$iJurnal.'" >';
-                            echo '<td align="center" valign="top" ><div class="form-group">
+                            echo '<td align="center" valign="top" ><div class="">
                             <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDkaligrafi"] . '" /></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
+                            echo '<td align="center" valign="top"><div class="">
                             <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" style="min-width: 45px;"></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
+                            echo '<td align="center" valign="top"><div class="">
                             <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" style="min-width: 45px;"></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
+                            echo '<td align="center" valign="top"><div class="">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" ></div></td>';
                             $chk = '';
                             if ($DetilJurnal["ppn"] == 1) {
@@ -451,14 +466,12 @@ function validasiForm(form)
                             if ($DetilJurnal["transport"] == 1) {
                                 $chkt = 'checked';
                             }
-                            echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="checkbox" class="minimal" name="chkPPN_' . $iJurnal . '" id="chkPPN_' . $iJurnal . '" value="'.$DetilJurnal["ppn"].'" '.$chk.'/> <label>PPN 10%</label></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
-                            <input type="checkbox" class="minimal" name="chkTransport_' . $iJurnal . '" id="chkTransport_' . $iJurnal . '" value="'.$DetilJurnal["transport"].'" '.$chkt.'/> <label>Harga termasuk Biaya Transport</label></div></td>';
-                            echo '<td align="center" valign="top"><div class="form-group">
+                            echo '<td align="center" valign="top"><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" name="chkPpn_' . $iJurnal . '" id="chkPpn_' . $iJurnal . '" value="'.$DetilJurnal["ppn"].'" '.$chk.' onclick="chkval(' . $iJurnal . ')"><label for="chkPpn_' . $iJurnal . '" class="custom-control-label"> PPN 10%</label></div></td>';
+                            echo '<td align="center" valign="top"><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" name="chkTransport_' . $iJurnal . '" id="chkTransport_' . $iJurnal . '" value="'.$DetilJurnal["transport"].'" '.$chkt.' onclick="chkvalt(' . $iJurnal . ')"><label for="chkTransport_' . $iJurnal . '" class="custom-control-label"> Harga termasuk Biaya Transport</label></div></td>';
+                            echo '<td align="center" valign="top"><div class="">
                             <input type="text" class="form-control"  name="txtkaligrafi_' . $iJurnal . '" id="txtkaligrafi_' . $iJurnal . '" value="' . ($DetilJurnal["kaligrafi"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
-                            /*echo '<input type="text" name="txtppn_' . $iJurnal . '" id="txtppn_' . $iJurnal . '" value="">';
-                            echo '<input type="text" name="txttrans_' . $iJurnal . '" id="txttrans_' . $iJurnal . '" value="">';*/
+                            echo '<input type="hidden" name="txtppn_' . $iJurnal . '" id="txtppn_' . $iJurnal . '" value="'.$DetilJurnal["ppn"].'">';
+                            echo '<input type="hidden" name="txttrans_' . $iJurnal . '" id="txttrans_' . $iJurnal . '" value="'.$DetilJurnal["transport"].'">';
                             $iJurnal++;
                         }
                     }
