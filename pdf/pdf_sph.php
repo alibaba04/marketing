@@ -93,7 +93,7 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
     if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
-        $pdf->Write(5,'Dengan Luas Atap '.$hasil['luas'].' meter');
+        $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
         if ($dt != 0){
@@ -265,47 +265,78 @@ if ($hasil['plafon'] == 0){
 
 if ($hasil['d']>=5 && $hasil['d']<6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+        
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
+    
     $pdf->SetFont('helvetica', '', 11);
 }else if ($hasil['d']>=6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $lampu='';
-    if ($hasil['d']>=15) {
-        $lampu='8';
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $lampu='';
+        if ($hasil['d']>=15) {
+            $lampu='8';
+        }else{
+            $lampu='4';
+        }
+        $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot '.$lampu.' sisi','LRB',1,'L',0);
     }else{
-        $lampu='4';
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
     }
-    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot '.$lampu.' sisi','LRB',1,'L',0);
+    
     $pdf->SetFont('helvetica', '', 11);
 }else{
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','T',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.',1,0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
+    
 }
  $tbl = '<br>
     <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga1) .'</b></i>
@@ -437,41 +468,77 @@ if ($hasil['plafon'] == 0){
 
 if ($hasil['d']>=5 && $hasil['d']<6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+        
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
     $pdf->SetFont('helvetica', '', 11);
 }else if ($hasil['d']>=6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $lampu='';
+        if ($hasil['d']>=15) {
+            $lampu='8';
+        }else{
+            $lampu='4';
+        }
+        $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
+
     $pdf->SetFont('helvetica', '', 11);
 }else{
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.',1,0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.',1,0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-    $pdf->Cell(143,6,'   Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
+
 }
  $tbl = '<br>
     <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga2).'</b></i>
@@ -610,41 +677,75 @@ if ($hasil['plafon'] == 0){
 
 if ($hasil['d']>=5 && $hasil['d']<6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+        
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
     $pdf->SetFont('helvetica', '', 11);
 }else if ($hasil['d']>=6){
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.','LTR',0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
-    $pdf->Cell(8,6,'','LRB',0,'C',0);
-    $pdf->Cell(32,6,'','LRB',0,'C',0);
-    $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->SetFont('helvetica', 'B', 11);
+        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
+        $pdf->Cell(8,6,'','LRB',0,'C',0);
+        $pdf->Cell(32,6,'','LRB',0,'C',0);
+        $lampu='';
+        if ($hasil['d']>=15) {
+            $lampu='8';
+        }else{
+            $lampu='4';
+        }
+        $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot 4 sisi','LRB',1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
     $pdf->SetFont('helvetica', '', 11);
 }else{
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        $pdf->Cell(8,6,'4.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'4.',1,0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
+        }
     }else {
         $pdf->Cell(8,6,'3.',1,0,'C',0);
     }
-    $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-    $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    if ($ketkubah != 'Atap') {
+        $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
+        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+    }else{
+        $pdf->Cell(32,6,'','T',0,'C',0);
+        $pdf->Cell(143,6,'','T',1,'L',0);
+    }
 }
  $tbl = '<br>
     <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b></i>
