@@ -327,7 +327,9 @@ if ($hasil['d']>=5 && $hasil['d']<6){
             $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }else {
-        $pdf->Cell(8,6,'3.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }
     }
     if ($ketkubah != 'Atap') {
         $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
@@ -529,7 +531,9 @@ if ($hasil['d']>=5 && $hasil['d']<6){
             $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }else {
-        $pdf->Cell(8,6,'3.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }
     }
     if ($ketkubah != 'Atap') {
         $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
@@ -737,7 +741,9 @@ if ($hasil['d']>=5 && $hasil['d']<6){
             $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }else {
-        $pdf->Cell(8,6,'3.',1,0,'C',0);
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }
     }
     if ($ketkubah != 'Atap') {
         $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
