@@ -329,6 +329,8 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     }else {
         if ($ketkubah != 'Atap') {
             $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }
     if ($ketkubah != 'Atap') {
@@ -533,6 +535,8 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     }else {
         if ($ketkubah != 'Atap') {
             $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }
     if ($ketkubah != 'Atap') {
@@ -743,6 +747,8 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     }else {
         if ($ketkubah != 'Atap') {
             $pdf->Cell(8,6,'3.',1,0,'C',0);
+        }else{
+            $pdf->Cell(8,6,'','T',0,'C',0);
         }
     }
     if ($ketkubah != 'Atap') {
