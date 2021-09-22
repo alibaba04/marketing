@@ -161,13 +161,13 @@ trow.appendChild(td);
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class=""><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class=""><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
