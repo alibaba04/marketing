@@ -37,7 +37,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     //Jika Mode Hapus/Delete
     if ($_GET["txtMode"]=="Delete")
     {
-            $pesan=$tmpGroup->deleteGroup($_GET["kodeUser"]);
+            $pesan=$tmpGroup->deleteGroup($_GET["kodeGroup"]);
     }
 
 

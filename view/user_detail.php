@@ -203,30 +203,18 @@ function validasiForm(form){
                     ?>
                     <div class="form-group">
                         <select name="cbogroup" id="cbogroup" class="form-control" onKeyPress="return handleEnter(this, event)">
-                            <option value="">User Group</option>
                             <?php
-                            $selected = "";
-                            if ($_GET['mode'] == 'edit') {
-                                if ($dataUser['kodeGroup']=="DIRECTOR") {
-                                    $selected = " selected";
-                                    echo '<option value="DIRECTOR">Director</option>';
-                                    echo '<option value="ADMIN"'.$selected.'>Admin</option>';
-                                    echo '<option value="SALES">Sales</option>';
-                                }elseif ($dataUser['kodeGroup']=="ADMIN") {
-                                    $selected = " selected";
-                                    echo '<option value="DIRECTOR">Director</option>';
-                                    echo '<option value="ADMIN"'.$selected.'>Admin</option>';
-                                    echo '<option value="SALES">Sales</option>';
-                                }elseif ($dataUser['kodeGroup']=="SALES") {
-                                    $selected = " selected";
-                                    echo '<option value="DIRECTOR">Director</option>';
-                                    echo '<option value="ADMIN">Admin</option>';
-                                    echo '<option value="SALES"'.$selected.'>Sales</option>';
-                                }
+                            $q = "SELECT * FROM `aki_groups`";
+                            $sql_g = mysql_query($q,$dbLink);
+                            if($_GET['mode']=='edit'){
+                                echo '<option value="'.$dataUser['kodeGroup'].'" selected>'.$dataUser['kodeGroup'].'</option>';
                             }else{
-                                echo '<option value="DIRECTOR">Director</option>';
-                                echo '<option value="ADMIN">Admin</option>';
-                                echo '<option value="SALES">Sales</option>';
+                                echo "<option value=''>User Group</option>";
+                            }
+                            while ($rs_rangka = mysql_fetch_array($sql_g)) {
+                                if ($dataUser['kodeGroup']!=$rs_rangka['kodeGroup']) {
+                                    echo '<option value="'.$rs_rangka['kodeGroup'].'">'.$rs_rangka['nama'].'</option>';
+                                }
                             }
                             ?>
                         </select>

@@ -117,7 +117,7 @@ class c_user
 		$query_data=mysql_fetch_row($rsTemp);
 		if($query_data[0]==NULL)
 		{
-			$q = "INSERT INTO aki_user (kodeUser, nama, aktif, password) VALUES ('".$kode."','".$nama."','".$status."','".HASH('SHA512',$passSalt.$password)."');";
+			$q = "INSERT INTO aki_user (kodeUser, nama, aktif, password,avatar) VALUES ('".$kode."','".$nama."','".$status."','".HASH('SHA512',$passSalt.$password)."','avt1.png');";
 		
 			if (mysql_query( $q, $dbLink))
 			{	

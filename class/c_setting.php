@@ -668,7 +668,7 @@ class c_setting
 				if($lvNoAkses[$id]!=0)
 				{
 					$q = "INSERT INTO aki_groupprivilege ( kodeGroup, kodeMenu, level ) ";
-					$q.= "VALUES ('".strtoupper($kode)."','".$cbNoAccess[$i]."', '".$lvNoAkses[$id]."');";
+					$q.= "VALUES ('".$cbNoAccess[$i]."','".strtoupper($kode)."', '".$lvNoAkses[$id]."');";
 					mysql_query( $q, $dbLink);
 				}
 				$ct++;

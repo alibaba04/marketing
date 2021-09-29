@@ -97,6 +97,23 @@ case "getcountAffiliate":
     }
 break;
 
+case "getcountAffm":
+    $filter = '';
+    if (isset($_POST['aff'])) {
+        $filter = "and affiliate='".$_POST['aff']."'";
+    }
+    $result = mysql_query("SELECT affiliate,COUNT(IF( month(tanggal) = 01, affiliate, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, affiliate, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, affiliate, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, affiliate, NULL)) AS april,COUNT(IF( month(tanggal) = 05, affiliate, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, affiliate, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, affiliate, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, affiliate, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, affiliate, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, affiliate, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, affiliate, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, affiliate, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE()) ".$filter." group by affiliate ", $dbLink);
+    if (mysql_num_rows($result)>0) {
+        $idx=0;
+        while ( $data = mysql_fetch_assoc($result)) {
+            $output[$idx]=array($data['affiliate'],$data['jan'],$data['feb'],$data['maret'],$data['april'],$data['mei'],$data['jun'],$data['jul'],$data['agus'],$data['sep'],$data['okt'],$data['nov'],$data['des']);
+            $idx++;
+        } 
+        echo json_encode($output);
+        break;
+    }
+break;
+
 case "getcountSPHm":
     $filter = '';
     if ($_POST['user']!='-') {

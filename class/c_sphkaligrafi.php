@@ -45,7 +45,7 @@ class c_sphkaligrafi
                     $h1 = preg_replace("/\D/", "", $harga);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
-                    $filekaligrafi='';
+                    
                     $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `harga`, `ppn`, `transport`, `kaligrafi`) VALUES";
 					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$h1."', '".$ppn."', '".$transport."', 'empty');";
 

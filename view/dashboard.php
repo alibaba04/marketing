@@ -22,6 +22,35 @@ defined( 'validSession' ) or die( 'Restricted access' );
   <div class="box-header">
     <div class="box box-solid">
       <div class="box-body">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Area Chart Affiliate</h3>
+            <div class="box-tools pull-right">
+              <select name="cboAffiliate" id="cboAffiliate" class="form-control select2">
+                <?php
+                echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
+                echo '<option value="Web Contractor">Web Contractor</option>';
+                echo '<option value="Representative">Representative</option>';
+                echo '<option value="Offline">Offline</option>';
+                echo '<option value="Edy">Edy</option>';
+                echo '<option value="Ibnu">Ibnu</option>';
+                echo '<option value="Sigit">Sigit</option>';
+                echo '<option value="Isaq">Isaq</option>';
+                echo '<option value="Fendy">Fendy</option>';
+                echo '<option value="Habibi">Habibi</option>';
+                echo '<option value="Rizal">Rizal</option>';
+                echo '<option value="Bekasi">Bekasi</option>';
+                ?>
+              </select>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="chart">
+              <canvas id="areaChartLine" style="height:250px"></canvas>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
         <div class="col-md-6">
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -48,9 +77,37 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
-            <div class="box-body chart-responsive">
-              <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+            <div class="box-body chart-responsive ">
+              <div class="chart " id="sales-chart" style="height: 300px; position: relative;"></div>
             </div>
+          </div>
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Leaderboard</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <tr>
+                  <th style="width: 20px">#</th>
+                  <th>Provinsi</th>
+                  <th style="width: 40px">Qty</th>
+                </tr>
+                <?php 
+                $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id group by s.provinsi order by jml desc";
+                $rs = new MySQLPagedResultSet($q, 10, $dbLink);
+                $rowCounter=1;
+                while ($query_data = $rs->fetchArray()) {
+                  echo '<tr><td>'.$rowCounter.'.</td>
+                  <td>'.$query_data['name'].'</td>
+                  <td><span class="badge bg-red">'.$query_data['jml'].'</span></td>
+                  </tr>';
+                  $rowCounter++;
+                }
+                ?>
+              </table>
+            </div>
+            <!-- /.box-body -->
           </div>
         </div>
         <div class="col-md-6">
@@ -83,6 +140,34 @@ defined( 'validSession' ) or die( 'Restricted access' );
               <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
             </div>
           </div>
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Leaderboard</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <table class="table table-striped">
+                <tr>
+                  <th style="width: 20px">#</th>
+                  <th>Kota/Kabupaten</th>
+                  <th style="width: 40px">Qty</th>
+                </tr>
+                <?php 
+                $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id group by s.kota order by jml desc";
+                $rs = new MySQLPagedResultSet($q, 10, $dbLink);
+                $rowCounter=1;
+                while ($query_data = $rs->fetchArray()) {
+                  echo '<tr><td>'.$rowCounter.'.</td>
+                  <td>'.$query_data['name'].'</td>
+                  <td><span class="badge bg-red">'.$query_data['jml'].'</span></td>
+                  </tr>';
+                  $rowCounter++;
+                }
+                ?>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
         </div>
       </div>
     </div>
@@ -91,6 +176,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
 <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="./plugins/chartjs/Chart.min.js"></script>
 <script language="JavaScript" TYPE="text/javascript">
+
   $(function () {
     $.post("function/ajax_function.php",{ fungsi: "getcountAffiliate"},function(data)
     {
@@ -132,25 +218,25 @@ defined( 'validSession' ) or die( 'Restricted access' );
     },"json"); 
     //- AREA CHART -
     var areaChartOptions = {
-        showScale: true,
-        scaleShowGridLines: false,
-        scaleGridLineColor: "rgba(0,0,0,.05)",
-        scaleGridLineWidth: 1,
-        scaleShowHorizontalLines: true,
-        scaleShowVerticalLines: true,
-        bezierCurve: true,
-        bezierCurveTension: 0.3,
-        pointDot: false,
-        pointDotRadius: 4,
-        pointDotStrokeWidth: 1,
-        pointHitDetectionRadius: 20,
-        datasetStroke: true,
-        datasetStrokeWidth: 2,
-        datasetFill: true,
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-        maintainAspectRatio: true,
-        responsive: true
-      };
+      showScale: true,
+      scaleShowGridLines: false,
+      scaleGridLineColor: "rgba(0,0,0,.05)",
+      scaleGridLineWidth: 1,
+      scaleShowHorizontalLines: true,
+      scaleShowVerticalLines: true,
+      bezierCurve: true,
+      bezierCurveTension: 0.3,
+      pointDot: false,
+      pointDotRadius: 4,
+      pointDotStrokeWidth: 1,
+      pointHitDetectionRadius: 20,
+      datasetStroke: true,
+      datasetStrokeWidth: 2,
+      datasetFill: true,
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+      maintainAspectRatio: true,
+      responsive: true
+    };
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
     $.post("function/ajax_function.php",{ fungsi: "getcountSPHm",user:'-'},function(data)
     {
@@ -197,57 +283,33 @@ defined( 'validSession' ) or die( 'Restricted access' );
     },"json");
 
     //area chart4
-    $.post("function/ajax_function.php",{ fungsi: "getcountSPH"},function(data)
-    {
-    var areaChartCanvas4 = $('#areaChart4').get(0).getContext('2d')
-    var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
+    aff()
+    $("#cboAffiliate").change(function(){
+      aff()
+    });
+    function aff(){
+      $.post("function/ajax_function.php",{ fungsi: "getcountAffm",aff:$('#cboAffiliate').val()},function(data)
       {
-        label: "Mr Reza",
-        fillColor: "rgba(122, 191, 235)",
-        strokeColor: "rgba(210, 214, 222, 1)",
-        pointColor: "rgba(210, 214, 222, 1)",
-        pointStrokeColor: "#c1c7d1",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: data.reza
-      },
-      {
-        label: "Mr. Antok",
-        fillColor: "rgba(54 126 169)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: data.antok
-      },
-      {
-        label: "Mr. Agus",
-        fillColor: "rgba(7, 51, 79)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#07344f",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: data.agus
-      },
-      {
-        label: "Mrs. Tina",
-        fillColor: "rgba(7, 51, 79)",
-        strokeColor: "rgba(60,141,188,0.8)",
-        pointColor: "#07344f",
-        pointStrokeColor: "rgba(60,141,188,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(60,141,188,1)",
-        data: data.tina
-      }
-      ]
-    };
-    var areaChart = new Chart(areaChartCanvas4);
-    areaChart.Line(areaChartData, areaChartOptions);
-    },"json"); 
+        var areaChartCanvas4 = $('#areaChartLine').get(0).getContext('2d')
+        var areaChartData = {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sep","Oct","Nov","Dec"],
+          datasets: [
+          {
+            label: data[0][0],
+            fillColor: "#00c0ef",
+            strokeColor: "rgba(210, 214, 222, 1)",
+            pointColor: "rgba(210, 214, 222, 1)",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [data[0][1],data[0][2],data[0][3],data[0][4],data[0][5],data[0][6],data[0][7],data[0][8],data[0][9],data[0][10],data[0][11],data[0][12]]
+          }
+          ]
+        };
+        var areaChart = new Chart(areaChartCanvas4);
+        areaChart.Line(areaChartData, areaChartOptions);
+      },"json");
+    }
 
     
   });

@@ -94,14 +94,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <script type="text/javascript" src="js/autoCompletebox.js"></script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
-
     var link = window.location.href;
     var res = link.match(/mode=edit/g);
     if (res != 'mode=edit') {
         if (link.match(/noSph=/g)) {
             $("#mySph").modal('hide');
         }else{
-            $("#mySph").modal({backdrop: 'static'});
+            //$("#mySph").modal({backdrop: 'static'});
             $("#createKk").click(function(){ 
                 if ($("#snosph").val()!='') {
                     $("#snosph").focus();
