@@ -434,6 +434,12 @@ class c_kk
 			if (!mysql_query( $q4, $dbLink))
 				throw new Exception('Gagal hapus data KK.');
 
+			$q5 = "DELETE FROM aki_report ";
+			$q5.= "WHERE ket like'%".$noKk."%';";
+
+			if (!mysql_query( $q5, $dbLink))
+				throw new Exception('Gagal hapus data KK.');
+
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Hapus Data KK ";
 		}
