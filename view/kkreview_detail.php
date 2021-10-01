@@ -45,6 +45,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 ?>
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
+    
 $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
@@ -200,14 +201,8 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
               }else if($dataSph["plafon"]=='1'){
                 $plafon='Waterproof';
               }
-              if ($dataSph["bahan"]=='3') {
-                $bahan='Titanium';
-              }else if($dataSph["bahan"]=='2'){
-                $bahan='Enamel';
-              }else if($dataSph["bahan"]=='1'){
-                $bahan='Galvalume';
-              }
-              echo "<tr><td>".($dataSph["nomer"]+1)."</td><td>".$dataSph["kubah"]."</td><td>".$bahan."</td><td>".ucfirst($dataSph["model"])."</td>";
+              
+              echo "<tr><td>".($dataSph["nomer"]+1)."</td><td>".$dataSph["kubah"]."</td><td>".$dataSph["bahan"]."</td><td>".ucfirst($dataSph["model"])."</td>";
               echo "<td>Diameter <b>".$dataSph["d"]." m</b>, Tinggi <b>". $dataSph["t"]." m</b>, Luas <b>".$dataSph["luas"]." m<sup>2</sup></b>"."</td>";
               echo "<td>".$plafon."</td><td><b>".$dataSph["jumlah"]."</b> Kubah</td><td style='width:10%;text-align:right;'>Rp </td><td style='text-align:right;width:10%'>".number_format($dataSph["harga"])."</td><td style='width:10%'></td><tr>";
               $hargaKubah += $dataSph["harga"];

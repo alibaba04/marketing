@@ -213,12 +213,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 18%">No SPH</th>
-                                <th style="width: 10%">Date</th>
-                                <th style="width: 10%">Client</th>
+                                <th style="width: 17%">No SPH</th>
+                                <th style="width: 5%">Date</th>
+                                <th style="width: 15%">Client</th>
                                 <th style="width: 20%">Address</th>
                                 <th style="width: 28%">Information</th>
-                                <th style="width: 18%">Operator</th>
+                                <th style="width: 15%">Operator</th>
                             </tr>
                         </thead>
                         <tbody>

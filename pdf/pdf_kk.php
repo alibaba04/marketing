@@ -141,7 +141,7 @@ $pdf->Ln(-1);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
-$pdf->Ln(52);
+$pdf->Ln(60);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(128,2,'',0,0,'L',0);
@@ -371,13 +371,13 @@ $tbl = '
 *Berlaku sebagai uang panjar<br>
 ';
 $pdf->writeHTML($tbl);
-  
+$pdf->SetFont('helvetica', '', 11);
 if ($hasil["jml"]==2) {
   $pdf->SetMargins(22, 10, 10, true);
   $pdf->Ln(10);
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(0);
+  $pdf->Ln(13);
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);
@@ -726,7 +726,7 @@ if ($hasil['jml']==2) {
   
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(18);
+  $pdf->Ln(20);
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);
@@ -1120,7 +1120,7 @@ $pdf->writeHTML($tbl);
 
 if ($hasil['jml']!=2) {
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(2);
+  $pdf->Ln(5);
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);

@@ -91,7 +91,7 @@ class c_kk
                     }else{
                     	$luas = ($dtengah * $tinggi * 3.14);
                     }
-                    $plafon = secureParam($params["txtKel_". $j],$dbLink);
+                    $plafon = secureParam($params["txtPlafon_". $j],$dbLink);
                     $harga1 = secureParam($params["txtHarga_" . $j], $dbLink);
                     $h = preg_replace("/\D/", "", $harga1);
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
@@ -104,44 +104,53 @@ class c_kk
 					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
-						throw new Exception('Gagal tambah data KK.');
+						throw new Exception($q2.'Gagal tambah data KK.');
 
 					$nomer++;
 				}
 			}
-				date_default_timezone_set("Asia/Jakarta");
-				$tgl = date("Y-m-d H:i:s");
-				$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
-				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
-				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
-				if (!mysql_query( $q4, $dbLink))
-							throw new Exception($q4.'Gagal ubah data KK. ');
-
-				@mysql_query("COMMIT", $dbLink);
-
-				//API send WA
-				$destination = 0; 
-				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='kpenjualan'";
-				$result=mysql_query($q, $dbLink);
-
-				if($dataMenu=mysql_fetch_row($result))
-				{
-					$destination = $dataMenu[0]; 
-				}
-				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
-				
-				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check '-Review Kontrak Kerja-'. Number KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
-				$api_url = "http://panel.rapiwha.com/send_message.php"; 
-				$api_url .= "?apikey=". urlencode ($my_apikey); 
-				$api_url .= "&number=". urlencode ($destination); 
-				$api_url .= "&text=". urlencode ($message); 
-				$my_result_object = json_decode(file_get_contents($api_url, false)); 
-				if ($my_result_object->success != 0) {
-					$this->strResults="Sukses Note";
-				}else{
-					$this->strResults=$my_result_object->description;
-				}
-			
+			date_default_timezone_set("Asia/Jakarta");
+			$tgl = date("Y-m-d H:i:s");
+			$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
+			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
+			if (!mysql_query( $q4, $dbLink))
+						throw new Exception($q4.'Gagal ubah data KK. ');
+			$privilegeU='';
+			if ($_SESSION["my"]->privilege == 'ADMIN') {
+				$privilegeU = 'kpenjualan';
+			}else if($_SESSION["my"]->privilege == 'kpenjualan'){
+				$privilegeU = 'ADMIN';
+			}else{
+				$privilegeU = 'GODMODE';
+			}
+			$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$privilegeU."' limit 1", $dbLink);
+			$temp = mysql_fetch_array($rsTemp);
+			$token=$temp['token'];
+			@mysql_query("COMMIT", $dbLink);
+			$this->strResults="Sukses Note ";
+			$url ="https://fcm.googleapis.com/fcm/send";
+			$fields=array(
+				"to"=>$token,
+				"notification"=>array(
+					"body"=>$treport,
+					"title"=>'Sikubah',
+					"click_action"=>$url
+				)
+			);
+			$headers=array(
+				'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+				'Content-Type:application/json'
+			);
+			$ch=curl_init();
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_POST,true);
+			curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+			$result=curl_exec($ch);
+			print_r($result);
+			curl_close($ch);
 		}
 		catch(Exception $e) 
 		{
