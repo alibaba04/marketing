@@ -130,10 +130,11 @@ class c_kk
 			@mysql_query("COMMIT", $dbLink);
 			$this->strResults="Sukses Note ";
 			$url ="https://fcm.googleapis.com/fcm/send";
+			$Message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'New Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' ";
 			$fields=array(
 				"to"=>$token,
 				"notification"=>array(
-					"body"=>$treport,
+					"body"=>$Message,
 					"title"=>'Sikubah',
 					"click_action"=>$url
 				)
@@ -151,6 +152,8 @@ class c_kk
 			$result=curl_exec($ch);
 			print_r($result);
 			curl_close($ch);
+			@mysql_query("COMMIT", $dbLink);
+			$this->strResults="Sukses Note ";
 		}
 		catch(Exception $e) 
 		{
