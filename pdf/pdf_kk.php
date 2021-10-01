@@ -377,7 +377,11 @@ if ($hasil["jml"]==2) {
   $pdf->Ln(10);
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(13);
+  if($hasil2['d']>=5){
+    $pdf->Ln(13);
+  }else{
+    $pdf->Ln(4);
+  }
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
   $pdf->Cell(135,2,'',0,0,'L',0);
