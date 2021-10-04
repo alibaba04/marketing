@@ -593,7 +593,7 @@ return true;
                         </div>
                         <div class="form-group">
                             <input name="txtnamacust" id="txtnamacust" class="form-control" 
-                            value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nama_cust"]; }else{ if (isset($_GET["noSph"])){$cname = explode(" ",$dataSph["nama_cust"]);echo $cname[1];}}?>" placeholder="Client Name">
+                            value="<?php  if($_GET['mode']=='edit'){echo $dataKk["nama_cust"]; }else{ if (isset($_GET["noSph"])){echo $dataSph["nama_cust"];}}?>" placeholder="Client Name">
                             <input type='hidden' name="txtnomersph" id="txtnomersph" class="form-control" 
                             value="<?php if($_GET['mode']=='edit'){echo $dataKk["noSph"]; }else{ echo $dataSph["noSph"];}?>" placeholder="Client Name">
                             <input type="hidden" name="treport" id="treport" class="form-control" 

@@ -127,16 +127,14 @@ class c_kk
 			$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$privilegeU."' limit 1", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$token=$temp['token'];
-			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Note ";
-			$url ="https://fcm.googleapis.com/fcm/send";
 			$Message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'New Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' ";
+			$url ="https://fcm.googleapis.com/fcm/send";
 			$fields=array(
 				"to"=>$token,
 				"notification"=>array(
 					"body"=>$Message,
 					"title"=>'Sikubah',
-					"click_action"=>$url
+					"click_action"=>"https://sikubah.com/marketing/index.php?page=view/kk_list"
 				)
 			);
 			$headers=array(
@@ -153,7 +151,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Note ";
+			$this->strResults="Sukses";
 		}
 		catch(Exception $e) 
 		{
