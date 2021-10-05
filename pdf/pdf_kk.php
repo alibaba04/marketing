@@ -1180,17 +1180,22 @@ $pdf->writeHTML($tbl);
 
 $pdf->SetFont('helvetica', 'b', 11);
 $pdf->Ln(10);
+$ln=0;
+if (strlen($hasil['jabatan'])>26) {
+  $ln=10;
+}
 $pdf->Cell(50,5,'Pihak Pertama',0,0,'L',0);
-$pdf->Cell(85,5,' ',0,0,'R',0);
+$pdf->Cell(85-$ln,5,' ',0,0,'R',0);
 $pdf->Cell(20,5,'Pihak Kedua',0,0,'L',0);
 $pdf->Ln(35);
 $pdf->SetFont('helvetica','BU');
 $pdf->Cell(50,5,'ANDIK NUR SETIAWAN',0,0,'L',0);
-$pdf->Cell(85,5,'',0,0,'R',0);
+$pdf->Cell(85-$ln,5,'',0,0,'R',0);
 $pdf->Cell(20,5,strtoupper($hasil['nama_cust']),0,1,'L',0);
 $pdf->SetFont('helvetica','');
 $pdf->Cell(50,5,'Direktur PT  Anugerah Kubah Indonesia',0,0,'L',0);
-$pdf->Cell(85,5,'',0,0,'R',0);
+$pdf->Cell(85-$ln,5,'',0,0,'R',0);
+
 $pdf->Cell(20,5,ucwords($hasil['jabatan']),0,1,'L',0);
 $pdf->SetMargins(13, 10, 10, true);
 if ($hasil['jml']==2) {
