@@ -1290,7 +1290,7 @@ $pdf->SetFont('helvetica', '', 11);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I'.$jmlcol,1,0,'C',0);
+$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
 $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
 $pdf->Cell(135,2,'',0,0,'L',0);
 $pdf->Cell(20,10,'',1,0,'C',0);
