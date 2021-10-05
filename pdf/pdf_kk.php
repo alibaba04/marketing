@@ -141,7 +141,7 @@ $pdf->Ln(-1);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'B',0);
 
 $pdf->SetMargins(20, 10, 10, true);
-$pdf->Ln(60);
+$pdf->Ln(50);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(128,2,'',0,0,'L',0);
@@ -377,10 +377,10 @@ if ($hasil["jml"]==2) {
   $pdf->Ln(10);
 }else{
   $pdf->SetMargins(13, 10, 10, true);
-  if($hasil2['d']>=5){
-    $pdf->Ln(13);
-  }else{
+  if($hasil['d']>=6){
     $pdf->Ln(4);
+  }else{
+    $pdf->Ln(13);
   }
   $pdf->SetTextColor(130);
   $pdf->SetDrawColor(130);
@@ -1198,14 +1198,6 @@ if ($hasil['jml']==2) {
 }else{
   $pdf->Ln(135);
 }
-$pdf->SetTextColor(130);
-$pdf->SetDrawColor(130);
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
-$pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
-$pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,10,'',1,0,'C',0);
-$pdf->Cell(20,10,'',1,1,'C',0);
 
 $pdf->addpage();
 $pdf->SetTextColor(0);
@@ -1226,48 +1218,66 @@ $pdf->Cell(50,8,'Kode',1,1,'C',1);
 $pdf->SetFont('helvetica', '', 14);
 $q2 = "SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
 $rs2 = mysql_query($q2, $dbLink);
+$jmlcol = 0;
 while (  $hasil1 = mysql_fetch_array($rs2)) {
-  if ($hasil1['color1'] !='-') {
+  if ($hasil1['color1'] !='-' && $hasil1['color1'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color1'] ,1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor1'] ,1,1,'C',0);
     if ($hasil1['color2'] =='-' && $hasil['jml']!=2) {
       $pdf->Ln(40);
     }
+    $jmlcol++;
   }
-  if ($hasil1['color2'] !='-') {
+  if ($hasil1['color2'] !='-' && $hasil1['color2'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color2'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor2'],1,1,'C',0);
     if ($hasil1['color3'] =='-') {
       $pdf->Ln(30);
     }
+    $jmlcol++;
   }
-  if ($hasil1['color3'] !='-') {
+  if ($hasil1['color3'] !='-' && $hasil1['color3'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color3'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor3'],1,1,'C',0);
     if ($hasil1['color4'] =='-') {
       $pdf->Ln(20);
     }
+    $jmlcol++;
   }
-  if ($hasil1['color4'] !='-') {
+  if ($hasil1['color4'] !='-' && $hasil1['color4'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
     if ($hasil1['color5'] =='-') {
       $pdf->Ln(10);
     }
+    $jmlcol++;
   }
-  if ($hasil1['color5'] !='-') {
+  if ($hasil1['color5'] !='-' && $hasil1['color5'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
+    $pdf->Cell(50,10,$hasil1['color5'],1,0,'C',0);
+    $pdf->Cell(50,10,$hasil1['kcolor5'],1,1,'C',0);
+    $jmlcol++;
   }
+
 }
 
 if ($hasil['jml']==2) {
   $pdf->Ln(30);
+}
+if ($jmlcol == 0) {
+  $pdf->Ln(50);
+}else if($jmlcol == 1){
+  $pdf->Ln(40);
+}else if($jmlcol == 2){
+  $pdf->Ln(30);
+}else if($jmlcol == 3){
+  $pdf->Ln(20);
+}else if($jmlcol == 4){
+  $pdf->Ln(10);
 }
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(20);
@@ -1275,7 +1285,7 @@ $pdf->SetFont('helvetica', '', 11);
 $pdf->SetTextColor(130);
 $pdf->SetDrawColor(130);
 $pdf->Cell(135,2,'',0,0,'L',0);
-$pdf->Cell(20,5,'PIHAK I',1,0,'C',0);
+$pdf->Cell(20,5,'PIHAK I'.$jmlcol,1,0,'C',0);
 $pdf->Cell(20,5,'PIHAK II',1,1,'C',0); 
 $pdf->Cell(135,2,'',0,0,'L',0);
 $pdf->Cell(20,10,'',1,0,'C',0);

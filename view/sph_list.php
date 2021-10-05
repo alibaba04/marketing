@@ -96,7 +96,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo("value='" . $_GET["noSph"] . "'");
                             }
                             ?>
-                            onKeyPress="return handleEnter(this, event)">
+                            onKeyPress="return handleEnter(this, event)" data-toggle="tooltip" data-placement="bottom" title="Gunakan '=' untuk data per user">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                             </span>

@@ -261,6 +261,21 @@ class c_kk
 			$nomer =0;
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
+					$color1 = secureParam($params["color1_". $j],$dbLink);
+					$color2 = secureParam($params["color2_". $j], $dbLink);
+					$color3 = secureParam($params["color3_". $j ], $dbLink);
+					$color4 = secureParam($params["color4_". $j ], $dbLink);
+					$color5 = secureParam($params["color5_". $j ], $dbLink);
+					$kcolor1 = secureParam($params["kcolor1_". $j],$dbLink);
+					$kcolor2 = secureParam($params["kcolor2_". $j], $dbLink);
+					$kcolor3 = secureParam($params["kcolor3_". $j ], $dbLink);
+					$kcolor4 = secureParam($params["kcolor4_". $j ], $dbLink);
+					$kcolor5 = secureParam($params["kcolor5_". $j ], $dbLink);
+
+					$q3 = "UPDATE `aki_kkcolor` SET `color1`='".$color1."',`color2`='".$color2."',`color3`='".$color3."',`color4`='".$color4."',`color5`='".$color5."',`kcolor1`='".$kcolor1."',`kcolor2`='".$kcolor2."',`kcolor3`='".$kcolor3."',`kcolor4`='".$kcolor4."',`kcolor5`='".$kcolor5."' WHERE noKk='".$nokk."'";
+					if (!mysql_query( $q3, $dbLink))
+						throw new Exception('Gagal Edit data KK.');
+
 					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
                     $model = secureParam($params["txtModel_". $j],$dbLink);
 					$jkubah = secureParam($params["txtKubah_". $j],$dbLink);
@@ -310,28 +325,43 @@ class c_kk
 			if (!mysql_query( $q4, $dbLink))
 				throw new Exception('Gagal ubah data KK. ');
 			@mysql_query("COMMIT", $dbLink);
-			//API send WA
-			$destination = 0; 
-			$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='kpenjualan'";
-			$result=mysql_query($q, $dbLink);
-
-			if($dataMenu=mysql_fetch_row($result))
-			{
-				$destination = $dataMenu[0]; 
-			}
-			$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
-
-			$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check '-Review Kontrak Kerja-'. Number KK : '".$nokk."', Note : '".$treport."' https://bit.ly/2SpMdIo"; 
-			$api_url = "http://panel.rapiwha.com/send_message.php"; 
-			$api_url .= "?apikey=". urlencode ($my_apikey); 
-			$api_url .= "&number=". urlencode ($destination); 
-			$api_url .= "&text=". urlencode ($message); 
-			$my_result_object = json_decode(file_get_contents($api_url, false)); 
-			if ($my_result_object->success != 0) {
-				$this->strResults="Sukses Ubah Data KK";
+			//API send firebase
+			$privilegeU='';
+			if ($_SESSION["my"]->privilege == 'ADMIN') {
+				$privilegeU = 'kpenjualan';
+			}else if($_SESSION["my"]->privilege == 'kpenjualan'){
+				$privilegeU = 'ADMIN';
 			}else{
-				$this->strResults=$my_result_object->description;
+				$privilegeU = 'GODMODE';
 			}
+			$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$privilegeU."' limit 1", $dbLink);
+			$temp = mysql_fetch_array($rsTemp);
+			$token=$temp['token'];
+			$Message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' ";
+			$url ="https://fcm.googleapis.com/fcm/send";
+			$fields=array(
+				"to"=>$token,
+				"notification"=>array(
+					"body"=>$Message,
+					"title"=>'Sikubah',
+					"click_action"=>"https://sikubah.com/marketing/index.php?page=view/kk_list"
+				)
+			);
+			$headers=array(
+				'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+				'Content-Type:application/json'
+			);
+			$ch=curl_init();
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_POST,true);
+			curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+			$result=curl_exec($ch);
+			print_r($result);
+			curl_close($ch);
+			@mysql_query("COMMIT", $dbLink);
+			$this->strResults="Sukses";
 		}
 		catch(Exception $e) 
 		{
