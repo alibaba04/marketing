@@ -323,7 +323,7 @@ function addJurnal(){
     var ttable = document.getElementById("kendali");
     var trow = document.createElement("TR");
     trow.setAttribute("id", "trid_"+tcounter);
-    trow.setAttribute('onclick','opendmodal('+tcounter+');');
+    
 
     //Kolom 1 Checkbox
     var td = document.createElement("TD");
@@ -340,32 +340,37 @@ function addJurnal(){
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtKubah_'+tcounter+'" id="txtKubah_'+tcounter+'" class="form-control" value="Kubah Utama" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control" value="Setengah Bola" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtBahan_'+tcounter+'" id="txtBahan_'+tcounter+'" class="form-control" value="Enamel" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'" class="form-control" value="Full" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     //Kolom 5 qty
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.setAttribute('onclick','adddetail('+tcounter+');');
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><input onkeydown="return numbersonly(this, event);"  value="0" style="text-align:right" name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" class="form-control" readonly></div>';
+    td.innerHTML+='<div class="form-group"><input onkeydown="return numbersonly(this, event);"  value="1" style="text-align:right" name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" class="form-control" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     //Kolom 6 d
     var td = document.createElement("TD");
@@ -373,6 +378,7 @@ function addJurnal(){
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control" " value="0" style="text-align:right" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     //Kolom 7 t
     var td = document.createElement("TD");
@@ -380,36 +386,42 @@ function addJurnal(){
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control" " value="0" style="text-align:right" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtDt_'+tcounter+'" id="txtDt_'+tcounter+'" class="form-control" " value="0" style="text-align:right" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtKaligrafi_'+tcounter+'" id="txtKaligrafi_'+tcounter+'" class="form-control" value="0" style="text-align:right" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtHargaKubah_'+tcounter+'" id="txtHargaKubah_'+tcounter+'" class="form-control" " value="0" style="text-align:right" readonly></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input name="txtHarga_'+tcounter+'" id="txtHarga_'+tcounter+'" class="form-control" readonly value="0" style="text-align:right"></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
     var td = document.createElement("TD");
     td.setAttribute("align","center");
     td.style.verticalAlign = 'top';
     td.innerHTML+='<div class="form-group"><input type="button" class="btn btn-primary" value="select" onclick="cmodal(' + tcounter + ')"></div>';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal('+tcounter+');');
 
 
     ttable.appendChild(trow);
@@ -772,7 +784,7 @@ return true;
                             <thead>
                                 <tr>
                                    <th style="width: 1%"><i class='fa fa-edit'></i></th>
-                                   <th style="width: 22%" colspan="4">Spec</th>
+                                   <th style="width: 22%;min-width: 100px;" colspan="4">Spec</th>
                                    <th style="width: 2%">Quantity</th>
                                    <th style="width: 3%">D</th>
                                    <th style="width: 3%">T</th>
@@ -801,7 +813,7 @@ return true;
                                     while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                                         $kel = '';
                                         echo '<div><tr id="trid_'.$iJurnal.'" >';
-                                        echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
+                                        echo '<td align="center" valign="top" ><div class="form-group">
                                         <input onclick="chkadddetail('.$iJurnal.')" type="checkbox" class="minimal" checked name="chkAddJurnal_' . $iJurnal . '" id="chkAddJurnal_' . $iJurnal . '" value="' . $DetilJurnal["idKk"] . '" /></div></td>';
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group" ><input type="text" class="form-control"name="txtKubah_' . $iJurnal . '" id="txtKubah_' . $iJurnal . '" value="' . ($DetilJurnal["kubah"]) . '" ></div></td>';
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group"><input type="text" class="form-control"name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . ($DetilJurnal["model"]) . '" ></div></td>';
@@ -1087,7 +1099,7 @@ return true;
                     <div class="form-group">
                         <div class="col-lg-6">
                             <label class="control-label" for="txtKeteranganKas">Jumlah</label>
-                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1" onfocus="this.value=''" placeholder="0">
+                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1" placeholder="0">
                         </div>
                         <div class="col-lg-6" id="dt">
                             <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
