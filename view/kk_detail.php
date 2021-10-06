@@ -200,6 +200,7 @@ function hitungtotal($param) {
     }
 }
 function getpabrikasi(){
+    alert($("#txtBahan_0").val());
     $.post("function/ajax_function.php",{ fungsi: "getpabrikasi",bahan:$("#txtBahan_0").val(),d:$("#txtD_0").val()},function(data)
         {
             $('#txtproduksi').val(data.pabrikasi);

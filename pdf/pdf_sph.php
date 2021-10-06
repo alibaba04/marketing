@@ -322,7 +322,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
 }else{
     if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
         if ($ketkubah != 'Atap') {
-            $pdf->Cell(8,6,'4.','T',0,'C',0);
+            $pdf->Cell(8,6,'4.','LBT',0,'C',0);
         }else{
             $pdf->Cell(8,6,'','T',0,'C',0);
         }
@@ -342,9 +342,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     }
     
 }
- $tbl = '<br>
-    <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga1) .'</b></i>
-    ';
+ $tbl = '<br>Masa pabrikasi Kubah Galvalume dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga1) .'</b>';
     $pdf->writeHTML($tbl);
     $nourut+=1;
     $pdf->addpage();
@@ -548,9 +546,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
     }
 
 }
- $tbl = '<br>
-    <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga2).'</b></i>
-    ';
+ $tbl = '<br>Masa pabrikasi Kubah Enamel dengan ukuran diatas '.lamapabrikasi($d,'Enamel').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga2) .'</b><br>';
     $pdf->writeHTML($tbl);
     $nourut+=1;
 }
@@ -759,9 +755,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
         $pdf->Cell(143,6,'','T',1,'L',0);
     }
 }
- $tbl = '<br>
-    <i><b>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b></i>
-    ';
+ $tbl = '<br>Masa pabrikasi Kubah Titanium dengan ukuran diatas '.lamapabrikasi($d,'Titanium').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b><br>';
     $pdf->writeHTML($tbl);
 }
 

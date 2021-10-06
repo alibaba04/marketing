@@ -96,6 +96,47 @@ function kalkulatorharga($d,$luas,$pmargin,$kel,$t)
 	$harga2 = $hpp2 + $affiliate2 + $marketing2 + $t;
     return $harga.'-'.$harga2;
 }
+function lamapabrikasi($d,$bahan){
+    $return = '';
+    if ($bahan == 'Galvalume'){
+        if ($d > '0.5' and $d<='3'){
+            $return = '28';
+        }elseif ($d > '3' and $d<='5') {
+            $return = '38';
+        }
+        elseif ($d > '5' and $d<='7') {
+            $return = '58';
+        }
+        elseif ($d > '7' and $d<='9') {
+            $return = '78';
+        }
+        elseif ($d > '9' and $d<='12') {
+            $return = '83';
+        }
+        elseif ($d > '12' and $d<='14') {
+            $return = '103';
+        }
+        elseif ($d > '14' and $d<='18') {
+            $return = '123';
+        }
+        else{
+            $return = '123';
+        }
+    }else{
+        if ($d > '0.5' and $d<'3'){
+            $return = '80';
+        }elseif ($d > '3' and $d<'6') {
+            $return = '110';
+        }
+        elseif ($d > '6' and $d<'12') {
+            $return = '125';
+        }
+        else{
+            $return = '125';
+        }
+    }
+    return($return);
+}
 function cekrangka($d)
 {
 	$return = '';

@@ -295,7 +295,7 @@ case "getpabrikasi":
     $d = $_POST['d'];
     $bahan = $_POST['bahan'];
     $return = '';
-    if ($bahan == 1){
+    if ($bahan == 'Galvalume'){
         if ($d > '0.5' and $d<='3'){
             $return = '28';
         }elseif ($d > '3' and $d<='5') {
