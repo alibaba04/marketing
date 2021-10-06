@@ -755,7 +755,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
         $pdf->Cell(143,6,'','T',1,'L',0);
     }
 }
- $tbl = '<br>Masa pabrikasi Kubah Titanium dengan ukuran diatas '.lamapabrikasi($d,'Titanium').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b><br>';
+ $tbl = '<br>Masa pabrikasi Kubah Titanium dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b><br>';
     $pdf->writeHTML($tbl);
 }
 
