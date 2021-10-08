@@ -46,7 +46,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
           </div>
           <div class="box-body">
             <div class="chart">
-              <canvas id="areaChartLine" style="height:250px"></canvas>
+              <canvas id="areaChartLine" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
           </div>
           <!-- /.box-body -->
@@ -173,9 +173,10 @@ defined( 'validSession' ) or die( 'Restricted access' );
     </div>
   </div>
 </div>
+
 <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="./plugins/chartjs/Chart.min.js"></script>
-<script language="JavaScript" TYPE="text/javascript">
+<script>
 
   $(function () {
     $.post("function/ajax_function.php",{ fungsi: "getcountAffiliate"},function(data)
@@ -323,14 +324,13 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 display : false,
               }
             }]
-          }
+          },
+          showTooltips: false
         }
 
         var areaChart = new Chart(areaChartCanvas4);
         areaChart.Line(areaChartData, areaChartOptionss);
       },"json");
     }
-
-    
   });
 </script>
