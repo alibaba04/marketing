@@ -314,6 +314,7 @@ function opendmodal(tcounter) {
         $("#txtKaligrafi_"+tcounter).val($('#txtkaligrafi').val());
         $("#txtHargaKubah_"+tcounter).val($('#idharga1').val());
         hitungtotal(tcounter);
+        getpabrikasi();
         $("#myCModal").modal('hide');
     });
 }

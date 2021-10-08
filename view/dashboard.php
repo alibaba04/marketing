@@ -306,8 +306,28 @@ defined( 'validSession' ) or die( 'Restricted access' );
           }
           ]
         };
+        var areaChartOptionss = {
+          maintainAspectRatio : false,
+          responsive : true,
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              gridLines : {
+                display : false,
+              }
+            }],
+            yAxes: [{
+              gridLines : {
+                display : false,
+              }
+            }]
+          }
+        }
+
         var areaChart = new Chart(areaChartCanvas4);
-        areaChart.Line(areaChartData, areaChartOptions);
+        areaChart.Line(areaChartData, areaChartOptionss);
       },"json");
     }
 
