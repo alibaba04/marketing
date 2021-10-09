@@ -238,12 +238,12 @@ $(document).ready(function () {
                 document.getElementById("chkHargaEn").checked=true;
                 document.getElementById("chkHargaTm").checked=false;
             }else if(data.bahan == 5){
-                document.getElementById("chkHargaGa").checked=false;
-                document.getElementById("chkHargaEn").checked=true;
-                document.getElementById("chkHargaTm").checked=true;
-            }else if(data.bahan == 6){
                 document.getElementById("chkHargaGa").checked=true;
                 document.getElementById("chkHargaEn").checked=false;
+                document.getElementById("chkHargaTm").checked=true;
+            }else if(data.bahan == 6){
+                document.getElementById("chkHargaGa").checked=false;
+                document.getElementById("chkHargaEn").checked=true;
                 document.getElementById("chkHargaTm").checked=true;
             }else{
                 document.getElementById("chkHargaGa").checked=true;
