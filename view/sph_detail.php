@@ -361,24 +361,31 @@ $(document).ready(function () {
         var h3 = $("#idharga3").val();
         var chkEnGa = '';
         var gold = '0';
+        //ga,en,tm
         if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
-        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').is(":checked") && $('#chkHargaTm').not(":checked")){
+        //ga,en
+        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '4';
-        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaTm').is(":checked") && $('#chkHargaEn').not(":checked")){
+        //ga,tm
+        }else if($('#chkHargaGa').is(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaTm').is(":checked") ){
             chkEnGa = '5';
-        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked") && $('#chkHargaGa').not(":checked")){
+        //en,tm
+        }else if( $('#chkHargaGa').not(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked") ){
             chkEnGa = '6';
+        //ga
         }else if($('#chkHargaGa').is(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '1';
-        }else if($('#chkHargaEn').is(":checked") && $('#chkHargaGa').not(":checked") && $('#chkHargaTm').not(":checked")){
+        //en
+        }else if($('#chkHargaGa').not(":checked")  && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').not(":checked")){
             chkEnGa = '2';
-        }else if($('#chkHargaTm').is(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaGa').not(":checked")){
+        //tm
+        }else if( $('#chkHargaGa').not(":checked") && $('#chkHargaEn').not(":checked") && $('#chkHargaTm').is(":checked") ){
             chkEnGa = '3';
         }else{
             chkEnGa = '0';
         }
-
+        
         if ($('#chkGold').is(":checked")){
             gold = '1';
         }

@@ -89,7 +89,7 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     }
     
 //if bahan ga 
-if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
+if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
     if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(10);
@@ -231,118 +231,118 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '6' or $bahan == '0') {
         $rangka2 = '1,5 inch tebal 1,6 mm, Hollow';
         $rangka2a = '3,5 x 3,5 cm';
     }
-if ($hasil['plafon'] == 0){
-    $pdf->Cell(8,6,'','LTR',0,'C',0);
-    $pdf->Cell(32,6,'','LTR',0,'C',0);
-    $pdf->Cell(110,6,'   ~ Bahan Kalsiboard 3 mm finishing cat dinding dengan lukisan','LT',0,'L',0);
-    $pdf->SetFont('helvetica', 'B', 11);
-    if ($bplafon!=0) {
-        $pdf->Cell(33,6,' Motif Kaligrafi','TR',1,'L',0);
-    }else{
-        $pdf->Cell(33,6,' Motif Awan','TR',1,'L',0);
-    }
-    $pdf->SetFont('helvetica', '', 11);
-    $pdf->Cell(8,6,'3.','LR',0,'C',0);
-    $pdf->Cell(32,6,'Plafon Kubah','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
-}else if($hasil['plafon'] == 2){
-    $pdf->Cell(8,6,'3.','LTR',0,'C',0);
-    $pdf->Cell(32,6,'Plafon Kubah','LTR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LTR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
-    $pdf->Cell(8,6,'','LR',0,'C',0);
-    $pdf->Cell(32,6,'','LR',0,'C',0);
-    $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
-}
-
-if ($hasil['d']>=5 && $hasil['d']<6){
-    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        if ($ketkubah != 'Atap') {
-            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
-        }else{
-            $pdf->Cell(8,6,'','T',0,'C',0);
-        }
-    }else {
-        $pdf->Cell(8,6,'3.','LTR',0,'C',0);
-    }
-        
-    if ($ketkubah != 'Atap') {
-        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
-        $pdf->Cell(8,6,'','LRB',0,'C',0);
-        $pdf->Cell(32,6,'','LRB',0,'C',0);
+    if ($hasil['plafon'] == 0){
+        $pdf->Cell(8,6,'','LTR',0,'C',0);
+        $pdf->Cell(32,6,'','LTR',0,'C',0);
+        $pdf->Cell(110,6,'   ~ Bahan Kalsiboard 3 mm finishing cat dinding dengan lukisan','LT',0,'L',0);
         $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
-    }else{
-        $pdf->Cell(32,6,'','T',0,'C',0);
-        $pdf->Cell(143,6,'','T',1,'L',0);
-    }
-    
-    $pdf->SetFont('helvetica', '', 11);
-}else if ($hasil['d']>=6){
-    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
-        if ($ketkubah != 'Atap') {
-            $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+        if ($bplafon!=0) {
+            $pdf->Cell(33,6,' Motif Kaligrafi','TR',1,'L',0);
         }else{
-            $pdf->Cell(8,6,'','T',0,'C',0);
+            $pdf->Cell(33,6,' Motif Awan','TR',1,'L',0);
         }
-    }else {
-        $pdf->Cell(8,6,'3.','LTR',0,'C',0);
-    }
-    if ($ketkubah != 'Atap') {
-        $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+        $pdf->SetFont('helvetica', '', 11);
+        $pdf->Cell(8,6,'3.','LR',0,'C',0);
+        $pdf->Cell(32,6,'Plafon Kubah','LR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LR',1,'L',0);
         $pdf->Cell(8,6,'','LR',0,'C',0);
         $pdf->Cell(32,6,'','LR',0,'C',0);
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
-        $pdf->Cell(8,6,'','LRB',0,'C',0);
-        $pdf->Cell(32,6,'','LRB',0,'C',0);
-        $lampu='';
-        if ($hasil['d']>=15) {
-            $lampu='8';
-        }else{
-            $lampu='4';
-        }
-        $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot '.$lampu.' sisi','LRB',1,'L',0);
-    }else{
-        $pdf->Cell(32,6,'','T',0,'C',0);
-        $pdf->Cell(143,6,'','T',1,'L',0);
+        $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
+    }else if($hasil['plafon'] == 2){
+        $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+        $pdf->Cell(32,6,'Plafon Kubah','LTR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Water Proofing Membrane Ethorching System setebal 3 mm','LTR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'   ~ Rangka menggunakan pipa galvanis '.$rangka2,'LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'     '.$rangka2a,'LR',1,'L',0);
     }
-    
-    $pdf->SetFont('helvetica', '', 11);
-}else{
-    if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+
+    if ($hasil['d']>=5 && $hasil['d']<6){
+        if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+            if ($ketkubah != 'Atap') {
+                $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+            }else{
+                $pdf->Cell(8,6,'','T',0,'C',0);
+            }
+        }else {
+            $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+        }
+        
         if ($ketkubah != 'Atap') {
-            $pdf->Cell(8,6,'4.','LBT',0,'C',0);
+            $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+            $pdf->Cell(8,6,'','LRB',0,'C',0);
+            $pdf->Cell(32,6,'','LRB',0,'C',0);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LRB',1,'L',0);
         }else{
-            $pdf->Cell(8,6,'','T',0,'C',0);
+            $pdf->Cell(32,6,'','T',0,'C',0);
+            $pdf->Cell(143,6,'','T',1,'L',0);
         }
-    }else {
+
+        $pdf->SetFont('helvetica', '', 11);
+    }else if ($hasil['d']>=6){
+        if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+            if ($ketkubah != 'Atap') {
+                $pdf->Cell(8,6,'4.','LTR',0,'C',0);
+            }else{
+                $pdf->Cell(8,6,'','T',0,'C',0);
+            }
+        }else {
+            $pdf->Cell(8,6,'3.','LTR',0,'C',0);
+        }
         if ($ketkubah != 'Atap') {
-            $pdf->Cell(8,6,'3.',1,0,'C',0);
+            $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(143,6,'   ~ BONUS : Penangkal Petir','LR',1,'L',0);
+            $pdf->Cell(8,6,'','LRB',0,'C',0);
+            $pdf->Cell(32,6,'','LRB',0,'C',0);
+            $lampu='';
+            if ($hasil['d']>=15) {
+                $lampu='8';
+            }else{
+                $lampu='4';
+            }
+            $pdf->Cell(143,6,'   ~ BONUS : Lampu Sorot '.$lampu.' sisi','LRB',1,'L',0);
         }else{
-            $pdf->Cell(8,6,'','T',0,'C',0);
+            $pdf->Cell(32,6,'','T',0,'C',0);
+            $pdf->Cell(143,6,'','T',1,'L',0);
         }
-    }
-    if ($ketkubah != 'Atap') {
-        $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-        $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+
+        $pdf->SetFont('helvetica', '', 11);
     }else{
-        $pdf->Cell(32,6,'','T',0,'C',0);
-        $pdf->Cell(143,6,'','T',1,'L',0);
+        if ($hasil['plafon'] == 0 or $hasil['plafon'] == 2){
+            if ($ketkubah != 'Atap') {
+                $pdf->Cell(8,6,'4.','LBT',0,'C',0);
+            }else{
+                $pdf->Cell(8,6,'','T',0,'C',0);
+            }
+        }else {
+            if ($ketkubah != 'Atap') {
+                $pdf->Cell(8,6,'3.',1,0,'C',0);
+            }else{
+                $pdf->Cell(8,6,'','T',0,'C',0);
+            }
+        }
+        if ($ketkubah != 'Atap') {
+            $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+        }else{
+            $pdf->Cell(32,6,'','T',0,'C',0);
+            $pdf->Cell(143,6,'','T',1,'L',0);
+        }
+
     }
-    
-}
- $tbl = '<br>Masa pabrikasi Kubah Galvalume dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga1) .'</b>';
+    $tbl = '<br>Masa pabrikasi Kubah Galvalume dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga1) .'</b>';
     $pdf->writeHTML($tbl);
     $nourut+=1;
     $pdf->addpage();
@@ -352,7 +352,7 @@ if ($hasil['d']>=5 && $hasil['d']<6){
 
 
 //if bahan en
-if ( $bahan == '2' or $bahan == '4'or $bahan == '5' or $bahan == '0') {
+if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
     $pdf->SetAutoPageBreak(TRUE, 0);
