@@ -81,7 +81,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
               <div class="chart " id="sales-chart" style="height: 300px; position: relative;"></div>
             </div>
           </div>
-          <div class="box">
+          <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>
             </div>
@@ -94,8 +94,8 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <th style="width: 40px">Qty</th>
                 </tr>
                 <?php 
-                $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id group by s.provinsi order by jml desc";
-                $rs = new MySQLPagedResultSet($q, 10, $dbLink);
+                $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id where YEAR(s.tanggal) = YEAR(CURDATE()) group by s.provinsi order by jml desc";
+                $rs = new MySQLPagedResultSet($q, 20, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
                   echo '<tr><td>'.$rowCounter.'.</td>
@@ -140,7 +140,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
               <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
             </div>
           </div>
-          <div class="box">
+          <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>
             </div>
@@ -153,8 +153,8 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <th style="width: 40px">Qty</th>
                 </tr>
                 <?php 
-                $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id group by s.kota order by jml desc";
-                $rs = new MySQLPagedResultSet($q, 10, $dbLink);
+                $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id where YEAR(s.tanggal) = YEAR(CURDATE()) group by s.kota order by jml desc";
+                $rs = new MySQLPagedResultSet($q, 20, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
                   echo '<tr><td>'.$rowCounter.'.</td>

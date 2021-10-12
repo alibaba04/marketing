@@ -77,6 +77,8 @@ class c_kkreview
 		global $dbLink;
 		require_once './function/fungsi_formatdate.php';
 		$nokk = secureParam($params["txtnoKk"],$dbLink);
+		$nokkEn = secureParam($params["txtnoKkEn"],$dbLink);
+		$nosph = secureParam($params["txtnoSph"],$dbLink);
         $pembuat = $_SESSION["my"]->id;
 		try
 		{
@@ -92,35 +94,45 @@ class c_kkreview
 				$q3 = "UPDATE aki_kk SET `approve`='1',`approve_by`='".$pembuat."',`approve_tgl`='".$tgl."'  WHERE noKk='".$nokk."'";
 				if (!mysql_query( $q3, $dbLink))
 					throw new Exception('Gagal ubah data KK. ');
+				$q4 = "UPDATE `aki_sph` SET `keterangan_kk`='y' WHERE noSph='".$nosph."'";
+				if (!mysql_query( $q4, $dbLink))
+					throw new Exception('Gagal ubah data KK. ');
 
 				$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 				$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 				if (!mysql_query( $q4, $dbLink))
-							throw new Exception('Gagal approve KK. ');
+						throw new Exception('Gagal approve KK. ');
 
+				//API send firebase
+				$privilegeU='ADMIN';
+				$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$privilegeU."' limit 1", $dbLink);
+				$temp = mysql_fetch_array($rsTemp);
+				$token=$temp['token'];
+				$Message = "SIKUBAH - Pesan dari Kepala Penjualan 'Kontrak Kerja'. Nomor KK : '".$nokk."', Telah disetujui. Note : '".$treport."' ";
+				$url ="https://fcm.googleapis.com/fcm/send";
+				$fields=array(
+					"to"=>$token,
+					"notification"=>array(
+						"body"=>$Message,
+						"title"=>'Sikubah',
+						"click_action"=>"https://sikubah.com/marketing/index.php?page=view/kkreview_detail&mode=addNote&noKK=".$nokkEn
+					)
+				);
+				$headers=array(
+					'Authorization: key=AAAA-drRgeY:APA91bGaAAaXRV5K9soSk_cFyKSkWkFSu1Nr3MO3OofWYjM_S0HEEX1IZtMLGZpcbx-N0RTFDMqk4hoOEkXA0PbqnSThk5qemRdkK7gPiuUQFHPWNzfeWbj-WRnFtpCVb17Fop4JRu6o',
+					'Content-Type:application/json'
+				);
+				$ch=curl_init();
+				curl_setopt($ch,CURLOPT_URL,$url);
+				curl_setopt($ch,CURLOPT_POST,true);
+				curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+				curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+				curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($fields));
+				$result=curl_exec($ch);
+				print_r($result);
+				curl_close($ch);
 				@mysql_query("COMMIT", $dbLink);
-				$destination = 0; 
-				$q = "SELECT phone FROM `aki_user` as auser left join aki_usergroup agroup on auser.kodeUser=agroup.kodeuser where agroup.kodeGroup='ADMIN'";
-				$result=mysql_query($q, $dbLink);
-
-				if($dataMenu=mysql_fetch_row($result))
-				{
-					$destination = $dataMenu[0]; 
-				}
-				//API send WA
-				$my_apikey = "ZDMMOCURFXUCNH8EEK36"; 
-				
-				$message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'Kontrak Kerja'. Number KK : '".$nokk."', Note : 'Has Been Approved' https://bit.ly/2SpMdIo"; 
-				$api_url = "http://panel.rapiwha.com/send_message.php"; 
-				$api_url .= "?apikey=". urlencode ($my_apikey); 
-				$api_url .= "&number=". urlencode ($destination); 
-				$api_url .= "&text=". urlencode ($message); 
-				$my_result_object = json_decode(file_get_contents($api_url, false)); 
-				if ($my_result_object->success != 0) {
-					$this->strResults="Sukses Approve";
-				}else{
-					$this->strResults=$my_result_object->description;
-				}
+				$this->strResults="Sukses";
 			
 		}
 		catch(Exception $e) 

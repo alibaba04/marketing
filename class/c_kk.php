@@ -127,7 +127,7 @@ class c_kk
 			$rsTemp=mysql_query("SELECT s.*,g.kodeGroup FROM `aki_user` s left join aki_usergroup g on s.kodeUser=g.kodeUser where g.kodeGroup='".$privilegeU."' limit 1", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$token=$temp['token'];
-			$Message = "SIKUBAH - Message from ".$_SESSION["my"]->privilege." Please Check 'New Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' ";
+			$Message = "SIKUBAH - Pesan dari ".$_SESSION["my"]->privilege." Please Check 'New Kontrak Kerja'. Nomor KK : '".$nokk."', Note : '".$treport."' ";
 			$url ="https://fcm.googleapis.com/fcm/send";
 			$fields=array(
 				"to"=>$token,

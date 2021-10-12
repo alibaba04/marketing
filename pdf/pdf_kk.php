@@ -26,7 +26,7 @@ $alamat = $hasil['kname'].', '.$hasil['pname'];
 $pdf->SetFont('helvetica', 'B', 14);
 $pdf->Cell(190,8,'PERJANJIAN JUAL BELI DAN PEMASANGAN KUBAH MASJID',0,1,'C',0);
 $pdf->SetFont('helvetica', '', 14);
-$pdf->Cell(190,6, 'Nomor : '.$no,0,0,'C',0);
+$pdf->Cell(190,6, 'Nomor: '.$no,0,0,'C',0);
 
 $pdf->SetFont('helvetica', '', 11);
 $pdf->SetAutoPageBreak(TRUE, 0);
@@ -93,7 +93,7 @@ Dalam hal ini bertindak untuk dan atas nama Panitia Pembangunan <b>'.$hasil['nma
 $pdf->writeHTML($tbl);
 $pdf->Ln(1);
 $tbl = '
-Selanjutnya  <b>Pihak  Pertama </b> dan <b> Pihak  Kedua</b>  secara bersama-sama disebut "Para Pihak". Bahwa Para Pihak sepakat untuk membuat dan mengikatkan diri dalam Perjanjian Jual  Beli dan Pemasangan Kubah Masjid <b>("Perjanjian")</b> ini dan terlebih dahulu menjelaskan hal-hal sebagai berikut :
+Selanjutnya  <b>Pihak  Pertama </b> dan <b> Pihak  Kedua</b>  secara bersama-sama disebut "Para Pihak". Bahwa Para Pihak sepakat untuk membuat dan mengikatkan diri dalam Perjanjian Jual  Beli dan Pemasangan Kubah Masjid <b>("Perjanjian")</b> ini dan terlebih dahulu menjelaskan hal-hal sebagai berikut:
 <br>
 ';
 $pdf->writeHTML($tbl); 
@@ -159,7 +159,7 @@ $pdf->Cell(190,6,'PASAL 2',0,1,'C',0);
 $pdf->Cell(190,4, 'DASAR PELAKSANAAN PEKERJAAN',0,0,'C',0);
 $pdf->SetFont('helvetica', '', 11);
 $tbl = '
-Pekerjaan tersebut dalam Pasal 1 Perjanjian ini harus dilaksanakan oleh <b>Pihak Pertama</b> dengan spesifikasi rincian pekerjaan sebagai berikut : 
+Pekerjaan tersebut dalam Pasal 1 Perjanjian ini harus dilaksanakan oleh <b>Pihak Pertama</b> dengan spesifikasi rincian pekerjaan sebagai berikut: 
 <br>
 ';
 $pdf->SetMargins(20, 10, 10, true);
@@ -501,7 +501,7 @@ Dalam menyelesaikan pekerjaan yang disepakati oleh Para Pihak, <b>Pihak Pertama<
 ';
 $pdf->writeHTML($tbl);
 $pdf->Cell(12,5,'',0,0,'R',0);
-$pdf->Cell(40,5,'menyelesaikan Pekerjaan sesuai dengan ketentuan sebagai berikut :',0,1,'L',0);
+$pdf->Cell(40,5,'menyelesaikan Pekerjaan sesuai dengan ketentuan sebagai berikut:',0,1,'L',0);
 
 $pdf->SetMargins(28, 10, 10, true);
 $pdf->SetFont('helvetica', 'B', 11);

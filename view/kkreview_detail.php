@@ -105,6 +105,7 @@ $txtnokk='';
 $rsTemp = mysql_query($q, $dbLink);
 if ($dataSph = mysql_fetch_array($rsTemp)) {
 echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataSph["noKk"] . "'>";
+echo "<input type='hidden' name='txtnoSph' id='txtnoSph' value='" . $dataSph["noSph"] . "'>";
 echo "<input type='hidden' name='txtnoKkEn' id='txtnoKkEn' value='" . $_GET["noKK"] . "'>";
 $txtnokk=$dataSph["noKk"];
 $filekubah=$dataSph["filekubah"];
@@ -291,6 +292,9 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
         if ($filekaligrafi!='') {
           echo '<img src="../uploads/'.$filekaligrafi.'" alt="First slide" width="300" height="200">'; 
         }
+        if ($filekubah=='' && $filekaligrafi=='') {
+          echo '<img src="../uploads/blank.png" alt="First slide" width="300" height="200">'; 
+        }
         ?>
       </center>
     </div>
@@ -331,7 +335,15 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
               ?>
             
         </table> -->
-        <table class="table">
+        
+        
+    </div>
+    <!-- /.col -->
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 invoice-col">
+      <table class="table">
             <tr>
               <th colspan="2"><center>Masa Produksi</center></th>
               <th colspan="2"><center>Masa Pemasangan</center></th>
@@ -343,22 +355,7 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
               <td >Hari</td>
             </tr>
         </table>
-        
     </div>
-    <!-- /.col -->
-  </div>
-
-  <div class="row">
-    <!-- accepted payments column -->
-    <div class="col-sm-6 invoice-col">
-      <p class="lead">Payment Method </p>
-      <img src="dist/img/credit/bca.png" alt="BCA">&nbsp&nbsp&nbsp
-      <img src="dist/img/credit/bnisyariah.png" alt="BNI Syariah">&nbsp&nbsp&nbsp
-      <img src="dist/img/credit/mandiri.png" alt="Mandiri">&nbsp&nbsp&nbsp
-      <img src="dist/img/credit/bri.png" alt="BRI">&nbsp&nbsp&nbsp
-
-    </div>
-    <!-- /.col -->
     <div class="col-sm-6 invoice-col">
       <p class="lead"></p>
 
