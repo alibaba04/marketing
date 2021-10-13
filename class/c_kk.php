@@ -361,7 +361,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses";
+			$this->strResults="Sukses Edit";
 		}
 		catch(Exception $e) 
 		{

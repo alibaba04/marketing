@@ -78,6 +78,7 @@ function omodal() {
   $("#myNoteAcc").modal({backdrop: 'static'});
 }
 function accmodal() {
+  if (true) {}
   $("#myAcc").modal({backdrop: 'static'});
     $('#btnApprove').click(function(){
         $('#txtMode').val('approve');
@@ -298,63 +299,51 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
         ?>
       </center>
     </div>
-    <div class="col-sm-6 invoice-col">
-      <p class="lead"> </p>
-        <!-- <table class="table">
-            <tr>
-              <th =><center>Warna</center></th>
-              <th ><center>Kode</center></th>
-            </tr>
-            
-              <?php 
-                  $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
-                  $rsTemp2 = mysql_query($q2, $dbLink);
-                  $i=1;
-                  while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
-                    if ($dataSph2['color1']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
-                    }
-                    if ($dataSph2['color2']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color2'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor2'].'</tr>';
-                    }
-                    if ($dataSph2['color3']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color3'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor3'].'</tr>';
-                    }
-                    if ($dataSph2['color4']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color4'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor4'].'</tr>';
-                    }
-                    if ($dataSph2['color5']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color5'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor5'].'</tr>';
-                    }
-                  }
-              ?>
-            
-        </table> -->
-        
-        
-    </div>
-    <!-- /.col -->
   </div>
 
   <div class="row">
     <div class="col-sm-6 invoice-col">
       <table class="table">
-            <tr>
-              <th colspan="2"><center>Masa Produksi</center></th>
-              <th colspan="2"><center>Masa Pemasangan</center></th>
-            </tr>
-            <tr>
-              <td style="text-align: right;"><?php  echo $mproduksi; ?></td>
-              <td >Hari</td>
-              <td style="text-align: right;"><?php  echo $mpemasangan; ?></td>
-              <td >Hari</td>
-            </tr>
-        </table>
+        <tr>
+          <th><center>Masa Produksi</center></th>
+          <th><center>Masa Pemasangan</center></th>
+        </tr>
+        <tr>
+          <td style="text-align: center;"><?php  echo $mproduksi; ?> Hari</td>
+          <td style="text-align: center;"><?php  echo $mpemasangan; ?> Hari</td>
+        </tr><th></th><th></th>
+        <tr>
+          <th><center>Warna</center></th>
+          <th><center>Kode</center></th>
+        </tr>
+        <?php 
+        $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
+        $rsTemp2 = mysql_query($q2, $dbLink);
+        $i=1;
+        while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
+          if ($dataSph2['color1']!='-') {
+            echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
+            echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
+          }
+          if ($dataSph2['color2']!='-') {
+            echo '<tr><td style="text-align: center;">'.$dataSph2['color2'];
+            echo '<td style="text-align: center;">'.$dataSph2['kcolor2'].'</tr>';
+          }
+          if ($dataSph2['color3']!='-') {
+            echo '<tr><td style="text-align: center;">'.$dataSph2['color3'];
+            echo '<td style="text-align: center;">'.$dataSph2['kcolor3'].'</tr>';
+          }
+          if ($dataSph2['color4']!='-') {
+            echo '<tr><td style="text-align: center;">'.$dataSph2['color4'];
+            echo '<td style="text-align: center;">'.$dataSph2['kcolor4'].'</tr>';
+          }
+          if ($dataSph2['color5']!='-') {
+            echo '<tr><td style="text-align: center;">'.$dataSph2['color5'];
+            echo '<td style="text-align: center;">'.$dataSph2['kcolor5'].'</tr>';
+          }
+        }
+        ?>
+      </table>
     </div>
     <div class="col-sm-6 invoice-col">
       <p class="lead"></p>
@@ -495,13 +484,14 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
     
   <!-- this row will not appear when printing -->
   <div class="row no-print">
-    <div class="col-xs-12">
+    <div class="col-xs-6 pull-right">
       <?php 
         if ($hakUser > 60) {
           echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-thumbs-up"></i> Approve KK</button>';
         }
-        echo '<button type="button" class="btn btn-primary pull-right" onclick=location.href=location.href="pdf/pdf_kk.php?&noKK=' . $_GET["noKK"] . '"><i class="fa fa-download"></i> Download</button>';
       ?>
+      <button type="button" class="btn btn-primary pull-left" id="btnNote" onclick=location.href=location.href="<?php echo 'pdf/pdf_kk.php?&noKK='.$_GET["noKK"];?>"><i class="fa fa-download"></i> Download
+      </button>
       <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-pencil-square-o" ></i> Note
       </button>
     </div>
