@@ -188,10 +188,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter4 =  " AND s1.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
-                $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
+                $q = "SELECT s.*,ds.bahan,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
                 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
                 $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph Union All" ;
-                $q.= " SELECT s1.*,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
+                $q.= " SELECT s1.*,'Kaligrafi' as bahan,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
                 $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
                 $q.= "WHERE 1=1 " .$filter4. $filter3."group by s1.noSph" ;
                 $q.= " ORDER BY idSph desc ";
@@ -281,9 +281,23 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";
-                                echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
-                                echo "<td><b>" . ($query_data["nama_cust"]) . "</b></td>";
-                                echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
+                                echo "<td><button style='pointer-events: none;' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
+                                echo "<td><b>" . ($query_data["nama_cust"]) . "</b> <div class='pull-right'>";
+                                if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
+                                    if ($query_data["harga"]>=100000000 || $query_data["harga2"]>=100000000) {
+                                        echo "<i class='bi bi-coin'></i><i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";
+                                    }
+                                }else if($query_data["bahan"]==1){
+                                    if ($query_data["harga"]>=100000000) {
+                                        echo "<i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";
+                                    }
+                                }else if($query_data["bahan"]==2 || $query_data["bahan"]==3 || $query_data["bahan"]==6){
+                                    if ($query_data["harga2"]>=100000000) {
+                                        echo "<i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";
+                                    }
+                                }
+                                
+                                echo "</td><td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
                                 $kel = '';
                                 if ($query_data["plafon"] == 0){
                                     $kel = 'Full';
