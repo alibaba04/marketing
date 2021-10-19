@@ -170,7 +170,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="box box-primary">
                 <?php
                 
-                $filter="";$filter3="";$snum="";
+                $filter="";$filter3="";$snum="";$noSph="";
                 if(isset($_GET["noSph"]) ){
                     $noSph = secureParam($_GET["noSph"], $dbLink);
                     $snum = secureParam($_GET["noSph"], $dbLink)." : ";
