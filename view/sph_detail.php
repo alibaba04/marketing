@@ -121,7 +121,7 @@ $(document).ready(function () {
         document.getElementById("simpan").disabled = true;
         document.getElementById("idluas").disabled = true;
     });
-    $("#dt :input").prop("readonly", true);
+    //$("#dt :input").prop("readonly", true);
             $("#txtDt").val(0);
     $("#txtket").change(function(){
         var cboket = $("#txtket").val();  
@@ -205,6 +205,9 @@ $(document).ready(function () {
     var tcounter = 0;
     function adddetail($param){
         $("#myModal").modal({backdrop: false});
+        if(cbomodel == 'bawang'){
+            $("#dt :input").prop("readonly", false);
+        }
         $('#validEdit').val($param);
         $("#chkeditval").val($("#chkEdit_"+$param).val());
         $.post("function/ajax_function.php",{ fungsi: "idList",id:$('#validEdit').val(),nosph:$('#txtnoSph').val()},function(data)

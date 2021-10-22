@@ -56,10 +56,24 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $('#tglTransaksi').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
     //$('#tglTransaksi').val('00-00-0000');
-    
-    $("#btnMsearch").click(function(){ 
-        $("#modal-m").modal({backdrop: false});
+    /*for (var i = 1; i >= 12; i++) {
+        $("#btn_"+i).click(function(){ 
+            var link =window.location.href.split("&noSph");
+            location.href=link[0]+'&noSph=='+i;
+        });
+    }*/
+    $("#btn_sm").click(function(){ 
+        var link =window.location.href;
+        var res = link.match(/&month=/g);
+        if (res == '&month=') {
+            link = link.split('&month=');
+            location.href=link[0]+'&month='+$("#cbom").val();
+        }else{
+            location.href=window.location.href+'&month='+$("#cbom").val();
+        }
+        
     });
+    
 });
 
 </script>
@@ -91,7 +105,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>"autocomplete="off">
+                    <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['REQUEST_URI']; ?>"autocomplete="off">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control" name="noSph" id="noSph" placeholder="Cari . . . ."
@@ -100,7 +114,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo("value='" . $_GET["noSph"] . "'");
                             }
                             ?>
-                            onKeyPress="return handleEnter(this, event)" data-toggle="tooltip" data-placement="bottom" title="Gunakan '=' untuk data per user/bulan">
+                            onKeyPress="return handleEnter(this, event)" data-toggle="tooltip" data-placement="bottom" title="Gunakan '=' untuk data per user">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                             </span>
@@ -169,22 +183,31 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         <section class="col-lg-12 connectedSortable">
             <div class="box box-primary">
                 <?php
+                $filter="";$filter3="";$noSph="";
+                if(isset($_GET["month"])){
+
+                    $_SESSION["month"] = $_GET["month"];
+                }
+                if ($_SERVER['REQUEST_URI']=='/marketing/index.php?page=view/sph_list') {
+                    unset($_SESSION["month"]);
+                }
+                if (isset($_SESSION["month"])) {
+                    $filter = $filter . " and month(s.tanggal)='" . secureParam($_SESSION["month"], $dbLink) . "' ";
+                    $filter3 = $filter3 . " and month(s1.tanggal)='" . secureParam($_SESSION["month"], $dbLink) . "' ";
+                }
                 
-                $filter="";$filter3="";$snum="";$noSph="";
                 if(isset($_GET["noSph"]) ){
                     $noSph = secureParam($_GET["noSph"], $dbLink);
-                    $snum = secureParam($_GET["noSph"], $dbLink)." : ";
                     if ($noSph)
                         if (strpos($noSph, '=') !== FALSE) {
-                            $filter = $filter . " AND s.kodeUser LIKE '%" . substr($noSph,1) . "%' or month(tanggal)='" . substr($noSph,1) . "' ";
-                            $filter3 = $filter3 . " AND s1.kodeUser LIKE '%" . substr($noSph,1) . "%' or month(tanggal)='" . substr($noSph,1) . "' ";
+                            $filter = $filter . " AND s.kodeUser LIKE '%" . substr($noSph,1) . "%'";
+                            $filter3 = $filter3 . " AND s1.kodeUser LIKE '%" . substr($noSph,1) . "%'";
                         }else{
-                            $filter = $filter . " AND p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or k.name LIKE '%" . $noSph . "%' or s.affiliate LIKE '%" . $noSph . "%'";
-                            $filter3 = $filter3 . " AND p1.name LIKE '%" . $noSph . "%'  or s1.nama_cust LIKE '%" . $noSph . "%'  or s1.noSph LIKE '%" . $noSph . "%'  or k1.name LIKE '%" . $noSph . "%'or s1.affiliate LIKE '%" . $noSph . "%'";
+                            $filter = $filter . " AND (k.name LIKE '%" . $noSph . "%' or p.name LIKE '%" . $noSph . "%'  or s.nama_cust LIKE '%" . $noSph . "%'  or s.noSph LIKE '%" . $noSph . "%'  or s.affiliate LIKE '%" . $noSph . "%')";
+                            $filter3 = $filter3 . " AND (k1.name LIKE '%" . $noSph . "%'or p1.name LIKE '%" . $noSph . "%'  or s1.nama_cust LIKE '%" . $noSph . "%'  or s1.noSph LIKE '%" . $noSph . "%'  or s1.affiliate LIKE '%" . $noSph . "%')";
                         }
-                }else{
-                    $filter = '';
                 }
+
                 $filter2 = '';
                 $filter4 = '';
                 if ($_SESSION['my']->privilege == 'SALES') {
@@ -206,21 +229,22 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <i class="ion ion-clipboard"></i>
                     <ul class="pagination pagination-sm inline"><?php 
                     $monthName='';
-                    if (is_numeric(substr($noSph,1))){
-                        $dateObj   = DateTime::createFromFormat('!m', substr($noSph,1));
+                    if (isset($_SESSION["month"])) {
+                        $dateObj   = DateTime::createFromFormat('!m', secureParam($_SESSION["month"], $dbLink));
                         $monthName = $dateObj->format('F'); 
                     }
+                    
                     echo $monthName.' - '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
                     if ($_SESSION['my']->privilege == 'DM') {
                         /*echo '<a href="class/c_exportexcel.php?"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>';*/
-                        /*echo '<div class="dropdown pull-right"><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i>Month</button><ul class="dropdown-menu" style="border-color:transparent;background:transparent">';
+                        echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
                         for ($i = 0; $i < 12; ) {
                             $month_val = date('m', strtotime($i." months"));
                             $month_str = date('F', strtotime($i++." months"));
-                            echo '<li><center><button type="button" class="btn btn-default" id="btn_'.$month_val .'">'.$month_str .'</button></center></li>';
+                            echo '<option value="'.$month_val.'">'.$month_str.'</option>';
                         } 
-                        echo "</ul></div>";*/
+                        echo '</select><span class="input-group-btn"><button class="btn btn-primary dropdown-toggle" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';
                     }
                     ?>
                 </div>
@@ -346,22 +370,3 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         </section>
     </div>
 </section>
-<div class="modal fade" id="modal-m">
-    <div class="modal-dialog">
-        <div class="modal-content bg-secondary">
-            <div class="modal-header">
-                <h4 class="modal-title">Input Password Level 1 (Owner)</h4>
-            </div>
-            <div class="modal-body"><center>
-                <?php 
-                    for ($i = 0; $i < 12; ) {
-                        $month_val = date('m', strtotime($i." months"));
-                        $month_str = date('F', strtotime($i++." months"));
-                        echo '<button type="button" class="btn btn-primary" id="btn_"'.$month_val .'>'.$month_str .'</button><br>';
-                    } 
-                ?>
-                </center>
-            </div>
-        </div>
-    </div>
-</div>
