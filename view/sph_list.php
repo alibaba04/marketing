@@ -254,12 +254,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 17%">No SPH</th>
-                                <th style="width: 5%">Date</th>
-                                <th style="width: 15%">Client</th>
+                                <th style="width: 14%">No SPH</th>
+                                <th style="width: 20%">Client</th>
                                 <th style="width: 20%">Address</th>
                                 <th style="width: 28%">Information</th>
-                                <th style="width: 15%">Operator</th>
+                                <th style="width: 5%">Date</th>
+                                <th style="width: 13%">Operator</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -322,7 +322,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";
-                                echo "<td><button style='pointer-events: none;' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
+                                
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b> <div class='pull-right'>";
                                 if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
                                     if ($query_data["harga"]>=100000000 || $query_data["harga2"]>=100000000) {
@@ -353,6 +353,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 $spek = '<b>'.$query_data["masjid"].'</b>, MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
                                 echo "<td>" . $spek ."</td>";
+                                echo "<td><button style='pointer-events: none;' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td><center>" . strtoupper($query_data["nama"]) ." <br>(".$query_data["affiliate"].")</center></td>";
                                 echo("</tr>");
                                 $rowCounter++;
