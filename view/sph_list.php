@@ -217,10 +217,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             //database
                 $q = "SELECT s.*,ds.bahan,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
                 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-                $q.= "WHERE 1=1 " .$filter2. $filter."group by s.noSph Union All" ;
+                $q.= "WHERE s.aktif=1 " .$filter2. $filter."group by s.noSph Union All" ;
                 $q.= " SELECT s1.*,'Kaligrafi' as bahan,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
                 $q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
-                $q.= "WHERE 1=1 " .$filter4. $filter3."group by s1.noSph" ;
+                $q.= "WHERE s1.aktif=1 " .$filter4. $filter3."group by s1.noSph" ;
                 $q.= " ORDER BY idSph desc ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);

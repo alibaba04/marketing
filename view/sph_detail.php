@@ -625,12 +625,15 @@ function validasiForm(form)
                                         }else if (strlen($kode)==3){
                                             $kode = '0'.$kode;
                                         }
-
                                         if ($tglTr != $tahun) {
                                             $kode = '0001';
                                         }
-                                        $noSph = $kode.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
-
+                                        if ($kode_['aktif']==99) {
+                                            $noSph = '0001'.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                        }else{
+                                            $noSph = $kode.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                        }
+                                        
                                     }else{
                                         $noSph = '0001'.'/SPH-MS/PTAKI/'.$bulan.'/'.$tglTr;
                                     }
@@ -953,7 +956,7 @@ function validasiForm(form)
                                             <option value='Anakan'>Anakan</option>;
                                             <option value='Menara'>Menara</option>;
                                             <?php
-                                            if ($_SESSION['my']->privilege == 'ADMIN') {
+                                            if ($_SESSION['my']->privilege == 'ADMIN' || $_SESSION['my']->name == 'Antok') {
                                                 echo '<option value=Atap>Atap</option>';
                                             }
                                             ?>
@@ -966,7 +969,7 @@ function validasiForm(form)
                                             <option value=madinah>Madinah</option>";
                                             <option value=bawang>Bawang</option>";
                                             <?php
-                                            if ($_SESSION['my']->privilege == 'ADMIN') {
+                                            if ($_SESSION['my']->privilege == 'ADMIN' || $_SESSION['my']->name == 'Antok') {
                                                 echo '<option value=custom>Custom</option>';
                                             }
                                             ?>
