@@ -30,32 +30,33 @@ require_once('./function/fungsi_formatdate.php');
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-       <link rel="stylesheet" href="dist/css/skins/skin-qoobah.css">
-       <!-- iCheck for checkboxes and radio inputs -->
-       <link rel="stylesheet" href="plugins/iCheck/all.css">
-       <link rel="stylesheet" href="plugins/morris/morris.css">
-       <!-- jvectormap -->
-       <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-       <!-- Date Picker -->
-       <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
-       <!-- Daterange picker -->
-       <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-       <!-- bootstrap wysihtml5 - text editor -->
-       <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-       <!-- Select2 -->
-       <link rel="stylesheet" href="plugins/select2/select2.min.css">
-       <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
-       <link rel="stylesheet" href="css/searchInput1.css">
-       <link rel="icon" href="dist/img/logo-qoobah.png" type="image/png"/>
-       <link rel="stylesheet" href="dist/css/bootstrap.min.css"> 
-       <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-       <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-       <script src="js/angka.js"></script>
-       <script type="text/javascript" src="js/autoCompletebox.js"></script>
-       <link rel="stylesheet" href="ionicons/css/ionicons.min.css">
-       <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
+     folder instead of downloading all of them to reduce the load. -->
+     <link rel="stylesheet" href="dist/css/skins/skin-qoobah.css">
+     <!-- iCheck for checkboxes and radio inputs -->
+     <link rel="stylesheet" href="plugins/iCheck/all.css">
+     <link rel="stylesheet" href="plugins/morris/morris.css">
+     <!-- jvectormap -->
+     <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+     <!-- Date Picker -->
+     <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+     <!-- Daterange picker -->
+     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+     <!-- bootstrap wysihtml5 - text editor -->
+     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+     <!-- Select2 -->
+     <link rel="stylesheet" href="plugins/select2/select2.min.css">
+     <link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
+     <link rel="stylesheet" href="css/searchInput1.css">
+     <link rel="icon" href="dist/img/logo-qoobah.png" type="image/png"/>
+     <link rel="stylesheet" href="dist/css/bootstrap.min.css"> 
+     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+     <script src="js/angka.js"></script>
+     <script type="text/javascript" src="js/autoCompletebox.js"></script>
+     <link rel="stylesheet" href="ionicons/css/ionicons.min.css">
+     <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"></script>
+     <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
    </head>
    <?php
    if ((isset($_SESSION["my"]) === false) || (isset($_GET["page"]) === "login_detail")) {
@@ -248,6 +249,7 @@ require_once('./function/fungsi_formatdate.php');
         <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
         <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
         <script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="plugins/toastr/toastr.min.js"></script>
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyCmTZroIbWCnevV3O3vz-VMDWJaYY-hexs",

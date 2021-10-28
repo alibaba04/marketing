@@ -68,6 +68,27 @@ case "hitungtotal":
     $total = $kaligrafi+$hkubah;
     echo json_encode(array("total"=>number_format($total)));
 break;
+case "cutoff":
+    $year = $_POST['year'];
+    $q = "UPDATE `aki_sph` SET `aktif`='99' WHERE year(tanggal)='".$year."'";
+    if (mysql_query($q, $dbLink)) {
+        $q2 = "UPDATE `aki_kk` SET `aktif`='99' WHERE year(tanggal)='".$year."'";
+        if (mysql_query($q2, $dbLink)) {
+            $q3 = "DELETE FROM `aki_report`";
+            if (mysql_query($q3, $dbLink)) {
+                date_default_timezone_set("Asia/Jakarta");
+                $tgl = date("Y-m-d H:i:s");
+                $q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
+                $q4.= "('Admin','".$tgl."','Cut Off ".$year."');";
+                if (mysql_query($q4, $dbLink)) {
+                    echo "yes";
+                }
+            }
+        }
+    } else {
+        echo "no";
+    }
+break;
 case "getOngkir":
     $result = mysql_query("select * FROM provinsi WHERE id ='" . secureParamAjax($_POST['idP'], $dbLink) . "'", $dbLink);
     if (mysql_num_rows($result)>0) {
@@ -79,7 +100,7 @@ case "getOngkir":
 break;
 
 case "getcountSPH":
-    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'agus', kodeUser, NULL)) AS agus,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE 1", $dbLink);
+    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'agus', kodeUser, NULL)) AS agus,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE aktif=1", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             echo json_encode( array("reza"=>$data['reza'],"antok"=>$data['antok'],"agus"=>$data['agus'],"tina"=>$data['tina']));
@@ -88,7 +109,7 @@ case "getcountSPH":
     }
 break;
 case "getcountAffiliate":
-    $result = mysql_query("SELECT COUNT(IF( affiliate = 'Web Qoobah Official', affiliate, NULL)) AS office,COUNT(IF( affiliate = 'Web Contractor', affiliate, NULL)) AS contr,COUNT(IF( affiliate = 'Representative', affiliate, NULL)) AS repre,COUNT(IF( affiliate = 'Offline', affiliate, NULL)) AS offline,COUNT(IF( affiliate = 'Edy', affiliate, NULL)) AS edy,COUNT(IF( affiliate = 'Ibnu', affiliate, NULL)) AS ibnu,COUNT(IF( affiliate = 'Sigit', affiliate, NULL)) AS sigit,COUNT(IF( affiliate = 'Isaq', affiliate, NULL)) AS isaq,COUNT(IF( affiliate = 'Fendy', affiliate, NULL)) AS fendy,COUNT(IF( affiliate = 'Habibi', affiliate, NULL)) AS habibi,COUNT(IF( affiliate = 'Rizal', affiliate, NULL)) AS rizal,COUNT(IF( affiliate = 'Bekasi', affiliate, NULL)) AS bekasi FROM `aki_sph` WHERE 1", $dbLink);
+    $result = mysql_query("SELECT COUNT(IF( affiliate = 'Web Qoobah Official', affiliate, NULL)) AS office,COUNT(IF( affiliate = 'Web Contractor', affiliate, NULL)) AS contr,COUNT(IF( affiliate = 'Representative', affiliate, NULL)) AS repre,COUNT(IF( affiliate = 'Offline', affiliate, NULL)) AS offline,COUNT(IF( affiliate = 'Edy', affiliate, NULL)) AS edy,COUNT(IF( affiliate = 'Ibnu', affiliate, NULL)) AS ibnu,COUNT(IF( affiliate = 'Sigit', affiliate, NULL)) AS sigit,COUNT(IF( affiliate = 'Isaq', affiliate, NULL)) AS isaq,COUNT(IF( affiliate = 'Fendy', affiliate, NULL)) AS fendy,COUNT(IF( affiliate = 'Habibi', affiliate, NULL)) AS habibi,COUNT(IF( affiliate = 'Rizal', affiliate, NULL)) AS rizal,COUNT(IF( affiliate = 'Bekasi', affiliate, NULL)) AS bekasi FROM `aki_sph` WHERE aktif=1", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             echo json_encode( array("office"=>$data['office'],"contr"=>$data['contr'],"repre"=>$data['repre'],"offline"=>$data['offline'],"edy"=>$data['edy'],"ibnu"=>$data['ibnu'],"sigit"=>$data['sigit'],"isaq"=>$data['isaq'],"fendy"=>$data['fendy'],"habibi"=>$data['habibi'],"rizal"=>$data['rizal'],"bekasi"=>$data['bekasi']));
@@ -102,7 +123,7 @@ case "getcountAffm":
     if (isset($_POST['aff'])) {
         $filter = "and affiliate='".$_POST['aff']."'";
     }
-    $result = mysql_query("SELECT affiliate,COUNT(IF( month(tanggal) = 01, affiliate, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, affiliate, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, affiliate, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, affiliate, NULL)) AS april,COUNT(IF( month(tanggal) = 05, affiliate, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, affiliate, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, affiliate, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, affiliate, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, affiliate, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, affiliate, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, affiliate, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, affiliate, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE()) ".$filter." group by affiliate ", $dbLink);
+    $result = mysql_query("SELECT affiliate,COUNT(IF( month(tanggal) = 01, affiliate, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, affiliate, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, affiliate, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, affiliate, NULL)) AS april,COUNT(IF( month(tanggal) = 05, affiliate, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, affiliate, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, affiliate, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, affiliate, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, affiliate, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, affiliate, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, affiliate, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, affiliate, NULL)) AS des FROM `aki_sph` where aktif=1 and YEAR(tanggal) = YEAR(CURDATE()) ".$filter." group by affiliate ", $dbLink);
     if (mysql_num_rows($result)>0) {
         $idx=0;
         while ( $data = mysql_fetch_assoc($result)) {
@@ -119,7 +140,7 @@ case "getcountSPHm":
     if ($_POST['user']!='-') {
         $filter = "and kodeUser='".$_POST['user']."'";
     }
-    $result = mysql_query("SELECT COUNT(IF( month(tanggal) = 01, kodeUser, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, kodeUser, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, kodeUser, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, kodeUser, NULL)) AS april,COUNT(IF( month(tanggal) = 05, kodeUser, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, kodeUser, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, kodeUser, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, kodeUser, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, kodeUser, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, kodeUser, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, kodeUser, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, kodeUser, NULL)) AS des FROM `aki_sph` where YEAR(tanggal) = YEAR(CURDATE()) ".$filter, $dbLink);
+    $result = mysql_query("SELECT COUNT(IF( month(tanggal) = 01, kodeUser, NULL)) AS jan,COUNT(IF( month(tanggal) = 02, kodeUser, NULL)) AS feb,COUNT(IF( month(tanggal) = 03, kodeUser, NULL)) AS maret,COUNT(IF( month(tanggal) = 04, kodeUser, NULL)) AS april,COUNT(IF( month(tanggal) = 05, kodeUser, NULL)) AS mei,COUNT(IF( month(tanggal) = 06, kodeUser, NULL)) AS jun,COUNT(IF( month(tanggal) = 07, kodeUser, NULL)) AS jul,COUNT(IF( month(tanggal) = 08, kodeUser, NULL)) AS agus,COUNT(IF( month(tanggal) = 09, kodeUser, NULL)) AS sep,COUNT(IF( month(tanggal) = 10, kodeUser, NULL)) AS okt,COUNT(IF( month(tanggal) = 11, kodeUser, NULL)) AS nov,COUNT(IF( month(tanggal) = 12, kodeUser, NULL)) AS des FROM `aki_sph` where aktif=1 and YEAR(tanggal) = YEAR(CURDATE()) ".$filter, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
             echo json_encode( array("jan"=>$data['jan'],"feb"=>$data['feb'],"maret"=>$data['maret'],"april"=>$data['april'],"mei"=>$data['mei'],"jun"=>$data['jun'],"jul"=>$data['jul'],"agus"=>$data['agus'],"sep"=>$data['sep'],"okt"=>$data['okt'],"nov"=>$data['nov'],"des"=>$data['des']));

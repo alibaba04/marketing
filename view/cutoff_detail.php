@@ -4,7 +4,7 @@
 ==================================================== */
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
-$curPage = "view/harga_detail";
+$curPage = "view/cutoff_detail";
 
 //Periksa hak user pada modul/menu ini
 $judulMenu = 'Pengaturan User';
@@ -32,17 +32,18 @@ if ($hakUser != 90 ) {
             $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"alibaba",pass:password } ,function(data)
             {
                 if(data=='yes') {
-                    $.post("function/ajax_function.php",{ fungsi: "updatehpp", txtLessGa1:$('#txtLessGa1').val(),txtLessGa2:$('#txtLessGa2').val(),txtLessGa3:$('#txtLessGa3').val(),txtLessEn1:$('#txtLessEn1').val(),txtLessEn2:$('#txtLessEn2').val(),txtLessEn3:$('#txtLessEn2').val(),txtGreaterGa1:$('#txtGreaterGa1').val(),txtGreaterGa2:$('#txtGreaterGa2').val(),txtGreaterGa3:$('#txtGreaterGa3').val(),txtGreaterEn1:$('#txtGreaterEn1').val(),txtGreaterEn2:$('#txtGreaterEn2').val(),txtGreaterEn3:$('#txtGreaterEn3').val() } ,function(data)
+                    $.post("function/ajax_function.php",{ fungsi: "cutoff", year:$('#cboyears').val()} ,function(data)
                     {
                         if(data=='yes') {
-                            toastr.success('Sukses Update Harga Awal . . . .')
                             $("#modal-pass").modal('hide');
+                            toastr.success('Sukses Cut Off . . . .')
+                            
                         }else{
-                            toastr.error('Gagal Update Harga Awal . . . .')
+                            toastr.error('Gagal Cut Off . . . .')
                         }
                     });
                 }else{
-                    toastr.error('Gagal !!!<br> Password Level 1 Salah . . . .')
+                    toastr.error('Gagal !!!<br> Password Admin Salah . . . .')
                     $("#txtPass").focus();
                 }
             });
@@ -60,7 +61,17 @@ if ($hakUser != 90 ) {
             <div class="modal-body">
                 
                 <div class="modal-header">
-                    <p>Data sebe</p>
+                    <div class="input-group-addon">
+                        <select name="cboyears" id="cboyears" class="form-control">
+                            <?php
+                                $q= "SELECT year(tanggal) as year FROM `aki_sph` GROUP by year(tanggal)";
+                                $rsTemp = mysql_query($q, $dbLink);
+                                while ($dataSph = mysql_fetch_array($rsTemp)) {
+                                    echo "<option value='" . $dataSph["year"] . "'>" . $dataSph["year"] . "</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
                     <div class="input-group-addon">
                         <button type="button" class="btn btn-primary" id="btnSave">Cut Off</button>
                     </div>
@@ -74,7 +85,7 @@ if ($hakUser != 90 ) {
     <div class="modal-dialog">
         <div class="modal-content bg-secondary">
             <div class="modal-header">
-                <h4 class="modal-title">Input Password Level 1 (Owner)</h4>
+                <h4 class="modal-title">Input Password (Admin)</h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">

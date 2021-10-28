@@ -34,6 +34,4 @@ $recordPerPage = 10;
 
 $wajibIsiKeterangan ='<font style="color:#FF0000; font-weight:bold">Field Bertanda * Wajib Diisi</font>';
 $wajibIsiSimbol = '<font style="color:#FF0000; font-weight:bold">&nbsp;&nbsp;*</font>';
-$SITUS = "kopkar.ubaya.ac.id/akuntansi/kobama";
-define('CONST_FOLDER', "/var/www/html/kopkar/akuntansi/kobama");
 ?>

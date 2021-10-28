@@ -45,33 +45,38 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 ?>
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
-    
+function sendnotif($msg){
+  $('#txtNote').val($('#txtmNote').val());
+  var user = $('#txtuser').val();
+  var Token = '';
+  var privilegeU = '';
+
+  if (user == 'ADMIN') {
+    privilegeU = 'kpenjualan';
+  }else if(user == 'kpenjualan'){
+    privilegeU = 'ADMIN';
+  }else{
+    privilegeU = 'GODMODE';
+  }
+  var url = 'https://sikubah.com/marketing/index.php?page=view/kkreview_detail&mode=addNote&noKK='+$('#txtnoKkEn').val();
+  $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
+  {
+    Token = data['token'];
+    var name = 'Admin';
+    var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note "+$msg+" : '"+$("#txtNote").val()+"' ";
+    $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,url:url},function(data)
+    {
+    },"json");
+  },"json");
+}
 $(document).ready(function () {
     $("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
     $('#btnSend').click(function(){
-        $('#txtNote').val($('#txtmNote').val());
-        var user = $('#txtuser').val();
-        var Token = '';
-        var privilegeU = '';
-
-        if (user == 'ADMIN') {
-          privilegeU = 'kpenjualan';
-        }else if(user == 'kpenjualan'){
-          privilegeU = 'ADMIN';
-        }else{
-          privilegeU = 'GODMODE';
-        }
-        var url = 'https://sikubah.com/marketing/index.php?page=view/kkreview_detail&mode=addNote&noKK='+$('#txtnoKkEn').val();
-        $.post("function/ajax_function.php",{ fungsi: "gettoken",user:privilegeU},function(data)
-        {
-          Token = data['token'];
-          var name = 'Admin';
-          var Message = "SIKUBAH - Message from "+name+" Please Check 'Review Kontrak Kerja'. Nomor KK : '"+$("#txtnoKk").val()+"', Note : '"+$("#txtNote").val()+"' ";
-          $.post("function/ajax_function.php",{ fungsi: "sendnotif",token:Token,message:Message,url:url},function(data)
-          {
-          },"json");
-        },"json");
+        sendnotif('Send');
+    });
+    $('#btnApprove').click(function(){
+        sendnotif('Approve');
     });
 });
 function omodal() {
