@@ -1238,27 +1238,27 @@ while (  $hasil1 = mysql_fetch_array($rs2)) {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color2'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor2'],1,1,'C',0);
-    if ($hasil1['color3'] =='-') {
+    /*if ($hasil1['color3'] =='-') {
       $pdf->Ln(30);
-    }
+    }*/
     $jmlcol++;
   }
   if ($hasil1['color3'] !='-' && $hasil1['color3'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color3'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor3'],1,1,'C',0);
-    if ($hasil1['color4'] =='-') {
+    /*if ($hasil1['color4'] =='-') {
       $pdf->Ln(20);
-    }
+    }*/
     $jmlcol++;
   }
   if ($hasil1['color4'] !='-' && $hasil1['color4'] !='') {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
-    if ($hasil1['color5'] =='-') {
+    /*if ($hasil1['color5'] =='-') {
       $pdf->Ln(10);
-    }
+    }*/
     $jmlcol++;
   }
   if ($hasil1['color5'] !='-' && $hasil1['color5'] !='') {
