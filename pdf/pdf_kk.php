@@ -1229,9 +1229,9 @@ while (  $hasil1 = mysql_fetch_array($rs2)) {
     $pdf->Cell(45,2,'',0,0,'L',0);
     $pdf->Cell(50,10,$hasil1['color1'] ,1,0,'C',0);
     $pdf->Cell(50,10,$hasil1['kcolor1'] ,1,1,'C',0);
-    if ($hasil1['color2'] =='-' && $hasil['jml']!=2) {
+    /*if ($hasil1['color2'] =='-' && $hasil['jml']!=2) {
       $pdf->Ln(40);
-    }
+    }*/
     $jmlcol++;
   }
   if ($hasil1['color2'] !='-' && $hasil1['color2'] !='') {

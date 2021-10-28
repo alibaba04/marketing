@@ -571,32 +571,29 @@ return true;
                             $q = "SELECT * FROM aki_kk where idKk=( SELECT max(idKk) FROM aki_kk where 1)";
                             $rsTemp = mysql_query($q, $dbLink);
                             $tglTransaksi = date("Y-m-d");
+                            $tglTr = substr($tglTransaksi, 0,4);
+                            $bulan = bulanRomawi(substr($tglTransaksi,5,2));
                             if ($kode_ = mysql_fetch_array($rsTemp)) {
                                 $urut = "";
-                                $tglTr = substr($tglTransaksi, 0,4);
-                                $bulan = bulanRomawi(substr($tglTransaksi,5,2));
-                                if ($kode_['noKk'] != ''){
-
-                                    $urut = substr($kode_['noSph'],0, 3);
-                                    $tahun = substr($kode_['noSph'],-4);
-
-                                    $kode = $urut + 1;
-                                    if (strlen($kode)==1) {
-                                        $kode = '00'.$kode;
-                                    }else if (strlen($kode)==2){
-                                        $kode = '0'.$kode;
-                                    }
-                                    if ($tglTr != $tahun) {
-                                        $kode = '001';
-                                    }
-                                    if ($kode_['aktif']==99) {
-                                        $noKk = '001'.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
-                                    }else{
-                                        $noKk = $kode.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
-                                    }
-                                }else{
-                                    $noKk = '001'.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                $urut = substr($kode_['noKk'],0, 3);
+                                $tahun = substr($kode_['noKk'],-4);
+                                $kode = $urut + 1;
+                                if (strlen($kode)==1) {
+                                    $kode = '00'.$kode;
+                                }else if (strlen($kode)==2){
+                                    $kode = '0'.$kode;
                                 }
+                                if ($tglTr != $tahun) {
+                                    $kode = '001';
+                                }
+
+                                if ($kode_['aktif']==99) {
+                                    $noKk = '001'.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                }else{
+                                    $noKk = $kode.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+                                }
+                            }else{
+                                $noKk = '001'.'/KK-MS/PTAKI/'.$bulan.'/'.$tglTr;
                             }
                             echo "<input type='hidden' name='txtMode'  value='Add'>";
                         }
