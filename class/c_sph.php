@@ -35,7 +35,7 @@ class c_sph
 			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, affiliate, tanggal, keterangan_kk, kodeUser) ";
 			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$affiliate."','".$tglTransaksi."','','".$pembuat."');";
 			if (!mysql_query($q, $dbLink))
-				throw new Exception($q.'Gagal masukkan data dalam database.');
+				throw new Exception('Gagal masukkan data dalam database.');
 			$jumData = $params["jumAddJurnal"];
 			$jumRangka = $params["norangka"];
 			$nomer=0;

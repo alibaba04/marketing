@@ -325,7 +325,8 @@ defined( 'validSession' ) or die( 'Restricted access' );
               }
             }]
           },
-          showTooltips: false
+          tooltipEvents:  ["click"]
+          
         }
 
         var areaChart = new Chart(areaChartCanvas4);
