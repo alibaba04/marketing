@@ -51,7 +51,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <script src="dist/js/jquery-ui.min.js"></script>
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script type="text/javascript" charset="utf-8">
-
+    function dpdf($pdf,$no){
+        $("#modal-pdf").modal('show');
+        $('#pdfno').val($no);
+        $('#pdfj').val($pdf);
+    }
     $(function () {
         $('#tglTransaksi').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
@@ -72,6 +76,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             location.href=window.location.href+'&month='+$("#cbom").val();
         }
         
+    });
+    $("#btnSubmit").click(function(){ 
+        location.href="pdf/"+$("#pdfj").val()+"?&noSph="+$("#pdfno").val();
     });
     
 });
@@ -320,8 +327,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if (strtoupper($query_data["model"])=='KALIGRAFI') {
                                     $colorr='btn-primary';
                                 }
-                                echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
-                                <button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";
+                                echo "<td>
+                                <button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
+                                /*echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
+                                <button type='button' id='btnpdf' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";*/
                                 
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b> <div class='pull-right'>";
                                 if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
@@ -371,3 +380,18 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         </section>
     </div>
 </section>
+<div class="modal fade" id="modal-pdf">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <h4 class="modal-title">Download PDF</h4>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <input type="hidden" name="" id="pdfno">
+                <input type="hidden" name="" id="pdfj">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary pull-right" id="btnSubmit">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
