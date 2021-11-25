@@ -243,15 +243,16 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     
                     echo $monthName.' - '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
+                    
                     if ($_SESSION['my']->privilege == 'DM') {
-                        /*echo '<a href="class/c_exportexcel.php?"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a>';*/
+                        echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&month='.$_GET["month"].'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
                         echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
                         for ($i = 0; $i < 12; ) {
                             $month_val = date('m', strtotime($i." months"));
                             $month_str = date('F', strtotime($i++." months"));
                             echo '<option value="'.$month_val.'">'.$month_str.'</option>';
                         } 
-                        echo '</select><span class="input-group-btn"><button class="btn btn-primary dropdown-toggle" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';
+                        echo '</select><span class="input-group-btn"><button class="btn btn-info pull-right" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';
                     }
                     ?>
                 </div>

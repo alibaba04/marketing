@@ -878,7 +878,7 @@ $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(40,6,'NB :','',1,'',0);
 $pdf->Ln(5);
 
-$pdf->Cell(100,6,'Harga di atas belum termasuk PPn 10%.','',1,'L',0);$pdf->Ln(2);
+//$pdf->Cell(100,6,'Harga di atas belum termasuk PPn 10%.','',1,'L',0);$pdf->Ln(2);
 $pdf->Cell(100,6,'Harga bisa berubah sewaktu-waktu mengikuti perubahan harga material.','',1,'L',0);$pdf->Ln(2);
 $pdf->Cell(100,6,'Harga di atas '.$tf.' termasuk Biaya Transportasi (Barang dan Tukang Pemasang).','',1,'L',0);$pdf->Ln(2);
 if ($bplafon!=0) {
