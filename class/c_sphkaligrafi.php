@@ -45,9 +45,10 @@ class c_sphkaligrafi
                     $h1 = preg_replace("/\D/", "", $harga);
                     $diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
+                    $motif = secureParam($params["txtMotif_". $j],$dbLink);
                     
-                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `harga`, `ppn`, `transport`, `kaligrafi`) VALUES";
-					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$h1."', '".$ppn."', '".$transport."', 'empty');";
+                    $q2 = "INSERT INTO `aki_dkaligrafi`(`nomer`, `noSph`, `d`, `t`, `motif`,`harga`, `ppn`, `transport`, `kaligrafi`) VALUES";
+					$q2.= " ('".$nomer."','".$noSph."', '".$diameter."', '".$tinggi."', '".$motif."', '".$h1."', '".$ppn."', '".$transport."', 'empty');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception($q2.'Gagal tambah data Kaligrafi.');
@@ -146,7 +147,8 @@ class c_sphkaligrafi
                     $kaligrafi = secureParam($params["txtkaligrafi_". $j],$dbLink);
                     $chkppn = secureParam($params["txtppn_". $j],$dbLink);
                     $chktransport = secureParam($params["txttrans_". $j],$dbLink);
-                    $q = "UPDATE aki_dkaligrafi SET `noSph`='".$params["txtnoSph"]."',`d`='".$diameter."',`t`='".$tinggi."',`harga`='".$h1."',`ppn`='".$chkppn."',`transport`='".$chktransport."',`kaligrafi`='".$kaligrafi."'";
+                    $motif = secureParam($params["txtMotif_". $j],$dbLink);
+                    $q = "UPDATE aki_dkaligrafi SET `noSph`='".$params["txtnoSph"]."',`d`='".$diameter."',`t`='".$tinggi."',`motif`='".$motif."',`harga`='".$h1."',`ppn`='".$chkppn."',`transport`='".$chktransport."',`kaligrafi`='".$kaligrafi."'";
 					$q.= " WHERE nosph='".$params["txtnoSph"]."' ;";
 
 					if (!mysql_query( $q, $dbLink))

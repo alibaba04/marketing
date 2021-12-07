@@ -47,7 +47,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
 	$pdf->writeHTML('Spesifikasi :<br>');
 	$pdf->Cell(10,5,'',0,0,'R',0);
 	$pdf->MultiCell(130,6,'  -    Diameter '.$hasil2['d'].' meter dan Tinggi '.$hasil2['t'].' meter
-		-    Plafon Motif Kaligrafi Asmaul Husna (Motif Terlampir)
+		-    Plafon Motif Kaligrafi '.$hasil2['motif'].' (Motif Terlampir)
 		-    Finishing menggunakan Cat Tembok Merk "Mowilex"'
 		,0,'B',0);
 	$ppn ='';

@@ -355,6 +355,24 @@ case "getpabrikasi":
     }
     echo json_encode(array("pabrikasi"=>$return));
 break;
+case "updatehpp":
+    $ga_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa1']), $dbLink);
+    $stg_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt1']), $dbLink);
+    $en_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn1']), $dbLink);
+    $ga_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa2']), $dbLink);
+    $stg_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt2']), $dbLink);
+    $en_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn2']), $dbLink);
+    $ga_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa3']), $dbLink);
+    $stg_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt3']), $dbLink);
+    $en_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn3']), $dbLink);
+
+    $q1 = "UPDATE `aki_hpp` SET `ga-full`='".$ga_full1."',`ga-waterproof`='".$ga_wa1."',`ga-tplafon`='".$ga_tp1."',`en-full`='".$en_full1."',`en-waterproof`='".$en_wa1."',`en-tplafon`='".$en_tp1."',`stg-full`='".$stg_full1."',`stg-waterproof`='".$stg_wa1."',`stg-tplafon`='".$stg_tp1."'";
+    if (mysql_query( $q1, $dbLink)){
+        echo "yes";
+    } else {
+        echo "no";
+    }
+break;
 case "kalkulator":
     $d = $_POST['d'];
     $t = $_POST['t'];
@@ -383,12 +401,36 @@ case "kalkulator":
     if ($m !=0 ) {
         $pmargin = $m; 
     }
+    //xtp = tanpa plafon
+    //xwa = waterproof
+    //xfull = plafon dan waterproof
+    //d = diameter
+    //kel = kelengkapan
+
+    //GA
     $xtp = 0;
-    if($d >= 4){ $xtp = 800000;}else{$xtp = 850000;} 
     $xwa = 0;
-    if($d >= 4){ $xwa = 850000;}else{$xwa = 900000;} 
     $xfull = 0;
-    if($d >= 4){ $xfull = 900000;}else{$xfull = 950000;} 
+    //EN
+    $xtp2 = 0;
+    $xwa2 = 0;
+    $xfull2 = 0;
+    $sql = '';
+    $sql = "SELECT * FROM aki_hpp";
+    $result = mysql_query($sql, $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            $xfull = (int)$data['ga-full'];
+            $xtp = (int)$data['ga-tplafon'];
+            $xwa = (int)$data['ga-waterproof'];
+            $xfull2 = (int)$data['stg-full'];
+            $xtp2 = (int)$data['stg-tplafon'];
+            $xwa2 = (int)$data['stg-waterproof'];
+            $xfull3 = (int)$data['en-full'];
+            $xtp3 = (int)$data['en-tplafon'];
+            $xwa3 = (int)$data['en-waterproof'];
+        }
+    }
     $x = 0;
     if( $kel == 0){$x = $xfull;}else if($kel == 2){$x = $xwa;}else{$x = $xtp;}
     $modal = $luas * $x;
@@ -397,13 +439,8 @@ case "kalkulator":
     $affiliate = $hpp * 0.05;
     $marketing = $hpp * 0.01;
     $harga = $hpp + $affiliate + $marketing + $transport;
-        //EN
-    $xtp2 = 0;
-    if($d >= 4){ $xtp2 = 1700000;}else{$xtp2 = 1900000;} 
-    $xwa2 = 0;
-    if($d >= 4){ $xwa2 = 1800000;}else{$xwa2 = 1950000;} 
-    $xfull2 = 0;
-    if($d >= 4){ $xfull2 = 1900000;}else{$xfull2 = 2000000;} 
+    
+    //STG
     $x2 = 0;
     if( $kel == 0){$x2 = $xfull2;}else if($kel == 2){$x2 = $xwa2;}else{$x2 = $xtp2;}
     $modal2 = $luas * $x2;
@@ -412,15 +449,27 @@ case "kalkulator":
     $affiliate2 = $hpp2 * 0.05;
     $marketing2 = $hpp2 * 0.01;
     $harga2 = $hpp2 + $affiliate2 + $marketing2 + $transport;
+    //EN
+    $x3 = 0;
+    if( $kel == 0){$x3 = $xfull3;}else if($kel == 3){$x3 = $xwa3;}else{$x3 = $xtp3;}
+    $modal3 = $luas * $x3;
+    $margin3 = $modal3 * ($pmargin*0.01);
+    $hpp3 = $modal3 + $margin3;
+    $affiliate3 = $hpp3 * 0.05;
+    $marketing3 = $hpp3 * 0.01;
+    $harga3 = $hpp3 + $affiliate3 + $marketing3 + $transport;
     //echo json_encode(array("luas"=>$luas,"margin"=>$pmargin,"harga"=>number_format(round($harga,-6)), "harga2"=>number_format(round($harga2,-6)));
     $tharga = $harga+$bplafon;
     $tharga2 = $harga2+$bplafon;
+    $tharga3 = $harga3+$bplafon;
+    $harga3 = number_format(round($harga3,-6));
     $harga2 = number_format(round($harga2,-6));
     $harga = number_format(round($harga,-6));
     $tharga = number_format(round($tharga,-6));
     $tharga2 = number_format(round($tharga2,-6));
+    $tharga3 = number_format(round($tharga3,-6));
     //echo json_encode(array("bplafon"=>$tharga2));
-    echo json_encode(array("tharga"=>$tharga.'',"tharga2"=>$tharga2.'',"luas"=>$luas.'',"margin"=>$pmargin.'',"harga"=>''.$harga,"harga2"=>''.$harga2));
+    echo json_encode(array("tharga"=>$tharga.'',"tharga2"=>$tharga2.'',"tharga3"=>$tharga3.'',"luas"=>$luas.'',"margin"=>$pmargin.'',"harga"=>''.$harga,"harga2"=>''.$harga2));
 break;
 }
 ?>

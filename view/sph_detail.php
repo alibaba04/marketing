@@ -79,7 +79,7 @@ $(".select2").select2();
                 $('#idluas').val(data.luas);
                 $('#idmargin').attr("placeholder", data.margin);
                 $('#idharga1').val(data.tharga);
-                $('#idharga2').val(data.tharga2);
+                $('#idharga2').val(data.tharga3);
                 $('#idharga3').val(data.tharga2);
             }
         },"json");

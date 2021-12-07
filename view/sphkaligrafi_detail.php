@@ -83,10 +83,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             $("#txttrans_"+$param).val(0);
         }
     }
-    function hitluas(tcounter){
-        var luas = $("#txtD_"+tcounter).val() * $("#txtT_"+tcounter).val() * 3.14;
-        $("#txtLuas_"+tcounter).val(luas);
-    }
+
     function addarray() {
         if($("#txtD").val()=='0' )
         {
@@ -161,13 +158,19 @@ trow.appendChild(td);
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class=""><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" ></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class=""><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" onKeyUp="hitluas('+tcounter+')"></div>';
+td.innerHTML+='<div class=""><input type="number" name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="0" step="any" style="min-width: 35px;" ></div>';
+trow.appendChild(td);
+
+var td = document.createElement("TD");
+td.setAttribute("align","right");
+td.style.verticalAlign = 'top';
+td.innerHTML+='<div class=""><select name="txtMotif_'+tcounter+'" id="txtMotif_'+tcounter+'" class="form-control" style="min-width: 120px;" ><option value="Ornamen">Ornamen</option><option value="Asmaul Husna">Asmaul Husna</option></select></div>';
 trow.appendChild(td);
 
 var td = document.createElement("TD");
@@ -175,6 +178,7 @@ td.setAttribute("align","right");
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class=""><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'" class="form-control" onkeydown="return numbersonly(this, event);" value="0"style="min-width: 120px;" ></div>';
 trow.appendChild(td);
+
 
 var td = document.createElement("TD");
 td.setAttribute("align","left");
@@ -427,6 +431,7 @@ function validasiForm(form)
                         <th style="width: 3%"><i class='fa fa-edit'></i></th>
                         <th style="width: 8%">Diameter</th>
                         <th style="width: 8%">Tinggi</th>
+                        <th style="width: 15%">Motif</th>
                         <th style="width: 25%">Harga Kaligrafi</th>
                         <th style="width: 10%">PPN</th>
                         <th style="width: 20%">Transport</th>
@@ -456,6 +461,10 @@ function validasiForm(form)
                             <input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" style="min-width: 45px;"></div></td>';
                             echo '<td align="center" valign="top"><div class="">
                             <input type="number" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" style="min-width: 45px;"></div></td>';
+                            echo '<td valign="top"><div class="">
+                            <select class="form-control select2" name="motif" id="motif">
+                            <option value="txtMotif_' . $iJurnal . '">' . ($DetilJurnal["motif"]) . '</option><option value="Asmaul Husna">Asmaul Husna</option><option value="Ornamen">Ornamen</option>
+                            </select></div></td>';
                             echo '<td align="center" valign="top"><div class="">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" ></div></td>';
                             $chk = '';

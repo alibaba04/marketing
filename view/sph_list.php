@@ -241,7 +241,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         $monthName = $dateObj->format('F'); 
                     }
                     
-                    echo $monthName.' - '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
+                    echo $monthName.' '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
                     
                     if ($_SESSION['my']->privilege == 'DM') {
