@@ -86,9 +86,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             $('#idmargin').attr("placeholder", data.margin);
             $('#idharga1').val(data.harga);
             $('#idharga2').val(data.harga2);
-            $('#idtharga2').val(data.tharga2);
+            $('#idharga3').val(data.harga3);
             $('#idtharga1').val(convertToRupiah(convertToAngka(data.tharga)*$("#txtqty").val()));
             $('#idtharga2').val(convertToRupiah(convertToAngka(data.tharga2)*$("#txtqty").val()));
+            $('#idtharga3').val(convertToRupiah(convertToAngka(data.tharga3)*$("#txtqty").val()));
             
         },"json");
     }
@@ -302,9 +303,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <label class="control-label" id="lbltharga" for="txtKeteranganKas">Total Harga Galvalum x 1</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga1" id="idtharga1" placeholder="0"class="form-control"value=""></div>
                             </div><br><br>
                             <div class="box-primary">
-                                <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control"
+                                <label class="control-label" for="txtKeteranganKas">Harga Stainless Gold</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control"value=""></div>
+                                <label class="control-label" id="lbltharga" for="txtKeteranganKas">Total Harga Stainless Gold x 1</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga2" id="idtharga2" placeholder="0"class="form-control"value=""></div>
+                            </div><br><br>
+                            <div class="box-primary">
+                                <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control"
                                     value=""></div>
-                                    <label class="control-label" id="lbltharga2" for="txtKeteranganKas">Total Harga Enamel x 1</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga2" id="idtharga2" placeholder="0"class="form-control"value=""></div>
+                                    <label class="control-label" id="lbltharga2" for="txtKeteranganKas">Total Harga Enamel x 1</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga3" id="idtharga3" placeholder="0"class="form-control"value=""></div>
                                 </div>
                             </ol>
                             <div class="modal-footer">

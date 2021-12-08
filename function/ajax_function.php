@@ -469,7 +469,7 @@ case "kalkulator":
     $tharga2 = number_format(round($tharga2,-6));
     $tharga3 = number_format(round($tharga3,-6));
     //echo json_encode(array("bplafon"=>$tharga2));
-    echo json_encode(array("tharga"=>$tharga.'',"tharga2"=>$tharga2.'',"tharga3"=>$tharga3.'',"luas"=>$luas.'',"margin"=>$pmargin.'',"harga"=>''.$harga,"harga2"=>''.$harga2));
+    echo json_encode(array("tharga"=>$tharga.'',"tharga2"=>$tharga2.'',"tharga3"=>$tharga3.'',"luas"=>$luas.'',"margin"=>$pmargin.'',"harga"=>''.$harga,"harga2"=>''.$harga2,"harga3"=>''.$harga3));
 break;
 }
 ?>
