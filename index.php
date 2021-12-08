@@ -197,7 +197,7 @@ require_once('./function/fungsi_formatdate.php');
 
                 <div class="pull-right hidden-xs">
                     
-                    <b>Marketing App</b> 2.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial">alibaba</a>.
+                    <b>Marketing App</b> 3.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial">alibaba</a>.
                     </div>
                     <strong>.</strong>
                     <!-- <strong>Copyright &copy; 2020 <a href="http://instagram.com/baihaqial">alibaba's</a>.</strong> All rights reserved.  -->

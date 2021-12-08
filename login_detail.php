@@ -92,7 +92,7 @@ if (isset($_POST[txtUserID])) {
     <footer class="login-footer" style="padding-right: 20px;">
 
         <div class="pull-right hidden-xs" style="color: white;">
-            <b>Marketing App</b> 2.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial" style="color: white;">alibaba</a>.
+            <b>Marketing App</b> 3.0.0 &nbsp;&nbsp;<strong>Created by: <a href="http://instagram.com/baihaqial" style="color: white;">alibaba</a>.
             </div>
             <strong>.</strong>
             <!-- <strong>Copyright &copy; 2020 <a href="http://instagram.com/baihaqial">alibaba's</a>.</strong> All rights reserved.  -->
