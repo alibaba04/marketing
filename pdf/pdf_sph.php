@@ -428,7 +428,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(32,6,'Atap Kubah','LR',0,'C',0);
     $pdf->SetFillColor(254, 255, 222);
     $pdf->Cell(3.5,6,'','L',0,'L',0);
-    $pdf->Cell(102,6,'~ Garansi warna dan konstruksi 5 tahun, bisa di cat ulang','0',0,'L',1);
+    $pdf->Cell(102,6,'~ Garansi warna dan konstruksi 5 tahun','0',0,'L',1);
     $pdf->Cell(37.5,6,'','R',1,'L',0);
     
     if ($d >= '0.5' and $d<'3'){

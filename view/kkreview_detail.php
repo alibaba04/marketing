@@ -42,6 +42,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
     header("Location:index.php?page=view/kk_list&pesan=" . $pesan);
     exit;
 }
+$datacolor1 ='';
+$datakcolor1 = '';
 ?>
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
@@ -83,7 +85,6 @@ function omodal() {
   $("#myNoteAcc").modal({backdrop: 'static'});
 }
 function accmodal() {
-  if (true) {}
   $("#myAcc").modal({backdrop: 'static'});
     $('#btnApprove').click(function(){
         $('#txtMode').val('approve');
@@ -98,7 +99,6 @@ function accmodal() {
 
 if (isset($_GET["noKK"])){
     $noKk = secureParam($_GET["noKK"], $dbLink);
-    
 }else{
     $noKk = "";
 }
@@ -107,7 +107,7 @@ $q.= "FROM aki_kk kk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_us
 $q.= "WHERE 1=1 and MD5(kk.noKk)='" . $noKk."'";
 $q.= " ORDER BY kk.noKk desc ";
 $txtnokk='';
-
+$approvekk = '';
 $rsTemp = mysql_query($q, $dbLink);
 if ($dataSph = mysql_fetch_array($rsTemp)) {
 echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataSph["noKk"] . "'>";
@@ -116,6 +116,7 @@ echo "<input type='hidden' name='txtnoKkEn' id='txtnoKkEn' value='" . $_GET["noK
 $txtnokk=$dataSph["noKk"];
 $filekubah=$dataSph["filekubah"];
 $filekaligrafi=$dataSph["filekaligrafi"];
+$approvekk = $dataSph["approve"];
 }
 
 if ($_GET["mode"] == "addNote") {
@@ -146,13 +147,17 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
   <!-- info row -->
   <div class="row invoice-info">
     <div class="col-sm-4 invoice-col">
-      <u>Pihak Pertama</u>
-      <address>
-        <strong>ANDIK NUR SETIAWAN</strong><br>
-        3571020710760001 (KTP)<br>
-        Ngadirejo Gg. I Buntu RT/RW 004/009 Kel/Desa Ngadirejo Kecamatan Kota  Kota Kediri, Jawa Timur.<br>
-        Direktur PT. Anugerah Kubah Indonesia<br>
-      </address>
+      <?php 
+        $q2 = "SELECT * FROM aki_kk_user ";
+        $q2.= "WHERE 1=1 ";
+        $rsTemp2 = mysql_query($q2, $dbLink);
+        if ($dataKK = mysql_fetch_array($rsTemp2)) {
+          echo "<u>Pihak Pertama</u>";
+          echo "<address><strong>".$dataKK["name"]."</strong><br>".$dataKK["no_id"]."(".$dataKK["jenis"].")<br>";
+          echo $dataKK["address"]."<br>".$dataKK["title"]."</address>";
+        }
+      ?>
+
     </div>
     <!-- /.col -->
     <div class="col-sm-4 invoice-col">
@@ -325,8 +330,12 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
         $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
         $rsTemp2 = mysql_query($q2, $dbLink);
         $i=1;
+        $kwarna = '';
         while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
           if ($dataSph2['color1']!='-') {
+            $datacolor1 = $dataSph2['color1'];
+            $datakcolor1 = $dataSph2['kcolor1'];
+            $kwarna = $dataSph2['color1'];
             echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
             echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
           }
@@ -491,8 +500,18 @@ echo "<input type='hidden' name='txtuser' id='txtuser' value='" . $_SESSION["my"
   <div class="row no-print">
     <div class="col-xs-6 pull-right">
       <?php 
-        if ($hakUser > 60) {
-          echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" ><i class="fa fa-thumbs-up"></i> Approve KK</button>';
+        $dsbl = '';
+        $dsbl2 = '';
+        if ($approvekk == 1) {
+          $dsbl = 'disabled';
+        }else{
+          $dsbl2 = 'disabled';
+        }
+        if ($filekubah!='' || $filekaligrafi!='' || $kwarna!='' && $datakcolor1!='' && $datacolor1!='' && $filekubah!='') {
+          echo '<button type="button" class="btn btn-success pull-right" id="btnaccSPK" style="margin-left: 5px;" '.$dsbl2.'><i class="fa fa-send" ></i> SPK </button>';
+        }
+        if ($hakUser > 60 ) {
+          echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()" '.$dsbl.'><i class="fa fa-thumbs-up"></i> Approve KK</button>';
         }
       ?>
       <button type="button" class="btn btn-primary pull-left" id="btnNote" onclick=location.href=location.href="<?php echo 'pdf/pdf_kk.php?&noKK='.$_GET["noKK"];?>"><i class="fa fa-download"></i> Download

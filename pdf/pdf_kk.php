@@ -179,6 +179,8 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->writeHTML($tbl);
     $pdf->Ln(2);
   }
+    $pdf->SetMargins(20, 10, 10, true);
+    $pdf->Ln(0);
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(1,5,'Jenis Pekerjaan',0,0,'L',0);
     $pdf->Cell(40,5,':',0,0,'R',0);
@@ -211,7 +213,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->Cell(2,5,'Spesifikasi',0,0,'L',0);
     $pdf->Cell(39,5,':',0,0,'R',0);
     $pdf->Ln(3);
-    $pdf->SetMargins(30, 10, 10, true);
+    $pdf->SetMargins(40, 10, 10, true);
     $pdf->MultiCell(120,5,'',0,'B',0);
     $rangka='';
     if ($hasil2['dt'] != 0){
@@ -892,7 +894,7 @@ $tbl = '
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
- longsor,  banjir,  gunung meletus), Wabah penyakit baik yangmenular  maupun  tidak  menular<br>';
+ longsor,  banjir,  gunung meletus), Wabah penyakit baik yang menular  maupun  tidak  menular<br>';
 $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'',0,0,'R',0);
 $tbl = '
@@ -1169,6 +1171,7 @@ $pdf->Cell(14,5,'3.',0,0,'R',0);
 $tbl = '
 Para Pihak beritikad baik  untuk  melaksanakan  Surat  Perjanjian  Kerja  ini  sesuai dengan isinya.<br>';
 $pdf->writeHTML($tbl);
+$pdf->SetMargins(20, 10, 10, true);
 $pdf->Ln(10);
 $arr = explode('-', $hasil['tanggal']);
 $newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];
@@ -1176,6 +1179,7 @@ $tbl = '
 Dibuat di  : Kediri <BR>
 Tanggal   : '.$newDate.'    
 <br>';
+
 $pdf->writeHTML($tbl);
 
 $pdf->SetFont('helvetica', 'b', 11);
@@ -1193,7 +1197,7 @@ $pdf->Cell(50,5,'ANDIK NUR SETIAWAN',0,0,'L',0);
 $pdf->Cell(85-$ln,5,'',0,0,'R',0);
 $pdf->Cell(20,5,strtoupper($hasil['nama_cust']),0,1,'L',0);
 $pdf->SetFont('helvetica','');
-$pdf->Cell(50,5,'Direktur PT  Anugerah Kubah Indonesia',0,0,'L',0);
+$pdf->Cell(50,5,'Direktur PT Anugerah Kubah Indonesia',0,0,'L',0);
 $pdf->Cell(85-$ln,5,'',0,0,'R',0);
 
 $pdf->Cell(20,5,ucwords($hasil['jabatan']),0,1,'L',0);

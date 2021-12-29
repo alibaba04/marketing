@@ -15,11 +15,11 @@ $spreadsheet = new Spreadsheet();
 // Set document properties
 $spreadsheet->getProperties()->setCreator('sikubah.com')
 ->setLastModifiedBy('sikubah.com')
-->setTitle('Office 2007 XLSX sikubah.com')
-->setSubject('Office 2007 XLSX sikubah.com')
-->setDescription('Test document for Office 2007 XLSX sikubah.com.')
-->setKeywords('office 2007 openxml php sikubah.com')
-->setCategory('Test result file sikubah.com');
+->setTitle('Office sikubah.com')
+->setSubject('Office sikubah.com')
+->setDescription('Test document for Office sikubah.com')
+->setKeywords('office sikubah.com')
+->setCategory('Result file sikubah.com');
 
 $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Export Data SPH Bulan '.$_GET["month"]);
@@ -54,11 +54,13 @@ $i=4;
 $no=1;
 $filter='';
 if (isset($_GET["month"])) {
-	$filter='and month(tanggal)="'.$_GET["month"].'"';
+	if ($_GET["month"] != '0') {
+		$filter='and month(tanggal)="'.$_GET["month"].'"';
+	}
 }
 $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-$q.= "WHERE 1=1 group by s.noSph ".$filter;
+$q.= "WHERE 1=1 ".$filter." group by s.noSph ";
 $q.= " ORDER BY s.noSph desc "; 
 $result = $dbLink->prepare($q);
 $result->execute();

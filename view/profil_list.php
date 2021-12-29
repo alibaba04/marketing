@@ -61,62 +61,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 <section class="content">
     <!-- Main row -->
     <div class="row">
-        <!-- Left col -->
         <section class="col-lg-6">
-            
-              
-            <!-- TO DO List -->
-            <div class="box box-primary">
-                <div class="box-header">
-                    <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">Pencarian Profil </h3>
-                </div>
-
-
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <form name="frmCariPerkiraan" method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="hidden" name="page" value="<?php echo $curPage; ?>">
-
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="namaPerusahaan" id="namaPerusahaan" placeholder="Nama..."
-                            <?php
-                            if (isset($_GET["namaPerusahaan"])) {
-                                echo("value='" . $_GET["namaPerusahaan"] . "'");
-                            }
-                            ?>
-                                   onKeyPress="return handleEnter(this, event)">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-info btn-flat">Go!</button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <?php
-                        if ($hakUser==90){
-                            $q_profil = mysql_query("SELECT id FROM aki_tabel_profil", $dbLink);
-                            if (mysql_num_rows($q_profil)>0){
-
-
-                    ?>
-                    
-                    <?php
-                            }else{
-
-                    ?>
-                    <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/profil_detail&mode=add";?>"><button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Tambah Data</button></a>
-                    <?php
-                            }
-                        }
-                    ?>
-                </div>
-            </div>
-            <!-- /.box -->
         </section>
-        <!-- /.Left col -->
-        <!-- right col -->
         <section class="col-lg-6">
             <?php
             //informasi hasil input/update Sukses atau Gagal
@@ -137,19 +83,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     if ($_GET["pesan"] != "") {
 
                             echo $_GET["pesan"];
-
                         }
                     echo '</div>';
                     ?>
-                        
-                    
                 </div>
             </div>
             <?php } ?>
         </section>
-        
-        <!-- /.right col -->
-
         <section class="col-lg-12 connectedSortable">
             <div class="box box-primary">
                 <?php
@@ -159,15 +99,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $namaPerusahaan = "";
                 }
 
-                //Set Filter berdasarkan query string
-                $filter="";
-                if ($namaPerusahaan)
-                    $filter = $filter . " AND nama_perusahaan LIKE '%" . $namaPerusahaan . "%'";
-
                 //database
-                $q = "SELECT id, nama_perusahaan, gedung, jalan, kelurahan, kecamatan, kota,  propinsi, negara, telepon, fax, email, website ";
-                $q.= "FROM aki_tabel_profil ";
-                $q.= "WHERE 1=1 " . $filter;
+                $q = "SELECT * FROM aki_kk_user ";
+                $q.= "WHERE 1=1 ";
                 
                 //Paging
                 //$rs = new MySQLPagedResultSet($q, $recordPerPage, $dbLink);
@@ -182,14 +116,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th style="width: 25%">Nama</th>
-                                <th style="width: 30%">Alamat</th>
-                                <th style="width: 10%">Telepon</th>
-                                <th style="width: 10%">Fax</th>
-                                <th style="width: 10%">Email</th>
-                                <th style="width: 15%">Website</th>
+                                <th style="width: 15%">Nama</th>
+                                <th style="width: 1%">ID</th>
+                                <th style="width: 10%">Nomor ID</th>
+                                <th style="width: 25%">Alamat</th>
                                 <th colspan="2" width="3%">Aksi</th>
-                                
                             </tr>
                         </thead>
                         <tbody>
@@ -198,12 +129,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             $rowCounter=1;
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
-                                echo "<td>" . $query_data["nama_perusahaan"] . "</td>";
-                                echo "<td>" . $query_data["gedung"] . " ". $query_data["jalan"]." ". $query_data["kelurahan"]." ". $query_data["kecamatan"]." ". $query_data["kota"]." ". $query_data["propinsi"]." ". $query_data["negara"]."</td>";
-                                echo "<td>" . $query_data["telepon"] . "</td>";
-                                echo "<td>" . $query_data["fax"] . "</td>";
-                                echo "<td>" . $query_data["email"] . "</td>";
-                                echo "<td>" . $query_data["website"] . "</td>";
+                                echo "<td>" . $query_data["name"] . " ( ". $query_data["title"] ." )</td>";
+                                echo "<td>" . $query_data["jenis"] . "</td>";
+                                echo "<td>" . $query_data["no_id"] . "</td>";
+                                echo "<td>" . $query_data["address"] . "</td>";
+                                
                                 
                                 if ($hakUser == 90) {
                                     echo "<td><span class='label label-success' style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/profil_detail&mode=edit&kode=" . md5($query_data["id"]) . "'><i class='fa fa-edit'></i>&nbsp;Ubah</span></td>";
@@ -227,7 +157,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 </div> 
             </div>
         </section>
-
     </div>
     <!-- /.row -->
 </section>

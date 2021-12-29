@@ -311,5 +311,6 @@ require_once('./function/fungsi_formatdate.php');
             IntitalizeFireBaseMessaging();
         </script>
     </body>
+    
     </html>
     

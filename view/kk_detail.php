@@ -858,7 +858,7 @@ return true;
                                             }else{
                                                 $harga= ($DetilJurnal["harga3"]+$DetilJurnal["transport"]);
                                             }
-                                            echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value=""/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
+                                            echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
                                         }else{
                                             $harga= ($DetilJurnal["harga"]+$DetilJurnal["transport"]);
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="' . $DetilJurnal["kcolor1"] . '"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="' . $DetilJurnal["kcolor2"] . '"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="' . $DetilJurnal["kcolor3"] . '"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="' . $DetilJurnal["kcolor4"] . '"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="' . $DetilJurnal["kcolor5"] . '"/>';
@@ -909,7 +909,7 @@ return true;
                                         </div>
                                         <div class="col-lg-6">
                                             <label class="control-label" for="chkPPN">Kode</label>
-                                            <input type="text" class="form-control" id="kcolor1" value="-" placeholder="#00000">
+                                            <input type="text" class="form-control" id="kcolor1" value="-" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -917,7 +917,7 @@ return true;
                                             <input type="text" class="form-control" id="color2" value="-" placeholder="">
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor2" value="-" placeholder="#00000">
+                                            <input type="text" class="form-control" id="kcolor2" value="-" placeholder="-">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -925,7 +925,7 @@ return true;
                                             <input type="text" class="form-control" id="color3" value="-" placeholder="">
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor3" value="-" placeholder="#00000">
+                                            <input type="text" class="form-control" id="kcolor3" value="-" placeholder="-">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -933,7 +933,7 @@ return true;
                                             <input type="text" class="form-control" id="color4" value="-" placeholder="">
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor4" value="-" placeholder="#00000">
+                                            <input type="text" class="form-control" id="kcolor4" value="-" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -941,7 +941,7 @@ return true;
                                             <input type="text" class="form-control" id="color5" value="-" placeholder="">
                                         </div>
                                         <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor5" value="-" placeholder="#00000">
+                                            <input type="text" class="form-control" id="kcolor5" value="-" placeholder="">
                                         </div>
                                     </div>
                                 </div>

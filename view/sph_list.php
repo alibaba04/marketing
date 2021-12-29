@@ -245,7 +245,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <?php
                     
                     if ($_SESSION['my']->privilege == 'DM') {
-                        echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&month='.$_GET["month"].'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
+                        $month = '0';
+                        if (isset($_GET["month"])) {
+                            $month = $_GET["month"];
+                        }
+                        echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&month='.$month.'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
                         echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
                         for ($i = 0; $i < 12; ) {
                             $month_val = date('m', strtotime($i." months"));

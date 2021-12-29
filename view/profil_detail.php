@@ -6,7 +6,7 @@ defined('validSession') or die('Restricted access');
 $curPage = "view/profil_detail";
 
 //Periksa hak user pada modul/menu ini
-$judulMenu = 'Data Profil Yayasan';
+$judulMenu = 'Data Profil';
 $hakUser = getUserPrivilege($curPage);
 
 if ($hakUser != 90) {
@@ -42,79 +42,44 @@ if ($hakUser != 90) {
     function validasiForm(form)
     {
        
-        if(form.txtNamaYayasan.value=='' )
+        if(form.txtName.value=='' )
         {
-            alert("Nama Yayasan harus diisi!");
-            form.txtNamaYayasan.focus();
+            alert("Nama harus diisi!");
+            form.txtName.focus();
             return false;
         }
-        if(form.txtGedung.value=='' )
+        if(form.txtalamat.value=='' )
         {
-            alert("Alamat 1 harus diisi!");
-            form.txtGedung.focus();
+            alert("Alamat harus diisi!");
+            form.txtalamat.focus();
             return false;
         }
-        if(form.txtJalan.value=='' )
+        if(form.txtid.value=='' )
         {
-            alert("Alamat 2 harus diisi!");
-            form.txtJalan.focus();
+            alert("ID harus diisi!");
+            form.txtid.focus();
             return false;
         }
-        if(form.txtKelurahan.value=='0' )
+        if(form.txtnoid.value=='0' )
         {
-            alert("Kelurahan harus diisi!");
-            form.txtKelurahan.focus();
+            alert("no id harus diisi!");
+            form.txtnoid.focus();
             return false;
         }
-        if(form.txtPropinsi.value=='' )
-        {
-            alert("Propinsi harus diisi!");
-            form.txtPropinsi.focus();
-            return false;
-        }
-        if(form.txtNegara.value=='' )
-        {
-            alert("Negara harus diisi!");
-            form.txtNegara.focus();
-            return false;
-        }
-        if(form.txtTelepon.value=='' )
-        {
-            alert("Nomor Telepon harus diisi!");
-            form.txtTelepon.focus();
-            return false;
-        }  
-        if(form.txtFax.value=='' )
-        {
-            alert("Nomor Fax harus diisi!");
-            form.txtFax.focus();
-            return false;
-        }  
-        if(form.txtEmail.value=='' )
-        {
-            alert("Email harus diisi!");
-            form.txtEmail.focus();
-            return false;
-        }
-        if(form.txtWebsite.value=='' )
-        {
-            alert("Website harus diisi!");
-            form.txtWebsite.focus();
-            return false;
-        }
+        
         return true;
     }
 </SCRIPT>
 
 <section class="content-header">
     <h1>
-        DATA PROFIL YAYASAN
-        <small>Detail Data Profil Yayasan</small>
+        DATA PROFIL PERUSAHAAN
+        <small>Detail Data </small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Pengaturan</li>
-        <li class="active">Data Profil Yayasan</li>
+        <li class="active">Data Profil </li>
     </ol>
 </section>
 
@@ -129,30 +94,16 @@ if ($hakUser != 90) {
                         <?php
                         $dataRekening = "";
                         if ($_GET["mode"] == "edit") {
-                            echo '<h3 class="box-title">UBAH DATA PROFIL YAYASAN </h3>';
+                            echo '<h3 class="box-title">UBAH DATA PROFIL PERUSAHAAN </h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
 
-                            //Secure parameter from SQL injection
-                            $kode = "";
-                            if (isset($_GET["kode"])){
-                                $kode = secureParam($_GET["kode"], $dbLink);
-                            }
-
-                            $q = "SELECT id, nama_perusahaan, gedung, jalan, kelurahan, kecamatan, kota, propinsi, negara, telepon, fax, email, website ";
-                            $q.= "FROM aki_tabel_profil ";
-                            $q.= "WHERE 1=1 AND md5(id)='" . $kode . "'";
+                            $q = "SELECT * FROM aki_kk_user ";
+                            $q.= "WHERE 1=1 ";
                             
                             $rsTemp = mysql_query($q, $dbLink);
                             if ($dataProfil = mysql_fetch_array($rsTemp)) {
                                 echo "<input type='hidden' name='id' value='" . $dataProfil[0] . "'>";
-                            } else {
-                                ?>
-                                <script language="javascript">
-                                    alert("Kode Tidak Valid");
-                                    history.go(-1);
-                                </script>
-                                <?php
-                            }
+                            } 
                         } else {
                             echo '<h3 class="box-title">TAMBAH DATA PROFIL PERUSAHAAN </h3>';
                             echo "<input type='hidden' name='txtMode'  value='Add'>";
@@ -161,77 +112,34 @@ if ($hakUser != 90) {
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="control-label" for="txtNamaYayasan">Nama Perusahaan</label>
+                            <label class="control-label" for="txtName">Nama</label>
                             
-                            <input name="txtNamaYayasan" id="txtNamaYayasan" maxlength="50" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['nama_perusahaan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">    
+                            <input name="txtName" id="txtName" maxlength="50" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['name']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">    
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtGedung">Alamat 1</label>
+                            <label class="control-label" for="txtGedung">Title</label>
 
-                            <input name="txtGedung" id="txtGedung"  class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['gedung']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtJalan">Alamat 2</label>
-
-                            <input name="txtJalan" id="txtJalan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['jalan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtGedung" id="txtGedung"  class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['title']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtKelurahan">Kelurahan</label>
+                            <label class="control-label" for="txtid">id</label>
 
-                            <input name="txtKelurahan" id="txtKelurahan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kelurahan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtKecamatan">Kecamatan</label>
-
-                            <input name="txtKecamatan" id="txtKecamatan" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kecamatan']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtid" id="txtid" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['jenis']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtKota">Kota</label>
+                            <label class="control-label" for="txtnoid">No</label>
 
-                            <input name="txtKota" id="txtKota" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['kota']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtPropinsi">Propinsi</label>
-
-                            <input name="txtPropinsi" id="txtPropinsi" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['propinsi']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtnoid" id="txtnoid" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['no_id']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
 
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="txtNegara">Negara</label>
+                            <label class="control-label" for="txtalamat">Alamat</label>
 
-                            <input name="txtNegara" id="txtNegara" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['negara']; }else{ echo "Indonesia"; } ?>" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtTelepon">Telepon</label>
-
-                            <input name="txtTelepon" id="txtTelepon" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['telepon']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
+                            <input name="txtalamat" id="txtalamat" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['address']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
 
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtFax">Fax</label>
-
-                            <input name="txtFax" id="txtFax" maxlength="12" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['fax']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtEmail">Email</label>
-
-                            <input name="txtEmail" id="txtEmail" maxlength="25" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['email']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label" for="txtWebsite">Website</label>
-
-                            <input name="txtWebsite" id="txtWebsite" class="form-control" value="<?php if ($_GET['mode']=='edit') { echo $dataProfil['website']; } ?>" placeholder="Wajib diisi" onKeyPress="return handleEnter(this, event)">
-
-                        </div>
-                        
                     </div>
                     <div class="box-footer">
                         <input type="submit" class="btn btn-primary" value="Simpan">
