@@ -4,6 +4,7 @@
 ==================================================== */
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
+error_reporting(error_reporting() & ~E_NOTICE);
 $curPage = "view/kk_detail";
 //Periksa hak user pada modul/menu ini
 $judulMenu = 'KK';
