@@ -43,9 +43,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 ?>
 <script>
     $(function () {
-//Initialize Select2 Elements
-$(".select2").select2();
-});
+        $("[data-mask]").inputmask();
+        $(".select2").select2();
+    });
 </script>
 <script type="text/javascript" charset="utf-8">
 
@@ -646,13 +646,23 @@ function validasiForm(form)
 </div>
 <div class="box-body">
     <div class="form-group" >
-        <label class="control-label" for="txtKodeTransaksi">Number SPH</label>
-        <input name="txtnoSph" id="txtnoSph" maxlength="30" class="form-control" 
-        readonly value="<?php if($_GET["mode"]=='edit'){ echo $dataSph["noSph"]; }else{echo $noSph;}?>" placeholder="Nomor otomatis dibuat">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <label class="control-label" for="txtKodeTransaksi">SPH</label>
+            </div>
+            <input name="txtnoSph" id="txtnoSph" maxlength="30" class="form-control" readonly value="<?php if($_GET["mode"]=='edit'){ echo $dataSph["noSph"]; }else{echo $noSph;}?>" placeholder="Nomor otomatis dibuat">
+        </div>
     </div>
-    <label class="control-label" for="txtKeteranganKas">Client</label>
     <div class="form-group">
-        <div class="col-lg-3" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-phone">&nbsp;&nbsp;&nbsp;<label class="control-label" for="txtKodeTransaksi">Contact</label></i>
+            </div>
+            <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-3" style="padding-right: 0px;padding-left: 5px;">
             <select name="cbosdr" id="cbosdr" class="form-control">
                 <?php
                 $selected = "";
@@ -710,7 +720,7 @@ function validasiForm(form)
             }?>" placeholder="Client Name">
         </div>
     </div>
-    <label class="control-label" for="txtTglTransaksi">&nbsp;</label>
+    <label class="control-label" for="txtKodeTransaksi">&nbsp;</label>
     <div class="form-group">
         <div class="col-lg-3" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
             <select name="cbomasjid" id="cbomasjid" class="form-control">
@@ -839,6 +849,8 @@ function validasiForm(form)
                     echo '<option value="Habibi">Habibi</option>';
                     echo '<option value="Rizal">Rizal</option>';
                     echo '<option value="Bekasi">Bekasi</option>';
+                    echo '<option value="Arief">Arief</option>';
+                    echo '<option value="Pupun">Pupun</option>';
                 ?>
             </select>
         </div>

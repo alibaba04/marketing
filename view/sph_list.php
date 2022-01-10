@@ -59,13 +59,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     $(function () {
         $('#tglTransaksi').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
-    //$('#tglTransaksi').val('00-00-0000');
-    /*for (var i = 1; i >= 12; i++) {
-        $("#btn_"+i).click(function(){ 
-            var link =window.location.href.split("&noSph");
-            location.href=link[0]+'&noSph=='+i;
-        });
-    }*/
     $("#btn_sm").click(function(){ 
         var link =window.location.href;
         var res = link.match(/&month=/g);
@@ -243,7 +236,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     
                     echo $monthName.' '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
-                    
+                    $month = '';
                     if ($_SESSION['my']->privilege == 'DM') {
                         $month = '0';
                         if (isset($_GET["month"])) {
@@ -251,11 +244,19 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         }
                         echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&month='.$month.'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
                         echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
-                        for ($i = 0; $i < 12; ) {
-                            $month_val = date('m', strtotime($i." months"));
-                            $month_str = date('F', strtotime($i++." months"));
-                            echo '<option value="'.$month_val.'">'.$month_str.'</option>';
-                        } 
+                        echo '<option value="01">January</option>';
+                        echo '<option value="02">February</option>';
+                        echo '<option value="03">March</option>';
+                        echo '<option value="04">April</option>';
+                        echo '<option value="05">May</option>';
+                        echo '<option value="06">June</option>';
+                        echo '<option value="07">July</option>';
+                        echo '<option value="08">August</option>';
+                        echo '<option value="09">September</option>';
+                        echo '<option value="10">October</option>';
+                        echo '<option value="11">November</option>';
+                        echo '<option value="12">December</option>';
+                        
                         echo '</select><span class="input-group-btn"><button class="btn btn-info pull-right" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';
                     }
                     ?>
@@ -336,8 +337,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
                                 /*echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' id='btnpdf' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";*/
-                                
-                                echo "<td><b>" . ($query_data["nama_cust"]) . "</b> <div class='pull-right'>";
+                                echo "<td><b>" . ($query_data["nama_cust"]) . "</b><br>" ;
+                                if ($query_data["no_phone"]!='000000000000') {
+                                    //echo "<a href='wa.me/".($query_data["no_phone"]) ;
+                                    $phone = str_replace("08","628",substr($query_data["no_phone"],0,2));
+                                    $phone = str_replace(" ","",$phone.substr($query_data["no_phone"],2,13));
+                                    echo "<a href='https://wa.me/".$phone."' target='_blank'>".$query_data["no_phone"]."</a>";
+                                }
+                                echo "<div class='pull-right'>";
                                 if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
                                     if ($query_data["harga"]>=100000000 || $query_data["harga2"]>=100000000) {
                                         echo "<i class='bi bi-coin'></i><i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";

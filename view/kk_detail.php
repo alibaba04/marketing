@@ -852,11 +852,11 @@ return true;
                                         $harga = 0;
                                         if ($_GET['mode']!='edit'){
                                             if($DetilJurnal["bahan"]=='1'){
-                                                $harga= ($DetilJurnal["harga"]+$DetilJurnal["transport"]);
+                                                $harga= $DetilJurnal["harga"];
                                             }else if($DetilJurnal["bahan"]=='2'){
-                                                $harga= ($DetilJurnal["harga2"]+$DetilJurnal["transport"]);
+                                                $harga= $DetilJurnal["harga2"];
                                             }else{
-                                                $harga= ($DetilJurnal["harga3"]+$DetilJurnal["transport"]);
+                                                $harga= $DetilJurnal["harga3"];
                                             }
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
                                         }else{
@@ -963,7 +963,7 @@ return true;
                                     
                                     <div class="input-group">
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mtxtW1" value="Saat penandatanganan Perjanjian">
+                                            <input type="text" class="form-control" id="mtxtW1" value="Saat penandatanganan Perjanjian ini">
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="input-group"><input type="number" id="mtxtP1" class="form-control" value="30"><span class="input-group-addon">%</span></div>
@@ -971,7 +971,7 @@ return true;
                                     </div>
                                     <div class="input-group">
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control"id="mtxtW2" value="Saat kubah selesai dipabrikasi">
+                                            <input type="text" class="form-control"id="mtxtW2" value="Saat kubah selesai dipabrikasi dan akan dikirimkan">
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="input-group"><input type="number" id="mtxtP2"class="form-control" value="25"><span class="input-group-addon">%</span></div>
@@ -979,7 +979,7 @@ return true;
                                     </div>
                                     <div class="input-group">
                                         <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mtxtW3"value="Saat tim pemasang dan kubah">
+                                            <input type="text" class="form-control" id="mtxtW3"value="Saat tim pemasang dan kubah sudah sampai di lokasi">
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="input-group"><input type="number" id="mtxtP3"class="form-control" value="35"><span class="input-group-addon">%</span></div>

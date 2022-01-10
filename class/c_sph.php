@@ -20,6 +20,7 @@ class c_sph
         $noSph = secureParam($params["txtnoSph"],$dbLink);
         $alamat = secureParam($params["provinsi"],$dbLink);
         $affiliate = secureParam($params["cboAffiliate"],$dbLink);
+        $phone = secureParam($params["txtPhone"],$dbLink);
         
         $provinsi = substr($alamat,0, 2);
         $kota = substr($alamat,3, 6);
@@ -32,8 +33,8 @@ class c_sph
 				throw new Exception('Could not begin transaction');
 			}
 			
-			$q = "INSERT INTO aki_sph(noSph, nama_cust, masjid, provinsi, kota, affiliate, tanggal, keterangan_kk, kodeUser) ";
-			$q.= "VALUES ('".$noSph."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$affiliate."','".$tglTransaksi."','','".$pembuat."');";
+			$q = "INSERT INTO aki_sph(noSph, no_phone, nama_cust, masjid, provinsi, kota, affiliate, tanggal, keterangan_kk, kodeUser) ";
+			$q.= "VALUES ('".$noSph."','".$phone."','".$sdr.$namacust."','".$tmasjid.$nmasjid."','".$provinsi."','".$kota."','".$affiliate."','".$tglTransaksi."','','".$pembuat."');";
 			if (!mysql_query($q, $dbLink))
 				throw new Exception('Gagal masukkan data dalam database.');
 			$jumData = $params["jumAddJurnal"];
@@ -128,6 +129,7 @@ class c_sph
         $affiliate = secureParam($params["cboAffiliate"],$dbLink);
         $pembuat = $_SESSION["my"]->id;
         $jumRangka = $params["norangka"];
+        $phone = secureParam($params["txtPhone"],$dbLink);
 		$q3='';
 		try
 		{
@@ -158,7 +160,7 @@ class c_sph
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
 
-			$q3 = "UPDATE aki_sph SET `masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."',`affiliate`='".$affiliate."' WHERE noSph='".$params["txtnoSph"]."'";
+			$q3 = "UPDATE aki_sph SET `no_phone`='".$phone."',`masjid`='".$tmasjid.$nmasjid."',`nama_cust`='".$sdr.$namacust."',`provinsi`='".$provinsi."',`kota`='".$kota."',`affiliate`='".$affiliate."' WHERE noSph='".$params["txtnoSph"]."'";
 			if (!mysql_query( $q3, $dbLink))
 						throw new Exception('Gagal ubah data SPH. 1');
 			$jumData = $params["jumAddJurnal"];

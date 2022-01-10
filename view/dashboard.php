@@ -40,6 +40,8 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 echo '<option value="Habibi">Habibi</option>';
                 echo '<option value="Rizal">Rizal</option>';
                 echo '<option value="Bekasi">Bekasi</option>';
+                echo '<option value="Arief">Arief</option>';
+                echo '<option value="Pupun">Pupun</option>';
                 ?>
               </select>
             </div>
@@ -184,7 +186,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
       var donut = new Morris.Donut({
         element: 'aff-chart',
         resize: true,
-        colors: ["#F45091", "#EA40A7", "#D420D3", "#BF00FF", "#833ab4", "#fd1d1d", "#fcb045", "#FEAC5E", "#C779D0", "#fcb045", "#6441A5", "#2a0845"],
+        colors: ["#F45091", "#EA40A7", "#D420D3", "#BF00FF", "#833ab4", "#fd1d1d", "#fcb045", "#FEAC5E", "#C779D0", "#fcb045", "#6441A5", "#2a0845", "#473059", "#d233f2"],
         data: [
         {label: "Web Qoobah Official", value: data.office},
         {label: "Web Contractor", value: data.contr},
@@ -197,7 +199,9 @@ defined( 'validSession' ) or die( 'Restricted access' );
         {label: "Fendy", value: data.fendy},
         {label: "Habibi", value: data.habibi},
         {label: "Rizal", value: data.rizal},
-        {label: "Bekasi", value: data.bekasi}
+        {label: "Bekasi", value: data.bekasi},
+        {label: "Arief", value: data.arief},
+        {label: "Pupun", value: data.pupun}
         ],
         hideHover: 'auto'
       });
@@ -212,7 +216,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
         {label: "Mr. Reza", value: data.reza},
         {label: "Mr. Antok", value: data.antok},
         {label: "Mr. Agus", value: data.agus},
-        {label: "Mrs. Tina", value: data.tina}
+        {label: "Admin", value: data.tina}
         ],
         hideHover: 'auto'
       });

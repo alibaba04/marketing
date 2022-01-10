@@ -518,7 +518,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
         }
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold','LTR',1,'L',0);
             $pdf->Cell(8,6,'','LR',0,'C',0);
             $pdf->Cell(32,6,'','LR',0,'C',0);
             $pdf->SetFont('helvetica', 'B', 11);
@@ -553,7 +553,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
         }
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold',1,1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold',1,1,'L',0);
         }else{
             $pdf->Cell(32,6,'','T',0,'C',0);
             $pdf->Cell(143,6,'','T',1,'L',0);
@@ -697,7 +697,7 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
             
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold','LTR',1,'L',0);
             $pdf->Cell(8,6,'','LRB',0,'C',0);
             $pdf->Cell(32,6,'','LRB',0,'C',0);
             $pdf->SetFont('helvetica', 'B', 11);
