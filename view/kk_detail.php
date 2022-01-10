@@ -4,7 +4,6 @@
 ==================================================== */
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
-error_reporting(error_reporting() & ~E_NOTICE);
 $curPage = "view/kk_detail";
 //Periksa hak user pada modul/menu ini
 $judulMenu = 'KK';
@@ -646,7 +645,7 @@ return true;
                                     <div class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </div>
-                                    <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataKk["no_phone"]; }?>"></div>
+                                    <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataKk["no_phone"]; }else{ if (isset($_GET["noSph"])){echo $dataSph["no_phone"];}}?>"></div>
                             </div>
                             <div class="col-lg-6" style="padding-right: 0px;padding-left: 5px;">
                                 <input type="text" name="txtPosition" id="txtPosition" class="form-control" value="<?php  if($_GET['mode']=='edit'){echo $dataKk["jabatan"]; }?>" placeholder='Jabatan' >

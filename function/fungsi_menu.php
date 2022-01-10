@@ -1,7 +1,7 @@
 <?php
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
-
+error_reporting(error_reporting() & ~E_NOTICE);
 require_once('./config.php');
 require_once('./class/c_user.php');
 

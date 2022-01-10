@@ -17,8 +17,8 @@ $spreadsheet->getProperties()->setCreator('sikubah.com')
 ->setLastModifiedBy('sikubah.com')
 ->setTitle('Office sikubah.com')
 ->setSubject('Office sikubah.com')
-->setDescription('Test document for Office sikubah.com')
-->setKeywords('office sikubah.com')
+->setDescription('Document for Office sikubah.com')
+->setKeywords('Office sikubah.com')
 ->setCategory('Result file sikubah.com');
 
 $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
@@ -26,7 +26,7 @@ $spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Export Data SPH Bulan 
 
 
 //Font Color
-$spreadsheet->getActiveSheet()->getStyle('A3:K3')
+$spreadsheet->getActiveSheet()->getStyle('A3:L3')
     ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
 
 // Background color
@@ -48,6 +48,7 @@ $spreadsheet->setActiveSheetIndex(0)
 ->setCellValue('I3', 'Provinsi')
 ->setCellValue('J3', 'Klien')
 ->setCellValue('K3', 'Operator')
+->setCellValue('L3', 'Affiliate')
 ;
 
 $i=4; 
@@ -85,7 +86,8 @@ while ($row = $res1->fetch_assoc()) {
 	->setCellValue('H'.$i, $row['kn'])
 	->setCellValue('I'.$i, $row['pn'])
 	->setCellValue('J'.$i, $row['nama_cust'])
-	->setCellValue('K'.$i, $row['nama']);
+	->setCellValue('K'.$i, $row['nama'])
+	->setCellValue('L'.$i, $row['affiliate']);
 	$i++; $no++;
 }
 
@@ -95,9 +97,10 @@ $spreadsheet->getActiveSheet()->setTitle('Report Excel '.date('d-m-Y H'));
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
+// We'll be outputting an excel file
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="Report Excel-'.$_GET["month"].'.xlsx"');
+header('Content-Disposition: attachment;filename="Report Excel-'.$_GET["month"].'.Xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

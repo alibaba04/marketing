@@ -85,7 +85,7 @@ function omodal() {
   $("#myNoteAcc").modal({backdrop: 'static'});
 }
 function accmodal() {
-  if ($('#datadesain').val()!='' || $('#color1').val()!='') {
+  if ($('#color1').val()!='' || $('#datadesain').val()!='') {
     $("#myAcc").modal({backdrop: 'static'});
     $('#btnApprove').click(function(){
       $('#txtMode').val('approve');
@@ -282,7 +282,7 @@ function accmodal() {
             if ($filekubah=='' && $filekaligrafi=='') {
               echo '<img src="../uploads/blank.png" alt="First slide" width="300" height="200">'; 
             }
-            echo '<input type="hidden" name="datadesain" id="datadesain" class="form-control" value="'.$filekubah.'">';
+            echo '<input type="" name="datadesain" id="datadesain" class="form-control" value="'.$filekubah.'">';
             ?>
           </center>
       </div>
@@ -463,23 +463,23 @@ function accmodal() {
       </div>
     </div>
     </section>
+    <div class="modal" id="myAcc" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Approve KK </h4>
+            </div>
+            <div class="modal-body">
+              <p>No KK <?php echo $txtnokk; ?></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              <button type="Submit" class="btn btn-primary" id="btnApprove">Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </form>
 <div class="clearfix"></div>
-<div class="modal" id="myAcc" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Approve KK </h4>
-      </div>
-      <div class="modal-body">
-        <p>No KK <?php echo $txtnokk; ?></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        <button type="Submit" class="btn btn-primary" id="btnApprove">Approve</button>
-      </div>
-    </div>
-  </div>
-</div>
