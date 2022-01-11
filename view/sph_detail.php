@@ -348,6 +348,7 @@ $(document).ready(function () {
             return false;
         }
 
+
         var bplafon = $("#txtBiayaPlafon").val().replace(/\./g,'');
         var ket = $("#txtket").val();
         var model = $("#cbomodel").val();
@@ -658,7 +659,7 @@ function validasiForm(form)
             <div class="input-group-addon">
                 <i class="fa fa-phone">&nbsp;&nbsp;&nbsp;<label class="control-label" for="txtKodeTransaksi">Contact</label></i>
             </div>
-            <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>">
+            <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>" required>
         </div>
     </div>
     <div class="form-group">
@@ -824,33 +825,24 @@ function validasiForm(form)
     </div>
     <div class="form-group">
         <div class="" style="padding-bottom: 10px;padding-right: 0px;padding-left: 5px;">
-            <select name="cboAffiliate" id="cboAffiliate" class="form-control select2">
+            <select name="cboAffiliate" id="cboAffiliate" class="form-control select2" required>
                 <?php
                 $selected = "";
                 $n=$dataSph["affiliate"];
                 if ($_GET['mode'] == 'edit') {
                     if ($n=='') {
-                        echo '<option value="Affiliate">Affiliate</option>';
+                        echo '<option value="">Affiliate</option>';
                     }else{
                         echo '<option value="'.$n.'">'.$n.'</option>';
                     }
                 }else{
-                    echo '<option value="Affiliate">Affiliate</option>';
+                    echo '<option value="">Affiliate</option>';
                 }
-                    echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
-                    echo '<option value="Web Contractor">Web Contractor</option>';
-                    echo '<option value="Representative">Representative</option>';
-                    echo '<option value="Offline">Offline</option>';
-                    echo '<option value="Edy">Edy</option>';
-                    echo '<option value="Ibnu">Ibnu</option>';
-                    echo '<option value="Sigit">Sigit</option>';
-                    echo '<option value="Isaq">Isaq</option>';
-                    echo '<option value="Fendy">Fendy</option>';
-                    echo '<option value="Habibi">Habibi</option>';
-                    echo '<option value="Rizal">Rizal</option>';
-                    echo '<option value="Bekasi">Bekasi</option>';
-                    echo '<option value="Arief">Arief</option>';
-                    echo '<option value="Pupun">Pupun</option>';
+                    $q = "SELECT * from aki_affiliate ";
+                    $sql = mysql_query($q,$dbLink);
+                    while ($rs = mysql_fetch_array($sql)) {
+                        echo '<option value="'.$rs["name"].'">'.$rs["name"].'</option>/>';
+                    }
                 ?>
             </select>
         </div>
