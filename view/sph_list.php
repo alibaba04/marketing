@@ -372,8 +372,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($query_data["no_phone"]!='000000000000') {
                                     //echo "<a href='wa.me/".($query_data["no_phone"]) ;
                                     $phone = str_replace("08","628",substr($query_data["no_phone"],0,2));
-                                    $phone = str_replace(" ","",$phone.substr($query_data["no_phone"],2,13));
-                                    echo "<a href='https://wa.me/".$phone."' target='_blank'>".$query_data["no_phone"]."</a>";
+                                    $phone1 = str_replace("_","",$phone.substr($query_data["no_phone"],2,13));
+                                    $phone = str_replace(" ","",$phone1);
+                                    echo "<a href='https://wa.me/".$phone."' target='_blank'>".$phone1."</a>";
                                 }
                                 echo "<div class='pull-right'>";
                                 if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
