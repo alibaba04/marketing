@@ -123,17 +123,18 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                             </span> -->
                         </div>
-                        <div class="form-group">
-                            <label>Range Transaction Date</label>
+                        <div class="form-group input-group">
                             <input type="text" class="form-control" name="tgl" id="tgl" 
                             <?php
                             if (isset($_GET["tanggal"])) {
                                 echo("value='" . $_GET["tgl"] . "'");
                             }
                             ?>
-                            onKeyPress="return handleEnter(this, event)">
+                            onKeyPress="return handleEnter(this, event)" placeholder="Range Date">
+                            <span class="input-group-btn">
+                            <button type="Submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Show</button></span>
                         </div>
-                        <button type="Submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Show</button>
+                        
                     </form>
                 </div>
                 <!-- /.box-body -->
