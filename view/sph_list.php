@@ -56,8 +56,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $('#pdfno').val($no);
         $('#pdfj').val($pdf);
     }
+
     $(function () {
-        $('#tglTransaksi').daterangepicker({ 
+        $('#tgl').daterangepicker({ 
             locale: { format: 'DD-MM-YYYY' } });
     $("#btn_sm").click(function(){ 
         var link =window.location.href;
@@ -75,6 +76,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     });
     
 });
+    $(document).ready(function () {
+        $('#tgl').val('');
+    });
 
 </script>
 
@@ -107,7 +111,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 <div class="box-body">
                     <form name="frmCariJurnalMasuk" method="GET" action="<?php echo $_SERVER['REQUEST_URI']; ?>"autocomplete="off">
                         <input type="hidden" name="page" value="<?php echo $curPage; ?>">
-                        <div class="input-group input-group-sm">
+                        <div class="form-group">
                             <input type="text" class="form-control" name="noSph" id="noSph" placeholder="Cari . . . ."
                             <?php
                             if (isset($_GET["noSph"])) {
@@ -115,10 +119,21 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             }
                             ?>
                             onKeyPress="return handleEnter(this, event)" data-toggle="tooltip" data-placement="bottom" title="Gunakan '=' untuk data per user">
-                            <span class="input-group-btn">
+                            <!-- <span class="input-group-btn">
                                 <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
+                            </span> -->
                         </div>
+                        <div class="form-group">
+                            <label>Range Transaction Date</label>
+                            <input type="text" class="form-control" name="tgl" id="tgl" 
+                            <?php
+                            if (isset($_GET["tanggal"])) {
+                                echo("value='" . $_GET["tgl"] . "'");
+                            }
+                            ?>
+                            onKeyPress="return handleEnter(this, event)">
+                        </div>
+                        <button type="Submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Show</button>
                     </form>
                 </div>
                 <!-- /.box-body -->
@@ -195,6 +210,20 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter = $filter . " and month(s.tanggal)='" . secureParam($_SESSION["month"], $dbLink) . "' ";
                     $filter3 = $filter3 . " and month(s1.tanggal)='" . secureParam($_SESSION["month"], $dbLink) . "' ";
                 }
+                if (isset($_GET["tgl"])){
+                    $tgl = secureParam($_GET["tgl"], $dbLink);
+                    $tgl = explode(" - ", $tgl);
+                    $tgl1 = $tgl[0];
+                    $tgl2 = $tgl[1];
+                    $tgl=$_GET["tgl"];
+                }else{
+                    $tgl1 = "";
+                    $tgl2 = "";
+                }
+                $filter = "";
+                if ($tgl1 && $tgl2)
+                    $filter = $filter . " AND s.tanggal BETWEEN '" . tgl_mysql($tgl1) . "' AND '" . tgl_mysql($tgl2) . "'  ";
+                    $filter3 = $filter3 . " AND s1.tanggal BETWEEN '" . tgl_mysql($tgl1) . "' AND '" . tgl_mysql($tgl2) . "'  ";
                 
                 if(isset($_GET["noSph"]) ){
                     $noSph = secureParam($_GET["noSph"], $dbLink);
@@ -242,8 +271,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         if (isset($_GET["month"])) {
                             $month = $_GET["month"];
                         }
-                        echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&month='.$month.'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
-                        echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
+                        //echo '<a href="pdf/pdf_datasph.php?&tgl1='.$tgl1.'&tgl2='.$tgl2.'" title="Data SPH"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Export Data</button></a>';
+                        echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&tgl1='.$tgl1.'&tgl2='.$tgl2.'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
+                        /*echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
                         echo '<option value="01">January</option>';
                         echo '<option value="02">February</option>';
                         echo '<option value="03">March</option>';
@@ -257,7 +287,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         echo '<option value="11">November</option>';
                         echo '<option value="12">December</option>';
                         
-                        echo '</select><span class="input-group-btn"><button class="btn btn-info pull-right" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';
+                        echo '</select><span class="input-group-btn"><button class="btn btn-info pull-right" type="button" id="btn_sm"><i class="fa fa-fw fa-search" ></i>Month</button></span></div>';*/
                     }
                     ?>
                 </div>

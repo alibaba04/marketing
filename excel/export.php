@@ -4,6 +4,7 @@ include '../config_pdf.php';
 
 // Load library phpspreadsheet
 require('vendor/autoload.php');
+require_once('../function/fungsi_formatdate.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -22,7 +23,7 @@ $spreadsheet->getProperties()->setCreator('sikubah.com')
 ->setCategory('Result file sikubah.com');
 
 $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
-$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Export Data SPH Bulan '.$_GET["month"]);
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Export Data SPH Tanggal '.($_GET["tgl1"]).' s/d '.$_GET["tgl2"]);
 
 
 //Font Color
@@ -53,16 +54,26 @@ $spreadsheet->setActiveSheetIndex(0)
 
 $i=4; 
 $no=1;
-$filter='';
-if (isset($_GET["month"])) {
-	if ($_GET["month"] != '0') {
-		$filter='and month(tanggal)="'.$_GET["month"].'"';
-	}
-}
+$tgl1 = $_GET["tgl1"];
+$tgl2 = $_GET["tgl2"];
+$filter = "";
+$filter3 = "";
+if ($tgl1 && $tgl2)
+	$filter = $filter . " AND s.tanggal BETWEEN '" . tgl_mysql($tgl1) . "' AND '" . tgl_mysql($tgl2) . "'  ";
+$filter3 = $filter3 . " AND s1.tanggal BETWEEN '" . tgl_mysql($tgl1) . "' AND '" . tgl_mysql($tgl2) . "'  ";
+$q = "SELECT s.*,ds.bahan,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
+$q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
+$q.= "WHERE s.aktif=1 " . $filter."group by s.noSph Union All" ;
+$q.= " SELECT s1.*,'Kaligrafi' as bahan,'Kaligrafi' as model,ds1.d,ds1.t,'-' as dt,'-' as plafon,ds1.harga,'-' as harga2,'-' as jumlah,'-' as ket,'-' as transport, u1.kodeUser, u1.nama, p1.name as pn, k1.name as kn ";
+$q.= "FROM aki_sph s1 right join aki_dkaligrafi ds1 on s1.noSph=ds1.noSph left join aki_user u1 on s1.kodeUser=u1.kodeUser left join provinsi p1 on s1.provinsi=p1.id LEFT join kota k1 on s1.kota=k1.id ";
+$q.= "WHERE s1.aktif=1 " . $filter3."group by s1.noSph" ;
+$q.= " ORDER BY idSph desc ";
+
+/*
 $q = "SELECT s.*,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,k.name as kn ";
 $q.= "FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id ";
-$q.= "WHERE 1=1 ".$filter." group by s.noSph ";
-$q.= " ORDER BY s.noSph desc "; 
+$q.= "WHERE 1=1 and month(tanggal)=08 group by s.noSph ";
+$q.= " ORDER BY s.noSph desc "; */
 $result = $dbLink->prepare($q);
 $result->execute();
 $res1 = $result->get_result();
