@@ -267,7 +267,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     echo $monthName.' '.$rs->getPageNav($_SERVER['QUERY_STRING']) ?></ul>
                     <?php
                     $month = '';
-                    if ($_SESSION['my']->privilege == 'DM') {
+                    if ($_SESSION['my']->privilege != 'ADMIN') {
                         $month = '0';
                         if (isset($_GET["month"])) {
                             $month = $_GET["month"];
