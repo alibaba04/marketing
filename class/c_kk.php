@@ -236,12 +236,10 @@ class c_kk
 			$tempTrans  = $temp['transport'];
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
-			$q3 = "UPDATE aki_kk SET `approve`='1',`approve_by`='".$pembuat."',`approve_tgl`='".$tgl."'  WHERE noKk='".$nokk."'";
-				if (!mysql_query( $q3, $dbLink))
-					throw new Exception('Gagal ubah data KK. ');
-			$q3 = "UPDATE aki_kk SET `nama_cust`='".$namacust."',`jenis_id`='".$jenis_id."',`no_id`='".$no_id."',`no_phone`='".$no_phone."',`jabatan`='".$jabatan."',`nmasjid`='".$nmasjid."',`nproyek`='".$nproyek."',`project_pemerintah`='".$project_pemerintah."',`alamat_proyek`='".$alamat_proyek."',`mproduksi`='".$mproduksi."',`mpemasangan`='".$mpemasangan."',`alamat`='".$alamat."',`provinsi`='".$provinsi."',`kota`='".$kota."',`approve`='0',`approve_by`='-',`approve_tgl`='0000-00-00' WHERE noKk='".$nokk."'";
+
+			$q3 = "UPDATE aki_kk SET `nama_cust`='".$namacust."',`jenis_id`='".$jenis_id."',`no_id`='".$no_id."',`no_phone`='".$no_phone."',`jabatan`='".$jabatan."',`nmasjid`='".$nmasjid."',`nproyek`='".$nproyek."',`project_pemerintah`='".$project_pemerintah."',`alamat_proyek`='".$alamat_proyek."',`mproduksi`='".$mproduksi."',`mpemasangan`='".$mpemasangan."',`alamat`='".$alamat."',`provinsi`='".$provinsi."',`kota`='".$kota."',`approve`='0',`approve_kpenjualan`='-',`approve_tgl`='0000-00-00',`approve_koperational`='-',`approve_tgl2`='0000-00-00' WHERE noKk='".$nokk."'";
 			if (!mysql_query( $q3, $dbLink))
-						throw new Exception('Gagal ubah data KK. ');
+						throw new Exception('Gagal ubah data KK2. ');
 
 			$w1 = secureParam($params["txtW1"],$dbLink);
 			$w2 = secureParam($params["txtW2"], $dbLink);
@@ -255,7 +253,7 @@ class c_kk
 			$q3 = "UPDATE `aki_dpembayaran` SET `noKk`='".$nokk."',`wpembayaran1`='".$w1."',`wpembayaran2`='".$w2."',`wpembayaran3`='".$w3."',`wpembayaran4`='".$w4."',`persen1`='".$p1."',`persen2`='".$p2."',`persen3`='".$p3."',`persen4`='".$p4."'";
 			$q3.= " WHERE noKk='".$nokk."'";
 			if (!mysql_query( $q3, $dbLink))
-				throw new Exception('Gagal update data KK.');
+				throw new Exception('Gagal update data KK3.');
 
 			$jumData = $params["jumAddJurnal"];
 			$nomer =0;
@@ -274,7 +272,7 @@ class c_kk
 
 					$q3 = "UPDATE `aki_kkcolor` SET `color1`='".$color1."',`color2`='".$color2."',`color3`='".$color3."',`color4`='".$color4."',`color5`='".$color5."',`kcolor1`='".$kcolor1."',`kcolor2`='".$kcolor2."',`kcolor3`='".$kcolor3."',`kcolor4`='".$kcolor4."',`kcolor5`='".$kcolor5."' WHERE noKk='".$nokk."'";
 					if (!mysql_query( $q3, $dbLink))
-						throw new Exception('Gagal Edit data KK.');
+						throw new Exception('Gagal Edit data KK4.');
 
 					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
                     $model = secureParam($params["txtModel_". $j],$dbLink);
@@ -307,7 +305,7 @@ class c_kk
 					$q.= " WHERE idKk='".$idKk."' ;";
 
 					if (!mysql_query( $q, $dbLink))
-						throw new Exception($q.'Gagal ubah data KK.');
+						throw new Exception($q.'Gagal ubah data KK5.');
                     $nomer++;
 				}
 			}
@@ -317,13 +315,13 @@ class c_kk
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-						throw new Exception($q4.'Gagal ubah data KK. ');
+						throw new Exception($q4.'Gagal ubah data KK6. ');
 
 			$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
-				throw new Exception('Gagal ubah data KK. ');
+				throw new Exception('Gagal ubah data KK7. ');
 			@mysql_query("COMMIT", $dbLink);
 			//API send firebase
 			$privilegeU='';

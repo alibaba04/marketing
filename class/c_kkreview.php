@@ -89,9 +89,9 @@ class c_kkreview
 			}
 				date_default_timezone_set("Asia/Jakarta");
 				$tgl = date("Y-m-d h:i:sa");
-				$ket = "KK Approve, nokk=".$nokk;
+				$ket = "KK Approve kpenjualan, nokk=".$nokk;
 
-				$q3 = "UPDATE aki_kk SET `approve`='1',`approve_by`='".$pembuat."',`approve_tgl`='".$tgl."'  WHERE noKk='".$nokk."'";
+				$q3 = "UPDATE aki_kk SET `approve`='1',`approve_kpenjualan`='".$pembuat."',`approve_tgl`='".$tgl."'  WHERE noKk='".$nokk."'";
 				if (!mysql_query( $q3, $dbLink))
 					throw new Exception('Gagal ubah data KK. ');
 				$q4 = "UPDATE `aki_sph` SET `keterangan_kk`='y' WHERE noSph='".$nosph."'";

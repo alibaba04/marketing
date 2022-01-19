@@ -108,7 +108,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <?php
                     if ($hakUser==90 or $hakUser==80){
                         ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/SPK_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPK</button></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF']."?page=html/spk_detail&mode=add";?>"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add SPK</button></a>
                         <?php
                     }
                     ?>

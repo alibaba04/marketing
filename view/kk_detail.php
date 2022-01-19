@@ -361,7 +361,7 @@ function addJurnal(){
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'" class="form-control" value="Full" readonly></div>';
+    td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'" class="form-control" value="Full" readonly><input style="text-align:center" name="txtPatas_'+tcounter+'" id="txtPatas_'+tcounter+'" class="form-control" value="" readonly></div>';
     trow.appendChild(td);
     td.setAttribute('onclick','opendmodal('+tcounter+');');
 
@@ -879,7 +879,7 @@ return true;
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
                                         <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.$totharga.'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
-                                        <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div></td>';
+                                        <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td>';
                                         $iJurnal++;
                                     }
                                 ?>
@@ -1086,6 +1086,7 @@ return true;
                             ?>
                         </select>
                     </div>
+
                     <div class="form-group">
                         <select name="cbobahan" id="cbobahan" class="form-control">
                             <option value=Galvalume>Galvalume</option>';
@@ -1100,7 +1101,27 @@ return true;
                             <option value=Waterproof>Waterproof</option>";
                         </select>
                     </div>
+                    <div class="form-group" >
+                        <div class="input-group">
+                            <span class="input-group-addon"><label class="control-label" for="txtKeteranganKas">Project</label></span>
+                            <select class="form-control " name="cbopatas" id="cbopatas">
+                            <option value="Patas">Patas</option>
+                            <option value="non">non Patas</option>
+                        </select>
+                        </div>
+                    </div>
                     <div class="form-group">
+                        <div class="col-lg-6">
+                            <label class="control-label" for="txtKeteranganKas">Makara</label>
+                            <input type="text" name="txtMakara" id="txtMakara" class="form-control" value="Lafadz Allah" placeholder="Lafadz Allah">
+                        </div>
+                        <div class="col-lg-6" id="dt">
+                            <label class="control-label" for="txtKeteranganKas">Transport Tengah</label><div class="input-group">
+                                <select class="form-control " name="cbotrans" id="cbotrans">
+                                    <option value="Transport Biasa">Transport Biasa</option>
+                                    <option value="Prioritas">Prioritas</option>
+                                </select>
+                        </div>
                         <div class="col-lg-6">
                             <label class="control-label" for="txtKeteranganKas">Jumlah</label>
                             <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1" placeholder="0">

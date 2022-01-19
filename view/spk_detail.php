@@ -29,17 +29,17 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 </script>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
 $(document).ready(function () {
-    var link = window.location.protocol;
+    var link = window.location.href;
     var res = link.match(/mode=edit/g);
     if (res != 'mode=edit') {
-        if (link.match(/noSph=/g)) {
-            $("#mySph").modal('hide');
+        if (link.match(/noKK=/g)) {
+            $("#mySpkn").modal({backdrop: 'static'});
         }else{
-            $("#mySph").modal({backdrop: 'static'});
+            $("#mySpk").modal({backdrop: 'static'});
             $("#createspk").click(function(){ 
                 if ($("#nokk").val()!='') {
                     $("#nokk").focus();
-                    location.href=link + "?page=view/kkreview_detail&mode=addNote&noKK=" + ($("#nokk").val());
+                    location.href="?page=view/kkreview_detail&mode=addNote&noKK=" + ($("#nokk").val());
                 }
             });
         }
@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 </SCRIPT>
 
-<div class="modal fade" id="mySph" role="dialog">
+<div class="modal fade" id="mySpk" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -69,6 +69,40 @@ $(document).ready(function () {
                         }  
                         ?>
                     </select>   
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-right" id="createspk"><i class="fa fa-plus"></i> Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mySpkn" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">No KK</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <label class="control-label" for="txtKodeTransaksi">  Makara  </label>
+                        </div>
+                        <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <label class="control-label" for="txtKodeTransaksi">Transportasi</label>
+                        </div>
+                        <select class="form-control select2" name="nokk" id="nokk">
+                            <option>Transport Biasa</option>
+                            <option>Prioritas</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
