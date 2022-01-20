@@ -121,6 +121,7 @@ $datakcolor1 = '';
       </div>
       <div class="col-sm-6 invoice-col">
         <h2 class="page-header" style="margin: 0;">
+          <button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;" <?php echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataSph["noKk"])."'"; ?>><i class="fa fa-pencil" ></i></button>
           <b><i class="fa fa-globe"></i> <?php  echo $dataSph["noKk"]; ?></b>
           <small>No SPH: <?php  echo $dataSph["noSph"]; ?></small>
           <input type="hidden" name="txtNote" id="txtNote" class="form-control" value="" placeholder="Empty" >
@@ -188,6 +189,7 @@ $datakcolor1 = '';
         <h5><address><th>Alamat : </th><br><?php  echo $dataSph["alamat_proyek"]; ?></td><address></h5>
         <p class="lead"> </p>
       </div>
+
     </div>
   </section>
   <section class="invoice">
@@ -340,6 +342,41 @@ $datakcolor1 = '';
                 </div>
               </li>
               <li>
+                <i class="fa fa-asterisk bg-aqua"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <div class="timeline-body">
+                    <?php  
+                    echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
+                    ?>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-asterisk bg-aqua"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <div class="timeline-body"><?php  echo $bahan.$Finishing; ?>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-asterisk bg-aqua"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <div class="timeline-body"><?php  echo $plafon; ?>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-asterisk bg-aqua"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <div class="timeline-body"><?php  echo $aksesoris; ?>
+                  </div>
+                </div>
+              </li>
+              <li>
                 <i class="fa fa-unsorted bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
@@ -379,42 +416,6 @@ $datakcolor1 = '';
                   echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
                   echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
                   ?></table>
-                  </div>
-                </div>
-              </li>
-              
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body">
-                    <?php  
-                    echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
-                    ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><?php  echo $bahan.$Finishing; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><?php  echo $plafon; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><?php  echo $aksesoris; ?>
                   </div>
                 </div>
               </li>

@@ -14,6 +14,17 @@ if ($hakUser != 90) {
     die('User cannot access this page!');
     echo "</p>";
 }
+function compress($source, $destination, $quality) {
+    $info = getimagesize($source);
+    if ($info['mime'] == 'image/jpeg') 
+        $image = imagecreatefromjpeg($source);
+    elseif ($info['mime'] == 'image/gif') 
+        $image = imagecreatefromgif($source);
+    elseif ($info['mime'] == 'image/png') 
+        $image = imagecreatefrompng($source);
+    imagejpeg($image, $destination, $quality);
+    return $destination;
+}
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
 if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     require_once("./class/c_kk.php");
@@ -29,15 +40,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         for ($i = 0; $i < $jumlahFile; $i++) {
             $namaFile = $files['listGambar']['name'][$i];
             $lokasiTmp = $files['listGambar']['tmp_name'][$i];
-        }
-        for ($i = 0; $i < $jumlahFile; $i++) {
-            $namaFile = $files['listGambar']['name'][$i];
-            $lokasiTmp = $files['listGambar']['tmp_name'][$i];
 
     # kita tambahkan uniqid() agar nama gambar bersifat unik
             $namaBaru = uniqid() . '-' . $namaFile;
             $lokasiBaru = "{$folderUpload}/{$namaBaru}";
-            $prosesUpload = move_uploaded_file($lokasiTmp, $lokasiBaru);
+            compress($lokasiTmp, $lokasiBaru, 65);
             if ($namaFile != '') {
                 array_push($nameimg,$namaBaru);
             }
@@ -62,7 +69,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     # kita tambahkan uniqid() agar nama gambar bersifat unik
             $namaBaru = uniqid() . '-' . $namaFile;
             $lokasiBaru = "{$folderUpload}/{$namaBaru}";
-            $prosesUpload = move_uploaded_file($lokasiTmp, $lokasiBaru);
+            compress($lokasiTmp, $lokasiBaru, 65);
             if ($namaFile != '') {
                 array_push($nameimg,$namaBaru);
             }
@@ -89,6 +96,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         //Initialize Select2 Elements
         $(".select2").select2();
     });
+    
 </script>
 <!-- Include script untuk function auto complete -->
 <script type="text/javascript" src="js/autoCompletebox.js"></script>
