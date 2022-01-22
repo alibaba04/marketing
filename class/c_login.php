@@ -81,11 +81,11 @@ class c_login
                         throw new Exception($qIp.'Gagal update token. ');
 
                     date_default_timezone_set("Asia/Jakarta");
-                    $tgl = date("Y-m-d h:i:sa");
+                    /*$tgl = date("Y-m-d h:i:sa");
                     $q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
                     $q4.= "('".$userId."','".$tgl."','User Login ip : ".$_SERVER['REMOTE_ADDR']."');";
                     if (!mysql_query( $q4, $dbLink))
-                        throw new Exception('Gagal update report. ');
+                        throw new Exception('Gagal update report. ');*/
                     return "Sukses";
                 }
                 else

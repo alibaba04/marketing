@@ -807,7 +807,7 @@ $pdf->Ln(6);
            $pdf->Cell(80,6,' ',0,0,'L',0);
            $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
            $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga']),0,1,'R',0);
+           $pdf->Cell(40,6,number_format($hasil['harga']*$jumlah),0,1,'R',0);
            if ($hasil['biaya_plafon'] !=0) {
                $pdf->Cell(80,6,' ',0,0,'L',0);
                $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
@@ -833,7 +833,7 @@ $pdf->Ln(6);
            $pdf->Cell(80,6,' ',0,0,'L',0);
            $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
            $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga3']),0,1,'R',0);
+           $pdf->Cell(40,6,number_format($hasil['harga3']*$jumlah),0,1,'R',0);
            if ($hasil['biaya_plafon'] !=0) {
                $pdf->Cell(80,6,' ',0,0,'L',0);
                $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
@@ -859,7 +859,7 @@ $pdf->Ln(6);
            $pdf->Cell(80,6,' ',0,0,'L',0);
            $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
            $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga2']),0,1,'R',0);
+           $pdf->Cell(40,6,number_format($hasil['harga2']*$jumlah),0,1,'R',0);
            if ($hasil['biaya_plafon'] !=0) {
                $pdf->Cell(80,6,' ',0,0,'L',0);
                $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
