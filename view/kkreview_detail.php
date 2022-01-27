@@ -50,6 +50,7 @@ $datakcolor1 = '';
     //$("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
     $('#btnSend').click(function(){
+      $('#txtNote').val($('#txtmNote').val());
       sendnotif('Send');
     });
     $('#btnApprove').click(function(){
@@ -373,6 +374,14 @@ $datakcolor1 = '';
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
                   <div class="timeline-body"><?php  echo $aksesoris; ?>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <i class="fa fa-truck bg-aqua"></i>
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-money"></i></span>
+                  <div class="timeline-body"><?php  echo 'Biaya Transport : Rp '.number_format($dataSph['ntransport']).' ('.$dataSph['ktransport'].')'; ?>
                   </div>
                 </div>
               </li>

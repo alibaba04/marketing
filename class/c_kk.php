@@ -22,6 +22,7 @@ class c_kk
         $jabatan = secureParam($params["txtPosition"],$dbLink);
         $nmasjid = secureParam($params["txtnmasjid"],$dbLink);
         $nproyek = secureParam($params["txtnproyek"],$dbLink);
+        $kproyek = secureParam($params["cbokproject"],$dbLink);
         $project_pemerintah = secureParam($params["txtppemerintah"],$dbLink);
         $alamat_proyek = secureParam($params["txtalamatp"],$dbLink);
         $mproduksi = secureParam($params["txtproduksi"],$dbLink);
@@ -41,8 +42,8 @@ class c_kk
 				throw new Exception('Could not begin transaction');
 			}
 			
-			$q = "INSERT INTO aki_kk(`noKk`, `noSph`, `nama_cust`, `jenis_id`, `no_id`, `no_phone`, `jabatan`,`nmasjid`, `nproyek`, `project_pemerintah`, `alamat_proyek`, `mproduksi`, `mpemasangan`, `alamat`, `provinsi`, `kota`, `tanggal`, `kodeUser`, `aktif`) ";
-			$q.= "VALUES ('".$nokk."','".$noSph."','".$namacust."','".$jenis_id."','".$no_id."','".$no_phone."','".$jabatan."','".$nmasjid."','".$nproyek."','".$project_pemerintah."','".$alamat_proyek."','".$mproduksi."','".$mpemasangan."','".$alamat."','".$provinsi."','".$kota."','".$tglTransaksi."','".$pembuat."','1');";
+			$q = "INSERT INTO aki_kk(`noKk`, `noSph`, `nama_cust`, `jenis_id`, `no_id`, `no_phone`, `jabatan`,`nmasjid`, `nproyek`,`kproyek`, `project_pemerintah`, `alamat_proyek`, `mproduksi`, `mpemasangan`, `alamat`, `provinsi`, `kota`, `tanggal`, `kodeUser`, `aktif`) ";
+			$q.= "VALUES ('".$nokk."','".$noSph."','".$namacust."','".$jenis_id."','".$no_id."','".$no_phone."','".$jabatan."','".$nmasjid."','".$nproyek."','".$kproyek."','".$project_pemerintah."','".$alamat_proyek."','".$mproduksi."','".$mpemasangan."','".$alamat."','".$provinsi."','".$kota."','".$tglTransaksi."','".$pembuat."','1');";
 			if (!mysql_query($q, $dbLink))
 				throw new Exception('Gagal masukkan data dalam database.');
 			$w1 = secureParam($params["txtW1"],$dbLink);
@@ -97,11 +98,16 @@ class c_kk
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
                     $transport = secureParam($params["txttransport"], $dbLink);
-                    $kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+                    $ntrans = secureParam($params["txtntrans_" . $j], $dbLink);
+                    $ktrans = secureParam($params["txtKtransport_" . $j], $dbLink);
+                    $nkal = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+                    $makara = secureParam($params["txtMakara_" . $j], $dbLink);
+                    $ntransport = preg_replace("/\D/", "", $ntrans);
+                    $kaligrafi = preg_replace("/\D/", "", $nkal);
                     $hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
                     
-                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`,`filekubah`, `filekaligrafi`) ";
-					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$nameimg[0]."', '".$nameimg[1]."');";
+                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `makara`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`, `ntransport`, `ktransport`,`filekubah`, `filekaligrafi`) ";
+					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$nameimg[0]."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception($q2.'Gagal tambah data KK.');
@@ -195,6 +201,7 @@ class c_kk
         $jabatan = secureParam($params["txtPosition"],$dbLink);
         $nmasjid = secureParam($params["txtnmasjid"],$dbLink);
         $nproyek = secureParam($params["txtnproyek"],$dbLink);
+        $kproyek = secureParam($params["cbokproject"],$dbLink);
         $project_pemerintah = secureParam($params["txtppemerintah"],$dbLink);
         $alamat_proyek = secureParam($params["txtalamatp"],$dbLink);
         $mproduksi = secureParam($params["txtproduksi"],$dbLink);
@@ -237,8 +244,8 @@ class c_kk
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
 
-			$q3 = "UPDATE aki_kk SET `nama_cust`='".$namacust."',`jenis_id`='".$jenis_id."',`no_id`='".$no_id."',`no_phone`='".$no_phone."',`jabatan`='".$jabatan."',`nmasjid`='".$nmasjid."',`nproyek`='".$nproyek."',`project_pemerintah`='".$project_pemerintah."',`alamat_proyek`='".$alamat_proyek."',`mproduksi`='".$mproduksi."',`mpemasangan`='".$mpemasangan."',`alamat`='".$alamat."',`provinsi`='".$provinsi."',`kota`='".$kota."',`approve`='0',`approve_kpenjualan`='-',`approve_tgl`='0000-00-00',`approve_koperational`='-',`approve_tgl2`='0000-00-00' WHERE noKk='".$nokk."'";
-			if (!mysql_query( $q3, $dbLink))
+			$qkk = "UPDATE aki_kk SET `nama_cust`='".$namacust."',`jenis_id`='".$jenis_id."',`no_id`='".$no_id."',`no_phone`='".$no_phone."',`jabatan`='".$jabatan."',`nmasjid`='".$nmasjid."',`nproyek`='".$nproyek."',`kproyek`='".$kproyek."',`project_pemerintah`='".$project_pemerintah."',`alamat_proyek`='".$alamat_proyek."',`mproduksi`='".$mproduksi."',`mpemasangan`='".$mpemasangan."',`alamat`='".$alamat."',`provinsi`='".$provinsi."',`kota`='".$kota."',`approve`='0',`approve_kpenjualan`='-',`approve_tgl`='0000-00-00',`approve_koperational`='-',`approve_tgl2`='0000-00-00' WHERE noKk='".$nokk."'";
+			if (!mysql_query( $qkk, $dbLink))
 						throw new Exception('Gagal ubah data KK2. ');
 
 			$w1 = secureParam($params["txtW1"],$dbLink);
@@ -288,7 +295,11 @@ class c_kk
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
                     $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
 					$kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+					$ntrans = secureParam($params["txtntrans_" . $j], $dbLink);
+					$ktrans = secureParam($params["txtKtransport_" . $j], $dbLink);
+					$ntransport = preg_replace("/\D/", "", $ntrans);
 					$transport = secureParam($params["txttransport"], $dbLink);
+					$makara = secureParam($params["txtMakara_" . $j], $dbLink);
 					$hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
 					if ($dtengah == 0) {
                     	$luas = ($diameter * $tinggi * 3.14);
@@ -301,7 +312,7 @@ class c_kk
                     }
 
                     $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
-                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`ppn`='".$project_pemerintah."',`hppn`='".$hppn."',`harga`='".$h."'".$qimg;
+                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`makara`='".$makara."',`jumlah`='".$qty."',`transport`='".$transport."',`ntransport`='".$ntransport."',`ktransport`='".$ktrans."',`ppn`='".$project_pemerintah."',`hppn`='".$hppn."',`harga`='".$h."'".$qimg;
 					$q.= " WHERE idKk='".$idKk."' ;";
 
 					if (!mysql_query( $q, $dbLink))
