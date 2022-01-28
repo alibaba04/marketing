@@ -832,7 +832,7 @@ return true;
                                         $q.= "WHERE 1=1 and MD5(kk.nokk)='" . $noKk;
                                         $q.= "' ORDER BY  kk.nomer ";
                                     }else{
-                                        $q = "SELECT idDsph AS 'idKk',ket as 'kubah',jumlah,d,t,dt,plafon,transport,luas,harga,harga2,harga3,bahan,biaya_plafon,model,biaya_plafon as kaligrafi FROM aki_dsph ";
+                                        $q = "SELECT idDsph AS 'idKk',ket as 'kubah',jumlah,d,t,dt,plafon,transport as ntransport,luas,harga,harga2,harga3,bahan,biaya_plafon,model,biaya_plafon as kaligrafi FROM aki_dsph ";
                                         $q.= "WHERE 1=1 and MD5(noSph)='" . $noSph;
                                         $q.= "' ORDER BY idDsph ";
                                     }

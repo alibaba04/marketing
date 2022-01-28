@@ -439,6 +439,7 @@ class c_kk
 			$tempJumlah  = $temp['jumlah'];
 			$tempKet  = $temp['ket'];
 			$tempBahan  = $temp['bahan'];
+			$nosph  = $temp['noSph'];
 
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d h:i:sa");
@@ -447,6 +448,12 @@ class c_kk
 			$q4.= "('".$pembatal."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
 						throw new Exception($q4.'Gagal ubah data KK. ');
+
+			$qs = "UPDATE `aki_sph` SET `keterangan_kk`=''";
+			$qs.= "WHERE (noSph)='".$nosph."';";
+
+			if (!mysql_query( $qs, $dbLink))
+				throw new Exception('Gagal hapus data KK.');
 
 			$q = "DELETE FROM  `aki_kk`";
 			$q.= "WHERE (noKk)='".$noKk."';";
