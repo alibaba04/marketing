@@ -54,35 +54,42 @@ defined( 'validSession' ) or die( 'Restricted access' );
           <!-- /.box-body -->
         </div>
         <div class="col-md-6">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart SPH <span style="text-transform:uppercase"><?php echo $_SESSION["my"]->id ?></span></h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <?php 
+            if ($_SESSION["my"]->privilege!='AFFILIATE') {
+              ?>
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Chart SPH <span style="text-transform:uppercase"><?php echo $_SESSION["my"]->id ?></span></h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="areaChartUser" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChartUser" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data SPH</h3>
+              <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Data SPH</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body chart-responsive ">
+                  <div class="chart " id="sales-chart" style="height: 300px; position: relative;"></div>
+                </div>
               </div>
-            </div>
-            <div class="box-body chart-responsive ">
-              <div class="chart " id="sales-chart" style="height: 300px; position: relative;"></div>
-            </div>
-          </div>
+            <?php
+            }
+          ?>
+          
           <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>
@@ -113,35 +120,42 @@ defined( 'validSession' ) or die( 'Restricted access' );
           </div>
         </div>
         <div class="col-md-6">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart SPH All Sales</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Affiliate</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <?php 
+            if ($_SESSION["my"]->privilege!='AFFILIATE') {
+              ?>
+              <div class="box box-primary" hidden="">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Chart SPH All Sales</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="box-body chart-responsive">
-              <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
-            </div>
-          </div>
+              <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Data Affiliate</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body chart-responsive">
+                  <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
+                </div>
+              </div>
+              <?php
+            }
+          ?>
           <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>

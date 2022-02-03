@@ -2,10 +2,10 @@
 //=======  : Alibaba
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');
-$curPage = "view/kkreview_detail";
+$curPage = "view/spkreview_detail";
 
 //Periksa hak user pada modul/menu ini
-$judulMenu = 'Review Kontrak Kerja';
+$judulMenu = 'Review SPK';
 $hakUser = getUserPrivilege($curPage);
 
 if ($hakUser < 10) {
@@ -18,8 +18,8 @@ if ($hakUser < 10) {
 //Periksa apakah merupakan proses headerless (tambah, edit atau hapus) dan apakah hak user cukup
 if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" ) {
 
-    require_once("./class/c_kkreview.php");
-    $tmpkk = new c_kkreview;
+    require_once("./class/c_spk.php");
+    $tmpkk = new c_spk;
 
 //Jika Mode Tambah/Add Note
     if ($_POST["txtMode"] == "addNote") {
@@ -71,7 +71,7 @@ $datakcolor1 = '';
     }
   }
 </SCRIPT>
-<form action="index2.php?page=view/kkreview_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off">
+<form action="index2.php?page=view/spkreview_detail" method="post" name="frmSiswaDetail" onSubmit="return validasiForm(this);" autocomplete="off">
   <?php
 
   if (isset($_GET["noKK"])){
@@ -79,8 +79,8 @@ $datakcolor1 = '';
   }else{
     $noKk = "";
   }
-  $q = "SELECT ROW_NUMBER() OVER(PARTITION BY dkk.model ORDER BY kk.idKk) AS id,kk.*, dkk.*,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK ";
-  $q.= "FROM aki_kk kk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_user u on kk.kodeUser=u.kodeUser left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
+  $q = "SELECT ROW_NUMBER() OVER(PARTITION BY dkk.model ORDER BY kk.idKk) AS id,spk.*,kk.*, dkk.*,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK ";
+  $q.= "FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_user u on kk.kodeUser=u.kodeUser left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
   $q.= "WHERE 1=1 and MD5(kk.noKk)='" . $noKk."'";
   $q.= " ORDER BY kk.noKk desc ";
   $txtnokk='';
@@ -123,8 +123,8 @@ $datakcolor1 = '';
       <div class="col-sm-6 invoice-col">
         <h2 class="page-header" style="margin: 0;">
           <button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;" <?php echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataSph["noKk"])."'"; ?>><i class="fa fa-pencil" ></i></button>
-          <b><i class="fa fa-globe"></i> <?php  echo $dataSph["noKk"]; ?></b>
-          <small>No SPH: <?php  echo $dataSph["noSph"]; ?></small>
+          <b><i class="fa fa-globe"></i> <?php  echo $dataSph["nospk"]; ?></b>
+          <small>No Kontrak: <?php  echo $dataSph["noKk"]; ?></small>
           <input type="hidden" name="txtNote" id="txtNote" class="form-control" value="" placeholder="Empty" >
         </h2>
         <h4>Proyek <?php if ( $dataSph["project_pemerintah"]=='1') {
@@ -470,7 +470,7 @@ $datakcolor1 = '';
             <div class="box-body">
               <div class="direct-chat-messages">
                 <?php
-                $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'KK Note, nokk=%".$txtnokk."%'";
+                $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'SPK Note, nospk=%".$txtnokk."%'";
                 $rsTemp3 = mysql_query($q3, $dbLink);
                 $txtket = '';
                 while ($dataSph3 = mysql_fetch_array($rsTemp3)) {

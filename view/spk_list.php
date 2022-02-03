@@ -181,12 +181,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 10%">No Proyek</th>
+                                <th style="width: 10%">Kode Proyek</th>
                                 <th style="width: 20%">No SPK</th>
                                 <th style="width: 20%">No Kontrak</th>
-                                <th style="width: 10%">Client</th>
-                                <th style="width: 20%">Address</th>
-                                <th style="width: 5%">Sales</th>
+                                <th style="width: 10%">Customer</th>
+                                <th style="width: 10%">Masjid</th>
+                                <th style="width: 10%">Tanggal</th>
+                                <th style="width: 5%">User</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -230,11 +231,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "<li><a style='cursor:pointer;' onclick=location.href=location.href='pdf/pdf_SPK.php?&noSPK=" . md5($query_data["noSPK"]) . "'><i class='fa fa-fw fa-money'></i>SPK Approve</a></li>";
                                         echo "</ul></div></td>";
                                 }
-                                echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/SPKreview_detail&mode=addNote&noSPK=" . md5($query_data["noSPK"])."'>
+                                echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/SPKreview_detail&mode=addNote&noKK=" . md5($query_data["nokk"])."'>
                                 <button type='button' class='btn btn-block btn-info'>".($query_data["noSPK"])."</button></a></td>";
-                                echo "<td><button type='button' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
-                                echo "<td>" . ($query_data["nama_cust"]) . "</td>";
-                                echo "<td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
+                                echo "<td>" . ($query_data["nospk"]) . "</td>";
+                                echo "<td>" . ($query_data["nokk"]) . "</td>";
+                                echo "<td>" . $query_data["nama_cust"] . "</td>";
                                 $kel = '';
                                 if ($query_data["plafon"] == 0){
                                     $kel = 'Full';
@@ -249,6 +250,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 $spek = 'MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
                                 echo "<td>" . $spek ."</td>";
+                                echo "<td>" . $query_data["tgl_spk"] . "</td>";
                                 echo "<td>" . strtoupper($query_data["kodeUser"]) . "</td>";
                                 echo("</tr>");
                                 $rowCounter++;

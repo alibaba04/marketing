@@ -9,21 +9,11 @@ class c_spk
 {
 	var $strResults="";
 	
-	function addspk(){
+	function addspk(&$params){
 		global $dbLink;
 		require_once './function/fungsi_formatdate.php';
         $tglTransaksi = date("Y-m-d");
-        $noproyek = secureParam($params["noproyek"],$dbLink);
-        $nokk = secureParam($params["txtnoKk"],$dbLink);
-        $nospk = secureParam($params["txtnomerspk"],$dbLink);
-        $namacust = secureParam($params["txtnamacust"],$dbLink);
-        $tgl_spk = secureParam($params["txtNoid"],$dbLink);
-        $tgl_deadline = secureParam($params["txtPhone"],$dbLink);
-        $deadline_internal = secureParam($params["txtPosition"],$dbLink);
-        $status = secureParam($params["txtnmasjid"],$dbLink);
-        $sales = secureParam($params["txtnproyek"],$dbLink);
-        $aktif = secureParam($params["txtppemerintah"],$dbLink);
-        $kota = substr($alamat2,3, 6);
+        
         $pembuat = $_SESSION["my"]->id;
 		try
 		{
@@ -32,14 +22,49 @@ class c_spk
 			if (!$result) {
 				throw new Exception('Could not begin transaction');
 			}
+			$q = "SELECT * FROM aki_spk where idSpk=( SELECT max(idSpk) FROM aki_spk )";
+			$rsTemp = mysql_query($q, $dbLink);
+			$tglTransaksi = date("Y-m-d");
+			$nospk = "";
+			if ($kode_ = mysql_fetch_array($rsTemp)) {
+				$urut = "";
+				$tglTr = substr($tglTransaksi, 0,4);
+				$bulan = bulanRomawi(substr($tglTransaksi,5,2));
+				if ($kode_['nospk'] != ''){
+					$urut = substr($kode_['nospk'],0, 4);
+					$tahun = substr($kode_['nospk'],-4);
+					$kode = $urut + 1;
+					if (strlen($kode)==1) {
+						$kode = '000'.$kode;
+					}else if (strlen($kode)==2){
+						$kode = '00'.$kode;
+					}else if (strlen($kode)==3){
+						$kode = '0'.$kode;
+					}
+					if ($tglTr != $tahun) {
+						$kode = '0001';
+					}
+					if ($kode_['aktif']==99) {
+						$nospk = '0001'.'/SPK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+					}else{
+						$nospk = $kode.'/SPK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+					}
+
+				}else{
+					$nospk = '0001'.'/SPK-MS/PTAKI/'.$bulan.'/'.$tglTr;
+				}
+			}
+			$rsTemp=mysql_query("SELECT * FROM `aki_kk` as s left join aki_dkk as ds on s.nokk=ds.nokk WHERE md5(s.nokk)='".$params["txtnokk"]."'", $dbLink);
+			$temp = mysql_fetch_array($rsTemp);
+			/*$rsTempk=mysql_query("SELECT * FROM `kota` WHERE id='".$temp["kota"]."'", $dbLink);
+			$tempkota = mysql_fetch_array($rsTempk);
+			$noproyek = substr($tempkota['name'],0,1);*/
 			
-			$q = "INSERT INTO `aki_spk`(`noproyek`,`nospk`, `nokk`, `nama_cust`, `tgl_spk`, `tgl_deadline`, `deadline_internal`, `status`, `sales`, `kodeUser`, `aktif`) ";
-			$q.= "VALUES ('".$noproyek."','".$nospk."','".$nokk."','".$namacust."','".$tgl_spk."','".$tgl_deadline."','".$deadline_internal."','".$status."','".$sales."','".$pembuat."','1');";
-			if (!mysql_query($q, $dbLink))
-				throw new Exception('Gagal masukkan data dalam database.');
-			$w1 = secureParam($params["txtW1"],$dbLink);
-		
-			date_default_timezone_set("Asia/Jakarta");
+			$q4 = "INSERT INTO `aki_spk`( `nospk`, `nokk`, `nama_cust`, `tgl_spk`, `sales`, `kodeUser`, `status_proyek`, `aktif`) VALUES";
+			$q4.= "('".$nospk."','".$temp['noKk']."','".$temp['nama_cust']."','".$tglTransaksi."','".$temp['kodeUser']."','".$pembuat."','".$params['statuskk']."','1');";
+			if (!mysql_query( $q4, $dbLink))
+						throw new Exception($q4.'Gagal tambah data SPK1');
+			/*date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d H:i:s");
 			$ket = "SPK Note, no proyek=".$noproyek.", no spk=".$nospk.", no kk=".$nokk.", read by kpenjualan=1";
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
@@ -80,8 +105,9 @@ class c_spk
 			$result=curl_exec($ch);
 			print_r($result);
 			curl_close($ch);
-			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses";
+			@mysql_query("COMMIT", $dbLink);*/
+			$this->strResults=$q4.'sukses';
+
 		}
 		catch(Exception $e) 
 		{

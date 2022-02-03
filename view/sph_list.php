@@ -243,6 +243,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 if ($_SESSION['my']->privilege == 'SALES') {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                     $filter4 =  " AND s1.kodeUser='".$_SESSION['my']->id."' ";
+                }else if($_SESSION['my']->privilege == 'AFFILIATE'){
+                    $filter2 =  " AND s.affiliate='".$_SESSION['my']->id."' ";
+                    $filter4 =  " AND s1.affiliate='".$_SESSION['my']->id."' ";
                 }
             //database
                 $q = "SELECT s.*,ds.bahan,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.jumlah,ds.ket,ds.transport,u.kodeUser,u.nama,p.name as pn,k.name as kn ";
