@@ -22,12 +22,15 @@ defined( 'validSession' ) or die( 'Restricted access' );
   <div class="box-header">
     <div class="box box-solid">
       <div class="box-body">
+        
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Area Chart Affiliate</h3>
             <div class="box-tools pull-right">
               <select name="cboAffiliate" id="cboAffiliate" class="form-control select2">
-                <?php
+
+              <?php 
+              if ($_SESSION["my"]->privilege!='AFFILIATE') {
                 echo '<option value="Web Qoobah Official">Web Qoobah Official</option>';
                 echo '<option value="Web Contractor">Web Contractor</option>';
                 echo '<option value="Representative">Representative</option>';
@@ -42,8 +45,11 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 echo '<option value="Bekasi">Bekasi</option>';
                 echo '<option value="Arief">Arief</option>';
                 echo '<option value="Pupun">Pupun</option>';
-                ?>
+              }else{
+                echo '<option value="'.$_SESSION["my"]->id.'">'.$_SESSION["my"]->id.'</option>';
+              } ?>
               </select>
+
             </div>
           </div>
           <div class="box-body">
@@ -51,13 +57,17 @@ defined( 'validSession' ) or die( 'Restricted access' );
               <canvas id="areaChartLine" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
             </div>
           </div>
-          <!-- /.box-body -->
         </div>
+        
         <div class="col-md-6">
           <?php 
             if ($_SESSION["my"]->privilege!='AFFILIATE') {
-              ?>
-              <div class="box box-primary">
+                echo '<div class="box box-primary">';
+            }else{
+                echo '<div class="box box-primary" hidden>';
+            }
+          ?>
+              
                 <div class="box-header with-border">
                   <h3 class="box-title">Chart SPH <span style="text-transform:uppercase"><?php echo $_SESSION["my"]->id ?></span></h3>
                   <div class="box-tools pull-right">
@@ -72,7 +82,13 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   </div>
                 </div>
               </div>
-              <div class="box box-danger">
+              <?php 
+              if ($_SESSION["my"]->privilege!='AFFILIATE') {
+                echo '<div class="box box-primary">';
+              }else{
+                echo '<div class="box box-primary" hidden>';
+              }
+              ?>
                 <div class="box-header with-border">
                   <h3 class="box-title">Data SPH</h3>
 
@@ -86,10 +102,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <div class="chart " id="sales-chart" style="height: 300px; position: relative;"></div>
                 </div>
               </div>
-            <?php
-            }
-          ?>
-          
+            
           <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>
@@ -126,9 +139,12 @@ defined( 'validSession' ) or die( 'Restricted access' );
         <div class="col-md-6">
 
           <?php 
-            if ($_SESSION["my"]->privilege!='AFFILIATE') {
-              ?>
-              <div class="box box-primary">
+          if ($_SESSION["my"]->privilege!='AFFILIATE') {
+            echo '<div class="box box-primary">';
+          }else{
+            echo '<div class="box box-primary" hidden>';
+          }
+          ?>
                 <div class="box-header with-border">
                   <h3 class="box-title">Chart SPH All Sales</h3>
                   <div class="box-tools pull-right">
@@ -143,7 +159,13 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   </div>
                 </div>
               </div>
-              <div class="box box-danger">
+              <?php 
+              if ($_SESSION["my"]->privilege!='AFFILIATE') {
+                echo '<div class="box box-primary">';
+              }else{
+                echo '<div class="box box-primary" hidden>';
+              }
+              ?>
                 <div class="box-header with-border">
                   <h3 class="box-title">Data Affiliate</h3>
 
@@ -157,9 +179,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <div class="chart" id="aff-chart" style="height: 300px; position: relative;"></div>
                 </div>
               </div>
-              <?php
-            }
-          ?>
+              
           <div class="box" style="height: 450px;overflow-y: scroll;">
             <div class="box-header">
               <h3 class="box-title">Leaderboard</h3>
