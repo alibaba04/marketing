@@ -181,12 +181,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         <thead>
                             <tr>
                                 <th width="3%">Action</th>
-                                <th style="width: 10%">Kode Proyek</th>
+                                <th style="width: 5%">Kode Proyek</th>
                                 <th style="width: 20%">No SPK</th>
                                 <th style="width: 20%">No Kontrak</th>
                                 <th style="width: 10%">Customer</th>
                                 <th style="width: 10%">Masjid</th>
-                                <th style="width: 10%">Tanggal</th>
+                                <th style="width: 10%">Status</th>
+                                <th style="width: 8%">Tanggal</th>
                                 <th style="width: 5%">User</th>
                             </tr>
                         </thead>
@@ -236,21 +237,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 echo "<td>" . ($query_data["nospk"]) . "</td>";
                                 echo "<td>" . ($query_data["nokk"]) . "</td>";
                                 echo "<td>" . $query_data["nama_cust"] . "</td>";
-                                $kel = '';
-                                if ($query_data["plafon"] == 0){
-                                    $kel = 'Full';
-                                }else if ($query_data["plafon"] == 1){
-                                    $kel = 'Tanpa Plafon';
-                                }else{
-                                    $kel = 'Waterproof';
-                                }
-                                $dt = '';
-                                if ($query_data["dt"] != 0){
-                                    $dt = ', DT : '.$query_data["dt"];
-                                }
-                                $spek = 'MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
-                                echo "<td>" . $spek ."</td>";
-                                echo "<td>" . $query_data["tgl_spk"] . "</td>";
+                                echo "<td>" . $query_data["masjid"] . "</td>";
+                                echo "<td>" . $query_data["status_proyek"] . "</td>";
+                                echo "<td><center>" . $query_data["tgl_spk"] . "</center></td>";
                                 echo "<td>" . strtoupper($query_data["kodeUser"]) . "</td>";
                                 echo("</tr>");
                                 $rowCounter++;

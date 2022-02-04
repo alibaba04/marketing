@@ -276,7 +276,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             $month = $_GET["month"];
                         }
                         //echo '<a href="pdf/pdf_datasph.php?&tgl1='.$tgl1.'&tgl2='.$tgl2.'" title="Data SPH"><button type="button" class="btn btn-info pull-right"><i class="fa fa-print "></i> Export Data</button></a>';
+                        if ($_SESSION["my"]->privilege!='AFFILIATE') {
                         echo '<div class="input-group input-group-sm col-lg-1 pull-right"><a href="excel/export.php?&tgl1='.$tgl1.'&tgl2='.$tgl2.'"><button class="btn btn-info pull-right"><i class="ion ion-ios-download"></i> Export Excel</button></a></div>';
+                        }
                         /*echo '<div class="input-group input-group-sm col-lg-2 pull-right"><select name="cbom" id="cbom" class="form-control select2">';
                         echo '<option value="01">January</option>';
                         echo '<option value="02">February</option>';
@@ -300,7 +302,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     <table class="table table-bordered table-striped table-hover" >
                         <thead>
                             <tr>
-                                <th width="3%">Action</th>
+                                <?php 
+                                if ($_SESSION["my"]->privilege!='AFFILIATE') {
+                                    echo '<th width="3%">Action</th>';
+                                }
+                                ?>
                                 <th style="width: 14%">No SPH</th>
                                 <th style="width: 20%">Client</th>
                                 <th style="width: 20%">Address</th>
@@ -315,6 +321,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
                                 if (empty($query_data["keterangan_kk"])) {
+                                    if ($_SESSION["my"]->privilege!='AFFILIATE') {
                                     if($hakUser == 90){
                                         if ($_SESSION["my"]->id == $query_data["kodeUser"] || $_SESSION["my"]->privilege == "GODMODE"|| $_SESSION["my"]->privilege == "ADMIN") {
                                             echo '<td><div class="dropdown">
@@ -347,7 +354,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         <ul class="dropdown-menu" style="border-color:#000;">';
                                         echo "<li><a><i class='fa fa-fw fa-remove'></i>Akun Tidak Punya Akses</a></li>";
                                         echo "</ul></div></td>";
-                                    }
+                                    }}
 
                                 } else {
                                     echo '<td><div class="dropdown">
@@ -367,12 +374,15 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if (strtoupper($query_data["model"])=='KALIGRAFI') {
                                     $colorr='btn-primary';
                                 }
-                                echo "<td>
-                                <button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
+                                if ($_SESSION["my"]->privilege!='AFFILIATE') {
+                                echo "<td><button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
+                                }else{
+                                    echo "<td><button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
+                                }
                                 /*echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' id='btnpdf' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";*/
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b><br>" ;
-                                if ($query_data["no_phone"]!='000000000000') {
+                                if ($query_data["no_phone"]!='000000000000' && $_SESSION["my"]->privilege!='AFFILIATE') {
                                     //echo "<a href='wa.me/".($query_data["no_phone"]) ;
                                     $phone = str_replace("08","628",substr($query_data["no_phone"],0,2));
                                     $phone1 = str_replace("_","",$phone.substr($query_data["no_phone"],2,13));
@@ -380,7 +390,8 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo "<a href='https://wa.me/".$phone."' target='_blank'>".$phone1."</a>";
                                 }
                                 echo "<div class='pull-right'>";
-                                if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5) {
+                                if ($_SESSION["my"]->privilege!='AFFILIATE') {
+                                if ($query_data["bahan"]==0 || $query_data["bahan"]==4 || $query_data["bahan"]==5 ) {
                                     if ($query_data["harga"]>=100000000 || $query_data["harga2"]>=100000000) {
                                         echo "<i class='bi bi-coin'></i><i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";
                                     }
@@ -392,7 +403,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     if ($query_data["harga2"]>=100000000) {
                                         echo "<i class='fa fa-fw fa-money' style='color:Tomato;'></i></div>";
                                     }
-                                }
+                                }}
                                 
                                 echo "</td><td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
                                 $kel = '';

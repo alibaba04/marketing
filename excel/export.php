@@ -111,7 +111,7 @@ $spreadsheet->setActiveSheetIndex(0);
 // We'll be outputting an excel file
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="Report Excel-.xlsx"');
+header('Content-Disposition: attachment;filename="Report Excel-'.date('d/m/Y').' .xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE over SSL, then the following may be needed
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
