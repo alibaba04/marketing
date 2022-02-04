@@ -103,7 +103,11 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <th style="width: 40px">Qty</th>
                 </tr>
                 <?php 
-                $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id where aktif=1 and YEAR(s.tanggal) = YEAR(CURDATE()) group by s.provinsi order by jml desc,s.tanggal";
+                $filter2 ='';
+                if($_SESSION['my']->privilege == 'AFFILIATE'){
+                    $filter2 =  " AND s.affiliate='".$_SESSION['my']->id."' ";
+                }
+                $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id where aktif=1 ".$filter2." group by s.provinsi order by jml desc,s.tanggal";
                 $rs = new MySQLPagedResultSet($q, 20, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
@@ -124,7 +128,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
           <?php 
             if ($_SESSION["my"]->privilege!='AFFILIATE') {
               ?>
-              <div class="box box-primary" hidden="">
+              <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Chart SPH All Sales</h3>
                   <div class="box-tools pull-right">
@@ -169,7 +173,11 @@ defined( 'validSession' ) or die( 'Restricted access' );
                   <th style="width: 40px">Qty</th>
                 </tr>
                 <?php 
-                $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id where aktif=1 and YEAR(s.tanggal) = YEAR(CURDATE()) group by s.kota order by jml desc,s.tanggal";
+                $filter2 ='';
+                if($_SESSION['my']->privilege == 'AFFILIATE'){
+                    $filter2 =  " AND s.affiliate='".$_SESSION['my']->id."' ";
+                }
+                $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id where aktif=1 ".$filter2." group by s.kota order by jml desc,s.tanggal";
                 $rs = new MySQLPagedResultSet($q, 20, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
