@@ -197,7 +197,8 @@ $(document).ready(function () {
 function hitungtotal($param) {
     var kaligrafi =  $('#txtKaligrafi_'+$param).val().match(/\d/g);
     var hkubah = $('#txtHargaKubah_'+$param).val().match(/\d/g);
-    var total = parseInt(hkubah.join(""))+parseInt(kaligrafi.join(""));
+    var transport = $('#txtntrans_'+$param).val().match(/\d/g);
+    var total = parseInt(hkubah.join(""))+parseInt(kaligrafi.join(""))+parseInt(transport.join(""));
     if ($('#chkppemerintah').is(":checked")) {
         var ppn = (parseInt(total)*0.1)+parseInt(total);
         var pra=Math.round(ppn / 1000) * 1000;
@@ -335,6 +336,16 @@ function opendmodal(tcounter) {
         hitungtotal(tcounter);
         getpabrikasi();
         $("#myCModal").modal('hide');
+    });
+    $('#cbobahan').change(function(){
+        if ($('#cbobahan').val() == 'Galvalume') {
+            $('#idharga1').val($("#txtharga1_"+tcounter).val());
+        }else if($('#cbobahan').val() == 'Titanium'){
+            $('#idharga1').val($("#txtharga2_"+tcounter).val());
+        }else{
+            $('#idharga1').val($("#txtharga3_"+tcounter).val());
+        }
+        
     });
 }
 function addJurnal(){    
@@ -864,7 +875,8 @@ return true;
                                         }else if($DetilJurnal["plafon"]=='1'){
                                             $plafon = 'Waterproof';
                                         }
-                                        echo '<input type="hidden" class="form-control"name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '" value="' . $plafon . '" ><input type="hidden" class="form-control"name="txtKtransport_' . $iJurnal . '" id="txtKtransport_' . $iJurnal . '" value="' . $DetilJurnal["ktransport"] . '" ><input type="hidden" class="form-control"name="txtMakara_' . $iJurnal . '" id="txtMakara_' . $iJurnal . '" value="' . $DetilJurnal["makara"] . '" >';
+                                        echo '<input type="hidden" class="form-control"name="txtPlafon_' . $iJurnal . '" id="txtPlafon_' . $iJurnal . '" value="' . $plafon . '" ><input type="hidden" class="form-control" name="txtKtransport_' . $iJurnal . '" id="txtKtransport_' . $iJurnal . '" value="';if ($_GET['mode']!='edit'){echo "Transport Biasa";}else{ echo $DetilJurnal["ktransport"];}
+                                        echo '" ><input type="hidden" class="form-control"name="txtMakara_' . $iJurnal . '" id="txtMakara_' . $iJurnal . '" value="' . $DetilJurnal["makara"] . '" >';
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group" style="min-width: 50px;"><input type="number" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '"></div></td>';
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group"style="min-width: 50px;">
                                         <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" ></div></td>';
@@ -873,15 +885,18 @@ return true;
                                         $harga = 0;
                                         if ($_GET['mode']!='edit'){
                                             if($DetilJurnal["bahan"]=='1'){
-                                                $harga= $DetilJurnal["harga"]-$DetilJurnal["transport"];
+                                                $harga= $DetilJurnal["harga"]-$DetilJurnal["ntransport"];
                                             }else if($DetilJurnal["bahan"]=='2'){
-                                                $harga= $DetilJurnal["harga2"]-$DetilJurnal["transport"];
+                                                $harga= $DetilJurnal["harga2"]-$DetilJurnal["ntransport"];
                                             }else{
-                                                $harga= $DetilJurnal["harga3"]-$DetilJurnal["transport"];
+                                                $harga= $DetilJurnal["harga3"]-$DetilJurnal["ntransport"];
                                             }
-                                            echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
+                                            echo '<input type="hidden" name="txtharga1_' . $iJurnal . '" id="txtharga1_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga"]-$DetilJurnal["ntransport"]).'"/>';
+                                            echo '<input type="hidden" name="txtharga2_' . $iJurnal . '" id="txtharga2_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga2"]-$DetilJurnal["ntransport"]).'"/>';
+                                            echo '<input type="hidden" name="txtharga3_' . $iJurnal . '" id="txtharga3_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga3"]-$DetilJurnal["ntransport"]).'"/>';
+                                            echo '<input type="hidden" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="'.$DetilJurnal["jumlah"].'"/><input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
                                         }else{
-                                            $harga= ($DetilJurnal["harga"]-$DetilJurnal["transport"]);
+                                            $harga= ($DetilJurnal["harga"]-$DetilJurnal["ntransport"]);
                                             echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="' . $DetilJurnal["kcolor1"] . '"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="' . $DetilJurnal["kcolor2"] . '"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="' . $DetilJurnal["kcolor3"] . '"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="' . $DetilJurnal["kcolor4"] . '"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="' . $DetilJurnal["kcolor5"] . '"/>';
                                         }
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
@@ -891,11 +906,11 @@ return true;
                                         $totharga = 0;
                                         if ($_GET['mode']!='edit') {
                                             echo '<input type="hidden" name="txtHargappn_' . $iJurnal . '" id="txtHargappn_' . $iJurnal . '" value=""/>';
-                                            $totharga = number_format(round($harga+$DetilJurnal["kaligrafi"],-6)+$DetilJurnal["transport"]);
+                                            $totharga = number_format(round($harga+$DetilJurnal["kaligrafi"],-6)+$DetilJurnal["ntransport"]);
                                         }else{
                                             echo '<input type="hidden" name="txtHargappn_' . $iJurnal . '" id="txtHargappn_' . $iJurnal . '" value="'.$DetilJurnal["hppn"].'"/>';
                                             $harga = $harga-$DetilJurnal["hppn"];
-                                            $totharga = number_format(round($harga+$DetilJurnal["kaligrafi"],-6)+$DetilJurnal["hppn"]+$DetilJurnal["transport"]);
+                                            $totharga = number_format(round($harga+$DetilJurnal["kaligrafi"],-6)+$DetilJurnal["hppn"]+$DetilJurnal["ntransport"]);
                                         }
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
                                         <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format(round($harga,-6)).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
@@ -1079,7 +1094,7 @@ return true;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Rangka Kubah <label id="labelclr"></label></h4>
+                    <h4 class="modal-title">Detail Kubah <label id="labelclr"></label></h4>
                     <input type="hidden" class="form-control" id="txtnomer" value="">
                 </div>
                 <div class="modal-body">
@@ -1120,7 +1135,7 @@ return true;
                             <input type="text" name="txtntrans" id="txtntrans" class="form-control" value="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" onfocus="this.value=''" placeholder="0" ></div>
                            
                             <label class="control-label" for="txtKeteranganKas">Jumlah</label>
-                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control" value="1" placeholder="0">
+                            <input type="number" min='1' name="txtqty" id="txtqty" class="form-control">
                             <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
                             <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
                             value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
@@ -1131,15 +1146,15 @@ return true;
                             
                             <label class="control-label" for="txtKeteranganKas"></label>
                             <select name="cbokelengkapan" id="cbokelengkapan" class="form-control">
-                                <option value=Full>Full</option>";
-                                <option value=Tanpa Plafon>Tanpa Plafon</option>";
-                                <option value=Waterproof>Waterproof</option>";
+                                <option value="Full">Full</option>";
+                                <option value="Tanpa Plafon">Tanpa Plafon</option>";
+                                <option value="Waterproof">Waterproof</option>";
                             </select>
-                            <label class="control-label" for="txtKeteranganKas">Makara</label>
+                            <label class="control-label" for="txtKeteranganKas"></label>
                             <input type="text" name="txtMakara" id="txtMakara" class="form-control" value="Lafadz Allah" placeholder="Lafadz Allah">
                             <label class="control-label" for="txtKeteranganKas">Transport</label><div class="input-group">
                                 <select class="form-control " name="cbotrans" id="cbotrans">
-                                    <option value="Transport Biasa">Transport Biasa</option>
+                                    <option value="Transport Biasa" selected>Transport Biasa</option>
                                     <option value="Prioritas">Prioritas</option>
                                 </select>
                             <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">

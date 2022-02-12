@@ -187,7 +187,18 @@ $datakcolor1 = '';
           $i++;
         }
         ?></h4>
-        <h5><address><th>Alamat : </th><br><?php  echo $dataSph["alamat_proyek"]; ?></td><address></h5>
+        <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataSph["alamat_proyek"]; ?></td><address></h5>
+          <div class="col-lg-3">
+          <button type="button" class="btn btn-block btn-default btn-lg" disabled="">
+        <?php
+          if ($dataSph["project_pemerintah"]=='1') {
+            echo "PPN";
+          }else{
+            echo "Non PPN";
+          }
+        ?>
+        </button>
+        </div>
         <p class="lead"> </p>
       </div>
 
@@ -197,21 +208,11 @@ $datakcolor1 = '';
     <div class="row">
       <div class="nav-tabs-custo">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#cust" data-toggle="tab">Cust</a></li>
-          <li><a href="#spec" data-toggle="tab">Spec</a></li>
+          <li class="active"><a href="#cust" data-toggle="tab">Customer</a></li>
+          <li><a href="#spec" data-toggle="tab">Specification</a></li>
           <li><a href="#termin" data-toggle="tab">Termin</a></li>
           <div class="col-lg-6 pull-right">
-            <?php 
-            if ($hakUser > 60 ) {
-              if ($dataSph["approve_koperational"] != '-' && $dataSph["approve_kpenjualan"] != '-') {
-                echo '<button type="button" class="btn btn-success pull-right" id="btnaccSPK" style="margin-left: 5px;" '.$dsbl2.' onclick=location.href="'. $_SERVER['PHP_SELF'].'?page=html/spk_detail&mode=add&noKK='. md5($dataSph["noKk"]).'"><i class="fa fa-send" ></i> SPK </button>';
-              }else{
-                echo '<button type="button" class="btn btn-success pull-right" id="btnaccKK" onclick="accmodal()"><i class="fa fa-thumbs-up"></i> Approve KK</button>';
-              }
-            }?>
             <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-pencil-square-o" ></i> Note
-            </button>
-            <button type="button" class="btn btn-default pull-left" id="btnNote" onclick=location.href=location.href="<?php echo 'pdf/pdf_kk.php?&noKK='.$_GET["noKK"];?>"><i class="fa fa-download"></i> Download
             </button>
           </div>
         </ul>
@@ -223,7 +224,7 @@ $datakcolor1 = '';
                   <th>Termin</th>
                   <th>Waktu Pembayaran</th>
                   <th>Persentase</th>
-                  <th>Nilai (Rp)</th>
+                  <th style="text-align: right;">Nilai (Rp)</th>
                 </tr>
                 <?php 
                 $q1 = "SELECT * FROM `aki_dpembayaran` WHERE MD5(noKk)='" . $noKk."'";
@@ -273,7 +274,8 @@ $datakcolor1 = '';
                 <i class="fa fa-user bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i> </span>
-                  <div class="timeline-body"><?php  echo $dataSph["nama_cust"]; ?>
+                  <h5 class="timeline-header">Nama </h5>
+                  <div class="timeline-body"><?php  echo $dataSph["nama_cust"].' ('.$dataSph["jabatan"].')'; ?>
                   </div>
                 </div>
               </li>
@@ -281,15 +283,8 @@ $datakcolor1 = '';
                 <i class="fa fa-id-card-o bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">No Identitas </h5>
                   <div class="timeline-body"><?php  echo $dataSph["no_id"].' ('.$dataSph["jenis_id"].')'; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-id-card-o bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><?php  echo $dataSph["jabatan"]; ?>
                   </div>
                 </div>
               </li>
@@ -297,6 +292,7 @@ $datakcolor1 = '';
                 <i class="fa fa-phone bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">No HP </h5>
                   <div class="timeline-body">
                     <?php  echo $dataSph["no_phone"]; ?>
                   </div>
@@ -306,6 +302,7 @@ $datakcolor1 = '';
                 <i class="fa fa-map-marker bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">Alamat Customer </h5>
                   <div class="timeline-body">
                     <?php  echo $dataSph["alamat"].' '.$dataSph["kn"].', '.$dataSph["pn"]; ?>
                   </div>
@@ -322,7 +319,7 @@ $datakcolor1 = '';
                 <i class="fa fa-tags bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body">KUBAH <?php echo strtoupper($dataSph["bahan"].', '.$dataSph["model"]); ?>
+                  <div class="timeline-body">Kubah <?php echo $dataSph["bahan"].', '.strtoupper($dataSph["model"]); ?>
                   </div>
                 </div>
               </li>
@@ -330,6 +327,7 @@ $datakcolor1 = '';
                 <i class="fa fa-dot-circle-o bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i> </span>
+                  <h5 class="timeline-header">Ukuran Kubah </h5>
                   <div class="timeline-body"><h4>Diameter <b><?php  echo $dataSph["d"]; ?> meter,</b> Tinggi <b><?php  echo $dataSph["t"]; ?> meter,</b> Luas <b><?php  echo $dataSph["luas"]; ?> meter<sup>2</sup></b></h4>
                   </div>
                 </div>
@@ -338,6 +336,7 @@ $datakcolor1 = '';
                 <i class="fa fa-asterisk bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">Rangka Kubah </h5>
                   <div class="timeline-body">
                     <?php  
                     echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
@@ -349,6 +348,7 @@ $datakcolor1 = '';
                 <i class="fa fa-asterisk bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">Atap Kubah </h5>
                   <div class="timeline-body"><?php  echo $bahan.$Finishing; ?>
                   </div>
                 </div>
@@ -357,6 +357,7 @@ $datakcolor1 = '';
                 <i class="fa fa-asterisk bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">Plafon Kubah </h5>
                   <div class="timeline-body"><?php  echo $plafon; ?>
                   </div>
                 </div>
@@ -365,6 +366,7 @@ $datakcolor1 = '';
                 <i class="fa fa-asterisk bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
+                  <h5 class="timeline-header">Aksesoris Kubah </h5>
                   <div class="timeline-body"><?php  echo $aksesoris; ?>
                   </div>
                 </div>
@@ -373,7 +375,8 @@ $datakcolor1 = '';
                 <i class="fa fa-truck bg-aqua"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-money"></i></span>
-                  <div class="timeline-body"><?php  echo 'Biaya Transport : Rp '.number_format($dataSph['ntransport']).' ('.$dataSph['ktransport'].')'; ?>
+                  <h5 class="timeline-header">Biaya Transport </h5>
+                  <div class="timeline-body"><?php  echo 'Rp '.number_format($dataSph['ntransport']).' ('.$dataSph['ktransport'].')'; ?>
                   </div>
                 </div>
               </li>
@@ -387,7 +390,7 @@ $datakcolor1 = '';
                   </tr>
                   <?php 
                   $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
-                  $rsTemp2 = mysql_query($q2, $dbLink);
+                  $rsTemp2 = mysql_query($q2, $dbLink2);
                   $i=1;
                   while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
                     if ($dataSph2['color1']!='-') {

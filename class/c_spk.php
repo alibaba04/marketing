@@ -106,7 +106,7 @@ class c_spk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);*/
-			$this->strResults=$q4.'sukses';
+			$this->strResults='sukses';
 
 		}
 		catch(Exception $e) 

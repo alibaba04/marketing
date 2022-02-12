@@ -162,7 +162,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
-                $q = "SELECT * FROM `aki_spk` WHERE 1";
+                $q = "SELECT * FROM `aki_spk` WHERE 1 and aktif=1";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
                 ?>
@@ -182,10 +182,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             <tr>
                                 <th width="3%">Action</th>
                                 <th style="width: 5%">Kode Proyek</th>
-                                <th style="width: 20%">No SPK</th>
-                                <th style="width: 20%">No Kontrak</th>
+                                <th style="width: 15%">No SPK</th>
+                                <th style="width: 15%">No Kontrak</th>
                                 <th style="width: 10%">Customer</th>
-                                <th style="width: 10%">Masjid</th>
+                                <th style="width: 15%">Masjid</th>
                                 <th style="width: 10%">Status</th>
                                 <th style="width: 8%">Tanggal</th>
                                 <th style="width: 5%">User</th>

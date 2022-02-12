@@ -100,8 +100,8 @@ $(document).ready(function () {
                             <label class="control-label" for="txtKodeTransaksi">Proyek</label>
                         </div>
                         <select class="form-control select2" name="statuskk" id="statuskk">
-                            <option value="0">Pekerjaan Kubah Baru</option>
-                            <option value="1">Pelapisan Kubah</option>
+                            <option value="Pembuatan Kubah Baru">Pembuatan Kubah Baru</option>
+                            <option value="Pelapisan Kubah">Pelapisan Kubah</option>
                         </select>
                     </div>
                 </div>

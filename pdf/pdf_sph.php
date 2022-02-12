@@ -794,86 +794,91 @@ $pdf->SetAutoPageBreak(TRUE, 0);
 $pdf->Ln(6);
 
 /*if ($nourut >3) {*/
-    $rs2 = mysql_query($q2, $dbLink);
+    $q4 = 'SELECT * FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)="'.$noSph.'" group by bahan order by idDsph asc';
+    $rs4 = mysql_query($q4, $dbLink);
     $pdf->SetFont('helvetica', 'B', 11);
-
-    if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
-        $tharga1=0;
-        $pdf->Cell(10,6,' ',0,0,'L',0);
-        $pdf->Cell(80,7,'Rincian Galvalum',0,1,'L',0);
-        while (  $hasil = mysql_fetch_array($rs2)) {
-           $ketkubah = $hasil['ket'];
-           $jumlah = $hasil['jumlah'];
-           $pdf->Cell(80,6,' ',0,0,'L',0);
-           $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
-           $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga']*$jumlah),0,1,'R',0);
-           if ($hasil['biaya_plafon'] !=0) {
+    $qcount =0;
+    while (  $hasil = mysql_fetch_array($rs4)) {
+        $bahan = $hasil['bahan'];
+        $q3 = 'SELECT * FROM aki_dsph ds WHERE 1=1 and bahan="'.$bahan.'" and MD5(ds.noSph)="'.$noSph.'" order by idDsph asc';
+        if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
+            $tharga1=0;
+            $pdf->Cell(10,6,' ',0,0,'L',0);
+            $pdf->Cell(80,7,'Rincian Galvalum',0,1,'L',0);
+            $rs3 = mysql_query($q3, $dbLink);
+            while (  $hasil = mysql_fetch_array($rs3)) {
+               $ketkubah = $hasil['ket'];
+               $jumlah = $hasil['jumlah'];
                $pdf->Cell(80,6,' ',0,0,'L',0);
-               $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+               $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
                $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-               $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
-           }
-           $tharga1 +=  $hasil['harga']*$jumlah+$hasil['biaya_plafon'];
+               $pdf->Cell(40,6,number_format($hasil['harga']*$jumlah),0,1,'R',0);
+               if ($hasil['biaya_plafon'] !=0) {
+                   $pdf->Cell(80,6,' ',0,0,'L',0);
+                   $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+                   $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
+                   $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
+               }
+               $tharga1 +=  $hasil['harga']*$jumlah+$hasil['biaya_plafon'];
+            }
+            $pdf->Cell(80,6,' ',0,0,'L',0);
+            $pdf->Cell(40,6,'Total ',0,0,'L',0);
+            $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
+            $pdf->Cell(40,6,number_format($tharga1),'T',1,'R',0);
         }
-        $pdf->Cell(80,6,' ',0,0,'L',0);
-        $pdf->Cell(40,6,'Total ',0,0,'L',0);
-        $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
-        $pdf->Cell(40,6,number_format($tharga1),'T',1,'R',0);
-    }
-    if($bahan == '3' or $bahan == '5' or $bahan == '6' or $bahan == '0'){
-        $tharga3=0;
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(10,6,' ',0,0,'L',0);
-        $pdf->Cell(80,7,'Rincian Titanium',0,1,'L',0);
-        $rs2 = mysql_query($q2, $dbLink);
-        while (  $hasil = mysql_fetch_array($rs2)) {
-           $ketkubah = $hasil['ket'];
-           $jumlah = $hasil['jumlah'];
-           $pdf->Cell(80,6,' ',0,0,'L',0);
-           $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
-           $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga3']*$jumlah),0,1,'R',0);
-           if ($hasil['biaya_plafon'] !=0) {
+        if($bahan == '3' or $bahan == '5' or $bahan == '6' or $bahan == '0'){
+            $tharga3=0;
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(10,6,' ',0,0,'L',0);
+            $pdf->Cell(80,7,'Rincian Titanium',0,1,'L',0);
+            $rs3 = mysql_query($q3, $dbLink);
+            while (  $hasil = mysql_fetch_array($rs3)) {
+               $ketkubah = $hasil['ket'];
+               $jumlah = $hasil['jumlah'];
                $pdf->Cell(80,6,' ',0,0,'L',0);
-               $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+               $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
                $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-               $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
-           }
-            $tharga3 +=  $hasil['harga3']*$jumlah+$hasil['biaya_plafon'];
+               $pdf->Cell(40,6,number_format($hasil['harga3']*$jumlah),0,1,'R',0);
+               if ($hasil['biaya_plafon'] !=0) {
+                   $pdf->Cell(80,6,' ',0,0,'L',0);
+                   $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+                   $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
+                   $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
+               }
+                $tharga3 +=  $hasil['harga3']*$jumlah+$hasil['biaya_plafon'];
+            }
+            $pdf->Cell(80,6,' ',0,0,'L',0);
+            $pdf->Cell(40,6,'Total ',0,0,'L',0);
+            $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
+            $pdf->Cell(40,6,number_format($tharga3),'T',1,'R',0);
         }
-        $pdf->Cell(80,6,' ',0,0,'L',0);
-        $pdf->Cell(40,6,'Total ',0,0,'L',0);
-        $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
-        $pdf->Cell(40,6,number_format($tharga3),'T',1,'R',0);
-    }
-    if($bahan == '2' or $bahan == '4' or $bahan == '6' or $bahan == '0'){
-        $tharga2=0;
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(10,6,' ',0,0,'L',0);
-        $pdf->Cell(80,7,'Rincian Enamel',0,1,'L',0);
-        $rs2 = mysql_query($q2, $dbLink);
-        while (  $hasil = mysql_fetch_array($rs2)) {
-           $ketkubah = $hasil['ket'];
-           $jumlah = $hasil['jumlah'];
-           $pdf->Cell(80,6,' ',0,0,'L',0);
-           $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
-           $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-           $pdf->Cell(40,6,number_format($hasil['harga2']*$jumlah),0,1,'R',0);
-           if ($hasil['biaya_plafon'] !=0) {
+        if($bahan == '2' or $bahan == '4' or $bahan == '6' or $bahan == '0'){
+            $tharga2=0;
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Cell(10,6,' ',0,0,'L',0);
+            $pdf->Cell(80,7,'Rincian Enamel',0,1,'L',0);
+            $rs3 = mysql_query($q3, $dbLink);
+            while (  $hasil = mysql_fetch_array($rs3)) {
+               $ketkubah = $hasil['ket'];
+               $jumlah = $hasil['jumlah'];
                $pdf->Cell(80,6,' ',0,0,'L',0);
-               $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+               $pdf->Cell(40,6,$ketkubah.' x '.$jumlah,0,0,'L',0);
                $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
-               $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
-           }
-            $tharga2 +=  $hasil['harga2']*$jumlah+$hasil['biaya_plafon'];
+               $pdf->Cell(40,6,number_format($hasil['harga2']*$jumlah),0,1,'R',0);
+               if ($hasil['biaya_plafon'] !=0) {
+                   $pdf->Cell(80,6,' ',0,0,'L',0);
+                   $pdf->Cell(40,6,"Biaya Kaligrafi",0,0,'L',0);
+                   $pdf->Cell(10,6,':   Rp.',0,0,'C',0);
+                   $pdf->Cell(40,6,number_format($hasil['biaya_plafon']),0,1,'R',0);
+               }
+                $tharga2 +=  $hasil['harga2']*$jumlah+$hasil['biaya_plafon'];
+            }
+            $pdf->Cell(80,6,' ',0,0,'L',0);
+            $pdf->Cell(40,6,'Total ',0,0,'L',0);
+            $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
+            $pdf->Cell(40,6,number_format($tharga2),'T',1,'R',0);
         }
-        $pdf->Cell(80,6,' ',0,0,'L',0);
-        $pdf->Cell(40,6,'Total ',0,0,'L',0);
-        $pdf->Cell(10,6,':   Rp.','T',0,'C',0);
-        $pdf->Cell(40,6,number_format($tharga2),'T',1,'R',0);
     }
-    
 
 if ($bahan != '0') {
     /*if ($nourut<3) {

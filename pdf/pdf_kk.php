@@ -161,36 +161,34 @@ $pdf->Cell(116,10,'',0,0,'R',0);
 $tbl = '<b>Pihak Pertama</b>';
 $pdf->writeHTML($tbl);
 $pdf->Ln(13);
-$q2 = "SELECT dkk.* FROM aki_dkk dkk WHERE 1=1 and MD5(dkk.noKK)='".$noKk."'";
+$q2 = "SELECT dkk.* FROM aki_dkk dkk WHERE 1=1 and MD5(dkk.noKK)='".$noKk."' order by idKk asc";
 $rs2 = mysql_query($q2, $dbLink);
 
 //Spek
 while (  $hasil2 = mysql_fetch_array($rs2)) {
-  if ($hasil["jml"]==2) {
-    $pdf->Cell(15,5,'-',0,0,'R',0);
-    $tbl = '
-    <b>Pekerjaan '.($hasil2["nomer"]+1).' </b><br>';
-    $pdf->writeHTML($tbl);
+  if ($hasil["jml"]>=2) {
+    $pdf->SetMargins(25, 10, 10, true);
+    $pdf->SetFont('Calibri', 'b', 11);
+    $pdf->Ln(0);
+    $pdf->Cell(15,9,($hasil2["nomer"]+1).'.',0,0,'R',0);
+    $pdf->SetFont('Calibri', '', 11);
     $pdf->Ln(2);
+
   }
     $pdf->SetMargins(20, 10, 10, true);
     $pdf->Ln(0);
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(1,5,'Jenis Pekerjaan',0,0,'L',0);
     $pdf->Cell(33,5,':',0,0,'R',0);
+    $pdf->SetFont('Calibri', 'b', 11);
     $pdf->Cell(1,5,strtoupper($hasil2['kubah']),0,1,'L',0); 
+    $pdf->SetFont('Calibri', '', 11);
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(12,5,'Bahan',0,0,'L',0);
     $pdf->Cell(22,5,':',0,0,'R',0);
-    $bahan = '';
-    if ($hasil2["bahan"]=='3') {
-      $bahan = 'Titanium';
-    }else if($hasil2["bahan"]=='2'){
-      $bahan = 'Enamel';
-    }else {
-      $bahan = 'Galvalume';
-    }
-    $pdf->Cell(23,5,$bahan,0,1,'L',0); 
+    $pdf->SetFont('Calibri', 'b', 11);
+    $pdf->Cell(23,5,$hasil2["bahan"],0,1,'L',0); 
+    $pdf->SetFont('Calibri', '', 11);
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(2,5,'Ukuran',0,0,'L',0);
     $pdf->Cell(32,5,':',0,0,'R',0);
@@ -206,7 +204,6 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->Cell(20,5,'',0,0,'R',0);
     $pdf->Cell(2,5,'Spesifikasi',0,0,'L',0);
     $pdf->Cell(32,5,':',0,0,'R',0);
-    $pdf->Ln(3);
     $pdf->SetMargins(40, 10, 10, true);
     $pdf->MultiCell(120,5,'',0,'B',0);
     $rangka='';
@@ -258,19 +255,13 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
     $pdf->writeHTML($tbl);
     
-    if ($hasil["jml"]==2) {
+    if ($hasil["jml"]>=2) {
       $pdf->SetMargins(10, 10, 10, true);
-      $pdf->Ln(2);
     }
 }
-if ($hasil["jml"]==2) {
+if ($hasil["jml"]>=2) {
   $pdf->SetMargins(14, 10, 10, true);
-  if ($hasil['d']>=5 ){
-    $pdf->Ln(30);
-  }else{
-    $pdf->Ln(24);
-  }
-  
+  $pdf->AddPage();
 }else{
   $pdf->SetMargins(10, 10, 10, true);
   $pdf->Ln(10);
@@ -354,7 +345,7 @@ $tbl = '
 ';
 $pdf->writeHTML($tbl);
 $pdf->SetFont('Calibri', '', 11);
-if ($hasil["jml"]==2) {
+if ($hasil["jml"]>=2) {
   $pdf->SetMargins(22, 10, 10, true);
   $pdf->Ln(10);
 }else{
@@ -378,7 +369,7 @@ $pdf->writeHTML($tbl);
 $pdf->SetMargins(24, 10, 10, true);
 
 $pdf->Ln(4);
-if ($hasil['project_pemerintah']==0) {
+if ($hasil['project_pemerintah']==1) {
   $pdf->SetFont('Calibri', 'B', 11);
   $pdf->SetFillColor(244,176,131);
   $pdf->Cell(59,8,'Nama Bank',1,0,'C',1);
@@ -438,13 +429,7 @@ $pdf->MultiCell(170, 5, 'Perjanjian ini berlaku efektif sejak ditandatangani ole
 $pdf->Cell(15.5,5,'2. ',0,0,'R',0);
 $pdf->MultiCell(165.5 , 5, 'Perjanjian ini berakhir dengan sendirinya saat seluruh kewajiban Para Pihak berdasarkan Perjanjian ini telah dipenuhi.', 0, 'J', 0);
 
-if ($hasil['jml']==2) {
-  $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(40);
-  
-}else{
-  $pdf->Ln(10);
-}
+$pdf->Ln(10);
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->MultiCell(190,5,'PASAL 5
   JANGKA WAKTU PEKERJAAN',0,'C',0);
@@ -459,6 +444,10 @@ $pdf->writeHTML($tbl);
 $pdf->Ln(13);
 $pdf->SetMargins(30, 10, 10, true);
 $pdf->SetFont('Calibri', 'B', 11);
+if ($hasil['jml']>=2) {
+  $pdf->AddPage();
+  $pdf->SetMargins(30, 10, 10, true);
+}
 $pdf->Ln(2);
 $pdf->SetFillColor(244,176,131);
 $pdf->Cell(45,6,'Tahapan Pekerjaan','LT',0,'C',1);
@@ -474,6 +463,7 @@ $pdf->MultiCell(85,6,'Waktu pengerjaan terhitung sejak terpenuhinya hal berikut:
 a).Uang Muka Lunas 
 b).Konfirmasi Pihak Kedua atas desain, motif, warna, ukuran dan spesifikasi serta sudah selesai atau belumnya dudukan kubah.
 ',1,'J',0);
+$pdf->Ln(0);
 $pdf->Cell(45,24,'Masa Pemasangan','LTB',0,'C',0);
 $pdf->Cell(30,24,$hasil['mpemasangan'].' hari','LTB',0,'C',0);
 $pdf->MultiCell(85,6,'Terhitung sejak tim pemasangan sampai di lokasi dengan ketentuan dudukan kubah sudah diselesaikan dan peralatan yang dibutuhkan (scaffolding dsb) telah disiapkan oleh Pihak Kedua.','LRB','J',0);
@@ -481,8 +471,8 @@ $pdf->SetMargins(13, 10, 10, true);
 $pdf->Ln(2);
 $pdf->Cell(15.5,5,'2. ',0,0,'R',0);
 $pdf->MultiCell(165.5, 5, 'Hari Kerja yang dimaksud adalah hari Senin - Sabtu dan tidak termasuk Hari Libur Nasional dan Hari Libur yang ditentukan oleh Perusahaan.', 0, 'J', 0);
-if ($hasil['jml']==2) {
-  
+if ($hasil['jml']>=2) {
+  $pdf->Ln(8);
 }else{
   $pdf->SetMargins(13, 10, 10, true);
   if ($hasil['project_pemerintah']==1) {
@@ -490,9 +480,8 @@ if ($hasil['jml']==2) {
   }else{
     $pdf->Ln(40);
   }
-  
+  $pdf->addpage();
 }
-$pdf->addpage();
 $pdf->Rect(15, 12, 185, 310, 'D');
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->SetFont('Calibri', 'b', 11);
@@ -542,7 +531,7 @@ Menerima informasi terkait spesifikasi kubah dan pengerjaan dudukan kubah dari <
 $pdf->writeHTML($tbl);
 $pdf->Cell(15.5,5,'c. ',0,0,'R',0);
 $pdf->MultiCell(161, 5, 'Melakukan pemberhentian pengerjaan proyek jika belum ada pembayaran sesuai dengan Pasal 3 pada Perjanjian ini.', 0, 'J', 0);
-$pdf->Ln(10);
+$pdf->Ln(8);
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->Cell(180,6,'PASAL 7',0,1,'C',0);
 $pdf->Cell(180,4, 'HAK DAN KEWAJIBAN PIHAK KEDUA',0,1,'C',0);
@@ -557,10 +546,6 @@ $pdf->SetMargins(20, 10, 10, true);
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'a. ',0,0,'R',0);
 $pdf->MultiCell(160, 5, 'Menyelesaikan administrasi kelengkapan pekerjaan seperti desain, motif, warna, dan lain sebagainya setelah dilakukan pembayaran uang panjar atau uang termin I.', 0, 'J', 0);
-if ($hasil['jml']==2) {
-  $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(10);
-}
 $pdf->Cell(14,5,'b. ',0,0,'R',0);
 $tbl = 'Membuat dudukan kubah & menginformasikan penyelesaian dudukan kubah kepada<br>';
 $pdf->writeHTML($tbl);
@@ -592,6 +577,11 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,'',0,0,'R',0);
 $tbl = '<b>Pertama</b> sebelum pembayaran termin ketiga.<br>';
 $pdf->writeHTML($tbl);
+if ($hasil['jml']>=2) {
+  $pdf->AddPage();
+  $pdf->SetMargins(20, 10, 10, true);
+  $pdf->Ln(0);
+}
 $pdf->Cell(14,5,'f. ',0,0,'R',0);
 $tbl = '
 Menjaga keamanan material bahan yang telah terkirim di lokasi <b>Pihak Kedua.</b><br>';
@@ -628,14 +618,13 @@ $pdf->Cell(88,5,'',0,0,'R',0);
 $tbl = '<b>Pihak Pertama.</b><br>';
 $pdf->writeHTML($tbl);
 
-if ($hasil['jml']==2) {
+if ($hasil['jml']>=2) {
   
 }else{
   $pdf->SetMargins(13, 10, 10, true);
   $pdf->Ln(20);
-  
+  $pdf->addpage();
 }
-$pdf->addpage();
 $pdf->Rect(15, 12, 185, 310, 'D');
 $pdf->SetMargins(15, 10, 10, true);
 $pdf->Ln(2);
@@ -714,13 +703,17 @@ $pdf->Cell(82,5,'',0,0,'R',0);
 $tbl = '<b>Pihak Pertama</b>. <br>';
 $pdf->writeHTML($tbl);
 
-if ($hasil['jml']==2) {
+if ($hasil['jml']>=2) {
   $pdf->SetMargins(13, 10, 10, true);
   $pdf->Ln(10);
 }
 $pdf->Cell(13,5,'3.',0,0,'R',0);
 $pdf->MultiCell(167,5,'Garansi tidak berlaku apabila penyebab kerusakan adalah karena  keadaan memaksa (force majeure) sebagaimana dimaksud pada Pasal 9 Perjanjian ini.',0,'J',0);
-$pdf->Ln(10);
+if ($hasil['jml']>=2) {
+  $pdf->AddPage();
+}else{
+  $pdf->Ln(10);
+}
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->MultiCell(188,5,'PASAL 9
   KEADAAN MEMAKSA (FORCE MAJEURE)',0,'C',0);
@@ -743,7 +736,9 @@ $pdf->writeHTML($tbl);
 $pdf->Cell(20,5,'c.',0,0,'R',0);
 $pdf->MultiCell(159,5,'Keterlambatan pengiriman   barang yang disebabkan oleh Pihak Ekspedisi, Embargo (didefinisikan sebagai waktu melebihi 30  hari sejak hari kedatangan dari kapal-kapal yang siap pembongkaran muatan).
 ',0,'J',0);
-$pdf->addpage();
+if ($hasil['jml']<2) {
+  $pdf->AddPage();
+}
 $pdf->Rect(15, 12, 185, 310, 'D');
 $pdf->SetMargins(16, 10, 10, true);
 $pdf->Ln(0);
@@ -793,13 +788,11 @@ $tbl = '<b>Pihak  Pertama                                                       
 $pdf->Ln(-15);
 $pdf->Cell(34,5,' ',0,0,'R',0);
 $pdf->writeHTML($tbl);
-$pdf->Ln(10);
-if ($hasil['jml']==2) {
+if ($hasil['jml']>=2) {
   $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(18);
-  
+  $pdf->Ln(10);
 }else{
-  $pdf->Ln(8);
+  $pdf->Ln(13);
 }
 
 $pdf->SetFont('Calibri', 'b', 11);
@@ -823,7 +816,11 @@ $tbl = '
 $pdf->Ln(-10);
 $pdf->Cell(72,5,' ',0,0,'R',0);
 $pdf->writeHTML($tbl);
-$pdf->Ln(18);
+if ($hasil['jml']>=2) {
+  $pdf->AddPage();
+}else{
+  $pdf->Ln(18);
+}
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->Cell(190,6,'PASAL 12',0,1,'C',0);
 $pdf->Cell(190,4, 'PENAMBAHAN ATAU PENGURANGAN PEKERJAAN',0,1,'C',0);
@@ -836,7 +833,9 @@ $pdf->Cell(14,5,'1.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Apabila terdapat rencana penambahan atau pengurangan Pekerjaan, maka  Pihak yang mengusulkan hal tersebut wajib memberitahukannya kepada Pihak lain.',0,'J',0);
 $pdf->Cell(14,5,'2.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Biaya atas penambahan atau pengurangan Pekerjaan tidak termasuk dalam Harga Borongan pada Perjanjian ini dan akan disepakati bersama  oleh Para Pihak baik melalui Adendum Perjanjian atau pembuatan perjanjian baru.',0,'J',0);
-$pdf->addpage();
+if ($hasil['jml']<2) {
+  $pdf->addpage();
+}
 $pdf->Rect(15, 12, 185, 310, 'D');
 $pdf->Cell(18,5,'3.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Jika                       berkehendak untu mengganti salah satu atau beberapa material dari setiap pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh ',0,'J',0);
@@ -848,16 +847,15 @@ $tbl = '<b>Pihak Pertama.</b>';
 $pdf->Cell(118,5,'',0,0,'R',0);
 $pdf->writeHTML($tbl);
 $pdf->Ln(5);
-if ($hasil['jml']!=2) {
-  $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(10);
-  
+if ($hasil['jml']>=2) {
+  $pdf->Ln(8);
+}else{
+  $pdf->Ln(5);
 }
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->MultiCell(192,5,'PASAL 13
   PENYELESAIAN PERSELISIHAN',0,'C',0);
 $pdf->Ln(5);
-
 $pdf->SetFont('Calibri', '', 11);
 $pdf->Cell(15,5,'1.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Apabila dalam pelaksanaan pekerjaan ini terjadi perselisihan atau perbedaan pendapat antara Para Pihak, maka terlebih dahulu akan diselesaikan secara musyawarah dan mufakat.',0,'J',false);
@@ -867,10 +865,10 @@ $pdf->Cell(15,5,'3.',0,0,'R',0);
 $tbl = 'Semua biaya penyelesaian perselisihan akan menjadi tanggung jawab Para Pihak.';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
-if ($hasil['jml']!=2) {
-  $pdf->SetMargins(13, 10, 10, true);
-  $pdf->Ln(10);
-  
+if ($hasil['jml']>=2) {
+  $pdf->Ln(8);
+}else{
+  $pdf->Ln(5);
 }
 $pdf->Ln(5);
 $pdf->SetFont('Calibri', 'b', 11);
@@ -916,7 +914,7 @@ $pdf->Cell(78-$ln,5,'',0,0,'R',0);
 
 $pdf->Cell(20,5,ucwords($hasil['jabatan']),0,1,'L',0);
 $pdf->SetMargins(13, 10, 10, true);
-if ($hasil['jml']==2) {
+if ($hasil['jml']>=2) {
   $pdf->Ln(15);
 }else{
   $pdf->Ln(135);
@@ -989,7 +987,7 @@ while (  $hasil1 = mysql_fetch_array($rs2)) {
 
 }
 
-if ($hasil['jml']==2) {
+if ($hasil['jml']>=2) {
   $pdf->Ln(30);
 }
 if ($jmlcol == 0) {
