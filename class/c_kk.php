@@ -320,13 +320,20 @@ class c_kk
                     $nomer++;
 				}
 			}
-			$q3 = "DELETE FROM aki_spk ";
-			$q3.= "WHERE (nokk)='".$nokk."';";
-			if (!mysql_query( $q3, $dbLink))
-						throw new Exception($q.'Gagal ubah data KK10.');
+
+			$rsTempSPK=mysql_query("SELECT * FROM `aki_spk` WHERE `nokk` = '".$params["txtnoKk"]."'", $dbLink);
+			$tempSPK = mysql_fetch_array($rsTempSPK);
+			$noproyek  = $temp['noproyek'];
+			$ket = 'first';
+			if ($noproyek !='-') {
+				$ket = 'revisi';
+				$q3 = "UPDATE `aki_spk` SET `ket`='".$ket."' WHERE noKk='".$nokk."'";
+				if (!mysql_query( $q3, $dbLink))
+					throw new Exception('Gagal ubah data KK. ');
+			}
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d H:i:s");
-			$ket = "`nomer`=".$params["txtnoKk"]."  -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
+			$ket = "`nomer`=".$params["txtnoKk"]." -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))

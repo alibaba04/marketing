@@ -47,7 +47,6 @@ $datakcolor1 = '';
 ?>
 <SCRIPT language="JavaScript" TYPE="text/javascript">
   $(document).ready(function () {
-    //$("#myNoteAcc").modal({backdrop: 'static'});
     var link = window.location.href;
     $('#btnSend').click(function(){
       $('#txtNote').val($('#txtmNote').val());
@@ -86,15 +85,15 @@ $datakcolor1 = '';
   $txtnokk='';
   $approvekk = '';
   $rsTemp = mysql_query($q, $dbLink);
-  if ($dataSph = mysql_fetch_array($rsTemp)) {
-    echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataSph["noKk"] . "'>";
-    echo "<input type='hidden' name='txtnoSph' id='txtnoSph' value='" . $dataSph["noSph"] . "'>";
+  if ($dataspk = mysql_fetch_array($rsTemp)) {
+    echo "<input type='hidden' name='txtnoKk' id='txtnoKk' value='" . $dataspk["noKk"] . "'>";
+    echo "<input type='hidden' name='txtnoSph' id='txtnoSph' value='" . $dataspk["noSph"] . "'>";
     echo "<input type='hidden' name='txtnoKkEn' id='txtnoKkEn' value='" . $_GET["noKK"] . "'>";
-    $txtnokk=$dataSph["noKk"];
-    $filekubah=$dataSph["filekubah"];
-    $filekaligrafi=$dataSph["filekaligrafi"];
-    $approvekk = $dataSph["approve"];
-    $hargaKubah = $dataSph["harga"];
+    $txtnokk=$dataspk["noKk"];
+    $filekubah=$dataspk["filekubah"];
+    $filekaligrafi=$dataspk["filekaligrafi"];
+    $approvekk = $dataspk["approve"];
+    $hargaKubah = $dataspk["harga"];
   }
   if ($_GET["mode"] == "addNote") {
     echo "<input type='hidden' name='txtMode' id='txtMode' value='addNote'>";
@@ -122,15 +121,22 @@ $datakcolor1 = '';
       </div>
       <div class="col-sm-6 invoice-col">
         <h2 class="page-header" style="margin: 0;">
-          <button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;" <?php echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataSph["noKk"])."'"; ?>><i class="fa fa-pencil" ></i></button>
-          <b><i class="fa fa-globe"></i> <?php  echo $dataSph["nospk"]; ?></b>
-          <small>No Kontrak: <?php  echo $dataSph["noKk"]; ?></small>
+          <?php
+              if ($dataspk["noproyek"]=='-') {
+                echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
+                echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataspk["noKk"])."'"; 
+                echo '><i class="fa fa-pencil" ></i></button>';
+              }
+          ?>
+          
+          <b><i class="fa fa-globe"></i> <?php  echo $dataspk["nospk"]; ?></b>
+          <small>No Kontrak: <?php  echo $dataspk["noKk"]; ?></small>
           <input type="hidden" name="txtNote" id="txtNote" class="form-control" value="" placeholder="Empty" >
         </h2>
-        <h4>Proyek <?php if ( $dataSph["project_pemerintah"]=='1') {
-         echo 'Pemerintah '.$dataSph["nproyek"];
+        <h4>Proyek <?php if ( $dataspk["project_pemerintah"]=='1') {
+         echo 'Pemerintah '.$dataspk["nproyek"];
          }else{
-          echo $dataSph["nproyek"];
+          echo $dataspk["nproyek"];
         }  
         $mproduksi=0;
         $mpemasangan=0;
@@ -187,11 +193,19 @@ $datakcolor1 = '';
           $i++;
         }
         ?></h4>
-        <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataSph["alamat_proyek"]; ?></td><address></h5>
+        <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataspk["alamat_proyek"]; ?></td><address></h5>
+        <?php
+          if ($dataSph["noproyek"]!='-') {
+            echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg" disabled="">'.$dataspk["noproyek"].'</button></div>';
+          }
+          if ($dataSph["ket"]!='-') {
+            echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg" disabled="">'.strtoupper($dataspk["ket"]).'</button></div>';
+          }
+        ?>
           <div class="col-lg-3">
           <button type="button" class="btn btn-block btn-default btn-lg" disabled="">
         <?php
-          if ($dataSph["project_pemerintah"]=='1') {
+          if ($dataspk["project_pemerintah"]=='1') {
             echo "PPN";
           }else{
             echo "Non PPN";
@@ -211,10 +225,6 @@ $datakcolor1 = '';
           <li class="active"><a href="#cust" data-toggle="tab">Customer</a></li>
           <li><a href="#spec" data-toggle="tab">Specification</a></li>
           <li><a href="#termin" data-toggle="tab">Termin</a></li>
-          <div class="col-lg-6 pull-right">
-            <button type="button" class="btn btn-primary pull-right" id="btnNote" onclick="omodal()" style="margin-right: 5px;"><i class="fa fa-pencil-square-o" ></i> Note
-            </button>
-          </div>
         </ul>
         <div class="tab-content">
           <div class="tab-pane" id="termin">
@@ -229,40 +239,40 @@ $datakcolor1 = '';
                 <?php 
                 $q1 = "SELECT * FROM `aki_dpembayaran` WHERE MD5(noKk)='" . $noKk."'";
                 $rsTemp1 = mysql_query($q1, $dbLink);
-                $dataSph1 = mysql_fetch_array($rsTemp1);
-                $hp1 = ($hargaKubah*($dataSph1['persen1']/100));
-                $hp2 = ($hargaKubah*($dataSph1['persen2']/100));
-                $hp3 = ($hargaKubah*($dataSph1['persen3']/100));
-                $hp4 = ($hargaKubah*($dataSph1['persen4']/100));
+                $dataspk1 = mysql_fetch_array($rsTemp1);
+                $hp1 = ($hargaKubah*($dataspk1['persen1']/100));
+                $hp2 = ($hargaKubah*($dataspk1['persen2']/100));
+                $hp3 = ($hargaKubah*($dataspk1['persen3']/100));
+                $hp4 = ($hargaKubah*($dataspk1['persen4']/100));
                 ?>
                 <tr>
                   <td >1</td>
-                  <td style="width:50%"><?php  echo $dataSph1["wpembayaran1"]; ?></td>
-                  <td ><?php  echo $dataSph1["persen1"].' %'; ?></td>
+                  <td style="width:50%"><?php  echo $dataspk1["wpembayaran1"]; ?></td>
+                  <td ><?php  echo $dataspk1["persen1"].' %'; ?></td>
                   <td style="text-align: right;"><?php  echo number_format($hp1); ?></td>
                 </tr>
                 <tr>
                   <td >2</td>
-                  <td style="width:50%"><?php  echo $dataSph1["wpembayaran2"]; ?></td>
-                  <td ><?php  echo $dataSph1["persen2"].' %'; ?></td>
+                  <td style="width:50%"><?php  echo $dataspk1["wpembayaran2"]; ?></td>
+                  <td ><?php  echo $dataspk1["persen2"].' %'; ?></td>
                   <td style="text-align: right;"><?php  echo number_format($hp2); ?></td>
                 </tr>
                 <tr>
                   <td >3</td>
-                  <td style="width:50%"><?php  echo $dataSph1["wpembayaran3"]; ?></td>
-                  <td ><?php  echo $dataSph1["persen3"].' %'; ?></td>
+                  <td style="width:50%"><?php  echo $dataspk1["wpembayaran3"]; ?></td>
+                  <td ><?php  echo $dataspk1["persen3"].' %'; ?></td>
                   <td style="text-align: right;"><?php  echo number_format($hp3); ?></td>
                 </tr>
                 <tr>
                   <td >4</td>
-                  <td style="width:50%"><?php  echo $dataSph1["wpembayaran4"]; ?></td>
-                  <td ><?php  echo $dataSph1["persen4"].' %'; ?></td>
+                  <td style="width:50%"><?php  echo $dataspk1["wpembayaran4"]; ?></td>
+                  <td ><?php  echo $dataspk1["persen4"].' %'; ?></td>
                   <td style="text-align: right;"><?php  echo number_format($hp4); ?></td>
                 </tr>
                 <tr style="background-color: #ddd">
                   <td ></td>
                   <td style="width:50%">Total</td>
-                  <td ><?php  echo $dataSph1["persen1"]+$dataSph1["persen2"]+$dataSph1["persen3"]+$dataSph1["persen4"].' %'; ?></td>
+                  <td ><?php  echo $dataspk1["persen1"]+$dataspk1["persen2"]+$dataspk1["persen3"]+$dataspk1["persen4"].' %'; ?></td>
                   <td style="text-align: right;"><b><?php  echo number_format($hp1+$hp2+$hp3+$hp4); ?></b></td>
                 </tr>
               </table>
@@ -275,7 +285,7 @@ $datakcolor1 = '';
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i> </span>
                   <h5 class="timeline-header">Nama </h5>
-                  <div class="timeline-body"><?php  echo $dataSph["nama_cust"].' ('.$dataSph["jabatan"].')'; ?>
+                  <div class="timeline-body"><?php  echo $dataspk["nama_cust"].' ('.$dataspk["jabatan"].')'; ?>
                   </div>
                 </div>
               </li>
@@ -284,7 +294,7 @@ $datakcolor1 = '';
                 <div class="timeline-item">
                   <span class="time"><i class="fa fa-clock-o"></i></span>
                   <h5 class="timeline-header">No Identitas </h5>
-                  <div class="timeline-body"><?php  echo $dataSph["no_id"].' ('.$dataSph["jenis_id"].')'; ?>
+                  <div class="timeline-body"><?php  echo $dataspk["no_id"].' ('.$dataspk["jenis_id"].')'; ?>
                   </div>
                 </div>
               </li>
@@ -294,7 +304,7 @@ $datakcolor1 = '';
                   <span class="time"><i class="fa fa-clock-o"></i></span>
                   <h5 class="timeline-header">No HP </h5>
                   <div class="timeline-body">
-                    <?php  echo $dataSph["no_phone"]; ?>
+                    <?php  echo $dataspk["no_phone"]; ?>
                   </div>
                 </div>
               </li>
@@ -304,7 +314,7 @@ $datakcolor1 = '';
                   <span class="time"><i class="fa fa-clock-o"></i></span>
                   <h5 class="timeline-header">Alamat Customer </h5>
                   <div class="timeline-body">
-                    <?php  echo $dataSph["alamat"].' '.$dataSph["kn"].', '.$dataSph["pn"]; ?>
+                    <?php  echo $dataspk["alamat"].' '.$dataspk["kn"].', '.$dataspk["pn"]; ?>
                   </div>
                 </div>
               </li>
@@ -314,127 +324,76 @@ $datakcolor1 = '';
             </ul>
           </div>
           <div class="tab-pane" id="spec">
-            <ul class="timeline timeline-inverse">
-              <li>
-                <i class="fa fa-tags bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body">Kubah <?php echo $dataSph["bahan"].', '.strtoupper($dataSph["model"]); ?>
+            <?php
+            $q4="SELECT dkk.*,col.* FROM aki_dkk dkk left join aki_kkcolor col on dkk.noKK=col.noKK and dkk.nomer=col.nomer WHERE 1=1 and MD5(dkk.noKk)='".$noKk."' group by dkk.nomer order by dkk.nomer asc";
+            $rsTemp3 = mysql_query($q4, $dbLink);
+            while ($detail = mysql_fetch_array($rsTemp3)) {
+              ?>
+              <ul class="timeline timeline-inverse" style="margin: 1%;">
+                <li style="margin-bottom: 0;">
+                  <i class="fa fa-dot-circle-o bg-aqua"></i>
+                  <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> </span>
+                    <h5 class="timeline-header">Proyek <?php  echo $detail["nomer"]+1; ?> </h5>
+                    <div class="timeline-body"><h4><b>Kubah <?php echo $detail["bahan"].', '.strtoupper($detail["model"]); ?>
+                  </b></h4></div>
+                  <div class="timeline-body"><h4>Diameter <b><?php  echo $detail["d"]; ?> meter,</b> Tinggi <b><?php  echo $detail["t"]; ?> meter,</b> Luas <b><?php  echo $detail["luas"]; ?> meter<sup>2</sup></b></h4>
                   </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-dot-circle-o bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> </span>
-                  <h5 class="timeline-header">Ukuran Kubah </h5>
-                  <div class="timeline-body"><h4>Diameter <b><?php  echo $dataSph["d"]; ?> meter,</b> Tinggi <b><?php  echo $dataSph["t"]; ?> meter,</b> Luas <b><?php  echo $dataSph["luas"]; ?> meter<sup>2</sup></b></h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Rangka Kubah </h5>
-                  <div class="timeline-body">
+                  <div class="timeline-body" style="margin-left: 1.5%;">
                     <?php  
                     echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
-                    ?>
+                    echo $bahan.$Finishing; 
+                    echo $plafon; 
+                    echo $aksesoris; ?></div>
+                    <div class="timeline-body"><h4><b><?php  echo 'Rp '.number_format($detail['ntransport']).' ('.$detail['ktransport'].')'; ?></h4></b>
+                    </div>
+                    <div class="timeline-body"><table class="table">
+                      <tr>
+                        <th><center>Warna</center></th>
+                        <th><center>Kode</center></th>
+                      </tr>
+                      <?php 
+                      
+                      if ($detail['color1']!='-') {
+                        $datacolor1 = $detail['color1'];
+                        $datakcolor1 = $detail['kcolor1'];
+                        echo '<tr><td style="text-align: center;">'.$detail['color1'];
+                        echo '<td style="text-align: center;">'.$detail['kcolor1'].'</tr>';
+                      }else{
+                        echo '<tr><td style="text-align: center;">-';
+                        echo '<td style="text-align: center;">-</tr>';
+                      }
+                      if ($detail['color2']!='-') {
+                        echo '<tr><td style="text-align: center;">'.$detail['color2'];
+                        echo '<td style="text-align: center;">'.$detail['kcolor2'].'</tr>';
+                      }
+                      if ($detail['color3']!='-') {
+                        echo '<tr><td style="text-align: center;">'.$detail['color3'];
+                        echo '<td style="text-align: center;">'.$detail['kcolor3'].'</tr>';
+                      }
+                      if ($detail['color4']!='-') {
+                        echo '<tr><td style="text-align: center;">'.$detail['color4'];
+                        echo '<td style="text-align: center;">'.$detail['kcolor4'].'</tr>';
+                      }
+                      if ($detail['color5']!='-') {
+                        echo '<tr><td style="text-align: center;">'.$detail['color5'];
+                        echo '<td style="text-align: center;">'.$detail['kcolor5'].'</tr>';
+                      }
+                      
+                      echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
+                      echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
+                      ?></table>
+                    </div>
+                    <div class="timeline-body"><h4>Masa Produksi <b><?php  echo $mproduksi; ?> hari,</b> Masa Pemasangan <b><?php  echo $mpemasangan; ?> hari</b></h4></div>
                   </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Atap Kubah </h5>
-                  <div class="timeline-body"><?php  echo $bahan.$Finishing; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Plafon Kubah </h5>
-                  <div class="timeline-body"><?php  echo $plafon; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Aksesoris Kubah </h5>
-                  <div class="timeline-body"><?php  echo $aksesoris; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-truck bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-money"></i></span>
-                  <h5 class="timeline-header">Biaya Transport </h5>
-                  <div class="timeline-body"><?php  echo 'Rp '.number_format($dataSph['ntransport']).' ('.$dataSph['ktransport'].')'; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-unsorted bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><table class="table"><tr>
-                    <th><center>Warna</center></th>
-                    <th><center>Kode</center></th>
-                  </tr>
-                  <?php 
-                  $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
-                  $rsTemp2 = mysql_query($q2, $dbLink2);
-                  $i=1;
-                  while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
-                    if ($dataSph2['color1']!='-') {
-                      $datacolor1 = $dataSph2['color1'];
-                      $datakcolor1 = $dataSph2['kcolor1'];
-
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
-                    }
-                    if ($dataSph2['color2']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color2'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor2'].'</tr>';
-                    }
-                    if ($dataSph2['color3']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color3'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor3'].'</tr>';
-                    }
-                    if ($dataSph2['color4']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color4'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor4'].'</tr>';
-                    }
-                    if ($dataSph2['color5']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color5'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor5'].'</tr>';
-                    }
-                  }
-                  echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
-                  echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
-                  ?></table>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-unsorted bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><h4>Masa Produksi <b><?php  echo $mproduksi; ?> hari,</b> Masa Pemasangan <b><?php  echo $mpemasangan; ?> hari</b></h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-clock-o bg-gray"></i>
-              </li>
-            </ul>
+                </li>
+                <li>
+                  <i class="fa fa-clock-o bg-gray"></i>
+                </li>
+              </ul>
+              <?php
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -476,17 +435,17 @@ $datakcolor1 = '';
                 $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'SPK Note, nospk=%".$txtnokk."%'";
                 $rsTemp3 = mysql_query($q3, $dbLink);
                 $txtket = '';
-                while ($dataSph3 = mysql_fetch_array($rsTemp3)) {
-                  $ket = explode("=",$dataSph3["ket"]);
+                while ($dataspk3 = mysql_fetch_array($rsTemp3)) {
+                  $ket = explode("=",$dataspk3["ket"]);
                   $ket = explode(",",$ket[2]);
-                  $txtket = $dataSph3["ket"];
-                  $date=date_create($dataSph3["datetime"]);
-                  if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
-                    echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
+                  $txtket = $dataspk3["ket"];
+                  $date=date_create($dataspk3["datetime"]);
+                  if ($dataspk3["kodeUser"] == $_SESSION["my"]->id) {
+                    echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataspk3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-left">'.date_format($date,"H:i d-m-Y").'</span></div>';
                     echo '<img src="dist/img/'.$_SESSION["my"]->avatar.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }else{
-                    echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
+                    echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataspk3["kodeUser"];
                     echo '</span><span class="direct-chat-timestamp pull-right">'.date_format($date,"H:i d-m-Y").'</span></div>';
                     echo '<img src="dist/img/avt5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                   }

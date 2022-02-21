@@ -230,7 +230,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                                         <i class="fa fa-fw fa-check"></i></button>
                                         <ul class="dropdown-menu" style="border-color:#000;">';
-                                        echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
+                                        //echo "<li><a style='cursor:pointer;' onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-edit'></i>&nbsp;Edit</a></li>";
                                         echo "<li><a style='cursor:pointer;' onclick=location.href=location.href='pdf/pdf_kk.php?&noKK=" . md5($query_data["noKK"]) . "'><i class='fa fa-fw fa-money'></i>KK Approve</a></li>";
                                         echo "</ul></div></td>";
                                 }

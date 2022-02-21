@@ -568,7 +568,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
 if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
     $pdf->Ln(5);
     $pdf->SetFont('helvetica', '', 11);
-    $pdf->SetAutoPageBreak(TRUE, 0);
+    $pdf->SetAutoPageBreak(true);
     if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
         $pdf->Ln(0);
@@ -1001,5 +1001,10 @@ $pdf->addpage();
 $pdf->SetFont('helvetica', 'B', 11);
 $pdf->Cell(0,6,'CONTOH MOTIF PLAFON KALIGRAFI',0,1,'C',0);
 $pdf->image('../dist/img/plafon2.png',17,70,184,202);
+$pdf->SetTitle('SPH QOOBAH');
+$pdf->SetAuthor('alibaba');
+$pdf->SetSubject("PT. Anugerah Qoobah Indonesia");
+$pdf->SetKeywords("PT. Anugerah Qoobah Indonesia");
+$pdf->SetCreator('sikubah.com');
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

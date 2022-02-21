@@ -393,8 +393,8 @@ function Header()
 
 function Footer()
 {
-	$this->SetMargins(75, 10, 15, true);
-	$this->SetY(-33);
+	$this->SetMargins(76, 10, 15, true);
+	$this->SetY(-29);
     // Arial italic 8
     $this->SetFont('helvetica','I',8);
     // Page number

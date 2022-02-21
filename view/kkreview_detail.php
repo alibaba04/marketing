@@ -56,10 +56,26 @@ $datakcolor1 = '';
     $('#btnApprove').click(function(){
       sendnotif('Approve');
     });
+    $('#btnSubmit').click(function(){
+      var password = $('#txtPass').val();
+      $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"alibaba",pass:password } ,function(data)
+      {
+        if(data=='yes') {
+          location.href = 'http://localhost/marketing/index.php?page=view/kk_detail&mode=edit&noKK='+$('#txtnoKkEn').val();
+        }else{
+          toastr.error('Gagal !!!<br> Password Admin Salah . . . .')
+          $("#txtPass").focus();
+        }
+      });
+    });
   });
   function omodal() {
     $("#myNoteAcc").modal({backdrop: 'static'});
   }
+  function modalpass() {
+    $("#modal-pass").modal({backdrop: 'static'});
+  }
+
   function accmodal() {
     if ($('#ktransport').val()!='' ) {
       if ($('#datadesain').val()!='' && $('#color1').val()!='' ) {
@@ -124,7 +140,21 @@ $datakcolor1 = '';
       </div>
       <div class="col-sm-6 invoice-col">
         <h2 class="page-header" style="margin: 0;">
-          <button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;" <?php echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataSph["noKk"])."'"; ?>><i class="fa fa-pencil" ></i></button>
+          <?php
+            $q= "SELECT * FROM `aki_spk` WHERE 1 and MD5(nokk)='" . $noKk."'";
+            $rsTemp = mysql_query($q, $dbLink);
+            if ($dataspk = mysql_fetch_array($rsTemp)) {
+              if ($dataspk["noproyek"]=='-') {
+                echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
+                echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataspk["noKk"])."'"; 
+                echo '><i class="fa fa-pencil" ></i></button>';
+              }else{
+                echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
+                echo 'onclick=modalpass()><i class="fa fa-pencil" ></i></button>';
+              }
+            }
+          ?>
+          
           <b><i class="fa fa-globe"></i> <?php  echo $dataSph["noKk"]; ?></b>
           <small>No SPH: <?php  echo $dataSph["noSph"]; ?></small>
           <input type="hidden" name="txtNote" id="txtNote" class="form-control" value="" placeholder="Empty" >
@@ -283,7 +313,7 @@ $datakcolor1 = '';
             </div>
           </div>
           <div class="active tab-pane" id="cust">
-            <ul class="timeline timeline-inverse">
+            <ul class="timeline timeline-inverse" style="margin: 1%;">
               <li>
                 <i class="fa fa-user bg-aqua"></i>
                 <div class="timeline-item">
@@ -328,127 +358,76 @@ $datakcolor1 = '';
             </ul>
           </div>
           <div class="tab-pane" id="spec">
-            <ul class="timeline timeline-inverse">
-              <li>
-                <i class="fa fa-tags bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body">Kubah <?php echo $dataSph["bahan"].', '.strtoupper($dataSph["model"]); ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-dot-circle-o bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> </span>
-                  <h5 class="timeline-header">Ukuran Kubah </h5>
-                  <div class="timeline-body"><h4>Diameter <b><?php  echo $dataSph["d"]; ?> meter,</b> Tinggi <b><?php  echo $dataSph["t"]; ?> meter,</b> Luas <b><?php  echo $dataSph["luas"]; ?> meter<sup>2</sup></b></h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Rangka Kubah </h5>
-                  <div class="timeline-body">
-                    <?php  
-                    echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
-                    ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Atap Kubah </h5>
-                  <div class="timeline-body"><?php  echo $bahan.$Finishing; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Plafon Kubah </h5>
-                  <div class="timeline-body"><?php  echo $plafon; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-asterisk bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <h5 class="timeline-header">Aksesoris Kubah </h5>
-                  <div class="timeline-body"><?php  echo $aksesoris; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-truck bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-money"></i></span>
-                  <h5 class="timeline-header">Biaya Transport </h5>
-                  <div class="timeline-body"><?php  echo 'Rp '.number_format($dataSph['ntransport']).' ('.$dataSph['ktransport'].')'; ?>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-unsorted bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><table class="table"><tr>
-                    <th><center>Warna</center></th>
-                    <th><center>Kode</center></th>
-                  </tr>
-                  <?php 
-                  $q2="SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
-                  $rsTemp2 = mysql_query($q2, $dbLink2);
-                  $i=1;
-                  while ($dataSph2 = mysql_fetch_array($rsTemp2)) {
-                    if ($dataSph2['color1']!='-') {
-                      $datacolor1 = $dataSph2['color1'];
-                      $datakcolor1 = $dataSph2['kcolor1'];
-
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color1'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor1'].'</tr>';
-                    }
-                    if ($dataSph2['color2']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color2'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor2'].'</tr>';
-                    }
-                    if ($dataSph2['color3']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color3'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor3'].'</tr>';
-                    }
-                    if ($dataSph2['color4']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color4'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor4'].'</tr>';
-                    }
-                    if ($dataSph2['color5']!='-') {
-                      echo '<tr><td style="text-align: center;">'.$dataSph2['color5'];
-                      echo '<td style="text-align: center;">'.$dataSph2['kcolor5'].'</tr>';
-                    }
-                  }
-                  echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
-                  echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
-                  ?></table>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-unsorted bg-aqua"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i></span>
-                  <div class="timeline-body"><h4>Masa Produksi <b><?php  echo $mproduksi; ?> hari,</b> Masa Pemasangan <b><?php  echo $mpemasangan; ?> hari</b></h4>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <i class="fa fa-clock-o bg-gray"></i>
-              </li>
-            </ul>
+            <?php
+                $q4="SELECT dkk.*,col.* FROM aki_dkk dkk left join aki_kkcolor col on dkk.noKK=col.noKK and dkk.nomer=col.nomer WHERE 1=1 and MD5(dkk.noKk)='".$noKk."' group by dkk.nomer order by dkk.nomer asc";
+                $rsTemp3 = mysql_query($q4, $dbLink);
+                while ($detail = mysql_fetch_array($rsTemp3)) {
+                  ?>
+                  <ul class="timeline timeline-inverse" style="margin: 1%;">
+                    <li style="margin-bottom: 0;">
+                      <i class="fa fa-dot-circle-o bg-aqua"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> </span>
+                        <h5 class="timeline-header">Proyek <?php  echo $detail["nomer"]+1; ?> </h5>
+                        <div class="timeline-body"><h4><b>Kubah <?php echo $detail["bahan"].', '.strtoupper($detail["model"]); ?>
+                        </b></h4></div>
+                        <div class="timeline-body"><h4>Diameter <b><?php  echo $detail["d"]; ?> meter,</b> Tinggi <b><?php  echo $detail["t"]; ?> meter,</b> Luas <b><?php  echo $detail["luas"]; ?> meter<sup>2</sup></b></h4>
+                        </div>
+                        <div class="timeline-body" style="margin-left: 1.5%;">
+                          <?php  
+                          echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
+                           echo $bahan.$Finishing; 
+                           echo $plafon; 
+                           echo $aksesoris; ?></div>
+                        <div class="timeline-body"><h4><b><?php  echo 'Rp '.number_format($detail['ntransport']).' ('.$detail['ktransport'].')'; ?></h4></b>
+                        </div>
+                        <div class="timeline-body"><table class="table">
+                          <tr>
+                            <th><center>Warna</center></th>
+                            <th><center>Kode</center></th>
+                          </tr>
+                          <?php 
+                          
+                            if ($detail['color1']!='-') {
+                              $datacolor1 = $detail['color1'];
+                              $datakcolor1 = $detail['kcolor1'];
+                              echo '<tr><td style="text-align: center;">'.$detail['color1'];
+                              echo '<td style="text-align: center;">'.$detail['kcolor1'].'</tr>';
+                            }else{
+                              echo '<tr><td style="text-align: center;">-';
+                              echo '<td style="text-align: center;">-</tr>';
+                            }
+                            if ($detail['color2']!='-') {
+                              echo '<tr><td style="text-align: center;">'.$detail['color2'];
+                              echo '<td style="text-align: center;">'.$detail['kcolor2'].'</tr>';
+                            }
+                            if ($detail['color3']!='-') {
+                              echo '<tr><td style="text-align: center;">'.$detail['color3'];
+                              echo '<td style="text-align: center;">'.$detail['kcolor3'].'</tr>';
+                            }
+                            if ($detail['color4']!='-') {
+                              echo '<tr><td style="text-align: center;">'.$detail['color4'];
+                              echo '<td style="text-align: center;">'.$detail['kcolor4'].'</tr>';
+                            }
+                            if ($detail['color5']!='-') {
+                              echo '<tr><td style="text-align: center;">'.$detail['color5'];
+                              echo '<td style="text-align: center;">'.$detail['kcolor5'].'</tr>';
+                            }
+                          
+                          echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
+                          echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
+                          ?></table>
+                        </div>
+                        <div class="timeline-body"><h4>Masa Produksi <b><?php  echo $mproduksi; ?> hari,</b> Masa Pemasangan <b><?php  echo $mpemasangan; ?> hari</b></h4></div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                  </ul>
+                  <?php
+                }
+            ?>
           </div>
         </div>
       </div>
@@ -475,55 +454,76 @@ $datakcolor1 = '';
         </div>
       </div>
   <div class="modal fade" id="myNoteAcc" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="box box-success direct-chat direct-chat-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Direct Chat</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool " data-dismiss="modal"><i class="fa fa-times"></i></button>
-              </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="box box-success direct-chat direct-chat-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool " data-dismiss="modal"><i class="fa fa-times"></i></button>
             </div>
-            <div class="box-body">
-              <div class="direct-chat-messages">
-                <?php
-                $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'KK Note, nokk=%".$txtnokk."%'";
-                $rsTemp3 = mysql_query($q3, $dbLink);
-                $txtket = '';
-                while ($dataSph3 = mysql_fetch_array($rsTemp3)) {
-                  $ket = explode("=",$dataSph3["ket"]);
-                  $ket = explode(",",$ket[2]);
-                  $txtket = $dataSph3["ket"];
-                  $date=date_create($dataSph3["datetime"]);
-                  if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
-                    echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
-                    echo '</span><span class="direct-chat-timestamp pull-left">'.date_format($date,"H:i d-m-Y").'</span></div>';
-                    echo '<img src="dist/img/'.$_SESSION["my"]->avatar.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
-                  }else{
-                    echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
-                    echo '</span><span class="direct-chat-timestamp pull-right">'.date_format($date,"H:i d-m-Y").'</span></div>';
-                    echo '<img src="dist/img/avt5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
-                  }
+          </div>
+          <div class="box-body">
+            <div class="direct-chat-messages">
+              <?php
+              $q3= "SELECT * FROM `aki_report` WHERE ket LIKE 'KK Note, nokk=%".$txtnokk."%'";
+              $rsTemp3 = mysql_query($q3, $dbLink);
+              $txtket = '';
+              while ($dataSph3 = mysql_fetch_array($rsTemp3)) {
+                $ket = explode("=",$dataSph3["ket"]);
+                $ket = explode(",",$ket[2]);
+                $txtket = $dataSph3["ket"];
+                $date=date_create($dataSph3["datetime"]);
+                if ($dataSph3["kodeUser"] == $_SESSION["my"]->id) {
+                  echo '<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">'.$dataSph3["kodeUser"];
+                  echo '</span><span class="direct-chat-timestamp pull-left">'.date_format($date,"H:i d-m-Y").'</span></div>';
+                  echo '<img src="dist/img/'.$_SESSION["my"]->avatar.'" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
+                }else{
+                  echo '<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'.$dataSph3["kodeUser"];
+                  echo '</span><span class="direct-chat-timestamp pull-right">'.date_format($date,"H:i d-m-Y").'</span></div>';
+                  echo '<img src="dist/img/avt5.png" class="direct-chat-img" alt="User Image"><div class="direct-chat-text">'.$ket[0].'</div></div>';
                 }
-                date_default_timezone_set("Asia/Jakarta");
-                $tgl = date("Y-m-d H:i:s");
-                $txtket = explode($_SESSION["my"]->privilege."=",$txtket);
-                $q11 = "UPDATE `aki_report` SET `datetime`='".$tgl."',`ket`='".$txtket[0].$_SESSION["my"]->privilege."=0' WHERE ket like '%".$txtnokk."%read by ".$_SESSION["my"]->privilege."=1%'";
-                $result=mysql_query($q11 , $dbLink);
-                ?>
-              </div>
+              }
+              date_default_timezone_set("Asia/Jakarta");
+              $tgl = date("Y-m-d H:i:s");
+              $txtket = explode($_SESSION["my"]->privilege."=",$txtket);
+              $q11 = "UPDATE `aki_report` SET `datetime`='".$tgl."',`ket`='".$txtket[0].$_SESSION["my"]->privilege."=0' WHERE ket like '%".$txtnokk."%read by ".$_SESSION["my"]->privilege."=1%'";
+              $result=mysql_query($q11 , $dbLink);
+              ?>
             </div>
-            <div class="box-footer">
-              <div class="input-group">
-                <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="txtmNote">
-                <span class="input-group-btn">
-                  <button type="Submit" class="btn btn-success btn-flat" id="btnSend">Send</button>
-                </span>
-              </div>
+          </div>
+          <div class="box-footer">
+            <div class="input-group">
+              <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="txtmNote">
+              <span class="input-group-btn">
+                <button type="Submit" class="btn btn-success btn-flat" id="btnSend">Send</button>
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="modal fade" id="modal-pass">
+    <div class="modal-dialog">
+      <div class="modal-content bg-secondary">
+        <div class="modal-header">
+          <h4 class="modal-title">KK sudah menjadi SPK, Input password (Admin) untuk edit</h4>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <label class="control-label" for="txtTglTransaksi">Password</label>
+            </div>
+            <input type="password" name="txtPass" id="txtPass" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btnSubmit">Enter</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
 <div class="clearfix"></div>

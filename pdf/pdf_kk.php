@@ -1012,9 +1012,11 @@ if ($kaligrafi != 0) {
   if ($hasil['filekaligrafi']!='') {
    $pdf->image('../../uploads/'.$hasil['filekaligrafi'],25,70,170,130);
  }
-
-
 }
-
+$pdf->SetTitle('KK QOOBAH');
+$pdf->SetAuthor('alibaba');
+$pdf->SetSubject("PT. Anugerah Qoobah Indonesia");
+$pdf->SetKeywords("PT. Anugerah Qoobah Indonesia");
+$pdf->SetCreator('sikubah.com');
 $pdf->Output(str_replace('/', '.', $no).'-'.$nama_cust.'-'.$alamat.'.pdf','I');
 ?>

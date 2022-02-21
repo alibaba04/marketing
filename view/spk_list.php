@@ -233,7 +233,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "</ul></div></td>";
                                 }
                                 echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/SPKreview_detail&mode=addNote&noKK=" . md5($query_data["nokk"])."'>
-                                <button type='button' class='btn btn-block btn-info'>".($query_data["noSPK"])."</button></a></td>";
+                                <button type='button' class='btn btn-block btn-info'>".($query_data["noproyek"])."</button></a></td>";
                                 echo "<td>" . ($query_data["nospk"]) . "</td>";
                                 echo "<td>" . ($query_data["nokk"]) . "</td>";
                                 echo "<td>" . $query_data["nama_cust"] . "</td>";
