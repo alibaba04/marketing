@@ -30,13 +30,16 @@ $nama_cust = $hasil['nama_cust'];
 $masjid = $hasil['masjid'];
 $pdf->SetFont('helvetica', '', 11); 
 $alamat = $hasil['kname'].', '.$hasil['pname'];
+$n=$hasil['masjid'];
+$nmasjid=explode(' ',$n);
+
 $tbl = '<br>
 Kepada Yth<br><b>'.$nama_cust.'</b><br>
 Panitia Pembangunan '.$masjid.'
 <br>'.$alamat.'<br><br>
 <ol>Di Tempat</ol><br><br>
 Dengan Hormat,<br><br>
-Sehubungan dengan pembangunan Masjid, Kami selaku kontraktor Kubah Masjid mengajukan penawaran harga untuk Kubah.
+Sehubungan dengan pembangunan '.$nmasjid[0].', Kami selaku kontraktor Kubah Masjid mengajukan penawaran harga untuk Kubah.
 ';
 $pdf->writeHTML($tbl);
 $pdf->SetFont('helvetica', '', 11); 

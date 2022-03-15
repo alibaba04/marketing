@@ -659,7 +659,7 @@ function validasiForm(form)
             <div class="input-group-addon">
                 <i class="fa fa-phone">&nbsp;&nbsp;&nbsp;<label class="control-label" for="txtKodeTransaksi">Contact</label></i>
             </div>
-            <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 9999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>" required>
+            <input type="phone" name="txtPhone" id="txtPhone" class="form-control" data-inputmask='"mask": "9999 9999 99999"' data-mask value="<?php  if($_GET['mode']=='edit'){echo $dataSph["no_phone"]; }?>" required>
         </div>
     </div>
     <div class="form-group">
@@ -732,14 +732,22 @@ function validasiForm(form)
                     if ($nm[0]=="Masjid") {
                         $selected = " selected";
                         echo '<option value="Masjid "'.$selected.'>Masjid</option>';
+                        echo '<option value="Mushola ">Mushola</option>';
                         echo '<option value="Atap ">Atap</option>';
                     }elseif ($nm[0]=="Atap") {
                         $selected = " selected";
                         echo '<option value="Masjid ">Masjid</option>';
+                        echo '<option value="Mushola ">Mushola</option>';
                         echo '<option value="Atap "'.$selected.'>Atap</option>';
+                    }elseif ($nm[0]=="Mushola") {
+                        $selected = " selected";
+                        echo '<option value="Masjid ">Masjid</option>';
+                        echo '<option value="Mushola " '.$selected.'>Mushola</option>';
+                        echo '<option value="Atap ">Atap</option>';
                     }
                 }else{
                     echo '<option value="Masjid ">Masjid</option>';
+                    echo '<option value="Mushola ">Mushola</option>';
                     echo '<option value="Atap ">Atap</option>';
                 }
                 ?>
@@ -752,6 +760,9 @@ function validasiForm(form)
                 $nm=explode(' ',$n);
                 if($nm[0]== 'Masjid'){
                     $nm=explode('Masjid',$n);
+                    echo $nm[1];
+                }else if($nm[0]== 'Mushola'){
+                    $nm=explode('Mushola',$n);
                     echo $nm[1];
                 }else{
                     $nm=explode('Atap',$n);

@@ -140,7 +140,7 @@ $datakcolor1 = '';
         }  
         $mproduksi=0;
         $mpemasangan=0;
-        $q2="SELECT kk.mproduksi,kk.mpemasangan, dkk.*FROM aki_kk kk right join aki_dkk dkk on kk.noKk=dkk.noKk WHERE 1=1 and MD5(kk.noKk)='".$noKk."'";
+        $q2="SELECT kk.kproyek,kk.mproduksi,kk.mpemasangan, dkk.*FROM aki_kk kk right join aki_dkk dkk on kk.noKk=dkk.noKk WHERE 1=1 and MD5(kk.noKk)='".$noKk."'";
         $rsTemp = mysql_query($q2, $dbLink);
         $i=1;
         while ($datadSph = mysql_fetch_array($rsTemp)) {
@@ -195,10 +195,13 @@ $datakcolor1 = '';
         ?></h4>
         <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataspk["alamat_proyek"]; ?></td><address></h5>
         <?php
-          if ($dataSph["noproyek"]!='-') {
+          if ($dataspk["kproyek"]=='patas') {
+              echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg bg-yellow" disabled="">PATAS</button></div>';
+          }
+          if ($dataspk["noproyek"]!='-') {
             echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg" disabled="">'.$dataspk["noproyek"].'</button></div>';
           }
-          if ($dataSph["ket"]!='-') {
+          if ($dataspk["ket"]!='-') {
             echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg" disabled="">'.strtoupper($dataspk["ket"]).'</button></div>';
           }
         ?>

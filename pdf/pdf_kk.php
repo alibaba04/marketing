@@ -238,7 +238,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     }
     $aksesoris='';
     if ($hasil2['d']>=5 ){
-      $aksesoris=chr(149).'  Makara bahan galvalume bola full warna gold bentuk <b>Lafadz Allah</b><br>'.chr(149).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
+      $aksesoris=chr(149).'  Makara bahan '.$hasil2['bmakara'].' bentuk <b>'.$hasil2['makara'].'</b><br>'.chr(149).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
       if ($hasil2['d']>=6){
         $lampu='';
         if ($hasil2['d']>=15) {
@@ -249,7 +249,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
         $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m).<br>';
       }
     }else{
-      $aksesoris=chr(149).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
+      $aksesoris=chr(149).'  Makara bahan '.$hasil2['bmakara'].' bentuk <b>'.$hasil2['makara'].'</b><br>';
     }
     $tbl = 
     chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
@@ -900,17 +900,21 @@ $ln=0;
 if (strlen($hasil['jabatan'])>26) {
   $ln=10;
 }
+$kn=0;
+if (strlen($hasil['nama_cust'])>=24) {
+  $kn=5;
+}
 $pdf->Cell(50,5,'Pihak Pertama',0,0,'L',0);
-$pdf->Cell(78-$ln,5,' ',0,0,'R',0);
+$pdf->Cell(78-$ln-$kn,5,' ',0,0,'R',0);
 $pdf->Cell(20,5,'Pihak Kedua',0,0,'L',0);
 $pdf->Ln(35);
 $pdf->SetFont('Calibri','BU');
 $pdf->Cell(50,5,'ANDIK NUR SETIAWAN',0,0,'L',0);
-$pdf->Cell(78-$ln,5,'',0,0,'R',0);
+$pdf->Cell(78-$ln-$kn,5,'',0,0,'R',0);
 $pdf->Cell(20,5,strtoupper($hasil['nama_cust']),0,1,'L',0);
 $pdf->SetFont('Calibri','');
 $pdf->Cell(50,5,'Direktur PT Anugerah Kubah Indonesia',0,0,'L',0);
-$pdf->Cell(78-$ln,5,'',0,0,'R',0);
+$pdf->Cell(78-$ln-$kn,5,'',0,0,'R',0);
 
 $pdf->Cell(20,5,ucwords($hasil['jabatan']),0,1,'L',0);
 $pdf->SetMargins(13, 10, 10, true);

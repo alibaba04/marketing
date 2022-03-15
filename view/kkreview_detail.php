@@ -152,6 +152,10 @@ $datakcolor1 = '';
                 echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
                 echo 'onclick=modalpass()><i class="fa fa-pencil" ></i></button>';
               }
+            }else{
+              echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
+                echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . ($noKk)."'"; 
+                echo '><i class="fa fa-pencil" ></i></button>';
             }
           ?>
           
@@ -203,7 +207,7 @@ $datakcolor1 = '';
           }
           $aksesoris='';
           if ($datadSph['d']>=5 ){
-            $aksesoris=chr(12).'  Makara bahan galvalume bola full warna gold bentuk <b>Lafadz Allah</b><br>'.chr(12).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
+            $aksesoris=chr(12).'  Makara bahan '.$datadSph['bmakara'].' bentuk <b>'.$datadSph['makara'].'</b><br>'.chr(12).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
             if ($datadSph['d']>=6){
               $lampu='';
               if ($datadSph['d']>=15) {
@@ -214,12 +218,17 @@ $datakcolor1 = '';
               $aksesoris=$aksesoris.chr(12).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
             }
           }else{
-            $aksesoris=chr(12).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
+            $aksesoris=chr(12).'  Makara bahan '.$datadSph['bmakara'].' bentuk <b>'.$datadSph['makara'].'</b><br>';
           }
           $i++;
         }
         ?></h4>
         <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataSph["alamat_proyek"]; ?></td><address></h5>
+          <?php
+            if ($dataSph["kproyek"]=='patas') {
+              echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg bg-yellow" disabled="">PATAS</button></div>';
+            }
+          ?>
         <div class="col-lg-4">
           <button type="button" class="btn btn-block btn-default btn-lg" disabled="">
             <?php
