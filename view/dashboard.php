@@ -121,7 +121,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                     $filter2 =  " AND s.affiliate='".$_SESSION['my']->id."' ";
                 }
                 $q = "SELECT p.name,count(s.idSph) as jml FROM `aki_sph` s left join provinsi p on s.provinsi=p.id where aktif=1 ".$filter2." group by s.provinsi order by jml desc,s.tanggal";
-                $rs = new MySQLPagedResultSet($q, 20, $dbLink);
+                $rs = new MySQLPagedResultSet($q, 30, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
                   echo '<tr><td>'.$rowCounter.'.</td>
@@ -198,7 +198,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
                     $filter2 =  " AND s.affiliate='".$_SESSION['my']->id."' ";
                 }
                 $q = "SELECT k.name,count(s.idSph) as jml FROM `aki_sph` s left join kota k on s.kota=k.id where aktif=1 ".$filter2." group by s.kota order by jml desc,s.tanggal";
-                $rs = new MySQLPagedResultSet($q, 20, $dbLink);
+                $rs = new MySQLPagedResultSet($q, 30, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
                   echo '<tr><td>'.$rowCounter.'.</td>

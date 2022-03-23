@@ -325,21 +325,18 @@ $(document).ready(function () {
             $("#txtD").focus();
             return false;
         }
-
         if($("#txtT").val()=='' )
         {
             alert("Tinggi harus diisi!");
             $("#txtT").focus();
             return false;
         }
-
         if ($("#cbomodel").val()=='bawang'){
             if($("#txtDt").val()=='0' ){
                 alert("Diameter Tengah harus diisi!");
                 $("#txtDt").focus();
                 return false;
             } 
-
         }
         if($("#txtongkir").val()=='' )
         {
@@ -347,7 +344,6 @@ $(document).ready(function () {
             $("#txtongkir").focus();
             return false;
         }
-
 
         var bplafon = $("#txtBiayaPlafon").val().replace(/\./g,'');
         var ket = $("#txtket").val();
@@ -423,6 +419,9 @@ $(document).ready(function () {
             $("#txtKel_"+$('#validEdit').val()).val($('#cbokelengkapan').val());
             $("#chkEnGa_"+$('#validEdit').val()).val(chkEnGa);
             $("#chkGold_"+$('#validEdit').val()).val(gold);
+            var ttable = document.getElementById("kendali1");
+            var trow = document.createElement("TR");
+            trow.setAttribute('id','trid_'+tcounter);
         }else{
             var ttable = document.getElementById("kendali");
             var trow = document.createElement("TR");
@@ -1111,9 +1110,9 @@ function validasiForm(form)
                                     <tr>
                                         <td>
                                             <?php
-                                            if($_GET['mode']!='edit'){
+                                            //if($_GET['mode']!='edit'){
                                                 echo '<center><button type="button" class="btn btn-danger" id="btnModal">Tambah Kubah</button></center>';
-                                            } 
+                                            //} 
                                             ?></td>
                                             <td><input type="submit" class="btn btn-primary" value="Save" id="simpan"></td>
                                             <td><a href="index.php?page=html/sph_list">
