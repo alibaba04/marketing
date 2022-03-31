@@ -402,7 +402,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
                 $pdf->Cell(32,6,'','LR',0,'C',0);
             }
             if ($hasil2['rangka']!='') {
-                $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
+                $pdf->MultiCell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
                 $jumrangka++;
             }
         }

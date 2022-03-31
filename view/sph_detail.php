@@ -983,7 +983,7 @@ function validasiForm(form)
                                             <option value=madinah>Madinah</option>";
                                             <option value=bawang>Bawang</option>";
                                             <?php
-                                            if ($_SESSION['my']->privilege == 'ADMIN' || $_SESSION['my']->name == 'Antok') {
+                                            if ($_SESSION['my']->privilege == 'ADMIN' || $_SESSION['my']->privilege == 'GODMODE' || $_SESSION['my']->name == 'Antok') {
                                                 echo '<option value=custom>Custom</option>';
                                             }
                                             ?>
