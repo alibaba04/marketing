@@ -21,14 +21,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     require_once("./class/c_sph.php");
     $tmpsph = new c_sph;
 
-//Jika Mode Tambah/Add
-    if ($_POST["txtMode"] == "Add") {
-        $pesan = $tmpsph->add($_POST);
-    }
 
 //Jika Mode Ubah/Edit
-    if ($_POST["txtMode"] == "Edit") {
-        $pesan = $tmpsph->edit($_POST);
+    if ($_POST["txtMode"] == "note") {
+        $pesan = $tmpsph->note($_POST);
     }
 
 //Jika Mode Hapus/Delete
@@ -55,6 +51,10 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $("#modal-pdf").modal('show');
         $('#pdfno').val($no);
         $('#pdfj').val($pdf);
+    }
+    function mnote($no){
+        $("#modal-note").modal('show');
+        $('#notenoSph').val($no);
     }
 
     $(function () {
@@ -134,7 +134,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             <span class="input-group-btn">
                             <button type="Submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Show</button></span>
                         </div>
-                        
                     </form>
                 </div>
                 <!-- /.box-body -->
@@ -307,12 +306,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     echo '<th width="3%">Action</th>';
                                 }
                                 ?>
-                                <th style="width: 14%">No SPH</th>
+                                <th style="width: 12%">No SPH</th>
+                                <th style="width: 20%">Note</th>
                                 <th style="width: 20%">Client</th>
-                                <th style="width: 20%">Address</th>
+                                <th style="width: 15%">Address</th>
                                 <th style="width: 28%">Information</th>
-                                <th style="width: 5%">Date</th>
-                                <th style="width: 13%">Operator</th>
+                                <th style="width: 4%">Date</th>
+                                <th style="width: 5%">Operator</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -370,15 +370,21 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }else{
                                     $pdf = 'pdf_sph.php';
                                 }
-                                $colorr='btn-info';
+                                $colorr='btn-default';
                                 if (strtoupper($query_data["model"])=='KALIGRAFI') {
                                     $colorr='btn-primary';
                                 }
                                 if ($_SESSION["my"]->privilege!='AFFILIATE') {
-                                echo "<td><button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
+                                echo "<td><button type='button' id='btnpdf' onclick=dpdf('".$pdf."','".md5($query_data["noSph"])."') class='btn ".$colorr."'>".($query_data["noSph"])."</button></td>";
                                 }else{
                                     echo "<td><button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
                                 }
+                                if ($_SESSION["my"]->privilege=='kpenjualan' || $_SESSION["my"]->privilege=='GODMODE' ) {
+                                    echo "<td onclick=mnote('".$query_data["noSph"]."')>" . $query_data["note"] ."</td><input type='hidden' name='mnoted' id='mnoted' value='" . $query_data["note"] ."'>";
+                                }else{
+                                    echo "<td >" . $query_data["note"] ."</td><input type='hidden' name='mnoted' id='mnoted' value='" . $query_data["note"] ."'>";
+                                }
+
                                 /*echo "<td><a onclick=\"if(confirm('Download data SPH ?')){location.href='pdf/".$pdf."?&noSph=" . md5($query_data["noSph"]) . "'}\" style='cursor:pointer;'>
                                 <button type='button' id='btnpdf' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></a></td>";*/
                                 echo "<td><b>" . ($query_data["nama_cust"]) . "</b><br>" ;
@@ -405,7 +411,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                     }
                                 }}
                                 
-                                echo "</td><td>" . $query_data["kn"] . ", ". $query_data["pn"] ."</td>";
+                                echo "</td><td><center>" . ucwords(strtolower($query_data["kn"])) ."</center></td>";
                                 $kel = '';
                                 if ($query_data["plafon"] == 0){
                                     $kel = 'Full';
@@ -418,9 +424,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 if ($query_data["dt"] != 0){
                                     $dt = ', DT : '.$query_data["dt"];
                                 }
-                                $spek = '<b>'.$query_data["masjid"].'</b>, MODEL : '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
+                                $spek = '<b>'.$query_data["masjid"].'</b>, '.strtoupper($query_data["model"]).', D: '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.strtoupper($kel);
                                 echo "<td>" . $spek ."</td>";
-                                echo "<td><button style='pointer-events: none;' class='btn btn-block btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
+                                echo "<td><button style='pointer-events: none;' class='btn btn-default'>" . tgl_ind($query_data["tanggal"]) . "</button></td>";
                                 echo "<td><center>" . strtoupper($query_data["nama"]) ." <br>(".$query_data["affiliate"].")</center></td>";
                                 echo("</tr>");
                                 $rowCounter++;
@@ -447,9 +453,30 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             <div class="modal-footer justify-content-between">
                 <input type="hidden" name="" id="pdfno">
                 <input type="hidden" name="" id="pdfj">
+               
                 <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary pull-right" id="btnSubmit">Download</button>
             </div>
         </div>
     </div>
 </div>
+<form action="index2.php?page=view/sph_list" method="post" name="frmSPh" onSubmit="return validasiForm(this);" autocomplete="off">
+<input type='hidden' name='txtMode'  value='note'>
+<div class="modal fade" id="modal-note">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <input type="hidden" name="notenoSph" id="notenoSph">
+                <h4 class="modal-title">Note</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="txtnote" name="txtnote"></textarea>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary pull-right" id="btnNoted">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

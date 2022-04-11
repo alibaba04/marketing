@@ -8,6 +8,29 @@ defined( 'validSession' ) or die( 'Restricted access' );
 class c_sph
 {
 	var $strResults="";
+	function note(&$params){
+		global $dbLink;
+		require_once './function/fungsi_formatdate.php';
+		$pembuat = $_SESSION["my"]->id;
+		$noSph = secureParam($params["notenoSph"],$dbLink);
+		$note = secureParam($params["txtnote"],$dbLink);
+		try
+		{
+			$q4 = "UPDATE aki_sph SET `note`='".$note."' WHERE noSph='".$noSph."'";
+			if (!mysql_query( $q4, $dbLink))
+						throw new Exception('Gagal tambah data NOTE');
+			@mysql_query("COMMIT", $dbLink);
+					$this->strResults="Sukses Tambah Data NOTE";
+		}
+		catch(Exception $e) 
+		{
+			  $this->strResults="Gagal Tambah Data - ".$e->getMessage().'<br/>';
+			  $result = @mysql_query('ROLLBACK', $dbLink);
+			  $result = @mysql_query('SET AUTOCOMMIT=1', $dbLink);
+			  return $this->strResults;
+		}
+		return $this->strResults;
+	}
 	
 	function addsph(&$params){
 		global $dbLink;
@@ -66,8 +89,8 @@ class c_sph
                     if ($model=='custom') {
                     	for ($k = 1; $k <= $jumRangka ; $k++){
                     		$rangka = secureParam($params["rangka". $k],$dbLink);
-                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
-                    		$q7.= "VALUES ('".$noSph."','".$rangka."');";
+                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`nomer`,`rangka`) ";
+                    		$q7.= "VALUES ('".$noSph."','".$nomer."','".$rangka."');";
                     		if (!mysql_query( $q7, $dbLink))
                     			throw new Exception('Gagal tambah data SPH.');
                     	}

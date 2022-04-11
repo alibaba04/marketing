@@ -41,7 +41,12 @@ class c_kk
 			if (!$result) {
 				throw new Exception('Could not begin transaction');
 			}
-			
+			$qs = "UPDATE `aki_sph` SET `keterangan_kk`='y'";
+			$qs.= "WHERE (noSph)='".$noSph."';";
+
+			if (!mysql_query( $qs, $dbLink))
+				throw new Exception('Gagal hapus data KK.');
+
 			$q = "INSERT INTO aki_kk(`noKk`, `noSph`, `nama_cust`, `jenis_id`, `no_id`, `no_phone`, `jabatan`,`nmasjid`, `nproyek`,`kproyek`, `project_pemerintah`, `alamat_proyek`, `mproduksi`, `mpemasangan`, `alamat`, `provinsi`, `kota`, `tanggal`, `kodeUser`, `aktif`) ";
 			$q.= "VALUES ('".$nokk."','".$noSph."','".$namacust."','".$jenis_id."','".$no_id."','".$no_phone."','".$jabatan."','".$nmasjid."','".$nproyek."','".$kproyek."','".$project_pemerintah."','".$alamat_proyek."','".$mproduksi."','".$mpemasangan."','".$alamat."','".$provinsi."','".$kota."','".$tglTransaksi."','".$pembuat."','1');";
 			if (!mysql_query($q, $dbLink))
@@ -111,7 +116,7 @@ class c_kk
 					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$bmakara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$nameimg[0]."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
-						throw new Exception($q2.'Gagal tambah data KK.');
+						throw new Exception('Gagal tambah data KK.');
 
 					$nomer++;
 				}
@@ -158,7 +163,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults=$q2."Sukses";
+			$this->strResults="Sukses";
 		}
 		catch(Exception $e) 
 		{

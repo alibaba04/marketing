@@ -43,7 +43,7 @@ Sehubungan dengan pembangunan '.$nmasjid[0].', Kami selaku kontraktor Kubah Masj
 ';
 $pdf->writeHTML($tbl);
 $pdf->SetFont('helvetica', '', 11); 
-$q2 = "SELECT ds.gold,ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
+$q2 = "SELECT ds.nomer,ds.gold,ds.luas,ds.biaya_plafon,ds.bahan,ds.idDsph,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport FROM aki_dsph ds WHERE 1=1 and MD5(ds.noSph)='".$noSph."' order by idDsph asc";
 $rs2 = mysql_query($q2, $dbLink);
 $nourut = 1;
 $rincian = '';
@@ -129,18 +129,49 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."' and nomer='".$hasil['nomer']."'";
         $rs3 = mysql_query($q3, $dbLink);
-        $jumrangka=0;
+        $jumrangka=0;$jmlkarakter=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {
-            if ($jumrangka!=0 && $hasil2['rangka']!='') {
-                $pdf->Cell(8,6,'','LR',0,'C',0);
-                $pdf->Cell(32,6,'','LR',0,'C',0);
+            $jmlkarakter = strlen($hasil2['rangka']);
+            if ($jumrangka!=0) {
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }else{
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
+            }else{
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
             }
             if ($hasil2['rangka']!='') {
-                $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
-                $jumrangka++;
+                if ($jmlkarakter>72) {
+                    $pdf->MultiCell(143,6,'   ~ '.$hasil2['rangka'],'LR','J',0);
+                }else{
+                    $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
+                }
+            }else{
+                $pdf->Cell(143,6,'   ','LR',1,'L',0);
             }
+            $jumrangka++;
+        }
+        if ($jmlkarakter>72) {
+            $pdf->Ln(-6);
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Ln(6);
         }
     }else{
         $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
@@ -393,18 +424,49 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."' and nomer='".$hasil['nomer']."'";
         $rs3 = mysql_query($q3, $dbLink);
-        $jumrangka=0;
+        $jumrangka=0;$jmlkarakter=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {
-            if ($jumrangka!=0 && $hasil2['rangka']!='') {
-                $pdf->Cell(8,6,'','LR',0,'C',0);
-                $pdf->Cell(32,6,'','LR',0,'C',0);
+            $jmlkarakter = strlen($hasil2['rangka']);
+            if ($jumrangka!=0) {
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }else{
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
+            }else{
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
             }
             if ($hasil2['rangka']!='') {
-                $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
-                $jumrangka++;
+                if ($jmlkarakter>72) {
+                    $pdf->MultiCell(143,6,'   ~ '.$hasil2['rangka'],'LR','J',0);
+                }else{
+                    $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
+                }
+            }else{
+                $pdf->Cell(143,6,'   ','LR',1,'L',0);
             }
+            $jumrangka++;
+        }
+        if ($jmlkarakter>72) {
+            $pdf->Ln(-6);
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Ln(6);
         }
     }else{
         $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
@@ -606,18 +668,49 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(8,6,'1.','LR',0,'C',0);
     $pdf->Cell(32,6,'Rangka Kubah','LR',0,'C',0);
     if ($hasil['model']=='custom') {
-        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."'";
+        $q3 = "SELECT * FROM aki_rangka WHERE 1=1 and aktif=1 and MD5(noSph)='".$noSph."' and nomer='".$hasil['nomer']."'";
         $rs3 = mysql_query($q3, $dbLink);
-        $jumrangka=0;
+        $jumrangka=0;$jmlkarakter=0;
         while (  $hasil2 = mysql_fetch_array($rs3)) {
-            if ($jumrangka!=0 && $hasil2['rangka']!='') {
-                $pdf->Cell(8,6,'','LR',0,'C',0);
-                $pdf->Cell(32,6,'','LR',0,'C',0);
+            $jmlkarakter = strlen($hasil2['rangka']);
+            if ($jumrangka!=0) {
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }else{
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
+            }else{
+                if ($jmlkarakter>72) {
+                    $pdf->Ln(6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                    $pdf->Ln(-6);
+                    $pdf->Cell(8,6,'','LR',0,'C',0);
+                    $pdf->Cell(32,6,'','LR',0,'C',0);
+                }
             }
             if ($hasil2['rangka']!='') {
-                $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
-                $jumrangka++;
+                if ($jmlkarakter>72) {
+                    $pdf->MultiCell(143,6,'   ~ '.$hasil2['rangka'],'LR','J',0);
+                }else{
+                    $pdf->Cell(143,6,'   ~ '.$hasil2['rangka'],'LR',1,'L',0);
+                }
+            }else{
+                $pdf->Cell(143,6,'   ','LR',1,'L',0);
             }
+            $jumrangka++;
+        }
+        if ($jmlkarakter>72) {
+            $pdf->Ln(-6);
+            $pdf->Cell(8,6,'','LR',0,'C',0);
+            $pdf->Cell(32,6,'','LR',0,'C',0);
+            $pdf->Ln(6);
         }
     }else{
         $pdf->Cell(143,6,'   ~ Rangka primer Pipa Galvanis dengan ukuran '.$rangka,'LR',1,'L',0);
