@@ -45,7 +45,7 @@ class c_kk
 			$qs.= "WHERE (noSph)='".$noSph."';";
 
 			if (!mysql_query( $qs, $dbLink))
-				throw new Exception('Gagal hapus data KK.');
+				throw new Exception('Gagal ket data KK.');
 
 			$q = "INSERT INTO aki_kk(`noKk`, `noSph`, `nama_cust`, `jenis_id`, `no_id`, `no_phone`, `jabatan`,`nmasjid`, `nproyek`,`kproyek`, `project_pemerintah`, `alamat_proyek`, `mproduksi`, `mpemasangan`, `alamat`, `provinsi`, `kota`, `tanggal`, `kodeUser`, `aktif`) ";
 			$q.= "VALUES ('".$nokk."','".$noSph."','".$namacust."','".$jenis_id."','".$no_id."','".$no_phone."','".$jabatan."','".$nmasjid."','".$nproyek."','".$kproyek."','".$project_pemerintah."','".$alamat_proyek."','".$mproduksi."','".$mpemasangan."','".$alamat."','".$provinsi."','".$kota."','".$tglTransaksi."','".$pembuat."','1');";
@@ -442,7 +442,7 @@ class c_kk
 			if (!$result) {
 				throw new Exception('Could not begin transaction');
 			}
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`jumlah`,ds.`ket`,ds.`bahan` FROM aki_KK s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$noKk."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`jumlah`,s.`noSph`,ds.`bahan` FROM aki_KK s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$noKk."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];
@@ -455,13 +455,12 @@ class c_kk
 			$tempPlafon  = $temp['plafon'];
 			$tempHarga  = $temp['harga'];
 			$tempJumlah  = $temp['jumlah'];
-			$tempKet  = $temp['ket'];
 			$tempBahan  = $temp['bahan'];
 			$nosph  = $temp['noSph'];
 
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d h:i:sa");
-			$ket = "`nomer`=".$noKk." -has delete, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempHarga.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
+			$ket = "`nomer`=".$noKk." -has delete, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempLuas.", ".$tempJumlah.", ".$tempHarga.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembatal."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
@@ -503,7 +502,7 @@ class c_kk
 				throw new Exception('Gagal hapus data KK.');
 
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Hapus Data KK ";
+			$this->strResults=$qs."Sukses Hapus Data KK ";
 		}
 		catch(Exception $e) 
 		{
