@@ -230,7 +230,7 @@ class c_kk
 			}
 			
 			//report
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`harga2`,ds.`harga3`,ds.`jumlah`,ds.`ket`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_KK s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$params["txtnoKk"]."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`hppn`,ds.`jumlah`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_kk s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$params["txtnoKk"]."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];
@@ -242,10 +242,8 @@ class c_kk
 			$tempLuas  = $temp['luas'];
 			$tempPlafon  = $temp['plafon'];
 			$tempHarga  = $temp['harga'];
-			$tempHarga2  = $temp['harga2'];
-			$tempHarga3  = $temp['harga3'];
+			$tempHarga2  = $temp['hppn'];
 			$tempJumlah  = $temp['jumlah'];
-			$tempKet  = $temp['ket'];
 			$tempTrans  = $temp['transport'];
 			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
@@ -340,7 +338,7 @@ class c_kk
 			}
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d H:i:s");
-			$ket = "`nomer`=".$params["txtnoKk"]." -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempKet.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
+			$ket = "`nomer`=".$params["txtnoKk"]." -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
@@ -442,7 +440,7 @@ class c_kk
 			if (!$result) {
 				throw new Exception('Could not begin transaction');
 			}
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`jumlah`,s.`noSph`,ds.`bahan` FROM aki_KK s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$noKk."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`jumlah`,s.`noSph`,ds.`bahan` FROM aki_kk s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$noKk."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];

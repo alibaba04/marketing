@@ -3,12 +3,12 @@ require_once('../config.php');
 require('../function/fpdf/html_table.php');
 require_once ("../function/fungsi_formatdate.php");
 require_once ("../function/fungsi_convertNumberToWord.php");
-$pdf=new PDF('P','mm',array(217,330));
+$pdf=new PDF('P','mm',array(215,330));
 
 $html="";
 
 $pdf->AddPage();
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetMargins(23, 10, 14, true);
 //HEADER        
 $tgl = '';
@@ -145,7 +145,7 @@ $pdf->Cell(51,10,'',0,0,'R',0);
 $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'J',0);
 
 $pdf->addpage();
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetMargins(23, 10, 14, true);
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
@@ -356,7 +356,7 @@ if ($hasil["jml"]>=2) {
     $pdf->Ln(13);
   }
   $pdf->addpage();
-  $pdf->Rect(15, 12, 185, 310, 'D');
+  
   $pdf->SetMargins(23, 10, 10, true);
   $pdf->Ln(1);
   $pdf->SetTextColor(0);
@@ -482,7 +482,7 @@ if ($hasil['jml']>=2) {
   }
   $pdf->addpage();
 }
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->MultiCell(196,5,'PASAL 6
@@ -625,7 +625,7 @@ if ($hasil['jml']>=2) {
   $pdf->Ln(20);
   $pdf->addpage();
 }
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetMargins(15, 10, 10, true);
 $pdf->Ln(2);
 $pdf->Cell(14,5,'2. ',0,0,'R',0);
@@ -739,7 +739,7 @@ $pdf->MultiCell(159,5,'Keterlambatan pengiriman   barang yang disebabkan oleh Pi
 if ($hasil['jml']<2) {
   $pdf->AddPage();
 }
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetMargins(16, 10, 10, true);
 $pdf->Ln(0);
 $pdf->Cell(20,5,'d.',0,0,'R',0);
@@ -836,7 +836,7 @@ $pdf->MultiCell(165,5,'Biaya atas penambahan atau pengurangan Pekerjaan tidak te
 if ($hasil['jml']<2) {
   $pdf->addpage();
 }
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->Cell(18,5,'3.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Jika                       berkehendak untu mengganti salah satu atau beberapa material dari setiap pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh ',0,'J',0);
 $tbl = '<b>Pihak Kedua  <br></b>';
@@ -925,7 +925,7 @@ if ($hasil['jml']>=2) {
 }
 
 $pdf->addpage();
-$pdf->Rect(15, 12, 185, 310, 'D');
+
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetFont('Calibri', 'bu', 11);
@@ -1008,7 +1008,7 @@ if ($jmlcol == 0) {
 
 if ($kaligrafi != 0) {
   $pdf->addpage();
-  $pdf->Rect(15, 12, 185, 310, 'D');
+  
   $pdf->SetTextColor(0);
   $pdf->SetDrawColor(0);
   $pdf->SetFont('Calibri', 'bu', 11);

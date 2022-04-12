@@ -307,6 +307,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }
                                 ?>
                                 <th style="width: 12%">No SPH</th>
+                                <th style="width: 4%">Status KK</th>
                                 <th style="width: 20%">Note</th>
                                 <th style="width: 20%">Client</th>
                                 <th style="width: 15%">Address</th>
@@ -320,7 +321,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                             $rowCounter=1;
                             while ($query_data = $rs->fetchArray()) {
                                 echo "<tr>";
-                                if (empty($query_data["keterangan_kk"])) {
                                     if ($_SESSION["my"]->privilege!='AFFILIATE') {
                                     if($hakUser == 90){
                                         if ($_SESSION["my"]->id == $query_data["kodeUser"] || $_SESSION["my"]->privilege == "GODMODE"|| $_SESSION["my"]->privilege == "ADMIN") {
@@ -356,14 +356,14 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "</ul></div></td>";
                                     }}
 
-                                } else {
+                                /*} else {
                                     echo '<td><div class="dropdown">
                                         <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
                                         <i class="fa fa-fw fa-check"></i></button>
                                         <ul class="dropdown-menu" style="border-color:#000;">';
                                         echo "<li>&nbsp&nbsp<i class='fa fa-fw fa-money'></i>SPH Sudah Jadi KK&nbsp</li>";
                                         echo "</ul></div></td>";
-                                }
+                                }*/
                                 $pdf = '';
                                 if ($query_data["model"]=='Kaligrafi') {
                                     $pdf = 'pdf_kaligrafi.php';
@@ -379,6 +379,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 }else{
                                     echo "<td><button type='button' class='btn btn-block ".$colorr."'>".($query_data["noSph"])."</button></td>";
                                 }
+                                if (empty($query_data["keterangan_kk"])) {
+                                    echo '<td></td>';
+                                }else{
+                                    echo '<td><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <i class="fa fa-fw fa-check"></i></button></td>';
+                                }
+                                
                                 if ($_SESSION["my"]->privilege=='kpenjualan' || $_SESSION["my"]->privilege=='GODMODE' ) {
                                     echo "<td onclick=mnote('".$query_data["noSph"]."')>" . $query_data["note"] ."</td><input type='hidden' name='mnoted' id='mnoted' value='" . $query_data["note"] ."'>";
                                 }else{

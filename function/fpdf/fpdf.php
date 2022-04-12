@@ -383,8 +383,8 @@ function AddPage($orientation='', $size='', $rotation=0)
 function Header()
 {
 	$this->SetMargins(10, 10, 10, true);
-	$this->Rect(15, 12, 185, 310, 'D');
-    $this->image('../dist/img/cop-aki.jpg',15,12,185,30);
+	$this->Rect(8, 8, 198, 315, 'D');
+    $this->image('../dist/img/cop-aki.jpg',15,9,185,30);
     // Line break
     $this->Ln(35);
 }
@@ -406,7 +406,7 @@ function Footer()
     $this->Cell(80,2,'',0,0,'L',0);
     $this->Cell(20,10,'',1,0,'C',0);
     $this->Cell(20,10,'',1,1,'C',0);
-    $this->Cell(120,5,'Halaman '.$this->PageNo(),0,0,'R');
+    $this->Cell(120,5,'Halaman '.$this->PageNo().'/8',0,0,'R');
 }
 
 function PageNo()
