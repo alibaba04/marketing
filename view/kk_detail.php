@@ -769,7 +769,7 @@ return true;
                 <div class="box box-primary">
                     <div class="box-body">
                     <div class="form-group" >
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <label class="control-label" for="txtKodeTransaksi">Project</label>
                             <div class="input-group">
                                 <select class="form-control" name="cbokproject" id="cbokproject">
@@ -792,13 +792,13 @@ return true;
                                 </div>
                         </div>
                         <div class="col-lg-4">
-                            <label class="control-label" for="txtKodeTransaksi">Masa Produksi</label>
+                            <label class="control-label" for="txtKodeTransaksi">Produksi</label>
                             <div class="input-group">
                                 <input type="number" name="txtproduksi" id="txtproduksi" class="form-control"
                                 value="<?php  if($_GET['mode']=='edit'){echo $dataKk["mproduksi"]; }?>" placeholder="0" ><span class="input-group-addon">Hari</span></div>
                         </div>
                         <div class="col-lg-4">
-                            <label class="control-label" for="txtKodeTransaksi">Masa Pemasangan</label>
+                            <label class="control-label" for="txtKodeTransaksi">Pemasangan</label>
                             <div class="input-group">
                                 <input type="number" name="txtPemasangan" id="txtPemasangan" class="form-control"
                                 value="<?php  if($_GET['mode']=='edit'){echo $dataKk["mpemasangan"]; }?>" placeholder="0" ><span class="input-group-addon">Hari</span></div>

@@ -82,6 +82,7 @@ $datakcolor1 = '';
   $q.= "FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_user u on kk.kodeUser=u.kodeUser left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
   $q.= "WHERE 1=1 and MD5(kk.noKk)='" . $noKk."'";
   $q.= " ORDER BY kk.noKk desc ";
+  echo $q;
   $txtnokk='';
   $approvekk = '';
   $rsTemp = mysql_query($q, $dbLink);
@@ -196,7 +197,7 @@ $datakcolor1 = '';
         <h5><address><th>Alamat Masjid: </th><br><?php  echo $dataspk["alamat_proyek"]; ?></td><address></h5>
         <?php
           if ($dataspk["kproyek"]=='patas') {
-              echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg bg-yellow" disabled="">PATAS</button></div>';
+              echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg bg-lightyellow" disabled="">PATAS</button></div>';
           }
           if ($dataspk["noproyek"]!='-') {
             echo '<div class="col-lg-3"><button type="" class="btn btn-block btn-default btn-lg" disabled="">'.$dataspk["noproyek"].'</button></div>';

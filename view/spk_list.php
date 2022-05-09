@@ -162,7 +162,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
-                $q = "SELECT * FROM `aki_spk` WHERE 1 and aktif=1";
+                $q = "SELECT spk.*,kk.*, dkk.* FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk WHERE 1=1 and spk.aktif=1 GROUP by spk.noproyek ORDER BY kk.noKk desc";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
                 ?>
@@ -183,12 +183,12 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                 <th width="3%">Action</th>
                                 <th style="width: 5%">Kode Proyek</th>
                                 <th style="width: 15%">No SPK</th>
-                                <th style="width: 15%">No Kontrak</th>
                                 <th style="width: 10%">Customer</th>
                                 <th style="width: 15%">Masjid</th>
+                                <th style="width: 15%">Detail</th>
+                                <th style="width: 5%">Bahan</th>
                                 <th style="width: 10%">Status</th>
-                                <th style="width: 8%">Tanggal</th>
-                                <th style="width: 5%">User</th>
+                                <th style="width: 8%">Tgl SPK</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -232,15 +232,28 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         echo "<li><a style='cursor:pointer;' onclick=location.href=location.href='pdf/pdf_SPK.php?&noSPK=" . md5($query_data["noSPK"]) . "'><i class='fa fa-fw fa-money'></i>SPK Approve</a></li>";
                                         echo "</ul></div></td>";
                                 }
-                                echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/SPKreview_detail&mode=addNote&noKK=" . md5($query_data["nokk"])."'>
+                                echo "<td><a onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/spkreview_detail&mode=addNote&noKK=" . md5($query_data["nokk"])."'>
                                 <button type='button' class='btn btn-block btn-info'>".($query_data["noproyek"])."</button></a></td>";
                                 echo "<td>" . ($query_data["nospk"]) . "</td>";
-                                echo "<td>" . ($query_data["nokk"]) . "</td>";
                                 echo "<td>" . $query_data["nama_cust"] . "</td>";
                                 echo "<td>" . $query_data["masjid"] . "</td>";
+                                $kel = '';
+                                if ($query_data["plafon"] == 0){
+                                    $kel = 'Full';
+                                }else if ($query_data["plafon"] == 1){
+                                    $kel = 'Tanpa Plafon';
+                                }else{
+                                    $kel = 'Waterproof';
+                                }
+                                $dt = '';
+                                if ($query_data["dt"] != 0){
+                                    $dt = ', DT : '.$query_data["dt"];
+                                }
+                                $spek = 'D : '.$query_data["d"].', T : '.$query_data["t"].$dt.', '.ucfirst($query_data["model"]).', '.ucfirst($kel).', qty : '.$query_data["jumlah"];
+                                echo "<td>" . $spek . "</td>";
+                                echo "<td>" . $query_data["bahan"] . "</td>";
                                 echo "<td>" . $query_data["status_proyek"] . "</td>";
-                                echo "<td><center>" . $query_data["tgl_spk"] . "</center></td>";
-                                echo "<td>" . strtoupper($query_data["kodeUser"]) . "</td>";
+                                echo "<td><center>" . tgl_ind($query_data["tgl_spk"]) . "</center></td>";
                                 echo("</tr>");
                                 $rowCounter++;
                             }
