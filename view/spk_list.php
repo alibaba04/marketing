@@ -162,7 +162,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                     $filter2 =  " AND s.kodeUser='".$_SESSION['my']->id."' ";
                 }
             //database
-                $q = "SELECT spk.*,kk.*, dkk.* FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk WHERE 1=1 and spk.aktif=1 GROUP by spk.noproyek ORDER BY kk.noKk desc";
+                $q = "SELECT spk.*,kk.*, dkk.* FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk WHERE 1=1 and spk.aktif=1 GROUP by spk.noproyek ORDER BY kk.noKk ";
             //Paging
                 $rs = new MySQLPagedResultSet($q, 50, $dbLink);
                 ?>

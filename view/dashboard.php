@@ -258,7 +258,7 @@ defined( 'validSession' ) or die( 'Restricted access' );
         {label: "Mr. Reza", value: data.reza},
         {label: "Mr. Antok", value: data.antok},
         {label: "Mr. Agus", value: data.agus},
-        {label: "Admin", value: data.tina}
+        {label: "Mr. Trio", value: data.trio}
         ],
         hideHover: 'auto'
       });

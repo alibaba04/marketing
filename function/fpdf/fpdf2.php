@@ -382,8 +382,11 @@ function AddPage($orientation='', $size='', $rotation=0)
 
 function Header()
 {
-	$this->SetMargins(10, 10, 10, true);
-    $this->image('../dist/img/cop-aki.jpg',15,12,185,30);
+	//$this->SetMargins(10, 10, 10, true);
+    
+    if ($this->PageNo() != '1') {
+    	$this->image('../dist/img/kop.jpg',0,0,215,330);
+    }
     // Line break
     $this->Ln(35);
 }
@@ -393,7 +396,7 @@ function Header()
 function Footer()
 {
 	$this->SetMargins(75, 10, 15, true);
-	$this->SetY(-10);
+	$this->SetY(-18);
     // Arial italic 8
     $this->SetFont('helvetica','I',8);
     // Page number
@@ -405,7 +408,10 @@ function Footer()
     $this->Cell(80,2,'',0,0,'L',0);
     $this->Cell(20,10,'',1,0,'C',0);
     $this->Cell(20,10,'',1,1,'C',0);*/
-    $this->Cell(125,5,'Halaman '.$this->PageNo(),0,0,'R');
+    
+    if ($this->PageNo() != '1') {
+    	$this->Cell(125,5,'Halaman '.$this->PageNo(),0,0,'R');
+    }
 }
 
 function PageNo()

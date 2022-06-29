@@ -3,12 +3,8 @@ require_once('../config.php');
 require('../function/fpdf/html_table2.php');
 require_once ("../function/fungsi_formatdate.php");
 require_once ("../function/fungsi_convertNumberToWord.php");
-$pdf=new PDF();
+$pdf=new PDF('P','mm',array(215,330));
 $html="";
-$pdf->AddPage();
-$pdf->SetMargins(17, 10, 10, true);
-$pdf->Ln(1);
-//HEADER        
 $tgl = '';
 $noSph = ($_GET["noSph"]);
 $q = "SELECT s.*,u.nama,p.name as pname,k.name as kname ";
@@ -17,6 +13,16 @@ $q.= "WHERE 1=1 and MD5(s.noSph)='" . $noSph."'";
 $q.= " ORDER BY s.noSph asc ";
 $rs = mysql_query($q, $dbLink);
 $hasil = mysql_fetch_array($rs);
+//COVER 
+$pdf->AddPage();
+$pdf->SetFont('courier', 'B', 19);
+$pdf->image('../dist/img/cover.jpg',0,0,215,330);
+$pdf->Ln(94);
+$pdf->Cell(0,20,ucfirst($hasil['kname']),'',0,'C',0);
+$pdf->AddPage();
+$pdf->SetMargins(17, 10, 10, true);
+$pdf->Ln(1);
+//HEADER        
 $pdf->SetFont('helvetica', '', 11);
 $pdf->SetAutoPageBreak(TRUE, 0);
 $tgl = $hasil['tanggal'];

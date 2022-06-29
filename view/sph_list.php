@@ -1,4 +1,4 @@
-<?php
+ <?php
 //=======  : Alibaba
 //Memastikan file ini tidak diakses secara langsung (direct access is not allowed)
 defined('validSession') or die('Restricted access');

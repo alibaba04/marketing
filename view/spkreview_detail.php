@@ -82,7 +82,6 @@ $datakcolor1 = '';
   $q.= "FROM aki_spk spk left join aki_kk kk on spk.nokk=kk.noKk right join aki_dkk dkk on kk.noKk=dkk.noKk left join aki_user u on kk.kodeUser=u.kodeUser left join provinsi p on kk.provinsi=p.id LEFT join kota k on kk.kota=k.id ";
   $q.= "WHERE 1=1 and MD5(kk.noKk)='" . $noKk."'";
   $q.= " ORDER BY kk.noKk desc ";
-  echo $q;
   $txtnokk='';
   $approvekk = '';
   $rsTemp = mysql_query($q, $dbLink);
@@ -178,7 +177,7 @@ $datakcolor1 = '';
           }
           $aksesoris='';
           if ($datadSph['d']>=5 ){
-            $aksesoris=chr(12).'  Makara bahan galvalume bola full warna gold bentuk <b>Lafadz Allah</b><br>'.chr(12).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
+            $aksesoris=chr(12).'  Makara bahan galvalume bola full warna gold bentuk <b>'.$datadSph['makara'].'</b><br>'.chr(12).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
             if ($datadSph['d']>=6){
               $lampu='';
               if ($datadSph['d']>=15) {
@@ -189,7 +188,7 @@ $datakcolor1 = '';
               $aksesoris=$aksesoris.chr(12).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
             }
           }else{
-            $aksesoris=chr(12).'  Makara bahan galvalume warna gold bentuk <b>Lafadz Allah</b><br>';
+            $aksesoris=chr(12).'  Makara bahan galvalume warna gold bentuk <b>'.$datadSph['makara'].'</b><br>';
           }
           $i++;
         }

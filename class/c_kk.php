@@ -107,7 +107,13 @@ class c_kk
                     $ktrans = secureParam($params["txtKtransport_" . $j], $dbLink);
                     $nkal = secureParam($params["txtKaligrafi_" . $j], $dbLink);
                     $makara = secureParam($params["txtMakara_" . $j], $dbLink);
+                    if ($makara=='') {
+                    	$makara='Lafadz Allah';
+                    }
                     $bmakara = secureParam($params["txtbMakara_" . $j], $dbLink);
+                    if ($bmakara=='') {
+                    	$bmakara='Galvalume';
+                    }
                     $ntransport = preg_replace("/\D/", "", $ntrans);
                     $kaligrafi = preg_replace("/\D/", "", $nkal);
                     $hppn = secureParam($params["txtHargappn_" . $j], $dbLink);

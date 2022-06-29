@@ -59,9 +59,10 @@ class c_spk
 			/*$rsTempk=mysql_query("SELECT * FROM `kota` WHERE id='".$temp["kota"]."'", $dbLink);
 			$tempkota = mysql_fetch_array($rsTempk);
 			$noproyek = substr($tempkota['name'],0,1);*/
+			$tgldeadline = date('Y-m-d', strtotime($tglTransaksi . "+ ".$temp['mproduksi']." day"));
 			
-			$q4 = "INSERT INTO `aki_spk`( `nospk`, `nokk`, `nama_cust`, `masjid`, `tgl_spk`, `sales`, `kodeUser`, `status_proyek`, `aktif`) VALUES";
-			$q4.= "('".$nospk."','".$temp['noKk']."','".$temp['nama_cust']."','".$temp['nmasjid']."','".$tglTransaksi."','".$temp['kodeUser']."','".$pembuat."','".$params['statuskk']."','1');";
+			$q4 = "INSERT INTO `aki_spk`( `nospk`, `nokk`, `nama_cust`, `masjid`, `tgl_spk`, `sales`, `kodeUser`, `status_proyek`, `aktif`,`tgl_deadline`) VALUES";
+			$q4.= "('".$nospk."','".$temp['noKk']."','".$temp['nama_cust']."','".$temp['nmasjid']."','".$tglTransaksi."','".$temp['kodeUser']."','".$pembuat."','".$params['statuskk']."','1','".$tgldeadline."');";
 			if (!mysql_query( $q4, $dbLink))
 						throw new Exception($q4.'Gagal tambah data SPK1');
 			/*date_default_timezone_set("Asia/Jakarta");

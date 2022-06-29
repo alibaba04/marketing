@@ -66,7 +66,7 @@ $(document).ready(function () {
                 <div class="modal-body">
                     <div class="form-group">
                         <?php  
-                        $q = 'SELECT noKK FROM `aki_kk` WHERE aktif=1 and approve =1 ORDER BY idkk desc';
+                        $q = 'SELECT noKK FROM `aki_kk` WHERE aktif=1 and approve =1 and noKK not in(SELECT noKK FROM `aki_tabel_proyek`) ORDER BY idkk desc';
                         $sql_sph = mysql_query($q,$dbLink);
                         ?>
                         <select class="form-control select2" name="nokk" id="nokk" style="width: 100%">
