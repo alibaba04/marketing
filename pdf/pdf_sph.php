@@ -646,6 +646,9 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
         $pdf->Write(5,'Dengan Luas Atap '.$luas.' meter');
         $pdf->subWrite(5,'2','',6,4);
     }else{
+        if ($bahan == '6') {
+            $pdf->addpage();
+        }
         if ($dt != 0){
             $pdf->SetMargins(34, 10, 10, true);
             $pdf->Ln(10);
