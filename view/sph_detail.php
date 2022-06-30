@@ -73,7 +73,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         var a = $('#txtongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
         var d = v.replace(/\./g,'');
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",model:$('#cbomodel').val(),d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
             if ($("#cbomodel").val() != 'custom') {
                 $('#idluas').val(data.luas);
@@ -888,7 +888,7 @@ function validasiForm(form)
                         <th style="width: 13%">Transport</th>
                         <th style="width: 13%">&nbspGALVALUME&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                         <th style="width: 13%">&nbspENAMEL&nbsp&nbsp&nbsp&nbsp&nbsp</th>
-                        <th style="width: 13%">&nbspTITANIUM&nbsp&nbsp&nbsp&nbsp&nbsp</th>
+                        <th style="width: 13%">&nbspSS 304 Gold&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                     </tr>
                 </thead>
                 <tbody id="kendali">
@@ -1045,7 +1045,7 @@ function validasiForm(form)
                                                 <label class="control-label" for="txtKeteranganKas">Harga Enamel</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control" value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaEn"checked></span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Harga Titanium</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control" value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaTm"checked></span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Harga SS 304 Gold</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control" value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaTm"checked></span></div>
                                             </div>
                                         </div>
                                         <div class="box-footer" style="padding-top: 10%;"></div>

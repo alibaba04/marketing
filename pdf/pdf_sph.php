@@ -393,7 +393,7 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
 }
 //end bahan ga 
 
-//if bahan Titanium 
+//if bahan SS Gold 
 if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     if ($ketkubah == 'Atap') {
         $pdf->SetMargins(74, 10, 10, true);
@@ -416,7 +416,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->Ln(2);
     $pdf->SetMargins(13, 10, 10, true);
     $tbl = '<br>
-    <i><b>'.$nourut.'. SPESIFIKASI KUBAH PLAT TITANIUM ( '.$ketkubah .') </b></i>
+    <i><b>'.$nourut.'. SPESIFIKASI KUBAH PLAT STAINLESS STEEL 304 GOLD ( '.$ketkubah .') </b></i>
     ';
     $pdf->writeHTML($tbl);
     $pdf->SetMargins(18, 10, 10, true);
@@ -492,9 +492,9 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
     $pdf->Cell(32,6,'','LTR',0,'C',0);
     $pdf->Cell(40,6,'   ~ Bahan terbuat dari','LT',0,'L',0);
     $pdf->SetFont('helvetica', 'B', 11);
-    $pdf->Cell(26,6,'Plat Titanium','T','L',0);
+    $pdf->Cell(55,6,'Plat Stainless Steel 304 Gold','T','L',0);
     $pdf->SetFont('helvetica', '', 11);
-    $pdf->Cell(77,6,'0,5  mm','TR',1,'L',0);
+    $pdf->Cell(48,6,'0,5  mm','TR',1,'L',0);
     $pdf->Cell(8,6,'2.','LR',0,'C',0);
     $pdf->Cell(32,6,'Atap Kubah','LR',0,'C',0);
     $pdf->SetFillColor(254, 255, 222);
@@ -567,7 +567,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
             
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan galvalume warna gold','LTR',1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan Stainless Steel 304 Gold','LTR',1,'L',0);
             $pdf->Cell(8,6,'','LRB',0,'C',0);
             $pdf->Cell(32,6,'','LRB',0,'C',0);
             $pdf->SetFont('helvetica', 'B', 11);
@@ -589,7 +589,7 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
         }
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold','LTR',1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan Stainless Steel 304 Gold','LTR',1,'L',0);
             $pdf->Cell(8,6,'','LR',0,'C',0);
             $pdf->Cell(32,6,'','LR',0,'C',0);
             $pdf->SetFont('helvetica', 'B', 11);
@@ -624,13 +624,13 @@ if ($bahan == '3' or $bahan == '5'or $bahan == '6' or $bahan == '0') {
         }
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah',1,0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold',1,1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan Stainless Steel 304 Gold',1,1,'L',0);
         }else{
             $pdf->Cell(32,6,'','T',0,'C',0);
             $pdf->Cell(143,6,'','T',1,'L',0);
         }
     }
-     $tbl = '<br>Masa pabrikasi Kubah Titanium dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b><br>';
+     $tbl = '<br>Masa pabrikasi Kubah Stainless Steel 304 Gold dengan ukuran diatas '.lamapabrikasi($d,'Galvalume').' hari kerja. <b><br>Harga Kubah dengan ukuran diatas adalah : Rp.'.number_format($harga3) .'</b><br>';
         $pdf->writeHTML($tbl);
 }
 //end bahan Titanium
@@ -799,7 +799,7 @@ if ( $bahan == '2' or $bahan == '4'or $bahan == '6' or $bahan == '0') {
             
         if ($ketkubah != 'Atap') {
             $pdf->Cell(32,6,'Aksesoris Kubah','LTR',0,'C',0);
-            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan titanium warna gold','LTR',1,'L',0);
+            $pdf->Cell(143,6,'   ~ Makara hiasan ujung kubah bagian luar bahan Stainless Steel 304 Gold','LTR',1,'L',0);
             $pdf->Cell(8,6,'','LRB',0,'C',0);
             $pdf->Cell(32,6,'','LRB',0,'C',0);
             $pdf->SetFont('helvetica', 'B', 11);
@@ -932,7 +932,7 @@ $pdf->Ln(6);
             $tharga3=0;
             $pdf->SetFont('helvetica', 'B', 11);
             $pdf->Cell(10,6,' ',0,0,'L',0);
-            $pdf->Cell(80,7,'Rincian Titanium',0,1,'L',0);
+            $pdf->Cell(80,7,'Rincian Stainless Steel 304 Gold',0,1,'L',0);
             $rs3 = mysql_query($q3, $dbLink);
             while (  $hasil = mysql_fetch_array($rs3)) {
                $ketkubah = $hasil['ket'];
