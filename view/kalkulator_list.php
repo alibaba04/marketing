@@ -79,17 +79,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         var a = $('#txtongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
         var d_ongkir = v.replace(/\./g,'');
-
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDT').val(),kel:$('#cbokelengkapan').val(),ongkir:d_ongkir,margin:$('#idmargin').val(),bplafon:0},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",model:$('#cbomodel').val(),d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDT').val(),kel:$('#cbokelengkapan').val(),ongkir:d_ongkir,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
             $('#idluas').val(data.luas);
             $('#idmargin').attr("placeholder", data.margin);
-            /*$('#idharga1').val(data.harga);
-            $('#idharga2').val(data.harga2);
-            $('#idharga3').val(data.harga3);*/
-            $('#idtharga1').val(data.harga);
-            $('#idtharga2').val(data.harga2);
-            $('#idtharga3').val(data.harga3);
+            $('#idharga1').val(data.hargaga);
+            $('#idharga2').val(data.hargass);
+            $('#idharga3').val(data.hargaen);
         },"json");
     }
     function kalkulatorhargaMIN(){
@@ -139,6 +135,20 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 kalkulatorhargaMIN();
             });
             $("#txtD").keyup(function(){ 
+                var cbomodel = $("#cbomodel").val(); 
+                var d = $("#txtD").val();
+                if(cbomodel == 'bawang'){
+                    var dt = parseInt(d)+(0.23*d);
+                    $("#txtDT").val(dt);
+                    $("#txtT").val(d);
+                }else if(cbomodel == 'pinang'){
+                    $("#txtT").val(d);
+                }else if(cbomodel == 'madinah'){
+                    $("#txtT").val(d*0.75);
+                }else if(cbomodel == 'setbola'){
+                    $("#txtT").val(d*0.5);
+                }
+
                 kalkulatorharga();
                 kalkulatorhargaMIN();
             });
@@ -316,16 +326,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                         </div><ol style="margin-right: 30px;">
                             <div class="box-primary">
                                 <label class="control-label" for="txtKeteranganKas">Harga Galvalum (Terendah)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value=""></div>
-                                <label class="control-label" id="lbltharga" for="txtKeteranganKas">Harga Galvalum (Tertinggi)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga1" id="idtharga1" placeholder="0"class="form-control"value=""></div>
                             </div><br><br>
                             <div class="box-primary">
                                 <label class="control-label" for="txtKeteranganKas">Harga Stainless Gold (Terendah)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga2" id="idharga2" placeholder="0"class="form-control"value=""></div>
-                                <label class="control-label" id="lbltharga2" for="txtKeteranganKas">Harga Stainless Gold (Tertinggi)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga2" id="idtharga2" placeholder="0"class="form-control"value=""></div>
                             </div><br><br>
                             <div class="box-primary">
                                 <label class="control-label" for="txtKeteranganKas">Harga Enamel (Terendah)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idharga3" id="idharga3" placeholder="0"class="form-control"
                                 value=""></div>
-                                <label class="control-label" id="lbltharga2" for="txtKeteranganKas">Harga Enamel (Tertinggi)</label><div class="input-group"><span class="input-group-addon">Rp</span><input readonly type="text" name="idtharga3" id="idtharga3" placeholder="0"class="form-control"value=""></div>
                                 </div>
                             </ol>
                             <div class="modal-footer">

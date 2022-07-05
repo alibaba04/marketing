@@ -78,9 +78,9 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
             if ($("#cbomodel").val() != 'custom') {
                 $('#idluas').val(data.luas);
                 $('#idmargin').attr("placeholder", data.margin);
-                $('#idharga1').val(data.tharga);
-                $('#idharga2').val(data.tharga3);
-                $('#idharga3').val(data.tharga2);
+                $('#idharga1').val(data.hargaga);
+                $('#idharga2').val(data.hargaen);
+                $('#idharga3').val(data.hargass);
             }
         },"json");
 
@@ -161,6 +161,19 @@ $(document).ready(function () {
     });
     var txtD = document.getElementById('txtD');
     txtD.addEventListener('keyup', function(e){
+        var cbomodel = $("#cbomodel").val(); 
+        var d = $("#txtD").val();
+        if(cbomodel == 'bawang'){
+            var dt = parseInt(d)+(0.23*d);
+            $("#txtDt").val(dt);
+            $("#txtT").val(d);
+        }else if(cbomodel == 'pinang'){
+            $("#txtT").val(d);
+        }else if(cbomodel == 'madinah'){
+            $("#txtT").val(d*0.75);
+        }else if(cbomodel == 'setbola'){
+            $("#txtT").val(d*0.5);
+        }
         kalkulatorharga();
     });
     var cbokel = document.getElementById('cbokelengkapan');

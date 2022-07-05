@@ -100,10 +100,10 @@ case "getOngkir":
 break;
 
 case "getcountSPH":
-    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'agus', kodeUser, NULL)) AS agus,COUNT(IF( kodeUser = 'trio', kodeUser, NULL)) AS trio FROM `aki_sph` WHERE aktif=1 and year(tanggal)=YEAR(CURDATE())", $dbLink);
+    $result = mysql_query("SELECT COUNT(IF( kodeUser = 'reza', kodeUser, NULL)) AS reza,COUNT(IF( kodeUser = 'antok', kodeUser, NULL)) AS antok,COUNT(IF( kodeUser = 'agus', kodeUser, NULL)) AS agus,COUNT(IF( kodeUser = 'tina', kodeUser, NULL)) AS tina FROM `aki_sph` WHERE aktif=1 and year(tanggal)=YEAR(CURDATE())", $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
-            echo json_encode( array("reza"=>$data['reza'],"antok"=>$data['antok'],"agus"=>$data['agus'],"trio"=>$data['trio']));
+            echo json_encode( array("reza"=>$data['reza'],"antok"=>$data['antok'],"agus"=>$data['agus'],"tina"=>$data['tina']));
         } 
         break;
     }
@@ -202,13 +202,13 @@ case "cek":
     $dt = $_POST['dt'];
     $kel = $_POST['kel'];
     $transport = $_POST['ongkir'];
-    $ltabung. = 0;
+    $luas = 0;
     if ($dt == 0) {
-        $ltabung. = ($d * $t * 3.14);
+        $luas = ($d * $t * 3.14);
     }else{
-        $ltabung. = ($dt * $t * 3.14);
+        $luas = ($dt * $t * 3.14);
     }
-    echo json_encode($ltabung.);
+    echo json_encode($luas);
 break;
 case "chart":
     $result = mysql_query("SELECT count(idSph) as id,YEAR(tanggal) as tahun, MONTH(tanggal) as bulan FROM `aki_sph`GROUP BY YEAR(tanggal), MONTH(tanggal)", $dbLink);
@@ -227,12 +227,12 @@ break;
 case "idList":
     $id = $_POST['id'];
     $no = $_POST['nosph'];
-    $q = "SELECT nomer,s.*,ds.ltabung.,ds.bahan,ds.biaya_plafon,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id WHERE 1=1 and nomer ='".$id."' and (s.noSph)='".$no."' ORDER BY s.noSph desc";
+    $q = "SELECT nomer,s.*,ds.luas,ds.bahan,ds.biaya_plafon,ds.model,ds.d,ds.t,ds.dt,ds.plafon,ds.harga,ds.harga2,ds.harga3,ds.jumlah,ds.ket,ds.transport,u.nama,p.name as pn,p.id as idP,k.name as kn,k.id as idK FROM aki_sph s right join aki_dsph ds on s.noSph=ds.noSph left join aki_user u on s.kodeUser=u.kodeUser left join provinsi p on s.provinsi=p.id LEFT join kota k on s.kota=k.id WHERE 1=1 and nomer ='".$id."' and (s.noSph)='".$no."' ORDER BY s.noSph desc";
     $result = mysql_query($q, $dbLink);
     if (mysql_num_rows($result)>0) {
         $idx = 0;
         while ( $data = mysql_fetch_assoc($result)) {
-            echo json_encode(array("biaya_plafon"=>number_format($data['biaya_plafon']).'',"model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"harga3"=>number_format($data['harga3']).'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"harga2"=>number_format($data['harga2']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"transport"=>number_format($data['transport']).'',"bahan"=>$data['bahan'].'',"ltabung."=>$data['ltabung.']));
+            echo json_encode(array("biaya_plafon"=>number_format($data['biaya_plafon']).'',"model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"harga3"=>number_format($data['harga3']).'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"harga2"=>number_format($data['harga2']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"transport"=>number_format($data['transport']).'',"bahan"=>$data['bahan'].'',"luas"=>$data['luas']));
             $idx++;
         } 
         //echo json_encode($output);
@@ -247,7 +247,7 @@ case "idListkk":
     if (mysql_num_rows($result)>0) {
         $idx = 0;
         while ( $data = mysql_fetch_assoc($result)) {
-            echo json_encode(array("model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"bahan"=>$data['bahan'].'',"ltabung."=>$data['ltabung.'].'',"kubah"=>$data['kubah'].'',"txtw1"=>$data['wpembayaran1'].'',"txtw2"=>$data['wpembayaran2'].'',"txtw3"=>$data['wpembayaran3'].'',"txtw4"=>$data['wpembayaran4'].'',"txtp1"=>$data['persen1'].'',"txtp2"=>$data['persen2'].'',"txtp3"=>$data['persen3'].'',"txtp4"=>$data['persen4'].'',"color1"=>$data['color1'].'',"color2"=>$data['color2'].'',"color3"=>$data['color3'].'',"color4"=>$data['color4'].'',"color5"=>$data['color5']));
+            echo json_encode(array("model"=>$data['model'].'',"d"=>$data['d'].'',"t"=>$data['t'].'',"dt"=>$data['dt'].'',"plafon"=>$data['plafon'].'',"harga"=>number_format($data['harga']).'',"jumlah"=>$data['jumlah'].'',"ket"=>$data['ket'].'',"bahan"=>$data['bahan'].'',"luas"=>$data['luas'].'',"kubah"=>$data['kubah'].'',"txtw1"=>$data['wpembayaran1'].'',"txtw2"=>$data['wpembayaran2'].'',"txtw3"=>$data['wpembayaran3'].'',"txtw4"=>$data['wpembayaran4'].'',"txtp1"=>$data['persen1'].'',"txtp2"=>$data['persen2'].'',"txtp3"=>$data['persen3'].'',"txtp4"=>$data['persen4'].'',"color1"=>$data['color1'].'',"color2"=>$data['color2'].'',"color3"=>$data['color3'].'',"color4"=>$data['color4'].'',"color5"=>$data['color5']));
             $idx++;
         } 
         //echo json_encode($output);
@@ -374,123 +374,154 @@ case "updatehpp":
     }
 break;
 case "kalkulator":
+    $model = $_POST['model'];
     $d = $_POST['d'];
     $t = $_POST['t'];
     $dt = $_POST['dt'];
     $kel = $_POST['kel'];
     $m = $_POST['margin'];
-    $model = $_POST['model'];
     $transport = $_POST['ongkir'];
     $bplafon = $_POST['bplafon'];
-    
     if ($transport == '') {
         $transport = 0;
     }
-    $ltabung. = 0;
+    $ltabung = 0;
     if ($dt == 0) {
-        $ltabung. = ($d * $t * 3.14);
+        $ltabung = ($d * $t * 3.14);
     }else{
-        $ltabung. = ($dt * $t * 3.14);
+        $ltabung = ($dt * $t * 3.14);
     }
 
-    $luas =0;
-    if ($model == 'pinang') {
-        $luas =$ltabung-($ltabung*18.3016557250314);
-    }elseif($model == 'madinah'){
-        $luas =$ltabung-($ltabung*12.5805048091737);
-    }elseif($model == 'bawang'){
-        $luas =$ltabung-($ltabung*9.71);
-    }elseif($model == 'setbola'){
-        $luas =$ltabung-($ltabung*0);
-    }
 
     $pmargin = 0; 
-    if ($luas. <= 15) {$pmargin = 100;}
-    else if($luas. <= 25){$pmargin = 80;}
-    else if($luas. <= 40){$pmargin = 60;}
-    else if($luas. <= 60){$pmargin = 50;}
-    else if($luas. <= 100){$pmargin = 40;}
+    if ($ltabung <= 15) {$pmargin = 100;}
+    else if($ltabung <= 25){$pmargin = 80;}
+    else if($ltabung <= 40){$pmargin = 60;}
+    else if($ltabung <= 60){$pmargin = 50;}
+    else if($ltabung <= 100){$pmargin = 40;}
     else{$pmargin = 33;}
     if ($m !=0 ) {
         $pmargin = $m; 
     }
-    //xtp = tanpa plafon
-    //xwa = waterproof
-    //xfull = plafon dan waterproof
-    //d = diameter
-    //kel = kelengkapan
-
-    $xtp0 = 0;
-    $xwa0 = 0;
-    $xfull0 = 0;
-    $xtp2 = 0;
-    $xwa2 = 0;
-    $xfull2 = 0;
-    $xtp3 = 0;
-    $xwa3 = 0;
-    $xfull3 = 0;
-
-    $sql = "SELECT * FROM aki_hpp where model='".$model."'";
-    $result = mysql_query($sql, $dbLink);
-    if (mysql_num_rows($result)>0) {
-        $i=0;
-        while ( $data = mysql_fetch_assoc($result)) {
-            $xfull.$i = (int)$data['full'];
-            $xtp.$i = (int)$data['tplafon'];
-            $xwa.$i = (int)$data['waterproof'];
-            $i++;
-        }
+    $luas=0;
+    if ($model=='pinang') {
+        $luas=$ltabung-(0.183016557250314*$ltabung);
+    }elseif ($model=='madinah') {
+        $luas=$ltabung-(0.125805048091737*$ltabung);
+    }elseif ($model=='bawang') {
+        $luas=$ltabung-(0.0971*$ltabung);
+    }elseif ($model=='setbola') {
+        $luas=$ltabung-(0*$ltabung);
     }
-    //Gal
-    $x = 0;
-    if( $kel == 0){$x = $xfull0;}else if($kel == 2){$x = $xwa0;}else{$x = $xtp0;}
-    $sql = "SELECT * FROM aki_hpp where id='1000'";
+    
+    //GA
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='galvalum'";
     $result = mysql_query($sql, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
-            $pinang = (int)$data['model'];
-            $madina = (int)$data['full'];
-            $bawang = (int)$data['tplafon'];
-            $setbola = (int)$data['waterproof'];
+            $xfull = (double)$data['full'];
+            $xtp = (double)$data['tplafon'];
+            $xwa = (double)$data['waterproof'];
         }
     }
-    $modal = $luas. * $x;
+    $h_en=0;
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='hpermeter'";
+    $result = mysql_query($sql, $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            $h_ga = (double)$data['full'];
+            $h_ss = (double)$data['waterproof'];
+            $h_en = (double)$data['tplafon'];
+        }
+    }
+    $hmodal = $luas*$h_ga;
+    if( $kel == 0){
+        $modal = $hmodal * $xfull;
+    }else if($kel == 2){
+        $modalt = $hmodal -(($xtp/100)*$hmodal) ;
+        $modal = $modalt + (($xwa/100)*$hmodal);
+    }else{
+        $modal = $hmodal -(($xtp/100)*$hmodal) ;
+    }
     $margin = $modal * ($pmargin*0.01);
     $hpp = $modal + $margin;
     $affiliate = $hpp * 0.05;
     $marketing = $hpp * 0.01;
-    $harga = $hpp + $affiliate + $marketing + $transport;
-    
-    //Gold
-    $x2 = 0;
-    if( $kel == 0){$x2 = $xfull2;}else if($kel == 2){$x2 = $xwa2;}else{$x2 = $xtp2;}
-    $modal2 = $ltabung. * $x2;
-    $margin2 = $modal2 * ($pmargin*0.01);
-    $hpp2 = $modal2 + $margin2;
-    $affiliate2 = $hpp2 * 0.05;
-    $marketing2 = $hpp2 * 0.01;
-    $harga2 = $hpp2 + $affiliate2 + $marketing2 + $transport;
+    $lain2 = $modal * 0.1;
+    $harga = $hpp + $affiliate + $marketing + $transport +$lain2;
+    $marketing = number_format(round($marketing,0));
+    $lain2 = number_format(round($lain2,0));
+    $hpp = number_format(round($hpp,0));
+    $affiliate = number_format(round($affiliate,0));
+    $hargaGA = number_format(round($harga,-6));
+    //end GA
+
+    //SS
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='gold'";
+    $result = mysql_query($sql, $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            $xfull = (double)$data['full'];
+            $xtp = (double)$data['tplafon'];
+            $xwa = (double)$data['waterproof'];
+        }
+    }
+    $hmodal2 = $luas*$h_ss;
+    if( $kel == 0){
+        $modal = $hmodal2 * $xfull;
+    }else if($kel == 2){
+        $modalt = $hmodal2 -(($xtp/100)*$hmodal2) ;
+        $modal = $modalt + (($xwa/100)*$hmodal2);
+    }else{
+        $modal = $hmodal2 -(($xtp/100)*$hmodal2) ;
+    }
+    $margin = $modal * ($pmargin*0.01);
+    $hpp = $modal + $margin;
+    $affiliate = $hpp * 0.05;
+    $marketing = $hpp * 0.01;
+    $lain2 = $modal * 0.1;
+    $hargaSS = $hpp + $affiliate + $marketing + $transport +$lain2;
+    $marketing = number_format(round($marketing,0));
+    $lain2 = number_format(round($lain2,0));
+    $hpp = number_format(round($hpp,0));
+    $affiliate = number_format(round($affiliate,0));
+    $hargaSS = number_format(round($hargaSS,-6));
+    //endSS
+
     //EN
-    $x3 = 0;
-    if( $kel == 0){$x3 = $xfull3;}else if($kel == 3){$x3 = $xwa3;}else{$x3 = $xtp3;}
-    $modal3 = $ltabung. * $x3;
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='enamel'";
+    $result = mysql_query($sql, $dbLink);
+    if (mysql_num_rows($result)>0) {
+        while ( $data = mysql_fetch_assoc($result)) {
+            $xfull = (double)$data['full'];
+            $xtp = (double)$data['tplafon'];
+            $xwa = (double)$data['waterproof'];
+        }
+    }
+   
+    $hmodal3 = $luas*$h_en;
+    if( $kel == 0){
+        $modal3 = $hmodal3 * $xfull;
+    }else if($kel == 2){
+        $modalt = $hmodal3 -(($xtp/100)*$hmodal3) ;
+        $modal3 = $modalt3 + (($xwa/100)*$hmodal3);
+    }else{
+        $modal3 = $hmodal3 -(($xtp/100)*$hmodal3) ;
+    }
     $margin3 = $modal3 * ($pmargin*0.01);
     $hpp3 = $modal3 + $margin3;
-    $affiliate3 = $hpp3 * 0.05;
-    $marketing3 = $hpp3 * 0.01;
-    $harga3 = $hpp3 + $affiliate3 + $marketing3 + $transport;
-    //echo json_encode(array("ltabung."=>$ltabung.,"margin"=>$pmargin,"harga"=>number_format(round($harga,-6)), "harga2"=>number_format(round($harga2,-6)));
-    $tharga = $harga+$bplafon;
-    $tharga2 = $harga2+$bplafon;
-    $tharga3 = $harga3+$bplafon;
-    $harga3 = number_format(round($harga3,-6));
-    $harga2 = number_format(round($harga2,-6));
-    $harga = number_format(round($harga,-6));
-    $tharga = number_format(round($tharga,-6));
-    $tharga2 = number_format(round($tharga2,-6));
-    $tharga3 = number_format(round($tharga3,-6));
-    //echo json_encode(array("bplafon"=>$tharga2));
-    echo json_encode(array("tharga"=>$tharga.'',"tharga2"=>$tharga2.'',"tharga3"=>$tharga3.'',"ltabung."=>$ltabung..'',"margin"=>$pmargin.'',"harga"=>''.$harga,"harga2"=>''.$harga2,"harga3"=>''.$harga3));
+    $affiliate = $hpp3 * 0.05;
+    $marketing = $hpp3 * 0.01;
+    $lain2 = $modal3 * 0.1;
+    $hargaEN = $hpp3 + $affiliate + $marketing + $transport +$lain2;
+    $marketing = number_format(round($marketing,0));
+    $lain2 = number_format(round($lain2,0));
+    $hpp3 = number_format(round($hpp3,0));
+    $affiliate = number_format(round($affiliate,0));
+    $hargaEN = number_format(round($hargaEN,-6));
+    //endEN
+
+    echo json_encode(array("hpp"=>$hpp.'',"hmargin"=>$margin3.'',"hmodal"=>$hmodal3.'',"h"=>$h_en.'',"luas"=>round($luas,2).'',"margin"=>$pmargin.'',"hargaga"=>$hargaGA.'',"hargass"=>$hargaSS.'',"hargaen"=>$hargaEN.'')); 
 break;
 }
 ?>
