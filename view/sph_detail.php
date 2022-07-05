@@ -177,7 +177,7 @@ $(document).ready(function () {
         kalkulatorharga();
     });
     var cbokel = document.getElementById('cbokelengkapan');
-    cbokel.addEventListener('keyup', function(e){
+    cbokel.addEventListener('change', function(e){
         kalkulatorharga();
     });
     var idmargin = document.getElementById('idmargin');

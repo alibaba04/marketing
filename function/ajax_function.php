@@ -402,7 +402,7 @@ case "kalkulator":
     }elseif ($model=='setbola') {
         $luas=$ltabung-(0*$ltabung);
     }
-    
+
     $pmargin = 0; 
     if ($luas <= 15) {$pmargin = 100;}
     else if($luas <= 25){$pmargin = 80;}
@@ -471,8 +471,8 @@ case "kalkulator":
     if( $kel == 0){
         $modal = $hmodal2 * $xfull;
     }else if($kel == 2){
-        $modalt = $hmodal2 -(($xtp/100)*$hmodal2) ;
-        $modal = $modalt + (($xwa/100)*$hmodal2);
+        $modalt2 = $hmodal2 -(($xtp/100)*$hmodal2) ;
+        $modal = $modalt2 + (($xwa/100)*$hmodal2);
     }else{
         $modal = $hmodal2 -(($xtp/100)*$hmodal2) ;
     }
@@ -504,7 +504,7 @@ case "kalkulator":
     if( $kel == 0){
         $modal3 = $hmodal3 * $xfull;
     }else if($kel == 2){
-        $modalt = $hmodal3 -(($xtp/100)*$hmodal3) ;
+        $modalt3 = $hmodal3 -(($xtp/100)*$hmodal3) ;
         $modal3 = $modalt3 + (($xwa/100)*$hmodal3);
     }else{
         $modal3 = $hmodal3 -(($xtp/100)*$hmodal3) ;
