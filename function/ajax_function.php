@@ -392,17 +392,6 @@ case "kalkulator":
         $ltabung = ($dt * $t * 3.14);
     }
 
-
-    $pmargin = 0; 
-    if ($ltabung <= 15) {$pmargin = 100;}
-    else if($ltabung <= 25){$pmargin = 80;}
-    else if($ltabung <= 40){$pmargin = 60;}
-    else if($ltabung <= 60){$pmargin = 50;}
-    else if($ltabung <= 100){$pmargin = 40;}
-    else{$pmargin = 33;}
-    if ($m !=0 ) {
-        $pmargin = $m; 
-    }
     $luas=0;
     if ($model=='pinang') {
         $luas=$ltabung-(0.183016557250314*$ltabung);
@@ -413,6 +402,18 @@ case "kalkulator":
     }elseif ($model=='setbola') {
         $luas=$ltabung-(0*$ltabung);
     }
+    
+    $pmargin = 0; 
+    if ($luas <= 15) {$pmargin = 100;}
+    else if($luas <= 25){$pmargin = 80;}
+    else if($luas <= 40){$pmargin = 60;}
+    else if($luas <= 60){$pmargin = 50;}
+    else if($luas <= 100){$pmargin = 40;}
+    else{$pmargin = 33;}
+    if ($m !=0 ) {
+        $pmargin = $m; 
+    }
+    
     
     //GA
     $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='galvalum'";
