@@ -75,12 +75,12 @@ while (  $hasil = mysql_fetch_array($rs2)) {
     $luas = '';
     $ongkir += $hasil['transport'];
     $txtrangka1=$txtrangka2=$txtrangka3='';
-    if ($hasil['model'] =='custom') {
+    //if ($hasil['model'] =='custom') {
         $luas = $hasil['luas'];
         
-    }else{
+    /*}else{
         $luas = luas($hasil['d'],$hasil['t'],$hasil['dt']);
-    }
+    }*/
     $luas = round($luas,2);
     $harga1 = ($hasil['harga']);
     $harga2 = ($hasil['harga2']);
