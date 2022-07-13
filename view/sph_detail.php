@@ -164,15 +164,15 @@ $(document).ready(function () {
         var cbomodel = $("#cbomodel").val(); 
         var d = $("#txtD").val();
         if(cbomodel == 'bawang'){
-            var dt = parseInt(d)+(0.23*d);
-            $("#txtDt").val(dt);
+            var dt = (0.23*(d))+parseFloat(d);
+            $("#txtDt").val(dt.toFixed(3));
             $("#txtT").val(d);
         }else if(cbomodel == 'pinang'){
             $("#txtT").val(d);
         }else if(cbomodel == 'madinah'){
-            $("#txtT").val(d*0.75);
+            $("#txtT").val((d*0.75).toFixed(3));
         }else if(cbomodel == 'setbola'){
-            $("#txtT").val(d*0.5);
+            $("#txtT").val((d*0.5).toFixed(3));
         }
         kalkulatorharga();
     });

@@ -124,11 +124,13 @@ defined( 'validSession' ) or die( 'Restricted access' );
                 $rs = new MySQLPagedResultSet($q,100, $dbLink);
                 $rowCounter=1;
                 while ($query_data = $rs->fetchArray()) {
-                  echo '<tr><td>'.$rowCounter.'.</td>
-                  <td>'.$query_data['name'].'</td>
-                  <td><span class="badge bg-red">'.$query_data['jml'].'</span></td>
-                  </tr>';
-                  $rowCounter++;
+                  if ($query_data['name']!= null) {
+                    echo '<tr><td>'.$rowCounter.'.</td>
+                    <td>'.$query_data['name'].'</td>
+                    <td><span class="badge bg-red">'.$query_data['jml'].'</span></td>
+                    </tr>';
+                    $rowCounter++;
+                  }
                 }
                 ?>
               </table>
