@@ -157,6 +157,14 @@ $(document).ready(function () {
     }); 
     var txtT = document.getElementById('txtT');
     txtT.addEventListener('keyup', function(e){
+        var cbomodel = $("#cbomodel").val(); 
+        if(cbomodel == 'pinang'){
+            if ($("#txtT").val()<$("#txtD").val()) {
+                alert("Tinggi minimal sama!");
+                $("#txtT").focus();
+                return false;
+            }
+        }
         kalkulatorharga();
     });
     var txtD = document.getElementById('txtD');
@@ -182,6 +190,12 @@ $(document).ready(function () {
     });
     var idmargin = document.getElementById('idmargin');
     idmargin.addEventListener('keyup', function(e){
+        if ($("#idmargin").val()<21) {
+            alert("Minimal Margin 21%!");
+            $("#idmargin").focus();
+            $("#idmargin").val('21');
+            return false;
+        }
         if($("#txtket").val() != 'Atap'){
             kalkulatorharga();
         }
