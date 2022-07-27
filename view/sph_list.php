@@ -386,7 +386,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                                         <i class="fa fa-fw fa-check"></i></button></td>';
                                 }
                                 
-                                if ($_SESSION["my"]->privilege=='kpenjualan' || $_SESSION["my"]->privilege=='GODMODE' ) {
+                                if ($_SESSION["my"]->privilege=='kpenjualan' || $_SESSION["my"]->privilege=='GODMODE' || $_SESSION["my"]->privilege=='SALES' ) {
                                     echo "<td onclick=mnote('".$query_data["noSph"]."')>" . $query_data["note"] ."</td><input type='hidden' name='mnoted' id='mnoted' value='" . $query_data["note"] ."'>";
                                 }else{
                                     echo "<td >" . $query_data["note"] ."</td><input type='hidden' name='mnoted' id='mnoted' value='" . $query_data["note"] ."'>";

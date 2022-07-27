@@ -609,7 +609,6 @@ function validasiForm(form)
                             echo '<h3 class="box-title">UBAH SPH</h3>';
                             echo "<input type='hidden' name='txtMode' value='Edit'>";
 
-//Secure parameter from SQL injection
                             if (isset($_GET["noSph"])){
                                 $noSph = secureParam($_GET["noSph"], $dbLink);
                             }else{
