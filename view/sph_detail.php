@@ -223,7 +223,6 @@ $(document).ready(function () {
     $("#closemyCModal").click(function(){ 
         $("#myCModal").modal('hide');
     });
-    
 });
 
 </script>
