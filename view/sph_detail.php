@@ -107,13 +107,19 @@ $(document).ready(function () {
     $("#btnModal").click(function(){ 
         var idP = $('#provinsi').val();
         idP = idP.split("-");
+        var idK = idP[1];
         var link = window.location.href;
         var res = link.match(/mode=edit/g);
         $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
         if (res != 'mode=edit') {
             $.post("function/ajax_function.php",{ fungsi: "getOngkir",idP:idP[0]},function(data)
             {
-                document.getElementById("txtongkir").value = data.transport;
+                if (idK == '3506' || idK == '3571') {
+                    document.getElementById("txtongkir").value = 0;
+                }else{
+                    document.getElementById("txtongkir").value = data.transport;
+                }
+                
             },"json");
         }
         
@@ -173,14 +179,15 @@ $(document).ready(function () {
         var d = $("#txtD").val();
         if(cbomodel == 'bawang'){
             var dt = (0.23*(d))+parseFloat(d);
-            $("#txtDt").val(dt.toFixed(3));
+            $("#txtDt").val(dt);
             $("#txtT").val(d);
         }else if(cbomodel == 'pinang'){
             $("#txtT").val(d);
         }else if(cbomodel == 'madinah'){
-            $("#txtT").val((d*0.75).toFixed(3));
+            $("#txtT").val((d*0.75));
         }else if(cbomodel == 'setbola'){
-            $("#txtT").val((d*0.5).toFixed(3));
+            var t = (d*0.5);
+            $("#txtT").val(t);
         }
         kalkulatorharga();
     });
@@ -194,7 +201,10 @@ $(document).ready(function () {
             alert("Minimal Margin 21%!");
             $("#idmargin").focus();
             $("#idmargin").val('21');
-            return false;
+        }else if($("#idmargin").val()>40){
+            alert("Maximal Margin 40%!");
+            $("#idmargin").focus();
+            $("#idmargin").val('40');
         }
         if($("#txtket").val() != 'Atap'){
             kalkulatorharga();
@@ -1061,7 +1071,7 @@ function validasiForm(form)
                                                     value=""><span class="input-group-addon">m<sup>2</sup></span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="text" value=""placeholder="0" name="idmargin" id="idmargin" class="form-control" value="0"><span class="input-group-addon">%</span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="number" value=""placeholder="0" name="idmargin" id="idmargin" min="21" max="40" class="form-control" value="0"><span class="input-group-addon">%</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>
