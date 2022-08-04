@@ -138,8 +138,13 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
                 var cbomodel = $("#cbomodel").val(); 
                 var d = $("#txtD").val();
                 if(cbomodel == 'bawang'){
-                    var dt = parseInt(d)+(0.23*d);
-                    $("#txtDT").val(dt);
+                    var dt = (0.23*(d))+parseFloat(d);
+                    var resdt = dt.toString().length;
+                    if (resdt > 5) {
+                        $("#txtDT").val(dt.toFixed(3));
+                    }else{
+                        $("#txtDT").val(dt);
+                    }
                     $("#txtT").val(d);
                 }else if(cbomodel == 'pinang'){
                     $("#txtT").val(d);

@@ -178,9 +178,14 @@ $(document).ready(function () {
         var cbomodel = $("#cbomodel").val(); 
         var d = $("#txtD").val();
         if(cbomodel == 'bawang'){
-            var dt = (0.23*(d))+parseFloat(d);
-            $("#txtDt").val(dt);
             $("#txtT").val(d);
+            var dt = (0.23*(d))+parseFloat(d);
+            var resdt = dt.toString().length;
+            if (resdt > 5) {
+                $("#txtDt").val(dt.toFixed(3));
+            }else{
+                $("#txtDt").val(dt);
+            }
         }else if(cbomodel == 'pinang'){
             $("#txtT").val(d);
         }else if(cbomodel == 'madinah'){
