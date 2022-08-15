@@ -89,10 +89,12 @@ class c_sph
                     if ($model=='custom') {
                     	for ($k = 1; $k <= $jumRangka ; $k++){
                     		$rangka = secureParam($params["rangka". $k],$dbLink);
-                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`nomer`,`rangka`) ";
-                    		$q7.= "VALUES ('".$noSph."','".$nomer."','".$rangka."');";
-                    		if (!mysql_query( $q7, $dbLink))
+                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
+                    		$q7.= "VALUES ('".$noSph."','".$rangka."');";
+                    		if ($rangka != '') {
+                    			if (!mysql_query( $q7, $dbLink))
                     			throw new Exception('SPH.'.mysql_error());
+                    		}
                     	}
                     	
                     }
@@ -190,7 +192,6 @@ class c_sph
 			$q7='';
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkEdit_'.$j])){
-
                     $idSph = secureParam($params["chkEdit_" . $j], $dbLink);
                     $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
@@ -220,8 +221,10 @@ class c_sph
                     		$rangka = secureParam($params["rangka". $k],$dbLink);
                     		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`,`aktif`) ";
                     		$q7.= "VALUES ('".$params["txtnoSph"]."','".$rangka."','1');";
-                    		if (!mysql_query( $q7, $dbLink))
+                    		if ($rangka != '') {
+                    			if (!mysql_query( $q7, $dbLink))
                     			throw new Exception('SPH.'.mysql_error());
+                    		}
                     	}
                     }
                     $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";

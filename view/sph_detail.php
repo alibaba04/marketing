@@ -202,6 +202,12 @@ $(document).ready(function () {
     });
     var idmargin = document.getElementById('idmargin');
     idmargin.addEventListener('keyup', function(e){
+        if($("#txtket").val() != 'Atap'){
+            kalkulatorharga();
+        }
+    });
+    var idmargin = document.getElementById('idmargin');
+    idmargin.addEventListener('focusout', function(e){
         if ($("#idmargin").val()<21) {
             alert("Minimal Margin 21%!");
             $("#idmargin").focus();

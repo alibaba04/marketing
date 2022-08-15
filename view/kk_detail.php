@@ -192,6 +192,9 @@ $(document).ready(function () {
     $("#kcolor5").click(function(){ 
         $("#kcolor5").val('');
     });
+    $("#closemyCModal").click(function(){ 
+        $("#mySModal").modal('hide');
+    });
 
 });
 function hitungtotal($param) {
@@ -224,6 +227,7 @@ function getpemasangan(){
             $('#txtPemasangan').val(data.pemasangan);
         },"json"); 
 }
+
 function cmodal($param) {
     $("#myModal").modal({backdrop: 'static'});
     $('#txtnomer').val($param);
@@ -258,6 +262,21 @@ function cmodal($param) {
         $("#kcolor5_"+$('#txtnomer').val()).val($('#kcolor5').val());
         $("#myModal").modal('hide');
     });
+}
+function csmodal($param) {
+    $("#mySModal").modal({backdrop: 'static'});
+}
+function prangka() {
+    var norangka = parseInt($("#norangka").val())+1;
+    var trow = document.createElement("DIV");
+    var trow2 = document.createElement("DIV");
+    var inp = document.getElementById("rangka");
+    var inp2 = document.getElementById("nrangka");
+    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'" value="">';
+    trow2.innerHTML+='<input type="hidden" class="form-control" id="rangka'+norangka+'" name="rangka'+norangka+'" value="">';
+    inp.appendChild(trow);
+    inp2.appendChild(trow2);
+    $("#norangka").val(norangka);
 }
 function chkadddetail(tcounter) {
     if ($("#chkAddJurnal_"+tcounter).val()==1) {
@@ -300,6 +319,18 @@ function omodal() {
             $('#txtP3').val($("#mtxtP3").val());
             $('#txtP4').val($("#mtxtP4").val());
     });
+    $('#btnrangka').click(function(){
+        var jumrangka = parseInt($("#norangka").val())-3;
+        for (var $k = 1; $k <= jumrangka ; $k++){
+            $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
+        }
+        $("#rangka1").val($('#txtrangka1').val());
+        $("#rangka2").val($('#txtrangka2').val());
+        $("#rangka3").val($('#txtrangka3').val());
+        $("#myCModal").modal('hide');
+        $("#myModal").modal('hide');
+        addarray();
+    });
 }
 function tnmasjid() {
     $("#txtnproyek").val($("#txtnmasjid").val());
@@ -340,12 +371,16 @@ function opendmodal(tcounter) {
         $("#myCModal").modal('hide');
     });
     $('#cbobahan').change(function(){
-        if ($('#cbobahan').val() == 'Galvalume') {
-            $('#idharga1').val($("#txtharga1_"+tcounter).val());
-        }else if($('#cbobahan').val() == 'Titanium'){
-            $('#idharga1').val($("#txtharga2_"+tcounter).val());
-        }else{
-            $('#idharga1').val($("#txtharga3_"+tcounter).val());
+        var link = window.location.href;
+        var res = link.match(/mode=edit/g);
+        if (res != 'mode=edit') {
+            if ($('#cbobahan').val() == 'Galvalume') {
+                $('#idharga1').val($("#txtharga1_"+tcounter).val());
+            }else if($('#cbobahan').val() == 'Titanium'){
+                $('#idharga1').val($("#txtharga2_"+tcounter).val());
+            }else{
+                $('#idharga1').val($("#txtharga3_"+tcounter).val());
+            }
         }
         
     });
@@ -833,6 +868,7 @@ return true;
                                    <th style="width: 10%">Kaligrafi</th>
                                    <th style="width: 10%">Price&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                                    <th style="width: 10%">Total</th>
+                                   <th style="width: 2%">Spec</th>
                                    <th style="width: 2%">Color</th>
                                 </tr>
                             </thead>
@@ -918,6 +954,8 @@ return true;
                                         <input type="text" class="form-control"  name="txtHargaKubah_' . $iJurnal . '" id="txtHargaKubah_' . $iJurnal . '" value="'.number_format(round($harga,-6)).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
                                         <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.$totharga.'" style="text-align:right;min-width: 120px;" ></div></td>';
+                                        echo '<td valign="top" ><div class="form-group"><center>
+                                        <input type="button" class="btn btn-primary" value="select" onclick="csmodal(' . $iJurnal . ')"></center></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td>';
                                         $iJurnal++;
@@ -1120,11 +1158,7 @@ return true;
                                 <option value=pinang>Pinang</option>";
                                 <option value=madinah>Madinah</option>";
                                 <option value=bawang>Bawang</option>";
-                                <?php
-                                if ($_SESSION['my']->privilege == 'ADMIN') {
-                                    echo '<option value=custom>Custom</option>';
-                                }
-                                ?>
+                                <option value=custom>Custom</option>";
                             </select>
                             <label class="control-label" for="txtKeteranganKas">Transport</label>
                             <div class="input-group"><span class="input-group-addon">Rp</span>
@@ -1174,5 +1208,56 @@ return true;
             </div>
         </div>
     </div>
+    <!-- Modal Rangka -->
+    <div class="modal fade" id="mySModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="closemyCModal">&times;</button>
+                    <h4 class="modal-title">Rangka Kubah <label id="labelclr"></label></h4>
+                    <input type="hidden" class="form-control" id="txtnomer" value="">
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <?php 
+                        $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and MD5(noSph)='".$noSph."'";
+                        $rsDetilJurnal = mysql_query($q, $dbLink);
+                        $nor=0;
+                        if(mysql_num_rows($rsDetilJurnal)== 0){
+                            echo '<input type="text" class="form-control" id="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
+                            <input type="text" class="form-control" id="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
+                            <input type="text" class="form-control" id="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
+                            echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
+                        }
+                        else{
+                            while($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
+                                $nor++;
+                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
+                            }
+                        }
+                        while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
+                            $nor++;
+                            if (! mysqli_num_rows($DetilJurnal)) {
+                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
+                            }else{
+                                echo '<input type="text" class="form-control" id="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
+                                <input type="text" class="form-control" id="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
+                                <input type="text" class="form-control" id="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
+                                echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
+                            }
+                            echo '<input type="hidden"  id="norangka" name="norangka" value="'.$nor.'" >';
+                        }
+                        ?>
+                        <div id="rangka"></div>
+                    </div><center>
+                        <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-primary" value="Add" id="btnrangka">
+                    </div>
+                </div>
+            </div>
+        </div>
 </form>
 
