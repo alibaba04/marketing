@@ -273,9 +273,20 @@ class c_kk
 				throw new Exception('Gagal update data KK3.');
 
 			$jumData = $params["jumAddJurnal"];
+			$jumRangka = $params["norangka"];
 			$nomer =0;
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
+					for ($k = 1; $k <= $jumRangka ; $k++){
+						$rangka = secureParam($params["rangka". $k],$dbLink);
+						$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
+						$q7.= "VALUES ('".$nokk."','".$rangka."');";
+						if ($rangka != '') {
+							if (!mysql_query( $q7, $dbLink))
+								throw new Exception('KK.'.mysql_error());
+						}
+					}
+
 					$color1 = secureParam($params["color1_". $j],$dbLink);
 					$color2 = secureParam($params["color2_". $j], $dbLink);
 					$color3 = secureParam($params["color3_". $j ], $dbLink);

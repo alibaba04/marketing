@@ -21,6 +21,7 @@ $rs = mysql_query($q, $dbLink);
 
 $hasil = mysql_fetch_array($rs);
 $no = $hasil['noKk'];
+$noSph = $hasil['noSph'];
 $tharga = $hasil['harga']+$hasil['kaligrafi'];
 $kaligrafi = $hasil['kaligrafi'];
 $nama_cust = $hasil['nama_cust'];
@@ -253,8 +254,19 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     }
     $tbl = 
     chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
+    $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and (noSph)='".$noSph."'";
+    $rsDetilJurnal = mysql_query($q, $dbLink);
+    $nor=0;
+    if(mysql_num_rows($rsDetilJurnal)== 0){
+      $pdf->writeHTML($tbl);
+    }else{
+      $txt='';
+      while($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
+        $txt .= chr(149).'  '.$DetilJurnal["rangka"].'<br>';
+      }
+      //$pdf->writeHTML($txt);
+    }
     $pdf->writeHTML($tbl);
-    
     if ($hasil["jml"]>=2) {
       $pdf->SetMargins(10, 10, 10, true);
     }

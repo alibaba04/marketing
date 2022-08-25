@@ -404,8 +404,8 @@ case "kalkulator":
     }
 
     $pmargin = 0; 
-    if ($luas >= 100) {$pmargin = 40;}
-    else {$pmargin = 30;}
+    if ($d >= 5) {$pmargin = 33;}
+    else {$pmargin = 40;}
     /*if ($luas <= 15) {$pmargin = 100;}
     else if($luas <= 25){$pmargin = 80;}
     else if($luas <= 40){$pmargin = 60;}

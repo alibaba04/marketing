@@ -119,6 +119,16 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     }
     
 $(document).ready(function () {
+    $('#btnrangka').click(function(){
+        var jumrangka = parseInt($("#norangka").val())-3;
+        for (var $k = 1; $k <= jumrangka ; $k++){
+            $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
+        }
+        $("#rangka1").val($('#txtrangka1').val());
+        $("#rangka2").val($('#txtrangka2').val());
+        $("#rangka3").val($('#txtrangka3').val());
+        $("#mySModal").modal('hide');
+    });
     var harga = document.getElementById('idharga1');
     harga.addEventListener('keyup', function(e){
         harga.value = formatRupiah(this.value,'');
@@ -319,18 +329,7 @@ function omodal() {
             $('#txtP3').val($("#mtxtP3").val());
             $('#txtP4').val($("#mtxtP4").val());
     });
-    $('#btnrangka').click(function(){
-        var jumrangka = parseInt($("#norangka").val())-3;
-        for (var $k = 1; $k <= jumrangka ; $k++){
-            $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
-        }
-        $("#rangka1").val($('#txtrangka1').val());
-        $("#rangka2").val($('#txtrangka2').val());
-        $("#rangka3").val($('#txtrangka3').val());
-        $("#myCModal").modal('hide');
-        $("#myModal").modal('hide');
-        addarray();
-    });
+
 }
 function tnmasjid() {
     $("#txtnproyek").val($("#txtnmasjid").val());

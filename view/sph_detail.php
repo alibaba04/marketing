@@ -311,35 +311,40 @@ $(document).ready(function () {
         },"json");
     }
     function checkKubah() {
-        if ($("#cbomodel").val()=='custom'){
-            $("#myCModal").modal({backdrop: false});
-            var link = window.location.href;
-            var res = link.match(/mode=edit/g);
-            $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
-            if (res == 'mode=edit') {
-                var jumrangka = parseInt($("#norangka").val())-3;
-                for (var $k = 0; $k < jumrangka ; $k++){
-                    $("#txtrangka"+$k).val($('#rangka'+$k).val());
+        if (confirm('Cek Nilai Transport!') == true) {
+            if ($("#cbomodel").val()=='custom'){
+                $("#myCModal").modal({backdrop: false});
+                var link = window.location.href;
+                var res = link.match(/mode=edit/g);
+                $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
+                if (res == 'mode=edit') {
+                    var jumrangka = parseInt($("#norangka").val())-3;
+                    for (var $k = 0; $k < jumrangka ; $k++){
+                        $("#txtrangka"+$k).val($('#rangka'+$k).val());
+                    }
+                    $("#txtrangka1").val($('#rangka1').val());
+                    $("#txtrangka2").val($('#rangka2').val());
+                    $("#txtrangka3").val($('#rangka3').val());
                 }
-                $("#txtrangka1").val($('#rangka1').val());
-                $("#txtrangka2").val($('#rangka2').val());
-                $("#txtrangka3").val($('#rangka3').val());
-            }
-            $('#btnrangka').click(function(){
-                var jumrangka = parseInt($("#norangka").val())-3;
-                for (var $k = 1; $k <= jumrangka ; $k++){
-                    $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
-                }
-                $("#rangka1").val($('#txtrangka1').val());
-                $("#rangka2").val($('#txtrangka2').val());
-                $("#rangka3").val($('#txtrangka3').val());
-                $("#myCModal").modal('hide');
-                $("#myModal").modal('hide');
+                $('#btnrangka').click(function(){
+                    var jumrangka = parseInt($("#norangka").val())-3;
+                    for (var $k = 1; $k <= jumrangka ; $k++){
+                        $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
+                    }
+                    $("#rangka1").val($('#txtrangka1').val());
+                    $("#rangka2").val($('#txtrangka2').val());
+                    $("#rangka3").val($('#txtrangka3').val());
+                    $("#myCModal").modal('hide');
+                    $("#myModal").modal('hide');
+                    addarray();
+                });
+            }else{
                 addarray();
-            });
-        }else{
-            addarray();
+            }
+        } else {
+            return false;
         }
+        
     }
     function prangka() {
         var norangka = parseInt($("#norangka").val())+1;
