@@ -246,6 +246,9 @@ if ($bahan == '1' or $bahan == '4' or $bahan == '5' or $bahan == '0') {
         $pdf->Cell(8,6,'','LR',0,'C',0);
         $pdf->Cell(32,6,'','LR',0,'C',0);
         $pdf->Cell(143,6,'         - Cat PU 2 Komponen','LR',1,'L',0);
+        $pdf->Cell(8,6,'','LR',0,'C',0);
+        $pdf->Cell(32,6,'','LR',0,'C',0);
+        $pdf->Cell(143,6,'         - Clear','LR',1,'L',0);
     }
     $pdf->Cell(8,6,'','LR',0,'C',0);
     $pdf->Cell(32,6,'','LR',0,'C',0);

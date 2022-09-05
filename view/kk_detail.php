@@ -52,7 +52,7 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         $pesan = $tmpkk->addkk($_POST, $nameimg);
     }
 //Jika Mode Ubah/Edit
-    if ($_POST["txtMode"] == "Edit") {
+    if ($_POST["txtMode"] == "edit") {
         $folderUpload = "../uploads/";
         $nameimg= array();
         $files = $_FILES;
@@ -124,9 +124,6 @@ $(document).ready(function () {
         for (var $k = 1; $k <= jumrangka ; $k++){
             $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
         }
-        $("#rangka1").val($('#txtrangka1').val());
-        $("#rangka2").val($('#txtrangka2').val());
-        $("#rangka3").val($('#txtrangka3').val());
         $("#mySModal").modal('hide');
     });
     var harga = document.getElementById('idharga1');
@@ -240,7 +237,7 @@ function getpemasangan(){
 
 function cmodal($param) {
     $("#myModal").modal({backdrop: 'static'});
-    $('#txtnomer').val($param);
+    $('#txtnomerc').val($param);
     $('#labelclr').html($param+1);
     var link = window.location.href;
     var res = link.match(/mode=edit/g);
@@ -259,33 +256,51 @@ function cmodal($param) {
     }
 
     $('#btncolor').click(function(){
-        $("#color1_"+$('#txtnomer').val()).val($('#color1').val());
-        $("#color2_"+$('#txtnomer').val()).val($("#color2").val());
-        $("#color3_"+$('#txtnomer').val()).val($('#color3').val());
-        $("#color4_"+$('#txtnomer').val()).val($("#color4").val());
-        $("#color5_"+$('#txtnomer').val()).val($('#color5').val());
+        $("#color1_"+$('#txtnomerc').val()).val($('#color1').val());
+        $("#color2_"+$('#txtnomerc').val()).val($("#color2").val());
+        $("#color3_"+$('#txtnomerc').val()).val($('#color3').val());
+        $("#color4_"+$('#txtnomerc').val()).val($("#color4").val());
+        $("#color5_"+$('#txtnomerc').val()).val($('#color5').val());
 
-        $("#kcolor1_"+$('#txtnomer').val()).val($('#kcolor1').val());
-        $("#kcolor2_"+$('#txtnomer').val()).val($('#kcolor2').val());
-        $("#kcolor3_"+$('#txtnomer').val()).val($('#kcolor3').val());
-        $("#kcolor4_"+$('#txtnomer').val()).val($('#kcolor4').val());
-        $("#kcolor5_"+$('#txtnomer').val()).val($('#kcolor5').val());
+        $("#kcolor1_"+$('#txtnomerc').val()).val($('#kcolor1').val());
+        $("#kcolor2_"+$('#txtnomerc').val()).val($('#kcolor2').val());
+        $("#kcolor3_"+$('#txtnomerc').val()).val($('#kcolor3').val());
+        $("#kcolor4_"+$('#txtnomerc').val()).val($('#kcolor4').val());
+        $("#kcolor5_"+$('#txtnomerc').val()).val($('#kcolor5').val());
         $("#myModal").modal('hide');
     });
 }
-function csmodal($param) {
+function csmodal($no,$nokk) {
+    $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk,nomer:$no },function(data)
+    {
+        var x = document.getElementById("detailrangka");
+        x.innerHTML = '';
+        for(var i=0; i<data.length; ++i) {
+            var y = document.createElement("input");
+            y.setAttribute("type", "text");
+            y.classList.add("form-control")
+            y.setAttribute("id", "txtrangka"+i);
+            y.setAttribute("name", "txtrangka"+i);
+            y.setAttribute("value", data[i]);
+            x.appendChild(y);
+        }
+        $("#norangka").val(data.length);
+
+        if (isempty($("#norangka").val())) {
+        alert('data');
+
+        }
+        
+    },"json"); 
     $("#mySModal").modal({backdrop: 'static'});
 }
 function prangka() {
     var norangka = parseInt($("#norangka").val())+1;
     var trow = document.createElement("DIV");
     var trow2 = document.createElement("DIV");
-    var inp = document.getElementById("rangka");
-    var inp2 = document.getElementById("nrangka");
-    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'" value="">';
-    trow2.innerHTML+='<input type="hidden" class="form-control" id="rangka'+norangka+'" name="rangka'+norangka+'" value="">';
+    var inp = document.getElementById("detailrangka");
+    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'"name="txtrangka'+norangka+'" value="">';
     inp.appendChild(trow);
-    inp2.appendChild(trow2);
     $("#norangka").val(norangka);
 }
 function chkadddetail(tcounter) {
@@ -583,7 +598,7 @@ return true;
                         if ($_GET["mode"] == "edit") {
                             $noKk='';
                             echo '<h3 class="box-title">UBAH KK</h3>';
-                            echo "<input type='hidden' name='txtMode' value='Edit'>";
+                            echo "<input type='hidden' name='txtMode' value='edit'>";
                             if (isset($_GET["noKK"])){
                                 $noKk = secureParam($_GET["noKK"], $dbLink);
                             }else{
@@ -844,7 +859,6 @@ return true;
                     </div>
                 </div>
             </section>
-
             <section class="col-lg-12">
                 <div class="box box-primary">
 
@@ -854,7 +868,6 @@ return true;
                         <span id="msgbox"> </span>
                     </div>
                     <div class="box-body" style="width: 100%;overflow-x: scroll;">
-
                         <table class="table table-bordered table-striped table-hover"  >
                             <thead>
                                 <tr>
@@ -954,7 +967,7 @@ return true;
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
                                         <input readonly type="text" class="form-control"  name="txtHarga_' . $iJurnal . '" id="txtHarga_' . $iJurnal . '" value="'.$totharga.'" style="text-align:right;min-width: 120px;" ></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
-                                        <input type="button" class="btn btn-primary" value="select" onclick="csmodal(' . $iJurnal . ')"></center></div></td>';
+                                        <input type="button" class="btn btn-primary" value="select" onclick=csmodal("' . $iJurnal . '","' . $_GET['noKK'] . '")></center></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td>';
                                         $iJurnal++;
@@ -962,171 +975,164 @@ return true;
                                 ?>
                             </tbody>
                         </table>
-
                         <input type="hidden" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
                         <input type="hidden" value="0" id="idebit" name="idebit"/>
                         <input type="hidden" value="0" id="ikredit" name="ikredit"/>
                         <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add Detail</button></center>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Warna <label id="labelclr"></label></h4>
-                                    <input type="hidden" class="form-control" id="txtnomer" value="">
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <label class="control-label" for="chkPPN">Warna</label>
-                                            <input type="text" class="form-control" id="color1" value="-" placeholder="">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="control-label" for="chkPPN">Kode</label>
-                                            <input type="text" class="form-control" id="kcolor1" value="-" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="color2" value="-" placeholder="">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor2" value="-" placeholder="-">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="color3" value="-" placeholder="">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor3" value="-" placeholder="-">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="color4" value="-" placeholder="">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor4" value="-" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="color5" value="-" placeholder="">
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="kcolor5" value="-" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-primary" value="Add"  id="btncolor">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="myNote" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Waktu & Persentase Pembayaran</h4>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                    <div class="input-group">
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mtxtW1" value="Saat penandatanganan Perjanjian ini">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="input-group"><input type="number" id="mtxtP1" class="form-control" value="30"><span class="input-group-addon">%</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control"id="mtxtW2" value="Saat kubah selesai dipabrikasi dan akan dikirimkan">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="input-group"><input type="number" id="mtxtP2"class="form-control" value="25"><span class="input-group-addon">%</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mtxtW3"value="Saat tim pemasang dan kubah sudah sampai di lokasi">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="input-group"><input type="number" id="mtxtP3"class="form-control" value="35"><span class="input-group-addon">%</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="col-lg-9">
-                                            <input type="text" class="form-control" id="mtxtW4"value="Saat kubah sudah terpasang">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="input-group"><input type="number" id="mtxtP4"class="form-control" value="10"><span class="input-group-addon">%</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Note</h4>
-                                    </div>
-                                    <textarea class="form-control" id="txtReport"></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" class="btn btn-primary" value="Save" id="btnsimpan">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="mySph" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">No SPH</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <?php  
-                                        $q = 'SELECT noSph FROM `aki_sph` WHERE aktif=1 ORDER BY idSph desc';
-                                        $sql_sph = mysql_query($q,$dbLink);
-                                        ?>
-                                        <select class="form-control select2" name="snosph" id="snosph" style="width: 100%">
-                                            <?php
-
-                                            $selected = "";
-                                            echo '<option value="">No SPH</option>';
-                                                while($rs_sph = mysql_fetch_assoc($sql_sph)){ 
-                                                    echo '<option value="'.md5($rs_sph['noSph']).'">'.$rs_sph['noSph'].'</option>';
-                                                }  
-                                            ?>
-                                        </select>   
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary pull-right" id="createKk"><i class="fa fa-plus"></i> Create</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="box-footer">
                         <input type="button" class="btn btn-primary" value="Save" onclick="omodal()">
                         <a href="index.php?page=html/kk_list">
                             <button type="button" class="btn btn-default pull-right">&nbsp;&nbsp;Cancel&nbsp;&nbsp;</button>    
                         </a>
-
                     </div>
                 </div>
-
             </section>
 
         </div>
     </section>
-    
-    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warna <label id="labelclr"></label></h4>
+                    <input type="hidden" class="form-control" id="txtnomerc" value="">
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <label class="control-label" for="chkPPN">Warna</label>
+                            <input type="text" class="form-control" id="color1" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="chkPPN">Kode</label>
+                            <input type="text" class="form-control" id="kcolor1" value="-" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color2" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor2" value="-" placeholder="-">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color3" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor3" value="-" placeholder="-">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color4" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor4" value="-" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color5" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor5" value="-" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" value="Add"  id="btncolor">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myNote" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Waktu & Persentase Pembayaran</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="input-group">
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="mtxtW1" value="Saat penandatanganan Perjanjian ini">
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group"><input type="number" id="mtxtP1" class="form-control" value="30"><span class="input-group-addon">%</span></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control"id="mtxtW2" value="Saat kubah selesai dipabrikasi dan akan dikirimkan">
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group"><input type="number" id="mtxtP2"class="form-control" value="25"><span class="input-group-addon">%</span></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="mtxtW3"value="Saat tim pemasang dan kubah sudah sampai di lokasi">
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group"><input type="number" id="mtxtP3"class="form-control" value="35"><span class="input-group-addon">%</span></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="mtxtW4"value="Saat kubah sudah terpasang">
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="input-group"><input type="number" id="mtxtP4"class="form-control" value="10"><span class="input-group-addon">%</span></div>
+                        </div>
+                    </div>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Note</h4>
+                    </div>
+                    <textarea class="form-control" id="txtReport"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Save" id="btnsimpan">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mySph" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">No SPH</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <?php  
+                        $q = 'SELECT noSph FROM `aki_sph` WHERE aktif=1 ORDER BY idSph desc';
+                        $sql_sph = mysql_query($q,$dbLink);
+                        ?>
+                        <select class="form-control select2" name="snosph" id="snosph" style="width: 100%">
+                            <?php
+
+                            $selected = "";
+                            echo '<option value="">No SPH</option>';
+                            while($rs_sph = mysql_fetch_assoc($sql_sph)){ 
+                                echo '<option value="'.md5($rs_sph['noSph']).'">'.$rs_sph['noSph'].'</option>';
+                            }  
+                            ?>
+                        </select>   
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-right" id="createKk"><i class="fa fa-plus"></i> Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="myCModal" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -1207,7 +1213,6 @@ return true;
             </div>
         </div>
     </div>
-    <!-- Modal Rangka -->
     <div class="modal fade" id="mySModal" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -1215,40 +1220,35 @@ return true;
                 <div class="modal-header">
                     <button type="button" class="close" id="closemyCModal">&times;</button>
                     <h4 class="modal-title">Rangka Kubah <label id="labelclr"></label></h4>
-                    <input type="hidden" class="form-control" id="txtnomer" value="">
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <?php 
-                        $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and MD5(noSph)='".$noSph."'";
+                        <div id="detailrangka"></div>
+                        <input type="hidden"  id="norangka" name="norangka" value="" >
+                        <!-- <?php 
+                        echo "<script type=\"text/javascript\">'GeeksForGeeks'; </script>";
+                        if ($_GET["mode"] == "edit") {
+                            $q="SELECT * FROM aki_kkrangka WHERE 1=1 and `aktif`=1 and MD5(noKK)='".$_GET["noKK"]."' and nomer='' order by idRangka asc";
+                        }else{
+                            $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and MD5(noSph)='".$noSph."'";
+                        }
                         $rsDetilJurnal = mysql_query($q, $dbLink);
                         $nor=0;
                         if(mysql_num_rows($rsDetilJurnal)== 0){
-                            echo '<input type="text" class="form-control" id="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
-                            <input type="text" class="form-control" id="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
-                            <input type="text" class="form-control" id="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
+                            echo '<input type="text" class="form-control" id="txtrangka1" name="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
+                            <input type="text" class="form-control" id="txtrangka2" name="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
+                            <input type="text" class="form-control" id="txtrangka3" name="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
                             echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
                         }
                         else{
                             while($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                                 $nor++;
-                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
-                            }
-                        }
-                        while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
-                            $nor++;
-                            if (! mysqli_num_rows($DetilJurnal)) {
-                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
-                            }else{
-                                echo '<input type="text" class="form-control" id="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
-                                <input type="text" class="form-control" id="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
-                                <input type="text" class="form-control" id="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
-                                echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
+                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" name="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
                             }
                             echo '<input type="hidden"  id="norangka" name="norangka" value="'.$nor.'" >';
                         }
-                        ?>
-                        <div id="rangka"></div>
+                        ?> -->
+                        
                     </div><center>
                         <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
                     </div>

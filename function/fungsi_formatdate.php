@@ -168,6 +168,7 @@ function cekrangka($d)
 	}
 	return $return;
 }
+
 function formatDate_id($value="01/01/1970", $pemisah="-", $hurufbesar=false, $formatbulan="MM", $format="dd/mm/yyyy")
 {
 	$tgl = substr($value, 0, 2);

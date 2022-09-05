@@ -253,7 +253,7 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
       $aksesoris=chr(149).'  Makara bahan '.$hasil2['bmakara'].' bentuk <b>'.$hasil2['makara'].'</b><br>';
     }
     $tbl = 
-    chr(149).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(149).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
+    chr(149).'  Rangka utama Pipa Galvanis dengan ukuran '.$rangka.'<br>'.$rangkad.chr(149).'  Rangka Pendukung Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
     $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and (noSph)='".$noSph."'";
     $rsDetilJurnal = mysql_query($q, $dbLink);
     $nor=0;

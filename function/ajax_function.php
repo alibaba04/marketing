@@ -224,6 +224,22 @@ case "chart":
 
     } 
 break;
+case "getdrangka":
+    $nokk = $_POST['nokk'];
+    $no = $_POST['nomer'];
+    $result = mysql_query("SELECT * FROM aki_kkrangka WHERE 1=1 and `aktif`=1 and MD5(noKK)='".$nokk."' and nomer='".$no."' order by idRangka asc", $dbLink);
+    if (mysql_num_rows($result)>0) {
+        $idx = 0;
+        while ( $data = mysql_fetch_assoc($result)) {
+
+            $output[$idx] = array($data['rangka']);
+            $idx++;
+        } 
+        echo json_encode($output);
+        break;
+
+    } 
+break;
 case "idList":
     $id = $_POST['id'];
     $no = $_POST['nosph'];

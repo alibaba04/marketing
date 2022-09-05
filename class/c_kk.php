@@ -66,6 +66,7 @@ class c_kk
 				throw new Exception('Gagal tambah data KK.');
 
 			$jumData = $params["jumAddJurnal"];
+			$jumRangka = $params["norangka"];
 			$nomer=0;
 			$files = $_FILES;
 			for ($j = 0; $j < $jumData ; $j++){
@@ -85,6 +86,16 @@ class c_kk
 					$q3.= " ('".$nokk."','".$nomer."','".$color1."','".$color2."','".$color3."','".$color4."','".$color5."','".$kcolor1."','".$kcolor2."','".$kcolor3."','".$color4."','".$kcolor5."');";
 					if (!mysql_query( $q3, $dbLink))
 						throw new Exception('Gagal tambah data KK.');
+
+					for ($k = 0; $k <= $jumRangka ; $k++){
+						$rangka = secureParam($params["txtrangka". $k],$dbLink);
+						$q7 = "INSERT INTO `aki_kkrangka`(  `noKK`, `nomer`, `rangka`) ";
+						$q7.= "VALUES ('".$nokk."','".$nomer."','".$rangka."');";
+						if ($rangka != '') {
+							if (!mysql_query( $q7, $dbLink))
+								throw new Exception('KK.'.mysql_error());
+						}
+					}
 
 					$model = secureParam($params["txtModel_". $j],$dbLink);
 					$jkubah = secureParam($params["txtKubah_". $j],$dbLink);
@@ -169,7 +180,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses";
+			$this->strResults=$q7."Sukses";
 		}
 		catch(Exception $e) 
 		{
@@ -275,12 +286,18 @@ class c_kk
 			$jumData = $params["jumAddJurnal"];
 			$jumRangka = $params["norangka"];
 			$nomer =0;
+			$qq3 = "DELETE FROM `aki_kkrangka` WHERE noKK='".$nokk."'";
+			if (!mysql_query( $qq3, $dbLink))
+				throw new Exception('Gagal del data KK.');
+			$qq4 = "DELETE FROM `aki_kkcolor` WHERE noKk='".$nokk."'";
+			if (!mysql_query( $qq4, $dbLink))
+				throw new Exception('Gagal del data KK.');
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-					for ($k = 1; $k <= $jumRangka ; $k++){
-						$rangka = secureParam($params["rangka". $k],$dbLink);
-						$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
-						$q7.= "VALUES ('".$nokk."','".$rangka."');";
+					for ($k = 0; $k <= $jumRangka ; $k++){
+						$rangka = secureParam($params["txtrangka". $k],$dbLink);
+						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
+						$q7.= "VALUES ('".$nokk."','".$nomer."','".$rangka."');";
 						if ($rangka != '') {
 							if (!mysql_query( $q7, $dbLink))
 								throw new Exception('KK.'.mysql_error());
@@ -297,10 +314,12 @@ class c_kk
 					$kcolor3 = secureParam($params["kcolor3_". $j ], $dbLink);
 					$kcolor4 = secureParam($params["kcolor4_". $j ], $dbLink);
 					$kcolor5 = secureParam($params["kcolor5_". $j ], $dbLink);
+					
 
-					$q3 = "UPDATE `aki_kkcolor` SET `color1`='".$color1."',`color2`='".$color2."',`color3`='".$color3."',`color4`='".$color4."',`color5`='".$color5."',`kcolor1`='".$kcolor1."',`kcolor2`='".$kcolor2."',`kcolor3`='".$kcolor3."',`kcolor4`='".$kcolor4."',`kcolor5`='".$kcolor5."' WHERE noKk='".$nokk."'";
+					$q3 = "INSERT INTO `aki_kkcolor`(`noKk`, `nomer`, `color1`, `color2`, `color3`, `color4`, `color5`, `kcolor1`, `kcolor2`, `kcolor3`, `kcolor4`, `kcolor5`) VALUES ";
+					$q3.= " ('".$nokk."','".$nomer."','".$color1."','".$color2."','".$color3."','".$color4."','".$color5."','".$kcolor1."','".$kcolor2."','".$kcolor3."','".$color4."','".$kcolor5."');";
 					if (!mysql_query( $q3, $dbLink))
-						throw new Exception('Gagal Edit data KK4.');
+						throw new Exception('Gagal tambah data KK.');
 
 					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
                     $model = secureParam($params["txtModel_". $j],$dbLink);
