@@ -156,7 +156,7 @@ case "cekpass":
     if (mysql_num_rows($result)) {
         echo "yes";
     } else {
-        echo "no";
+        echo $pass;
     }
 break;
 
@@ -372,19 +372,27 @@ case "getpabrikasi":
     echo json_encode(array("pabrikasi"=>$return));
 break;
 case "updatehpp":
-    $ga_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa1']), $dbLink);
-    $stg_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt1']), $dbLink);
-    $en_full1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn1']), $dbLink);
-    $ga_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa2']), $dbLink);
-    $stg_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt2']), $dbLink);
-    $en_wa1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn2']), $dbLink);
-    $ga_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessGa3']), $dbLink);
-    $stg_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessSt3']), $dbLink);
-    $en_tp1 = secureParamAjax(str_replace(',', '',$_POST['txtLessEn3']), $dbLink);
+    $pinang1 = secureParamAjax(str_replace(',', '',$_POST['txtpinang1']), $dbLink);
+    $pinang2 = secureParamAjax(str_replace(',', '',$_POST['txtpinang2']), $dbLink);
+    $pinang3 = secureParamAjax(str_replace(',', '',$_POST['txtpinang3']), $dbLink);
+    $madina1 = secureParamAjax(str_replace(',', '',$_POST['txtmadina1']), $dbLink);
+    $madina2 = secureParamAjax(str_replace(',', '',$_POST['txtmadina2']), $dbLink);
+    $madina3 = secureParamAjax(str_replace(',', '',$_POST['txtmadina3']), $dbLink);
+    $bawang1 = secureParamAjax(str_replace(',', '',$_POST['txtbawang1']), $dbLink);
+    $bawang2 = secureParamAjax(str_replace(',', '',$_POST['txtbawang2']), $dbLink);
+    $bawang3 = secureParamAjax(str_replace(',', '',$_POST['txtbawang3']), $dbLink);
+    $setbola1 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola1']), $dbLink);
+    $setbola2 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola2']), $dbLink);
+    $setbola3 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola3']), $dbLink);
 
-    $q1 = "UPDATE `aki_hpp` SET `ga-full`='".$ga_full1."',`ga-waterproof`='".$ga_wa1."',`ga-tplafon`='".$ga_tp1."',`en-full`='".$en_full1."',`en-waterproof`='".$en_wa1."',`en-tplafon`='".$en_tp1."',`stg-full`='".$stg_full1."',`stg-waterproof`='".$stg_wa1."',`stg-tplafon`='".$stg_tp1."'";
+    $q1 = "UPDATE `aki_hpp` SET `aktif`='1' WHERE `id` = '1000' or `id` = '3000' or `id` = '5000' or `id` = '7000'";
     if (mysql_query( $q1, $dbLink)){
-        echo "yes";
+        $q2 = "INSERT INTO `aki_hpp`(`id`, `bahan`, `model`, `full`, `waterproof`, `tplafon`, `aktif`) VALUES ('1000','hpermeter','pinang','".$pinang1."','".$pinang2."','".$pinang3."','0'), ('3000','hpermeter','madinah','".$madina1."','".$madina2."','".$madina3."','0'), ('5000','hpermeter','bawang','".$bawang1."','".$bawang2."','".$bawang3."','0'), ('7000','hpermeter','setbola','".$setbola1."','".$setbola2."','".$setbola3."','0')";
+        if (mysql_query( $q2, $dbLink)){
+            echo "yes";
+        }else{
+            echo $q2;
+        }
     } else {
         echo "no";
     }
@@ -434,7 +442,7 @@ case "kalkulator":
     
     
     //GA
-    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='galvalum'";
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='galvalum' and aktif=0";
     $result = mysql_query($sql, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
@@ -444,7 +452,7 @@ case "kalkulator":
         }
     }
     $h_en=0;
-    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='hpermeter'";
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='hpermeter' and aktif=0";
     $result = mysql_query($sql, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
@@ -476,7 +484,7 @@ case "kalkulator":
     //end GA
 
     //SS
-    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='gold'";
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='gold' and aktif=0";
     $result = mysql_query($sql, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {
@@ -508,7 +516,7 @@ case "kalkulator":
     //endSS
 
     //EN
-    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='enamel'";
+    $sql = "SELECT * FROM aki_hpp where model='".$model."' and bahan='enamel' and aktif=0";
     $result = mysql_query($sql, $dbLink);
     if (mysql_num_rows($result)>0) {
         while ( $data = mysql_fetch_assoc($result)) {

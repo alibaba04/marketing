@@ -32,7 +32,7 @@ if ($hakUser != 90 ) {
             $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"alibaba",pass:password } ,function(data)
             {
                 if(data=='yes') {
-                    $.post("function/ajax_function.php",{ fungsi: "updatehpp", txtLessGa1:$('#txtLessGa1').val(),txtLessGa2:$('#txtLessGa2').val(),txtLessGa3:$('#txtLessGa3').val(),txtLessEn1:$('#txtLessEn1').val(),txtLessEn2:$('#txtLessEn2').val(),txtLessEn3:$('#txtLessEn3').val(),txtLessSt1:$('#txtLessSt1').val(),txtLessSt2:$('#txtLessSt2').val(),txtLessSt3:$('#txtLessSt3').val() } ,function(data)
+                    $.post("function/ajax_function.php",{ fungsi: "updatehpp", txtpinang1:$('#txtpinang1').val(),txtpinang2:$('#txtpinang2').val(),txtpinang3:$('#txtpinang3').val(), txtmadina1:$('#txtmadina1').val(),txtmadina2:$('#txtmadina2').val(),txtmadina3:$('#txtmadina3').val(),txtbawang1:$('#txtbawang1').val(),txtbawang2:$('#txtbawang2').val(),txtbawang3:$('#txtbawang3').val(),txtsetbola1:$('#txtsetbola1').val(),txtsetbola2:$('#txtsetbola2').val(),txtsetbola3:$('#txtsetbola3').val()} ,function(data)
                     {
                         if(data=='yes') {
                             toastr.success('Sukses Update Harga Awal . . . .')
@@ -42,7 +42,7 @@ if ($hakUser != 90 ) {
                         }
                     });
                 }else{
-                    toastr.error('Gagal !!!<br> Password Level 1 Salah . . . .')
+                    toastr.error('Gagal !!!<br> Password LitBank Level 1 Salah . . . .')
                     $("#txtPass").focus();
                 }
             });
@@ -58,104 +58,152 @@ if ($hakUser != 90 ) {
                 <h4 class="modal-title">Set Harga Awal</h4>
             </div>
             <div class="modal-body">
-                <?php
-                $q= "SELECT * FROM `aki_hpp` WHERE ket='d<4'";
-                $rsTemp = mysql_query($q, $dbLink);
-                if ($datahppLess = mysql_fetch_array($rsTemp)) {}
-                ?>
-                <div class="modal-header">
-                    <section class="col-lg-2">
-                        <label class="control-label" for="txtTglTransaksi"><u>FULL</u></label>
-                    </section>
-                    <section class="col-lg-3">
+                
+                <div class="modal-header" style="background-color: #fafafa;">
+                    <?php
+                    $q= "SELECT * FROM `aki_hpp` where id='1000' and aktif=0";
+                    $rsTemp = mysql_query($q, $dbLink);
+                    if ($hpppinang = mysql_fetch_array($rsTemp)) {}
+                    ?>
+                    <div class="modal-header">
+                        <center><h4 class="modal-title">Pinang</h4></center>
+                    </div>
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Galvalume</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessGa1" id="txtLessGa1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['ga-full']);?>">
+                            <input type="text" name="txtpinang1" id="txtpinang1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hpppinang['full']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Stainless Gold</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessSt1" id="txtLessSt1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['stg-full']);?>">
+                            <input type="text" name="txtpinang2" id="txtpinang2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hpppinang['waterproof']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Enamel</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessEn1" id="txtLessEn1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['en-full']);?>">
+                            <input type="text" name="txtpinang3" id="txtpinang3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hpppinang['tplafon']);?>">
                         </div>
                     </section>
                 </div>
-                <div class="modal-header">
-                    <section class="col-lg-2">
-                        <label class="control-label" for="txtTglTransaksi"><u>WATERPROOF</u></label>
-                    </section>
-                    <section class="col-lg-3">
+                <div class="modal-header" style="background-color: #f0f0f0;">
+                    <?php
+                    $q= "SELECT * FROM `aki_hpp` where id='3000' and aktif=0";
+                    $rsTemp = mysql_query($q, $dbLink);
+                    if ($hppmadina = mysql_fetch_array($rsTemp)) {}
+                    ?>
+                    <div class="modal-header">
+                        <center><h4 class="modal-title">Madina</h4></center>
+                    </div>
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Galvalume</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessGa2" id="txtLessGa2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['ga-waterproof']);?>">
+                            <input type="text" name="txtmadina1" id="txtmadina1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppmadina['full']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Stainless Gold</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessSt2" id="txtLessSt2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['stg-waterproof']);?>">
+                            <input type="text" name="txtmadina2" id="txtmadina2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppmadina['waterproof']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
-                        <label class="control-label" for="txtTglTransaksi">Enamel</label>
+                    <section class="col-lg-4">
+                        <label class="control-label" for="txtTglTransaksi">Bawang</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessEn2" id="txtLessEn2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['en-waterproof']);?>">
+                            <input type="text" name="txtmadina3" id="txtmadina3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppmadina['tplafon']);?>">
                         </div>
                     </section>
                 </div>
-                <div class="modal-header">
-                    <section class="col-lg-2">
-                        <label class="control-label" for="txtTglTransaksi"><u>TANPA PLAFON</u></label>
-                    </section>
-                    <section class="col-lg-3">
+                <div class="modal-header" style="background-color: #fafafa;" >
+                    <?php
+                    $q= "SELECT * FROM `aki_hpp` where id='5000' and aktif=0";
+                    $rsTemp = mysql_query($q, $dbLink);
+                    if ($hppbawang = mysql_fetch_array($rsTemp)) {}
+                    ?>
+                    <div class="modal-header">
+                        <center><h4 class="modal-title">Bawang</h4></center>
+                    </div>
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Galvalume</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessGa3" id="txtLessGa3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['ga-tplafon']);?>">
+                            <input type="text" name="txtbawang1" id="txtbawang1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppbawang['full']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Stainless Gold</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessSt3" id="txtLessSt3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['stg-tplafon']);?>">
+                            <input type="text" name="txtbawang2" id="txtbawang2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppbawang['waterproof']);?>">
                         </div>
                     </section>
-                    <section class="col-lg-3">
+                    <section class="col-lg-4">
                         <label class="control-label" for="txtTglTransaksi">Enamel</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <label class="control-label" for="txtTglTransaksi">Rp.</label>
                             </div>
-                            <input type="text" name="txtLessEn3" id="txtLessEn3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo number_format($datahppLess['en-tplafon']);?>">
+                            <input type="text" name="txtbawang3" id="txtbawang3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppbawang['tplafon']);?>">
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-header" style="background-color: #f0f0f0;">
+                    <?php
+                    $q= "SELECT * FROM `aki_hpp` where id='7000' and aktif=0";
+                    $rsTemp = mysql_query($q, $dbLink);
+                    if ($hppsbola = mysql_fetch_array($rsTemp)) {}
+                    ?>
+                    <div class="modal-header">
+                        <center><h4 class="modal-title">Set. Bola</h4></center>
+                    </div>
+                    <section class="col-lg-4">
+                        <label class="control-label" for="txtTglTransaksi">Galvalume</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <label class="control-label" for="txtTglTransaksi">Rp.</label>
+                            </div>
+                            <input type="text" name="txtsetbola1" id="txtsetbola1" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppsbola['full']);?>">
+                        </div>
+                    </section>
+                    <section class="col-lg-4">
+                        <label class="control-label" for="txtTglTransaksi">Stainless Gold</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <label class="control-label" for="txtTglTransaksi">Rp.</label>
+                            </div>
+                            <input type="text" name="txtsetbola2" id="txtsetbola2" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppsbola['waterproof']);?>">
+                        </div>
+                    </section>
+                    <section class="col-lg-4">
+                        <label class="control-label" for="txtTglTransaksi">Enamel</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <label class="control-label" for="txtTglTransaksi">Rp.</label>
+                            </div>
+                            <input type="text" name="txtsetbola3" id="txtsetbola3" class="form-control" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" value="<?php echo ($hppsbola['tplafon']);?>">
                         </div>
                     </section>
                 </div>

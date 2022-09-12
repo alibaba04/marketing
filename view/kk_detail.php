@@ -271,6 +271,7 @@ function cmodal($param) {
     });
 }
 function csmodal($no,$nokk) {
+    $("#idrangka").val($no);
     $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk,nomer:$no },function(data)
     {
         var x = document.getElementById("detailrangka");
@@ -283,12 +284,6 @@ function csmodal($no,$nokk) {
             y.setAttribute("name", "txtrangka"+i);
             y.setAttribute("value", data[i]);
             x.appendChild(y);
-        }
-        $("#norangka").val(data.length);
-
-        if (isempty($("#norangka").val())) {
-        alert('data');
-
         }
         
     },"json"); 
@@ -1224,7 +1219,8 @@ return true;
                 <div class="modal-body">
                     <div class="form-group">
                         <div id="detailrangka"></div>
-                        <input type="hidden"  id="norangka" name="norangka" value="" >
+                        <input type=""  id="norangka" name="norangka" value="" >
+                        <input type=""  id="idrangka" name="idrangka" value="" >
                         <!-- <?php 
                         echo "<script type=\"text/javascript\">'GeeksForGeeks'; </script>";
                         if ($_GET["mode"] == "edit") {

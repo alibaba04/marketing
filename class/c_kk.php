@@ -295,9 +295,10 @@ class c_kk
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
 					for ($k = 0; $k <= $jumRangka ; $k++){
+						$idrangka = secureParam($params["idrangka"],$dbLink);
 						$rangka = secureParam($params["txtrangka". $k],$dbLink);
 						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
-						$q7.= "VALUES ('".$nokk."','".$nomer."','".$rangka."');";
+						$q7.= "VALUES ('".$nokk."','".$idrangka."','".$rangka."');";
 						if ($rangka != '') {
 							if (!mysql_query( $q7, $dbLink))
 								throw new Exception('KK.'.mysql_error());
@@ -422,7 +423,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults="Sukses Edit";
+			$this->strResults=$q7."Sukses Edit";
 		}
 		catch(Exception $e) 
 		{
