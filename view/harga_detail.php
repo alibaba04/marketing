@@ -29,7 +29,7 @@ if ($hakUser != 90 ) {
         });
         $('#btnSubmit').click(function(){
             var password = $('#txtPass').val();
-            $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"alibaba",pass:password } ,function(data)
+            $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"litbank",pass:password } ,function(data)
             {
                 if(data=='yes') {
                     $.post("function/ajax_function.php",{ fungsi: "updatehpp", txtpinang1:$('#txtpinang1').val(),txtpinang2:$('#txtpinang2').val(),txtpinang3:$('#txtpinang3').val(), txtmadina1:$('#txtmadina1').val(),txtmadina2:$('#txtmadina2').val(),txtmadina3:$('#txtmadina3').val(),txtbawang1:$('#txtbawang1').val(),txtbawang2:$('#txtbawang2').val(),txtbawang3:$('#txtbawang3').val(),txtsetbola1:$('#txtsetbola1').val(),txtsetbola2:$('#txtsetbola2').val(),txtsetbola3:$('#txtsetbola3').val()} ,function(data)
@@ -220,7 +220,7 @@ if ($hakUser != 90 ) {
     <div class="modal-dialog">
         <div class="modal-content bg-secondary">
             <div class="modal-header">
-                <h4 class="modal-title">Input Password Level 1 (Owner)</h4>
+                <h4 class="modal-title">Input Password LitBank Level 1 </h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">
