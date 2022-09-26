@@ -35,7 +35,8 @@ class c_sph
 	function addsph(&$params){
 		global $dbLink;
 		require_once './function/fungsi_formatdate.php';
-        $tglTransaksi = date("Y-m-d");
+		date_default_timezone_set("Asia/Jakarta");
+        $tglTransaksi = date("Y-m-d H:i:s");
         $namacust = secureParam($params["txtnamacust"],$dbLink);
         $sdr = secureParam($params["cbosdr"],$dbLink);
         $nmasjid = secureParam($params["txtnmasjid"],$dbLink);

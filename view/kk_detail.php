@@ -120,10 +120,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     
 $(document).ready(function () {
     $('#btnrangka').click(function(){
-        var jumrangka = parseInt($("#norangka").val())-3;
-        for (var $k = 1; $k <= jumrangka ; $k++){
-            $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
-        }
         $("#mySModal").modal('hide');
     });
     var harga = document.getElementById('idharga1');
@@ -272,16 +268,23 @@ function cmodal($param) {
 }
 function csmodal($no,$nokk) {
     $("#idrangka").val($no);
+    var x = document.getElementById("detailrangka");
+    x.innerHTML = '';
+    var y = document.createElement("input");
+    y.setAttribute("type", "text");
+    y.setAttribute("id", "norangka_"+$no);
+    y.setAttribute("name", "norangka_"+$no);
+    y.setAttribute("value", 0);
+    x.appendChild(y);
     $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk,nomer:$no },function(data)
     {
-        var x = document.getElementById("detailrangka");
-        x.innerHTML = '';
+        $("#norangka_"+$no).val(data.length);
         for(var i=0; i<data.length; ++i) {
             var y = document.createElement("input");
             y.setAttribute("type", "text");
             y.classList.add("form-control")
-            y.setAttribute("id", "txtrangka"+i);
-            y.setAttribute("name", "txtrangka"+i);
+            y.setAttribute("id", "txtrangka"+$no+'_'+i);
+            y.setAttribute("name", "txtrangka"+$no+'_'+i);
             y.setAttribute("value", data[i]);
             x.appendChild(y);
         }
@@ -290,13 +293,14 @@ function csmodal($no,$nokk) {
     $("#mySModal").modal({backdrop: 'static'});
 }
 function prangka() {
-    var norangka = parseInt($("#norangka").val())+1;
+    var idrangka = $("#idrangka").val();
+    //var norangka = parseInt($("#norangka_"+idrangka).val())+1;
+    var norangka = $("#norangka_"+idrangka).val();
     var trow = document.createElement("DIV");
-    var trow2 = document.createElement("DIV");
     var inp = document.getElementById("detailrangka");
-    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'"name="txtrangka'+norangka+'" value="">';
+    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+idrangka+'_'+norangka+'"name="txtrangka'+idrangka+'_'+norangka+'" value="">';
     inp.appendChild(trow);
-    $("#norangka").val(norangka);
+    $("#norangka_"+idrangka).val(parseInt(norangka)+1);
 }
 function chkadddetail(tcounter) {
     if ($("#chkAddJurnal_"+tcounter).val()==1) {
@@ -970,7 +974,7 @@ return true;
                                 ?>
                             </tbody>
                         </table>
-                        <input type="hidden" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
+                        <input type="" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
                         <input type="hidden" value="0" id="idebit" name="idebit"/>
                         <input type="hidden" value="0" id="ikredit" name="ikredit"/>
                         <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add Detail</button></center>
@@ -1219,32 +1223,7 @@ return true;
                 <div class="modal-body">
                     <div class="form-group">
                         <div id="detailrangka"></div>
-                        <input type=""  id="norangka" name="norangka" value="" >
                         <input type=""  id="idrangka" name="idrangka" value="" >
-                        <!-- <?php 
-                        echo "<script type=\"text/javascript\">'GeeksForGeeks'; </script>";
-                        if ($_GET["mode"] == "edit") {
-                            $q="SELECT * FROM aki_kkrangka WHERE 1=1 and `aktif`=1 and MD5(noKK)='".$_GET["noKK"]."' and nomer='' order by idRangka asc";
-                        }else{
-                            $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and MD5(noSph)='".$noSph."'";
-                        }
-                        $rsDetilJurnal = mysql_query($q, $dbLink);
-                        $nor=0;
-                        if(mysql_num_rows($rsDetilJurnal)== 0){
-                            echo '<input type="text" class="form-control" id="txtrangka1" name="txtrangka1" value="Rangka primer Pipa Galvanis dengan ukuran 1,5 inchi tebal 1,6 mm" placeholder="">
-                            <input type="text" class="form-control" id="txtrangka2" name="txtrangka2" value="System Rangka Double Frame (Kremona)" placeholder="#00000">
-                            <input type="text" class="form-control" id="txtrangka3" name="txtrangka3" value="Rangka Pendukung Hollow 1,5 x 3,5 cm, tebal 0,7 mm" placeholder="">';
-                            echo '<input type="hidden"  id="norangka" name="norangka" value="3" >';
-                        }
-                        else{
-                            while($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
-                                $nor++;
-                                echo '<input type="text" class="form-control" id="txtrangka'.$nor.'" name="txtrangka'.$nor.'" value="'.$DetilJurnal["rangka"].'">';
-                            }
-                            echo '<input type="hidden"  id="norangka" name="norangka" value="'.$nor.'" >';
-                        }
-                        ?> -->
-                        
                     </div><center>
                         <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
                     </div>

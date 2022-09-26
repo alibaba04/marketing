@@ -180,7 +180,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults=$q7."Sukses";
+			$this->strResults="Sukses";
 		}
 		catch(Exception $e) 
 		{
@@ -284,7 +284,6 @@ class c_kk
 				throw new Exception('Gagal update data KK3.');
 
 			$jumData = $params["jumAddJurnal"];
-			$jumRangka = $params["norangka"];
 			$nomer =0;
 			$qq3 = "DELETE FROM `aki_kkrangka` WHERE noKK='".$nokk."'";
 			if (!mysql_query( $qq3, $dbLink))
@@ -294,11 +293,23 @@ class c_kk
 				throw new Exception('Gagal del data KK.');
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-					for ($k = 0; $k <= $jumRangka ; $k++){
+					$jumRangka = $params["norangka_".$j];
+					for ($k = 0; $k < $jumRangka ; $k++){
 						$idrangka = secureParam($params["idrangka"],$dbLink);
-						$rangka = secureParam($params["txtrangka". $k],$dbLink);
+						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
 						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
-						$q7.= "VALUES ('".$nokk."','".$idrangka."','".$rangka."');";
+						$q7.= "VALUES ('".$nokk."','".$j."','".$rangka."');";
+						if ($rangka != '') {
+							if (!mysql_query( $q7, $dbLink))
+								throw new Exception('KK.'.mysql_error());
+						}
+					}
+					$jumRangka1 = $params["norangka_1"];
+					for ($k = 0; $k < $jumRangka1 ; $k++){
+						$idrangka = secureParam($params["idrangka"],$dbLink);
+						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
+						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
+						$q7.= "VALUES ('".$nokk."','".$j."','".$rangka."');";
 						if ($rangka != '') {
 							if (!mysql_query( $q7, $dbLink))
 								throw new Exception('KK.'.mysql_error());
@@ -423,7 +434,7 @@ class c_kk
 			print_r($result);
 			curl_close($ch);
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults=$q7."Sukses Edit";
+			$this->strResults="Sukses Edit";
 		}
 		catch(Exception $e) 
 		{

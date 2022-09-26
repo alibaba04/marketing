@@ -32,7 +32,7 @@ if ($hakUser != 90 ) {
             $.post("function/ajax_function.php",{ fungsi: "cekpass", kodeUser:"litbank",pass:password } ,function(data)
             {
                 if(data=='yes') {
-                    $.post("function/ajax_function.php",{ fungsi: "updatehpp", txtpinang1:$('#txtpinang1').val(),txtpinang2:$('#txtpinang2').val(),txtpinang3:$('#txtpinang3').val(), txtmadina1:$('#txtmadina1').val(),txtmadina2:$('#txtmadina2').val(),txtmadina3:$('#txtmadina3').val(),txtbawang1:$('#txtbawang1').val(),txtbawang2:$('#txtbawang2').val(),txtbawang3:$('#txtbawang3').val(),txtsetbola1:$('#txtsetbola1').val(),txtsetbola2:$('#txtsetbola2').val(),txtsetbola3:$('#txtsetbola3').val()} ,function(data)
+                    $.post("function/ajax_function.php",{ fungsi: "updatehpp",kodeUser: "litbank", txtpinang1:$('#txtpinang1').val(),txtpinang2:$('#txtpinang2').val(),txtpinang3:$('#txtpinang3').val(), txtmadina1:$('#txtmadina1').val(),txtmadina2:$('#txtmadina2').val(),txtmadina3:$('#txtmadina3').val(),txtbawang1:$('#txtbawang1').val(),txtbawang2:$('#txtbawang2').val(),txtbawang3:$('#txtbawang3').val(),txtsetbola1:$('#txtsetbola1').val(),txtsetbola2:$('#txtsetbola2').val(),txtsetbola3:$('#txtsetbola3').val()} ,function(data)
                     {
                         if(data=='yes') {
                             toastr.success('Sukses Update Harga Awal . . . .')

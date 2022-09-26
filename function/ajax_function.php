@@ -227,18 +227,18 @@ break;
 case "getdrangka":
     $nokk = $_POST['nokk'];
     $no = $_POST['nomer'];
-    $result = mysql_query("SELECT * FROM aki_kkrangka WHERE 1=1 and `aktif`=1 and MD5(noKK)='".$nokk."' and nomer='".$no."' order by idRangka asc", $dbLink);
+    $result = mysql_query("SELECT * FROM aki_kkrangka WHERE `aktif`=1 and MD5(noKK)='".$nokk."' and nomer='".$no."' order by idRangka asc", $dbLink); 
     if (mysql_num_rows($result)>0) {
         $idx = 0;
         while ( $data = mysql_fetch_assoc($result)) {
-
             $output[$idx] = array($data['rangka']);
             $idx++;
         } 
         echo json_encode($output);
         break;
-
-    } 
+    }else{
+        echo "yes";
+    }
 break;
 case "idList":
     $id = $_POST['id'];
@@ -372,6 +372,7 @@ case "getpabrikasi":
     echo json_encode(array("pabrikasi"=>$return));
 break;
 case "updatehpp":
+    $kodeUser = secureParamAjax($_POST['kodeUser'], $dbLink);
     $pinang1 = secureParamAjax(str_replace(',', '',$_POST['txtpinang1']), $dbLink);
     $pinang2 = secureParamAjax(str_replace(',', '',$_POST['txtpinang2']), $dbLink);
     $pinang3 = secureParamAjax(str_replace(',', '',$_POST['txtpinang3']), $dbLink);
@@ -384,10 +385,12 @@ case "updatehpp":
     $setbola1 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola1']), $dbLink);
     $setbola2 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola2']), $dbLink);
     $setbola3 = secureParamAjax(str_replace(',', '',$_POST['txtsetbola3']), $dbLink);
-
+    date_default_timezone_set("Asia/Jakarta");
+    $dtime = date("Y-m-d H:i:s");
     $q1 = "UPDATE `aki_hpp` SET `aktif`='1' WHERE `id` = '1000' or `id` = '3000' or `id` = '5000' or `id` = '7000'";
+
     if (mysql_query( $q1, $dbLink)){
-        $q2 = "INSERT INTO `aki_hpp`(`id`, `bahan`, `model`, `full`, `waterproof`, `tplafon`, `aktif`) VALUES ('1000','hpermeter','pinang','".$pinang1."','".$pinang2."','".$pinang3."','0'), ('3000','hpermeter','madinah','".$madina1."','".$madina2."','".$madina3."','0'), ('5000','hpermeter','bawang','".$bawang1."','".$bawang2."','".$bawang3."','0'), ('7000','hpermeter','setbola','".$setbola1."','".$setbola2."','".$setbola3."','0')";
+        $q2 = "INSERT INTO `aki_hpp`(`id`, `bahan`, `model`, `full`, `waterproof`, `tplafon`,`dtime`, `kodeUser`,  `aktif`) VALUES ('1000','hpermeter','pinang','".$pinang1."','".$pinang2."','".$pinang3."','".$dtime."','".$kodeUser."','0'), ('3000','hpermeter','madinah','".$madina1."','".$madina2."','".$madina3."','".$dtime."','".$kodeUser."','0'), ('5000','hpermeter','bawang','".$bawang1."','".$bawang2."','".$bawang3."','".$dtime."','".$kodeUser."','0'), ('7000','hpermeter','setbola','".$setbola1."','".$setbola2."','".$setbola3."','".$dtime."','".$kodeUser."','0')";
         if (mysql_query( $q2, $dbLink)){
             echo "yes";
         }else{
