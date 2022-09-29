@@ -304,17 +304,6 @@ class c_kk
 								throw new Exception('KK.'.mysql_error());
 						}
 					}
-					$jumRangka1 = $params["norangka_1"];
-					for ($k = 0; $k < $jumRangka1 ; $k++){
-						$idrangka = secureParam($params["idrangka"],$dbLink);
-						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
-						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
-						$q7.= "VALUES ('".$nokk."','".$j."','".$rangka."');";
-						if ($rangka != '') {
-							if (!mysql_query( $q7, $dbLink))
-								throw new Exception('KK.'.mysql_error());
-						}
-					}
 
 					$color1 = secureParam($params["color1_". $j],$dbLink);
 					$color2 = secureParam($params["color2_". $j], $dbLink);

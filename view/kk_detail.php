@@ -119,8 +119,19 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
     }
     
 $(document).ready(function () {
+    $def = 0;
     $('#btnrangka').click(function(){
+
+        var idrangka = $("#idrangka").val();
+        var norangka = $("#norangka_"+idrangka).val();
+        for($i = 1; $i <= norangka; $i++){
+            var drangka = $("#txtmrangka"+idrangka+"_"+$i).val();
+            $("#txtrangka"+idrangka+"_"+$i).val(drangka);
+            alert(drangka);
+        }
         $("#mySModal").modal('hide');
+        
+        
     });
     var harga = document.getElementById('idharga1');
     harga.addEventListener('keyup', function(e){
@@ -200,6 +211,7 @@ $(document).ready(function () {
     });
 
 });
+
 function hitungtotal($param) {
     var kaligrafi =  $('#txtKaligrafi_'+$param).val().match(/\d/g);
     var hkubah = $('#txtHargaKubah_'+$param).val().match(/\d/g);
@@ -279,7 +291,7 @@ function csmodal($no,$nokk) {
     $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk,nomer:$no },function(data)
     {
         $("#norangka_"+$no).val(data.length);
-        for(var i=0; i<data.length; ++i) {
+        for(var i=1; i<data.length; ++i) {
             var y = document.createElement("input");
             y.setAttribute("type", "text");
             y.classList.add("form-control")
@@ -288,8 +300,8 @@ function csmodal($no,$nokk) {
             y.setAttribute("value", data[i]);
             x.appendChild(y);
         }
-        
-    },"json"); 
+    },"json");
+    $def++;
     $("#mySModal").modal({backdrop: 'static'});
 }
 function prangka() {
@@ -298,8 +310,19 @@ function prangka() {
     var norangka = $("#norangka_"+idrangka).val();
     var trow = document.createElement("DIV");
     var inp = document.getElementById("detailrangka");
-    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+idrangka+'_'+norangka+'"name="txtrangka'+idrangka+'_'+norangka+'" value="">';
+    trow.innerHTML+='<input type="text" class="form-control" id="txtmrangka'+idrangka+'_'+(parseInt(norangka)+1)+'"name="txtmrangka'+idrangka+'_'+(parseInt(norangka)+1)+'" value="">';
     inp.appendChild(trow);
+
+    var ttable = document.getElementById("drangka");
+    var trow = document.createElement("TR");
+    trow.setAttribute("id", "trid_"+idrangka);
+    var td = document.createElement("TD");
+    td.setAttribute("align","left");
+    td.style.verticalAlign = 'top';
+    trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+idrangka+'_'+(parseInt(norangka)+1)+'"name="txtrangka'+idrangka+'_'+(parseInt(norangka)+1)+'" value="">';
+    trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal(1);');
+    ttable.appendChild(trow);
     $("#norangka_"+idrangka).val(parseInt(norangka)+1);
 }
 function chkadddetail(tcounter) {
@@ -405,7 +428,6 @@ function addJurnal(){
     var trow = document.createElement("TR");
     trow.setAttribute("id", "trid_"+tcounter);
     
-
     //Kolom 1 Checkbox
     var td = document.createElement("TD");
     td.setAttribute("align","center");
@@ -415,7 +437,6 @@ function addJurnal(){
     trow.appendChild(td);
 
     //Kolom 2 Kode Rekening
-
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
@@ -429,8 +450,6 @@ function addJurnal(){
     td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control" value="Setengah Bola" readonly></div>';
     trow.appendChild(td);
     td.setAttribute('onclick','opendmodal('+tcounter+');');
-
-  
 
     //Kolom 6 d
     var td = document.createElement("TD");
@@ -498,7 +517,6 @@ function addJurnal(){
 
 function validasiForm(form)
 {
-
     if(form.txtNoid.value=='' )
     {
         $("#myNote").modal('hide');
@@ -968,13 +986,13 @@ return true;
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick=csmodal("' . $iJurnal . '","' . $_GET['noKK'] . '")></center></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
-                                        <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td>';
+                                        <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td><div id="drangka"></div>';
                                         $iJurnal++;
                                     }
                                 ?>
                             </tbody>
                         </table>
-                        <input type="" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
+                        <input type="hidden" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
                         <input type="hidden" value="0" id="idebit" name="idebit"/>
                         <input type="hidden" value="0" id="ikredit" name="ikredit"/>
                         <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add Detail</button></center>

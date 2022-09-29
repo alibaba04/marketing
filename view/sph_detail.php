@@ -212,11 +212,11 @@ $(document).ready(function () {
             alert("Minimal Margin 21%!");
             $("#idmargin").focus();
             $("#idmargin").val('21');
-        }else if($("#idmargin").val()>40){
+        }/*else if($("#idmargin").val()>40){
             alert("Maximal Margin 40%!");
             $("#idmargin").focus();
             $("#idmargin").val('40');
-        }
+        }*/
         if($("#txtket").val() != 'Atap'){
             kalkulatorharga();
         }
