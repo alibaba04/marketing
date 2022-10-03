@@ -539,7 +539,7 @@ class c_kk
 				throw new Exception('Gagal hapus data KK.');
 
 			@mysql_query("COMMIT", $dbLink);
-			$this->strResults=$qs."Sukses Hapus Data KK ";
+			$this->strResults="Sukses Hapus Data KK ";
 		}
 		catch(Exception $e) 
 		{
