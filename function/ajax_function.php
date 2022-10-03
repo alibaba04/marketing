@@ -224,6 +224,21 @@ case "chart":
 
     } 
 break;
+case "getjumdrangka":
+    $nokk = $_POST['nokk'];
+    $result = mysql_query("SELECT * FROM aki_kkrangka WHERE `aktif`=1 and MD5(noKK)='".$nokk."' order by idRangka asc", $dbLink); 
+    if (mysql_num_rows($result)>0) {
+        $idx = 0;
+        while ( $data = mysql_fetch_assoc($result)) {
+            $output[$idx] = array("rangka"=>$data['rangka'],"nomer"=>$data['nomer']);
+            $idx++;
+        } 
+        echo json_encode($output);
+        break;
+    }else{
+        echo "yes";
+    }
+break;
 case "getdrangka":
     $nokk = $_POST['nokk'];
     $no = $_POST['nomer'];
@@ -237,7 +252,7 @@ case "getdrangka":
         echo json_encode($output);
         break;
     }else{
-        echo "yes";
+        echo "0";
     }
 break;
 case "idList":

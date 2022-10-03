@@ -87,10 +87,12 @@ class c_kk
 					if (!mysql_query( $q3, $dbLink))
 						throw new Exception('Gagal tambah data KK.');
 
-					for ($k = 0; $k <= $jumRangka ; $k++){
-						$rangka = secureParam($params["txtrangka". $k],$dbLink);
-						$q7 = "INSERT INTO `aki_kkrangka`(  `noKK`, `nomer`, `rangka`) ";
-						$q7.= "VALUES ('".$nokk."','".$nomer."','".$rangka."');";
+					$jumRangka = $params["jumDetailr"];
+					for ($k = 1; $k <= $jumRangka ; $k++){
+						$idrangka = secureParam($params["idrangka"],$dbLink);
+						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
+						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";
+						$q7.= "VALUES ('".$nokk."','".$j."','".$rangka."');";
 						if ($rangka != '') {
 							if (!mysql_query( $q7, $dbLink))
 								throw new Exception('KK.'.mysql_error());
@@ -293,8 +295,8 @@ class c_kk
 				throw new Exception('Gagal del data KK.');
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-					$jumRangka = $params["norangka_".$j];
-					for ($k = 0; $k < $jumRangka ; $k++){
+					$jumRangka = $params["jumDetailr"];
+					for ($k = 1; $k <= $jumRangka ; $k++){
 						$idrangka = secureParam($params["idrangka"],$dbLink);
 						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
 						$q7 = "INSERT INTO `aki_kkrangka`( `noKK`, `nomer`, `rangka`) ";

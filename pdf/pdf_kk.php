@@ -207,7 +207,17 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->Cell(32,5,':',0,0,'R',0);
     $pdf->SetMargins(40, 10, 10, true);
     $pdf->MultiCell(120,5,'',0,'B',0);
-    $rangka='';
+
+    $qq2 = "SELECT * FROM aki_kkrangka WHERE `aktif`=1 and MD5(noKK)='".$noKk."' and nomer='".$hasil2["nomer"]."' order by idRangka asc";
+    $rsq2 = mysql_query($qq2, $dbLink);
+    while (  $hasildr1 = mysql_fetch_array($rsq2)) {
+      $rangkad='  '.chr(149).'  '.$hasildr1['rangka'].'<br>';
+      $pdf->writeHTML($rangkad);
+    }
+}
+
+
+/*$rangka='';
     if ($hasil2['dt'] != 0){
       $rangka = cekrangka($hasil2['dt']);
     }else{
@@ -269,8 +279,9 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     $pdf->writeHTML($tbl);
     if ($hasil["jml"]>=2) {
       $pdf->SetMargins(10, 10, 10, true);
-    }
-}
+    }*/
+
+
 if ($hasil["jml"]>=2) {
   $pdf->SetMargins(14, 10, 10, true);
   $pdf->AddPage();

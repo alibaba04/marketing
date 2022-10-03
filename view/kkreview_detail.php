@@ -176,50 +176,6 @@ $datakcolor1 = '';
         while ($datadSph = mysql_fetch_array($rsTemp)) {
           $mproduksi=$datadSph['mproduksi'];
           $mpemasangan=$datadSph['mpemasangan'];
-          $rangka='';
-          if ($datadSph['dt'] != 0){
-            $rangka = cekrangka($datadSph['dt']);
-          }else{
-            $rangka = cekrangka($datadSph['d']);
-          }
-          $rangkad='';
-          if ($datadSph['d']>=6) {
-            $rangkad=chr(12).'  Model Rangka <b>Double Frame (Kremona)</b><br>';
-          }
-          $bahan='';
-          $Finishing='';
-          if ($datadSph['bahan']>='Galvalume') {
-            $Finishing=chr(12).'  Finishing coating Enamel dengan suhu 800-900<sup>o</sup> Celcius<br>';
-            $bahan=chr(12).'  Bahan terbuat dari plat besi SPCC SD 0,9 - 1 mm (Spek Enamel Grade)<br>';
-          }else{
-            if ($datadSph['d']>=1 ) {
-              $bahan=chr(12).'  Bahan terbuat dari plat Galvalume 0,4 - 0,5 mm<br>';
-            }else{
-              $bahan=chr(12).'  Bahan terbuat dari plat Galvalume 0,4 mm<br>';
-            }
-            $Finishing=chr(12).'  Finishing <b>Cat PU</b> dengan 2 komponen pengecatan :<br>&nbsp&nbsp&nbsp'.chr(45).'  Epoxy<br>&nbsp&nbsp&nbsp'.chr(45).'  Cat PU 2 Komponen <br>';
-          }
-          $plafon='';
-          if ($datadSph['plafon']==0) {
-            $plafon=chr(12).'  Plafon kalsiboard 3 mm motif <b>AWAN</b>.<br>'.chr(12).'  Kedap air menggunakan membran bakar 3 mm<br>';
-          }else if($datadSph['plafon']==2){
-            $plafon=chr(12).'  Kedap air menggunakan membran bakar 3 mm<br>';
-          }
-          $aksesoris='';
-          if ($datadSph['d']>=5 ){
-            $aksesoris=chr(12).'  Makara bahan '.$datadSph['bmakara'].' bentuk <b>'.$datadSph['makara'].'</b><br>'.chr(12).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
-            if ($datadSph['d']>=6){
-              $lampu='';
-              if ($datadSph['d']>=15) {
-                $lampu='8';
-              }else{
-                $lampu='4';
-              }
-              $aksesoris=$aksesoris.chr(12).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m)<br>';
-            }
-          }else{
-            $aksesoris=chr(12).'  Makara bahan '.$datadSph['bmakara'].' bentuk <b>'.$datadSph['makara'].'</b><br>';
-          }
           $i++;
         }
         ?></h4>
@@ -384,10 +340,12 @@ $datakcolor1 = '';
                         </div>
                         <div class="timeline-body" style="margin-left: 1.5%;">
                           <?php  
-                          echo chr(12).'  Rangka utama pipa galvanis '.$rangka.'<br>'.$rangkad.chr(12).'  Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>';
-                           echo $bahan.$Finishing; 
-                           echo $plafon; 
-                           echo $aksesoris; ?></div>
+                          $qq2 = "SELECT * FROM aki_kkrangka WHERE `aktif`=1 and MD5(noKK)='".$noKk."' and nomer='".$detail["nomer"]."' order by idRangka asc";
+                          $rsq2 = mysql_query($qq2, $dbLink);
+                          while (  $hasildr1 = mysql_fetch_array($rsq2)) {
+                            echo chr(12).'  '.$hasildr1['rangka'].'<br>';
+                          }
+                          ?></div>
                         <div class="timeline-body"><h4><b><?php  echo 'Rp '.number_format($detail['ntransport']).' ('.$detail['ktransport'].')'; ?></h4></b>
                         </div>
                         <div class="timeline-body"><table class="table">
