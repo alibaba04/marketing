@@ -255,6 +255,22 @@ case "getdrangka":
         echo "0";
     }
 break;
+case "getdwarna":
+    $nokk = $_POST['nokk'];
+    $no = $_POST['nomer'];
+    $result = mysql_query("SELECT * FROM aki_kkcolor WHERE MD5(noKK)='".$nokk."' and nomer='".$no."' order by id asc", $dbLink); 
+    if (mysql_num_rows($result)>0) {
+        $idx = 0;
+        while ( $data = mysql_fetch_assoc($result)) {
+            $output[$idx] = array("color"=>$data['color'],"kcolor"=>$data['kcolor']);
+            $idx++;
+        } 
+        echo json_encode($output);
+        break;
+    }else{
+        echo "0";
+    }
+break;
 case "idList":
     $id = $_POST['id'];
     $no = $_POST['nosph'];

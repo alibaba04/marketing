@@ -382,9 +382,7 @@ function AddPage($orientation='', $size='', $rotation=0)
 
 function Header()
 {
-	$this->SetMargins(10, 10, 10, true);
-	$this->Rect(8, 8, 198, 315, 'D');
-    $this->image('../dist/img/cop-aki.jpg',15,9,185,30);
+    $this->image('../dist/img/kop.jpg',0,0,215,330);
     // Line break
     $this->Ln(35);
 }
@@ -394,7 +392,7 @@ function Header()
 function Footer()
 {
 	$this->SetMargins(76, 10, 15, true);
-	$this->SetY(-29);
+	$this->SetY(-33);
     // Arial italic 8
     $this->SetFont('helvetica','I',8);
     // Page number

@@ -1055,7 +1055,8 @@ if ($plafon == 1){
 
 $pdf->image('../dist/img/ttd.jpg',122,204);
 $arr = explode('-', $tgl);
-$newDate = $arr[2].' '.namaBulan_id($arr[1]).' '.$arr[0];
+$arrDate = explode('0', $arr[2]);
+$newDate = $arrDate[0].' '.namaBulan_id($arr[1]).' '.$arr[0];
 $pdf->Ln(140);
 $pdf->image($imgrangka,17,60,184,120);
 $pdf->SetFont('helvetica', '', 12);

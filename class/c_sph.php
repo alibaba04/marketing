@@ -64,9 +64,8 @@ class c_sph
 			$jumData = $params["jumAddJurnal"];
 			$jumRangka = $params["norangka"];
 			$nomer=0;
-			for ($j = 0; $j < $jumData ; $j++){
+			for ($j = 1; $j <= $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-
                     $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
                     $transport = secureParam($params["txtTransport_" . $j], $dbLink);
@@ -84,7 +83,7 @@ class c_sph
                     $plafon = secureParam($params["txtKel_". $j],$dbLink);
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
                     $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
-                    $luas = secureParam($params["luas_". $j],$dbLink);
+                    $luas = secureParam($params["txtLuas_". $j],$dbLink);
                     $gold = secureParam($params["chkGold_". $j],$dbLink);
                     
                     if ($model=='custom') {
@@ -143,6 +142,7 @@ class c_sph
 			$this->strResults="Gagal Ubah Data SPH - ".$this->strResults;
 			return $this->strResults;
 		}
+		$noSph = secureParam($params["txtnoSph"],$dbLink);
 		$tglTransaksi = date("Y-m-d");
         $namacust = secureParam($params["txtnamacust"],$dbLink);
         $sdr = secureParam($params["cbosdr"],$dbLink);
@@ -189,11 +189,20 @@ class c_sph
 			if (!mysql_query( $q3, $dbLink))
 				throw new Exception('SPH.'.mysql_error());
 			$jumData = $params["jumAddJurnal"];
-			$nomer =0;
-			$q7='';
-			for ($j = 0; $j < $jumData ; $j++){
-				if (!empty($params['chkEdit_'.$j])){
-                    $idSph = secureParam($params["chkEdit_" . $j], $dbLink);
+			$jumRangka = $params["norangka"];
+			$nomer=0;
+			$q2 = "DELETE FROM aki_dsph ";
+			$q2.= "WHERE (noSph)='".$noSph."';";
+			if (!mysql_query( $q2, $dbLink))
+				throw new Exception('Gagal hapus data SPH.');
+			if ($model=='custom') {
+				$q = "DELETE FROM aki_rangka ";
+				$q.= "WHERE (noSph)='".$noSph."';";
+				if (!mysql_query( $q, $dbLink))
+					throw new Exception('Gagal hapus data SPH.');
+			}
+			for ($j = 0; $j <= $jumData ; $j++){
+				if (!empty($params['chkAddJurnal_'.$j])){
                     $ketkubah = secureParam($params["txtKet_" . $j], $dbLink);
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
                     $transport = secureParam($params["txtTransport_" . $j], $dbLink);
@@ -210,31 +219,29 @@ class c_sph
                     $model = secureParam($params["txtModel_". $j],$dbLink);
                     $plafon = secureParam($params["txtKel_". $j],$dbLink);
                     $chkEnGa = secureParam($params["chkEnGa_". $j],$dbLink);
-                    $bp = secureParam($params["txtBplafon_". $j],$dbLink);
-                    $bplafon = preg_replace("/\D/", "", $bp);
-                    $luas = secureParam($params["luas_". $j],$dbLink);
+                    $bplafon = secureParam($params["txtBplafon_". $j],$dbLink);
+                    $luas = secureParam($params["txtLuas_". $j],$dbLink);
+                    $gold = secureParam($params["chkGold_". $j],$dbLink);
+                    
                     if ($model=='custom') {
-                    	$q = "UPDATE `aki_rangka` SET `aktif`=0 ";
-                    	$q.= "WHERE (noSph)='".$params["txtnoSph"]."';";
-                    	if (!mysql_query( $q, $dbLink))
-                    		throw new Exception('SPH.'.mysql_error());
                     	for ($k = 1; $k <= $jumRangka ; $k++){
                     		$rangka = secureParam($params["rangka". $k],$dbLink);
-                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`,`aktif`) ";
-                    		$q7.= "VALUES ('".$params["txtnoSph"]."','".$rangka."','1');";
+                    		$q7 = "INSERT INTO `aki_rangka`( `noSph`,`rangka`) ";
+                    		$q7.= "VALUES ('".$noSph."','".$rangka."');";
                     		if ($rangka != '') {
                     			if (!mysql_query( $q7, $dbLink))
                     			throw new Exception('SPH.'.mysql_error());
                     		}
                     	}
+                    	
                     }
-                    $q = "UPDATE aki_dsph SET `luas`='".$luas."',`nomer`='".$nomer."',`biaya_plafon`='".$bplafon."',`bahan`='".$chkEnGa."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`plafon`='".$plafon."',`jumlah`='".$qty."',`transport`='".$transport."',`harga`='".$h1."',`harga2`='".$h2."',`harga3`='".$h3."',`ket`='".$ketkubah."'";
-					$q.= " WHERE idDsph='".$idSph."' ;";
-
-					if (!mysql_query( $q, $dbLink))
+                    $q2 = "INSERT INTO aki_dsph(nomer,noSph, model, d, t, dt, plafon, gold, harga, harga2, harga3, jumlah, ket, transport,bahan,biaya_plafon,luas) ";
+					$q2.= "VALUES ('".$nomer."','".$noSph."','".$model."', '".$diameter."', '".$tinggi."', '".$dtengah."', '".$plafon."', '".$gold."', '".$h1."', '".$h2."', '".$h3."', '".$qty."', '".$ketkubah."', '".$transport."','".$chkEnGa."','".$bplafon."','".$luas."');";
+					if (!mysql_query( $q2, $dbLink))
 						throw new Exception('SPH.'.mysql_error());
-                    $nomer++;
-					
+					@mysql_query("COMMIT", $dbLink);
+					$this->strResults="Sukses Tambah Data SPH";
+					$nomer++;
 				}
 			}
 			date_default_timezone_set("Asia/Jakarta");
@@ -329,12 +336,11 @@ class c_sph
 
 			$q = "DELETE FROM aki_sph ";
 			$q.= "WHERE (noSph)='".$noSph."';";
-
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data SPH.');
+
 			$q = "DELETE FROM aki_rangka ";
 			$q.= "WHERE (noSph)='".$noSph."';";
-
 			if (!mysql_query( $q, $dbLink))
 				throw new Exception('Gagal hapus data SPH.');
 

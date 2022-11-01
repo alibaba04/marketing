@@ -147,12 +147,12 @@ $pdf->MultiCell(120,5,ucwords($hasil['alamat_proyek']),0,'J',0);
 
 $pdf->addpage();
 
-$pdf->SetMargins(23, 10, 14, true);
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetMargins(23, 10, 14, true);
+$pdf->Ln(0);
 $pdf->SetFont('Calibri', 'b', 11);
-$pdf->MultiCell(196,5,'PASAL 2
+$pdf->MultiCell(171,5,'PASAL 2
   DASAR PELAKSANAAN PEKERJAAN',0,'C',0);
 $pdf->SetFont('Calibri', '', 11);
 $pdf->Ln(10);
@@ -216,75 +216,10 @@ while (  $hasil2 = mysql_fetch_array($rs2)) {
     }
 }
 
-
-/*$rangka='';
-    if ($hasil2['dt'] != 0){
-      $rangka = cekrangka($hasil2['dt']);
-    }else{
-      $rangka = cekrangka($hasil2['d']);
-    }
-    $rangkad='';
-    if ($hasil2['d']>=6) {
-      $rangkad=chr(149).'  Model Rangka <b>Double Frame (Kremona)</b><br>';
-    }
-    $bahan='';
-    $Finishing='';
-    if ($hasil2['bahan']>='Galvalume') {
-      $Finishing=chr(149).'  Finishing coating Enamel dengan suhu 800-900'.chr(176).' Celcius<br>';
-      $bahan=chr(149).'  Bahan terbuat dari plat besi SPCC SD 0,9 - 1 mm (Spek Enamel Grade)<br>';
-    }else{
-      if ($hasil2['d']>=1 ) {
-        $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 - 0,5 mm<br>';
-      }else{
-        $bahan=chr(149).'  Bahan terbuat dari plat Galvalume 0,4 mm<br>';
-      }
-      $Finishing=chr(149).'  Finishing <b>Cat PU</b> dengan 2 komponen pengecatan :<br><ul>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Epoxy<br>'.chr(32).chr(32).chr(32).chr(45).chr(32).chr(32).'Cat PU 2 Komponen </ul><br>';
-    }
-
-    $plafon='';
-    if ($hasil2['plafon']==0) {
-      $plafon=chr(149).'  Plafon kalsiboard 3 mm motif <b>AWAN</b>.<br>'.chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
-    }else if($hasil2['plafon']==2){
-      $plafon=chr(149).'  Kedap air menggunakan membran bakar 3 mm<br>';
-    }
-    $aksesoris='';
-    if ($hasil2['d']>=5 ){
-      $aksesoris=chr(149).'  Makara bahan '.$hasil2['bmakara'].' bentuk <b>'.$hasil2['makara'].'</b><br>'.chr(149).'  Penangkal Petir (Panjang Kabel 25 m)<br>';
-      if ($hasil2['d']>=6){
-        $lampu='';
-        if ($hasil2['d']>=15) {
-          $lampu='8';
-        }else{
-          $lampu='4';
-        }
-        $aksesoris=$aksesoris.chr(149).'  Lampu Sorot '.$lampu.' Sisi (Panjang Kabel 5 m).<br>';
-      }
-    }else{
-      $aksesoris=chr(149).'  Makara bahan '.$hasil2['bmakara'].' bentuk <b>'.$hasil2['makara'].'</b><br>';
-    }
-    $tbl = 
-    chr(149).'  Rangka utama Pipa Galvanis dengan ukuran '.$rangka.'<br>'.$rangkad.chr(149).'  Rangka Pendukung Hollow 1,5 x 3,5 cm tebal 0,7 mm<br>'.$bahan.$Finishing.$plafon.$aksesoris;
-    $q="SELECT * FROM aki_rangka WHERE 1=1 and `aktif`=1 and (noSph)='".$noSph."'";
-    $rsDetilJurnal = mysql_query($q, $dbLink);
-    $nor=0;
-    if(mysql_num_rows($rsDetilJurnal)== 0){
-      $pdf->writeHTML($tbl);
-    }else{
-      $txt='';
-      while($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
-        $txt .= chr(149).'  '.$DetilJurnal["rangka"].'<br>';
-      }
-      //$pdf->writeHTML($txt);
-    }
-    $pdf->writeHTML($tbl);
-    if ($hasil["jml"]>=2) {
-      $pdf->SetMargins(10, 10, 10, true);
-    }*/
-
-
 if ($hasil["jml"]>=2) {
-  $pdf->SetMargins(14, 10, 10, true);
   $pdf->AddPage();
+  $pdf->SetMargins(14, 10, 10, true);
+  $pdf->Ln(1);
 }else{
   $pdf->SetMargins(10, 10, 10, true);
   $pdf->Ln(10);
@@ -508,7 +443,8 @@ if ($hasil['jml']>=2) {
 
 $pdf->SetMargins(13, 10, 10, true);
 $pdf->SetFont('Calibri', 'b', 11);
-$pdf->MultiCell(196,5,'PASAL 6
+$pdf->Ln(0);
+$pdf->MultiCell(190,5,'PASAL 6
   HAK DAN KEWAJIBAN PIHAK PERTAMA',0,'C',0);
 $pdf->Ln(8);
 $pdf->SetFont('Calibri', '', 11);
@@ -734,6 +670,8 @@ $pdf->Cell(13,5,'3.',0,0,'R',0);
 $pdf->MultiCell(167,5,'Garansi tidak berlaku apabila penyebab kerusakan adalah karena  keadaan memaksa (force majeure) sebagaimana dimaksud pada Pasal 9 Perjanjian ini.',0,'J',0);
 if ($hasil['jml']>=2) {
   $pdf->AddPage();
+  $pdf->SetMargins(15, 10, 10, true);
+  $pdf->Ln(1);
 }else{
   $pdf->Ln(10);
 }
@@ -841,6 +779,8 @@ $pdf->Cell(72,5,' ',0,0,'R',0);
 $pdf->writeHTML($tbl);
 if ($hasil['jml']>=2) {
   $pdf->AddPage();
+  $pdf->SetMargins(13, 10, 10, true);
+  $pdf->Ln(1);
 }else{
   $pdf->Ln(18);
 }
@@ -858,16 +798,18 @@ $pdf->Cell(14,5,'2.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Biaya atas penambahan atau pengurangan Pekerjaan tidak termasuk dalam Harga Borongan pada Perjanjian ini dan akan disepakati bersama  oleh Para Pihak baik melalui Adendum Perjanjian atau pembuatan perjanjian baru.',0,'J',0);
 if ($hasil['jml']<2) {
   $pdf->addpage();
+  $pdf->SetMargins(10, 10, 10, true);
+  $pdf->Ln(0);
 }
 
 $pdf->Cell(18,5,'3.',0,0,'R',0);
-$pdf->MultiCell(165,5,'Jika                       berkehendak untu mengganti salah satu atau beberapa material dari setiap pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh ',0,'J',0);
+$pdf->MultiCell(165,5,'Jika                     berkehendak  untuk  mengganti  salah satu  atau  beberapa  material  dari  setiap pekerjaan, maka dikenakan biaya sesuai dengan harga yang diajukan oleh ',0,'J',0);
 $tbl = '<b>Pihak Kedua  <br></b>';
 $pdf->Ln(-10);
-$pdf->Cell(24,5,'',0,0,'R',0);
+$pdf->Cell(26,5,'',0,0,'R',0);
 $pdf->writeHTML($tbl);
 $tbl = '<b>Pihak Pertama.</b>';
-$pdf->Cell(118,5,'',0,0,'R',0);
+$pdf->Cell(135,5,'',0,0,'R',0);
 $pdf->writeHTML($tbl);
 $pdf->Ln(5);
 if ($hasil['jml']>=2) {
@@ -880,19 +822,22 @@ $pdf->MultiCell(192,5,'PASAL 13
   PENYELESAIAN PERSELISIHAN',0,'C',0);
 $pdf->Ln(5);
 $pdf->SetFont('Calibri', '', 11);
-$pdf->Cell(15,5,'1.',0,0,'R',0);
+$pdf->Cell(18,5,'1.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Apabila dalam pelaksanaan pekerjaan ini terjadi perselisihan atau perbedaan pendapat antara Para Pihak, maka terlebih dahulu akan diselesaikan secara musyawarah dan mufakat.',0,'J',false);
-$pdf->Cell(15,5,'2.',0,0,'R',0);
+$pdf->Cell(18,5,'2.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Perselisihan terkait teknik konstruksi kubah akan diselesaikan melalui suatu Panitia Arbitrase yang akan terdiri dari seorang anggota yang ditunjuk oleh Pihak Pertama, seorang yang akan ditunjuk oleh Pihak Kedua dan seorang yang netral sebagai ketua merangkap anggota yang disetujui oleh kedua belah pihak.',0,'J',false);
-$pdf->Cell(15,5,'3.',0,0,'R',0);
+$pdf->Cell(18,5,'3.',0,0,'R',0);
 $tbl = 'Semua biaya penyelesaian perselisihan akan menjadi tanggung jawab Para Pihak.';
 $pdf->writeHTML($tbl);
 $pdf->Cell(14,5,' ',0,0,'R',0);
 if ($hasil['jml']>=2) {
-  $pdf->Ln(8);
+  $pdf->AddPage();
+  $pdf->SetMargins(14, 10, 10, true);
+  $pdf->Ln(1);
 }else{
   $pdf->Ln(5);
 }
+
 $pdf->Ln(5);
 $pdf->SetFont('Calibri', 'b', 11);
 $pdf->MultiCell(192,5,'PASAL 14
@@ -900,11 +845,11 @@ PENUTUP',0,'C',0);
 $pdf->Ln(8);
 
 $pdf->SetFont('Calibri', '', 11);
-$pdf->Cell(15,5,'1.',0,0,'R',0);
+$pdf->Cell(18,5,'1.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Hal-hal yang belum ditetapkan  dalam Perjanjian ini akan ditentukan kemudian atas persetujuan Para Pihak.',0,'J',false);
-$pdf->Cell(15,5,'2.',0,0,'R',0);
+$pdf->Cell(18,5,'2.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Demikian  Surat  Perjanjian  ini  dibuat  rangkap  2  (dua)  masing-masing  bermaterai  cukup  yang mempunyai  kekuatan  hukum  yang  sama yang dipegang oleh  masing-masing pihak dan berlaku sejak ditandatangani Surat Perjanjian ini.',0,'J',false);
-$pdf->Cell(15,5,'3.',0,0,'R',0);
+$pdf->Cell(18,5,'3.',0,0,'R',0);
 $pdf->MultiCell(165,5,'Para Pihak beritikad baik  untuk  melaksanakan  Surat  Perjanjian  Kerja  ini  sesuai dengan isinya.',0,'J',false);
 $pdf->SetMargins(23, 10, 10, true);
 $pdf->Ln(10);
@@ -952,7 +897,7 @@ $pdf->addpage();
 $pdf->SetTextColor(0);
 $pdf->SetDrawColor(0);
 $pdf->SetFont('Calibri', 'bu', 11);
-$pdf->Cell(190,6,'DESAIN KUBAH',0,1,'C',0);
+$pdf->Cell(68,6,'DESAIN KUBAH',0,1,'C',0);
 $pdf->SetX(100);
 if ($hasil['filekubah']!='') {
   $pdf->image('../../uploads/'.$hasil['filekubah'],30,60,155,155);
@@ -969,49 +914,9 @@ $q2 = "SELECT * FROM `aki_kkcolor` WHERE 1=1 and MD5(noKk)='".$noKk."'";
 $rs2 = mysql_query($q2, $dbLink);
 $jmlcol = 0;
 while (  $hasil1 = mysql_fetch_array($rs2)) {
-  if ($hasil1['color1'] !='-' && $hasil1['color1'] !='') {
-    $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color1'] ,1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor1'] ,1,1,'C',0);
-    /*if ($hasil1['color2'] =='-' && $hasil['jml']!=2) {
-      $pdf->Ln(40);
-    }*/
-    $jmlcol++;
-  }
-  if ($hasil1['color2'] !='-' && $hasil1['color2'] !='') {
-    $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color2'],1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor2'],1,1,'C',0);
-    /*if ($hasil1['color3'] =='-') {
-      $pdf->Ln(30);
-    }*/
-    $jmlcol++;
-  }
-  if ($hasil1['color3'] !='-' && $hasil1['color3'] !='') {
-    $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color3'],1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor3'],1,1,'C',0);
-    /*if ($hasil1['color4'] =='-') {
-      $pdf->Ln(20);
-    }*/
-    $jmlcol++;
-  }
-  if ($hasil1['color4'] !='-' && $hasil1['color4'] !='') {
-    $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color4'],1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor4'],1,1,'C',0);
-    /*if ($hasil1['color5'] =='-') {
-      $pdf->Ln(10);
-    }*/
-    $jmlcol++;
-  }
-  if ($hasil1['color5'] !='-' && $hasil1['color5'] !='') {
-    $pdf->Cell(45,2,'',0,0,'L',0);
-    $pdf->Cell(50,10,$hasil1['color5'],1,0,'C',0);
-    $pdf->Cell(50,10,$hasil1['kcolor5'],1,1,'C',0);
-    $jmlcol++;
-  }
-
+  $pdf->Cell(45,2,'',0,0,'L',0);
+  $pdf->Cell(50,10,$hasil1['color'] ,1,0,'C',0);
+  $pdf->Cell(50,10,$hasil1['kcolor'] ,1,1,'C',0);
 }
 
 if ($hasil['jml']>=2) {

@@ -71,7 +71,23 @@ class c_kk
 			$files = $_FILES;
 			for ($j = 0; $j < $jumData ; $j++){
 				if (($params['chkAddJurnal_'.$j])!=0){
-					$jumRangka = $params["jumDetailr_".$j];
+					$color1 = secureParam($params["color1_". $j],$dbLink);
+					$color2 = secureParam($params["color2_". $j], $dbLink);
+					$color3 = secureParam($params["color3_". $j ], $dbLink);
+					$color4 = secureParam($params["color4_". $j ], $dbLink);
+					$color5 = secureParam($params["color5_". $j ], $dbLink);
+					$kcolor1 = secureParam($params["kcolor1_". $j],$dbLink);
+					$kcolor2 = secureParam($params["kcolor2_". $j], $dbLink);
+					$kcolor3 = secureParam($params["kcolor3_". $j ], $dbLink);
+					$kcolor4 = secureParam($params["kcolor4_". $j ], $dbLink);
+					$kcolor5 = secureParam($params["kcolor5_". $j ], $dbLink);
+
+					$q3 = "INSERT INTO `aki_kkcolor`(`noKk`, `nomer`, `color1`, `color2`, `color3`, `color4`, `color5`, `kcolor1`, `kcolor2`, `kcolor3`, `kcolor4`, `kcolor5`) VALUES ";
+					$q3.= " ('".$nokk."','".$nomer."','".$color1."','".$color2."','".$color3."','".$color4."','".$color5."','".$kcolor1."','".$kcolor2."','".$kcolor3."','".$color4."','".$kcolor5."');";
+					if (!mysql_query( $q3, $dbLink))
+						throw new Exception('Gagal tambah data KK.');
+
+					$jumRangka = $params["jumDetailr"];
 					for ($k = 1; $k <= $jumRangka ; $k++){
 						$idrangka = secureParam($params["idrangka"],$dbLink);
 						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
@@ -82,59 +98,48 @@ class c_kk
 								throw new Exception('KK.'.mysql_error());
 						}
 					}
-					$jumWarna = $params["jumWarna_".$j];
-					for ($k = 1; $k <= $jumWarna ; $k++){
-						$warna = secureParam($params["txtwarna".$j.'_'.$k],$dbLink);
-						$kwarna = secureParam($params["txtkwarna".$j.'_'.$k],$dbLink);
-						$q7 = "INSERT INTO `aki_kkcolor`(`noKk`, `nomer`, `color`, `kcolor`) ";
-						$q7.= "VALUES ('".$nokk."','".$j."','".$warna."','".$kwarna."');";
-						if ($warna != '' || $kwarna != '') {
-							if (!mysql_query( $q7, $dbLink))
-								throw new Exception('KK.'.mysql_error());
-						}
-					}
 
-					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
-                    $model = secureParam($params["txtModel_". $j],$dbLink);
+					$model = secureParam($params["txtModel_". $j],$dbLink);
 					$jkubah = secureParam($params["txtKubah_". $j],$dbLink);
 					$diameter = secureParam($params["txtD_". $j],$dbLink);
                     $tinggi = secureParam($params["txtT_". $j],$dbLink);
                     $dtengah = secureParam($params["txtDt_". $j],$dbLink);
-                    $luas = 0;
+                    $luas = '';
+                    if ($dtengah == 0) {
+                    	$luas = ($diameter * $tinggi * 3.14);
+                    }else{
+                    	$luas = ($dtengah * $tinggi * 3.14);
+                    }
                     $plafon = secureParam($params["txtPlafon_". $j],$dbLink);
                     $harga1 = secureParam($params["txtHarga_" . $j], $dbLink);
                     $h = preg_replace("/\D/", "", $harga1);
                     $qty = secureParam($params["txtQty_" . $j], $dbLink);
                     $bahan = secureParam($params["txtBahan_" . $j], $dbLink);
-                    $filekubah = secureParam($params["filekubah_" . $j], $dbLink);
-					$kaligrafi = secureParam($params["txtKaligrafi_" . $j], $dbLink);
-					$ntrans = secureParam($params["txtntrans_" . $j], $dbLink);
-					$ktrans = secureParam($params["txtKtransport_" . $j], $dbLink);
-					$ntransport = preg_replace("/\D/", "", $ntrans);
-					$transport = secureParam($params["txttransport"], $dbLink);
-					$makara = secureParam($params["txtMakara_" . $j], $dbLink);
-					$bmakara = secureParam($params["txtbMakara_" . $j], $dbLink);
-					$hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
-					if ($dtengah == 0) {
-                    	$luas = ($diameter * $tinggi * 3.14);
-                    }else{
-                    	$luas = ($dtengah * $tinggi * 3.14);
+                    $transport = secureParam($params["txttransport"], $dbLink);
+                    $ntrans = secureParam($params["txtntrans_" . $j], $dbLink);
+                    $ktrans = secureParam($params["txtKtransport_" . $j], $dbLink);
+                    $nkal = secureParam($params["txtKaligrafi_" . $j], $dbLink);
+                    $makara = secureParam($params["txtMakara_" . $j], $dbLink);
+                    if ($makara=='') {
+                    	$makara='Lafadz Allah';
                     }
+                    $bmakara = secureParam($params["txtbMakara_" . $j], $dbLink);
+                    if ($bmakara=='') {
+                    	$bmakara='Galvalume';
+                    }
+                    $ntransport = preg_replace("/\D/", "", $ntrans);
+                    $kaligrafi = preg_replace("/\D/", "", $nkal);
+                    $hppn = secureParam($params["txtHargappn_" . $j], $dbLink);
                     
-                    if ($nameimg[0]!=''){
-                    	$qimg=",`filekubah`='".$nameimg[0]."',`filekaligrafi`='".$nameimg[1]."'";
-                    }
-
-                    $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
                     $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `makara`, `bmakara`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`, `ntransport`, `ktransport`,`filekubah`, `filekaligrafi`) ";
 					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$bmakara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$nameimg[0]."', '".$nameimg[1]."');";
+
 					if (!mysql_query( $q2, $dbLink))
-						throw new Exception($q2.'Gagal ubah data KK5.');
+						throw new Exception($q2.'Gagal tambah data KK-2.');
+
 					$nomer++;
 				}
 			}
-
-			
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d H:i:s");
 			$ket = "KK Note, nokk=".$nokk.", note=".$treport.", read by kpenjualan=1";
@@ -282,9 +287,6 @@ class c_kk
 
 			$jumData = $params["jumAddJurnal"];
 			$nomer =0;
-			$qq2 = "DELETE FROM `aki_dkk` WHERE noKK='".$nokk."'";
-			if (!mysql_query( $qq2, $dbLink))
-				throw new Exception('Gagal del data KK.');
 			$qq3 = "DELETE FROM `aki_kkrangka` WHERE noKK='".$nokk."'";
 			if (!mysql_query( $qq3, $dbLink))
 				throw new Exception('Gagal del data KK.');
@@ -293,7 +295,7 @@ class c_kk
 				throw new Exception('Gagal del data KK.');
 			for ($j = 0; $j < $jumData ; $j++){
 				if (!empty($params['chkAddJurnal_'.$j])){
-					$jumRangka = $params["jumDetailr_".$j];
+					$jumRangka = $params["jumDetailr"];
 					for ($k = 1; $k <= $jumRangka ; $k++){
 						$idrangka = secureParam($params["idrangka"],$dbLink);
 						$rangka = secureParam($params["txtrangka".$j.'_'.$k],$dbLink);
@@ -304,17 +306,23 @@ class c_kk
 								throw new Exception('KK.'.mysql_error());
 						}
 					}
-					$jumWarna = $params["jumWarna_".$j];
-					for ($k = 1; $k <= $jumWarna ; $k++){
-						$warna = secureParam($params["txtwarna".$j.'_'.$k],$dbLink);
-						$kwarna = secureParam($params["txtkwarna".$j.'_'.$k],$dbLink);
-						$q7 = "INSERT INTO `aki_kkcolor`(`noKk`, `nomer`, `color`, `kcolor`) ";
-						$q7.= "VALUES ('".$nokk."','".$j."','".$warna."','".$kwarna."');";
-						if ($warna != '' || $kwarna != '') {
-							if (!mysql_query( $q7, $dbLink))
-								throw new Exception('KK.'.mysql_error());
-						}
-					}
+
+					$color1 = secureParam($params["color1_". $j],$dbLink);
+					$color2 = secureParam($params["color2_". $j], $dbLink);
+					$color3 = secureParam($params["color3_". $j ], $dbLink);
+					$color4 = secureParam($params["color4_". $j ], $dbLink);
+					$color5 = secureParam($params["color5_". $j ], $dbLink);
+					$kcolor1 = secureParam($params["kcolor1_". $j],$dbLink);
+					$kcolor2 = secureParam($params["kcolor2_". $j], $dbLink);
+					$kcolor3 = secureParam($params["kcolor3_". $j ], $dbLink);
+					$kcolor4 = secureParam($params["kcolor4_". $j ], $dbLink);
+					$kcolor5 = secureParam($params["kcolor5_". $j ], $dbLink);
+					
+
+					$q3 = "INSERT INTO `aki_kkcolor`(`noKk`, `nomer`, `color1`, `color2`, `color3`, `color4`, `color5`, `kcolor1`, `kcolor2`, `kcolor3`, `kcolor4`, `kcolor5`) VALUES ";
+					$q3.= " ('".$nokk."','".$nomer."','".$color1."','".$color2."','".$color3."','".$color4."','".$color5."','".$kcolor1."','".$kcolor2."','".$kcolor3."','".$color4."','".$kcolor5."');";
+					if (!mysql_query( $q3, $dbLink))
+						throw new Exception('Gagal tambah data KK-3.');
 
 					$idKk = secureParam($params["chkAddJurnal_" . $j], $dbLink);
                     $model = secureParam($params["txtModel_". $j],$dbLink);
@@ -348,11 +356,11 @@ class c_kk
                     }
 
                     $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
-                    $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `makara`, `bmakara`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`, `ntransport`, `ktransport`,`filekubah`, `filekaligrafi`) ";
-					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$bmakara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$nameimg[0]."', '".$nameimg[1]."');";
+                    $q = "UPDATE aki_dkk SET `luas`='".$luas."',`nomer`='".$nomer."',`bahan`='".$bahan."',`kubah`='".$jkubah."',`model`='".$model."',`d`='".$diameter."',`t`='".$tinggi."',`dt`='".$dtengah."',`kaligrafi`='".$kaligrafi."',`plafon`='".$plafon."',`makara`='".$makara."',`bmakara`='".$bmakara."',`jumlah`='".$qty."',`transport`='".$transport."',`ntransport`='".$ntransport."',`ktransport`='".$ktrans."',`ppn`='".$project_pemerintah."',`hppn`='".$hppn."',`harga`='".$h."'".$qimg;
+					$q.= " WHERE idKk='".$idKk."' ;";
 
-					if (!mysql_query( $q2, $dbLink))
-						throw new Exception($q2.'Gagal ubah data KK5.');
+					if (!mysql_query( $q, $dbLink))
+						throw new Exception($q.'Gagal ubah data KK5.');
                     $nomer++;
 				}
 			}
@@ -501,13 +509,7 @@ class c_kk
 			if (!mysql_query( $qs, $dbLink))
 				throw new Exception('Gagal hapus data KK.');
 
-			$qd = "UPDATE `aki_kk` SET `aktif`='0'";
-			$qd.= "WHERE (noKk)='".$noKk."';";
-			if (!mysql_query( $qd, $dbLink))
-				throw new Exception('Gagal hapus data KK.');
-
-
-			$q = "DELETE FROM  `aki_kkrangka`";
+			$q = "DELETE FROM  `aki_kk`";
 			$q.= "WHERE (noKk)='".$noKk."';";
 
 			if (!mysql_query( $q, $dbLink))

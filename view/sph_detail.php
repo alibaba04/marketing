@@ -1,4 +1,4 @@
-<?php
+    <?php
 /* ==================================================
 //=======  : Alibaba
 ==================================================== */
@@ -49,31 +49,11 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
 </script>
 <script type="text/javascript" charset="utf-8">
 
-    var prov = [];
-    var kota = [];    
-    function ambilProv(){
-        $.post("function/ajax_function.php",{ fungsi: "ambilProv"},function(data)
-        {
-            prov=data;
-        },"json"); 
-    }
-    function ambilKota(){
-        $.post("function/ajax_function.php",{ fungsi: "ambilKota"},function(data)
-        {
-            kota=data;
-        },"json"); 
-    }
-    function complete1(){
-        autocomplete(document.getElementById("prov"), prov);
-    }
-    function complete2(){
-        autocomplete(document.getElementById("kota"), kota);
-    }
     function kalkulatorharga(){
-        var a = $('#txtongkir').val();
+        var a = $('#txtmongkir').val();
         var v = a.replace(/[^0-9\.]+/g, '');
         var d = v.replace(/\./g,'');
-        $.post("function/ajax_function.php",{ fungsi: "kalkulator",model:$('#cbomodel').val(),d:$('#txtD').val(),t:$('#txtT').val(),dt:$('#txtDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
+        $.post("function/ajax_function.php",{ fungsi: "kalkulator",model:$('#cbomodel').val(),d:$('#txtmD').val(),t:$('#txtmT').val(),dt:$('#txtmDt').val(),kel:$('#cbokelengkapan').val(),ongkir:d,margin:$('#idmargin').val(),bplafon:0},function(data)
         {
             if ($("#cbomodel").val() != 'custom') {
                 $('#idluas').val(data.luas);
@@ -85,7 +65,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         },"json");
 
     }
-    /* Fungsi formatRupiah */
     function formatRupiah(angka, prefix){
         var number_string = angka.replace(/[^,\d]/g, '').toString(),
         split           = number_string.split(','),
@@ -93,7 +72,6 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         rupiah          = split[0].substr(0, sisa),
         ribuan          = split[0].substr(sisa).match(/\d{3}/gi);
 
-        // tambahkan titik jika yang di input sudah menjadi angka ribuan
         if(ribuan){
             separator = sisa ? '.' : '';
             rupiah += separator + ribuan.join('.');
@@ -102,57 +80,53 @@ if (substr($_SERVER['PHP_SELF'], -10, 10) == "index2.php" && $hakUser == 90) {
         return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
     }
 $(document).ready(function () {
-
-    ambilProv();ambilKota();
     $("#btnModal").click(function(){ 
         var idP = $('#provinsi').val();
         idP = idP.split("-");
         var idK = idP[1];
         var link = window.location.href;
         var res = link.match(/mode=edit/g);
-        $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
         if (res != 'mode=edit') {
             $.post("function/ajax_function.php",{ fungsi: "getOngkir",idP:idP[0]},function(data)
             {
                 if (idK == '3506' || idK == '3571') {
-                    document.getElementById("txtongkir").value = 0;
+                    document.getElementById("txtmongkir").value = 0;
                 }else{
-                    document.getElementById("txtongkir").value = data.transport;
+                    document.getElementById("txtmongkir").value = data.transport;
                 }
                 
             },"json");
         }
-        
-        $("#myModal").modal({backdrop: false});
+        $('#chkmodel').val(1);
+        $("#modalDetailkubah").modal({backdrop: false});
         document.getElementById("simpan").disabled = true;
         document.getElementById("idluas").disabled = true;
     });
-    //$("#dt :input").prop("readonly", true);
-            $("#txtDt").val(0);
-    $("#txtket").change(function(){
-        var cboket = $("#txtket").val();  
+    $("#txtmDt").val(0);
+    $("#txtmket").change(function(){
+        var cboket = $("#txtmket").val();  
         if(cboket == 'Atap'){
             document.getElementById("idluas").disabled = false;
-            document.getElementById("txtD").disabled = true;
-            document.getElementById("txtDt").disabled = true;
-            document.getElementById("txtT").disabled = true;
-            document.getElementById("txtBiayaPlafon").disabled = true;
+            document.getElementById("txtmD").disabled = true;
+            document.getElementById("txtmDt").disabled = true;
+            document.getElementById("txtmT").disabled = true;
+            document.getElementById("txtmbplafon").disabled = true;
         }else{
             document.getElementById("idluas").disabled = true;
-            document.getElementById("txtD").disabled = false;
-            document.getElementById("txtDt").disabled = false;
-            document.getElementById("txtT").disabled = false;
-            document.getElementById("txtBiayaPlafon").disabled = false;
+            document.getElementById("txtmD").disabled = false;
+            document.getElementById("txtmDt").disabled = false;
+            document.getElementById("txtmT").disabled = false;
+            document.getElementById("txtmbplafon").disabled = false;
         }
     });
     $("#cbomodel").change(function(){ 
         var cbomodel = $("#cbomodel").val(); 
-        var dt = $("#txtDt").val(); 
+        var dt = $("#txtmDt").val(); 
         if(cbomodel == 'bawang'){
             $("#dt :input").prop("readonly", false);
         }else{
             $("#dt :input").prop("readonly", true);
-            $("#txtDt").val(0); 
+            $("#txtmDt").val(0); 
         }
         if ($("#cbomodel").val() == 'custom') {
             document.getElementById("idluas").disabled = false;
@@ -161,38 +135,38 @@ $(document).ready(function () {
             $("#idluas").val(0);
         }
     }); 
-    var txtT = document.getElementById('txtT');
+    var txtT = document.getElementById('txtmT');
     txtT.addEventListener('keyup', function(e){
         var cbomodel = $("#cbomodel").val(); 
         if(cbomodel == 'pinang'){
-            if ($("#txtT").val()<$("#txtD").val()) {
+            if ($("#txtmT").val()<$("#txtmD").val()) {
                 alert("Tinggi minimal sama!");
-                $("#txtT").focus();
+                $("#txtmT").focus();
                 return false;
             }
         }
         kalkulatorharga();
     });
-    var txtD = document.getElementById('txtD');
+    var txtD = document.getElementById('txtmD');
     txtD.addEventListener('keyup', function(e){
         var cbomodel = $("#cbomodel").val(); 
-        var d = $("#txtD").val();
+        var d = $("#txtmD").val();
         if(cbomodel == 'bawang'){
-            $("#txtT").val(d);
+            $("#txtmT").val(d);
             var dt = (0.23*(d))+parseFloat(d);
             var resdt = dt.toString().length;
             if (resdt > 5) {
-                $("#txtDt").val(dt.toFixed(3));
+                $("#txtmDt").val(dt.toFixed(3));
             }else{
-                $("#txtDt").val(dt);
+                $("#txtmDt").val(dt);
             }
         }else if(cbomodel == 'pinang'){
-            $("#txtT").val(d);
+            $("#txtmT").val(d);
         }else if(cbomodel == 'madinah'){
-            $("#txtT").val((d*0.75));
+            $("#txtmT").val((d*0.75));
         }else if(cbomodel == 'setbola'){
             var t = (d*0.5);
-            $("#txtT").val(t);
+            $("#txtmT").val(t);
         }
         kalkulatorharga();
     });
@@ -202,7 +176,7 @@ $(document).ready(function () {
     });
     var idmargin = document.getElementById('idmargin');
     idmargin.addEventListener('keyup', function(e){
-        if($("#txtket").val() != 'Atap'){
+        if($("#txtmket").val() != 'Atap'){
             kalkulatorharga();
         }
     });
@@ -212,36 +186,23 @@ $(document).ready(function () {
             alert("Minimal Margin 21%!");
             $("#idmargin").focus();
             $("#idmargin").val('21');
-        }/*else if($("#idmargin").val()>40){
-            alert("Maximal Margin 40%!");
-            $("#idmargin").focus();
-            $("#idmargin").val('40');
-        }*/
-        if($("#txtket").val() != 'Atap'){
+        }
+        if($("#txtmket").val() != 'Atap'){
             kalkulatorharga();
         }
     });
-    var rupiah = document.getElementById('txtongkir');
+    var rupiah = document.getElementById('txtmongkir');
     rupiah.addEventListener('keyup', function(e){
         rupiah.value = formatRupiah(this.value,'');
         kalkulatorharga();
     });
-    var bplafon = document.getElementById('txtBiayaPlafon');
+    var bplafon = document.getElementById('txtmbplafon');
     bplafon.addEventListener('keyup', function(e){
         bplafon.value = formatRupiah(this.value,'');
         kalkulatorharga();
     });
-    $("#deletedetail").click(function(){ 
-        var txt;
-        var r = confirm("Hapus Detail SPH?");
-        if (r == true) {
-            txt = "Berhasil Hapus Detail SPH!";
-        } else {
-            txt = "Batal Hapus Detail SPH!";
-        }
-        document.getElementById("pesandel").innerHTML = '<div class="callout callout-info">'+txt+'</div>';
-    });
     $("#closemyCModal").click(function(){ 
+        $('#chkmodel').val(0);
         $("#myCModal").modal('hide');
     });
 });
@@ -249,170 +210,79 @@ $(document).ready(function () {
 </script>
 <!-- Include script untuk function auto complete -->
 <SCRIPT language="JavaScript" TYPE="text/javascript">
-    var tcounter = 0;
-    function adddetail($param){
-        $("#myModal").modal({backdrop: false});
-        if(cbomodel == 'bawang'){
-            $("#dt :input").prop("readonly", false);
-        }
-        $('#validEdit').val($param);
-        $("#chkeditval").val($("#chkEdit_"+$param).val());
-        $.post("function/ajax_function.php",{ fungsi: "idList",id:$('#validEdit').val(),nosph:$('#txtnoSph').val()},function(data)
-        {
-            document.getElementById("txtket").value = data.ket;
-            document.getElementById("cbokelengkapan").value = data.plafon;
-            document.getElementById("cbomodel").value = data.model;
-            document.getElementById("txtqty").value = data.jumlah;
-            document.getElementById("txtD").value = data.d;
-            document.getElementById("txtDt").value = data.dt;
-            document.getElementById("txtT").value = data.t;
-            document.getElementById("idharga1").value = data.harga;
-            document.getElementById("idharga2").value = data.harga2;
-            document.getElementById("idharga3").value = data.harga3;
-            document.getElementById("txtongkir").value = data.transport;
-            document.getElementById("txtBiayaPlafon").value = data.biaya_plafon;
-            if (data.bahan == 1) {
-                document.getElementById("chkHargaGa").checked=true;
-                document.getElementById("chkHargaEn").checked=false;
-                document.getElementById("chkHargaTm").checked=false;
-            }else if(data.bahan == 2){
-                document.getElementById("chkHargaGa").checked=false;
-                document.getElementById("chkHargaEn").checked=true;
-                document.getElementById("chkHargaTm").checked=false;
-            }else if(data.bahan == 3){
-                document.getElementById("chkHargaGa").checked=false;
-                document.getElementById("chkHargaEn").checked=false;
-                document.getElementById("chkHargaTm").checked=true;
-            }else if(data.bahan == 4){
-                document.getElementById("chkHargaGa").checked=true;
-                document.getElementById("chkHargaEn").checked=true;
-                document.getElementById("chkHargaTm").checked=false;
-            }else if(data.bahan == 5){
-                document.getElementById("chkHargaGa").checked=true;
-                document.getElementById("chkHargaEn").checked=false;
-                document.getElementById("chkHargaTm").checked=true;
-            }else if(data.bahan == 6){
-                document.getElementById("chkHargaGa").checked=false;
-                document.getElementById("chkHargaEn").checked=true;
-                document.getElementById("chkHargaTm").checked=true;
-            }else{
-                document.getElementById("chkHargaGa").checked=true;
-                document.getElementById("chkHargaEn").checked=true;
-                document.getElementById("chkHargaTm").checked=true;
-            }
-            if (data.model != 'bawang') {
-                $("#dt :input").prop("readonly", true);
-            }
-            if (data.model != 'custom') {
-                //kalkulatorharga();
-            }else{
-                document.getElementById("idluas").value = data.luas;
-            }
-        },"json");
-    }
-    function checkKubah() {
-        if (confirm('Cek Nilai Transport!') == true) {
-            if ($("#cbomodel").val()=='custom'){
-                $("#myCModal").modal({backdrop: false});
-                var link = window.location.href;
-                var res = link.match(/mode=edit/g);
-                $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
-                if (res == 'mode=edit') {
-                    var jumrangka = parseInt($("#norangka").val())-3;
-                    for (var $k = 0; $k < jumrangka ; $k++){
-                        $("#txtrangka"+$k).val($('#rangka'+$k).val());
-                    }
-                    $("#txtrangka1").val($('#rangka1').val());
-                    $("#txtrangka2").val($('#rangka2').val());
-                    $("#txtrangka3").val($('#rangka3').val());
-                }
-                $('#btnrangka').click(function(){
-                    var jumrangka = parseInt($("#norangka").val())-3;
-                    for (var $k = 1; $k <= jumrangka ; $k++){
-                        $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
-                    }
-                    $("#rangka1").val($('#txtrangka1').val());
-                    $("#rangka2").val($('#txtrangka2').val());
-                    $("#rangka3").val($('#txtrangka3').val());
-                    $("#myCModal").modal('hide');
-                    $("#myModal").modal('hide');
-                    addarray();
-                });
-            }else{
-                addarray();
-            }
-        } else {
-            return false;
-        }
-        
-    }
-    function prangka() {
-        var norangka = parseInt($("#norangka").val())+1;
-        var trow = document.createElement("DIV");
-        var trow2 = document.createElement("DIV");
-        var inp = document.getElementById("rangka");
-        var inp2 = document.getElementById("nrangka");
-        trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'" value="">';
-        trow2.innerHTML+='<input type="hidden" class="form-control" id="rangka'+norangka+'" name="rangka'+norangka+'" value="">';
-        inp.appendChild(trow);
-        inp2.appendChild(trow2);
-        $("#norangka").val(norangka);
-    }
-    function addarray() {
-        if($("#txtket").val()=='0' )
-        {
-            alert("Keterangan harus diisi!");
-            $("#txtket").focus();
-            return false;
-        }
-        if($("#cbomodel").val()=='0' )
-        {
-            alert("Pilih Model Kubah!");
-            $("#cbomodel").focus();
-            return false;
-        }
-        if($("#txtD").val()=='' )
-        {
-            alert("Diameter harus diisi!");
-            $("#txtD").focus();
-            return false;
-        }
-        if($("#txtT").val()=='' )
-        {
-            alert("Tinggi harus diisi!");
-            $("#txtT").focus();
-            return false;
-        }
-        if ($("#cbomodel").val()=='bawang'){
-            if($("#txtDt").val()=='0' ){
-                alert("Diameter Tengah harus diisi!");
-                $("#txtDt").focus();
-                return false;
-            } 
-        }
-        if($("#txtongkir").val()=='' )
-        {
-            alert("Biaya Transport harus diisi!");
-            $("#txtongkir").focus();
-            return false;
-        }
+    
+    function addmDetail($param){
+        $('#detkubah').val($param);
+        var mbplafon = $("#txtBplafon_"+$param).val();
+        var mket = $("#txtKet_"+$param).val();
+        var mmodel = $("#txtModel_"+$param).val();
+        var mqty = $("#txtQty_"+$param).val();
+        var mkelengkapan = $("#txtKel_"+$param).val();
+        var md = $("#txtD_"+$param).val();
+        var mdt = $("#txtDt_"+$param).val();
+        var mt = $("#txtT_"+$param).val();
+        var mtransport = $("#txtTransport_"+$param).val();
+        var mluas = $("#txtLuas_"+$param).val();
+        var mh1 = $("#txtHarga1_"+$param).val();
+        var mh2 = $("#txtHarga2_"+$param).val();
+        var mh3 = $("#txtHarga3_"+$param).val();
+        var mchkmodel = $("#chkEnGa_"+$param).val();
+        mchkhbaham(mchkmodel);
 
-        var bplafon = $("#txtBiayaPlafon").val().replace(/\./g,'');
-        var ket = $("#txtket").val();
+        $("#txtmbplafon").val(mbplafon);
+        $("#txtmket").val(mket);
+        $("#cbomodel").val(mmodel);
+        $("#txtqty").val(mqty);
+        $("#cbokelengkapan").val(mkelengkapan);
+        $("#txtmD").val(md);
+        $("#txtmDt").val(mdt);
+        $("#txtmT").val(mt);
+        $("#txtmongkir").val(mtransport);
+        $("#idluas").val(mluas);
+        $("#idharga1").val(mh1);
+        $("#idharga2").val(mh2);
+        $("#idharga3").val(mh3);
+        $("#modalDetailkubah").modal({backdrop: false});
+    }
+    function addDetail($param){
+        var bplafon = $("#txtmbplafon").val();
+        var ket = $("#txtmket").val();
         var model = $("#cbomodel").val();
         var qty = $("#txtqty").val();
         var kelengkapan = $("#cbokelengkapan").val();
-        var d = $("#txtD").val();
-        var dt = $("#txtDt").val();
-        var t = $("#txtT").val();
-        var transport = $("#txtongkir").val();
+        var d = $("#txtmD").val();
+        var dt = $("#txtmDt").val();
+        var t = $("#txtmT").val();
+        var transport = $("#txtmongkir").val();
         var l = $("#idluas").val();
         var m = $("#idmargin").val();
         var h1 = $("#idharga1").val();
         var h2 = $("#idharga2").val();
         var h3 = $("#idharga3").val();
+        var chkmodel = modelcheck();
+        mchkhbaham(chkmodel);
+
+        $("#chkEnGa_"+$param).val(chkmodel);
+        $("#txtBplafon_"+$param).val(bplafon);
+        $("#txtKet_"+$param).val(ket);
+        $("#txtModel_"+$param).val(model);
+        $("#txtQty_"+$param).val(qty);
+        $("#txtKel_"+$param).val(kelengkapan);
+        $("#txtD_"+$param).val(d);
+        $("#txtDt_"+$param).val(dt);
+        $("#txtT_"+$param).val(t);
+        $("#txtTransport_"+$param).val(transport);
+        $("#txtLuas_"+$param).val(l);
+        $("#txtHarga1_"+$param).val(h1);
+        $("#txtHarga2_"+$param).val(h2);
+        $("#txtHarga3_"+$param).val(h3);
+        
+        $('#chkmodel').val(0);
+        $("#modalDetailkubah").modal('hide');
+    }
+    function modelcheck(){
         var chkEnGa = '';
-        var gold = '0';
+
         //ga,en,tm
         if ($('#chkHargaGa').is(":checked") && $('#chkHargaEn').is(":checked") && $('#chkHargaTm').is(":checked")){
             chkEnGa = '0';
@@ -437,81 +307,190 @@ $(document).ready(function () {
         }else{
             chkEnGa = '0';
         }
-        
-        if ($('#chkGold').is(":checked")){
-            gold = '1';
+        return chkEnGa;
+    }
+    function mchkhbaham($param){
+        if ($param == 0) {
+            document.getElementById("chkHargaGa").checked = true;
+            document.getElementById("chkHargaEn").checked = true;
+            document.getElementById("chkHargaTm").checked = true;
+        }else if($param == 1){
+            document.getElementById("chkHargaGa").checked = true;
+            document.getElementById("chkHargaEn").checked = false;
+            document.getElementById("chkHargaTm").checked = false;
+        }else if($param == 2){
+            document.getElementById("chkHargaEn").checked = true;
+            document.getElementById("chkHargaGa").checked = false;
+            document.getElementById("chkHargaTm").checked = false;
+        }else if($param == 3){
+            document.getElementById("chkHargaTm").checked = true;
+            document.getElementById("chkHargaEn").checked = false;
+            document.getElementById("chkHargaGa").checked = false;
+        }else if($param == 4){
+            document.getElementById("chkHargaGa").checked = true;
+            document.getElementById("chkHargaEn").checked = true;
+            document.getElementById("chkHargaTm").checked = false;
+        }else if($param == 5){
+            document.getElementById("chkHargaGa").checked = true;
+            document.getElementById("chkHargaTm").checked = true;
+            document.getElementById("chkHargaEn").checked = false;
+        }else if($param == 6){
+            document.getElementById("chkHargaEn").checked = true;
+            document.getElementById("chkHargaTm").checked = true;
+            document.getElementById("chkHargaGa").checked = false;
+
         }
 
-        tcounter++;
-        $("#myModal").modal('hide');
-        document.getElementById("simpan").disabled = false;
-        tcounter = $("#jumAddJurnal").val();
-        if ($("#chkmode").val() == 'edit'){
-            tcounter = tcounter-1;
-            $("#jumAddJurnal").val(tcounter);
-        }
-        var link = window.location.href;
-        var res = link.match(/mode=edit/g);
-        $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
-        if (res == 'mode=edit') {
-            $("#txtKet_"+$('#validEdit').val()).val( $("#txtket").val());
-            $("#txtQty_"+$('#validEdit').val()).val($('#txtqty ').val());
-            $("#txtD_"+$('#validEdit').val()).val( $("#txtD").val());
-            $("#txtT_"+$('#validEdit').val()).val($('#txtT').val());
-            $("#txtDt_"+$('#validEdit').val()).val( $("#txtDt").val());
-            $("#txtModel_"+$('#validEdit').val()).val($('#cbomodel').val());
-            $("#txtHarga1_"+$('#validEdit').val()).val( $("#idharga1").val());
-            $("#txtHarga2_"+$('#validEdit').val()).val($('#idharga2').val());
-            $("#txtHarga3_"+$('#validEdit').val()).val($('#idharga3').val());
-            $("#txtTransport_"+$('#validEdit').val()).val($('#txtongkir').val());
-            $("#txtBplafon_"+$('#validEdit').val()).val($('#txtBiayaPlafon').val());
-            if ($("#txtModel_"+$('#validEdit').val()).val() =='custom'){
-                $("#luas_"+$('#validEdit').val()).val($('#idluas').val());
+    }
+    function checkKubah() {
+        $("#jumAddJurnal").val();
+        if ($("#chkmodel").val() != 0) {
+            if (confirm('Cek Nilai Transport!') == true) {
+                if ($("#cbomodel").val()=='custom'){
+                    $("#myCModal").modal({backdrop: false});
+                    var link = window.location.href;
+                    var res = link.match(/mode=edit/g);
+                    $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
+                    if (res == 'mode=edit') {
+                        var jumrangka = parseInt($("#norangka").val())-3;
+                        for (var $k = 0; $k < jumrangka ; $k++){
+                            $("#txtrangka"+$k).val($('#rangka'+$k).val());
+                        }
+                        $("#txtrangka1").val($('#rangka1').val());
+                        $("#txtrangka2").val($('#rangka2').val());
+                        $("#txtrangka3").val($('#rangka3').val());
+                    }
+                    $('#btnrangka').click(function(){
+                        var jumrangka = parseInt($("#norangka").val())-3;
+                        for (var $k = 1; $k <= jumrangka ; $k++){
+                            $("#rangka"+(parseInt($k)+3)).val($('#txtrangka'+(parseInt($k)+3)).val());
+                        }
+                        $("#rangka1").val($('#txtrangka1').val());
+                        $("#rangka2").val($('#txtrangka2').val());
+                        $("#rangka3").val($('#txtrangka3').val());
+                        $("#myCModal").modal('hide');
+                        $("#modalDetailkubah").modal('hide');
+                        addarray();
+                        $('#chkmodel').val(0);
+                    });
+                }else{
+                    addarray();
+                    $('#chkmodel').val(0);
+                }
+            } else {
+                return false;
             }
-            $("#txtKel_"+$('#validEdit').val()).val($('#cbokelengkapan').val());
-            $("#chkEnGa_"+$('#validEdit').val()).val(chkEnGa);
-            $("#chkGold_"+$('#validEdit').val()).val(gold);
-            var ttable = document.getElementById("kendali1");
-            var trow = document.createElement("TR");
-            trow.setAttribute('id','trid_'+tcounter);
         }else{
-            var ttable = document.getElementById("kendali");
-            var trow = document.createElement("TR");
-            trow.setAttribute('id','trid_'+tcounter);
+            addDetail($('#detkubah').val());
+        }
+
+        
+    }
+    function deleteRow(r) {
+        var param = r.split("_");
+        document.getElementById(r).style.display = "none";
+        $("#chkAddJurnal_"+param[1]).val('');
+    }
+    function prangka() {
+        var norangka = parseInt($("#norangka").val())+1;
+        var trow = document.createElement("DIV");
+        var trow2 = document.createElement("DIV");
+        var inp = document.getElementById("rangka");
+        var inp2 = document.getElementById("nrangka");
+        trow.innerHTML+='<input type="text" class="form-control" id="txtrangka'+norangka+'" value="">';
+        trow2.innerHTML+='<input type="hidden" class="form-control" id="rangka'+norangka+'" name="rangka'+norangka+'" value="">';
+        inp.appendChild(trow);
+        inp2.appendChild(trow2);
+        $("#norangka").val(norangka);
+    }
+
+function addarray() {
+    if($("#txtmket").val()=='0' )
+    {
+        alert("Keterangan harus diisi!");
+        $("#txtmket").focus();
+        return false;
+    }
+    if($("#cbomodel").val()=='0' )
+    {
+        alert("Pilih Model Kubah!");
+        $("#cbomodel").focus();
+        return false;
+    }
+    if($("#txtmD").val()=='0' )
+    {
+        alert("Diameter harus diisi!");
+        $("#txtmD").focus();
+        return false;
+    }
+    if($("#txtmT").val()=='' )
+    {
+        alert("Tinggi harus diisi!");
+        $("#txtmT").focus();
+        return false;
+    }
+    if ($("#cbomodel").val()=='bawang'){
+        if($("#txtmDt").val()=='0' ){
+            alert("Diameter Tengah harus diisi!");
+            $("#txtmDt").focus();
+            return false;
+        } 
+    }
+    if($("#txtmongkir").val()=='' )
+    {
+        alert("Biaya Transport harus diisi!");
+        $("#txtmongkir").focus();
+        return false;
+    }
+    $("#jumAddJurnal").val(parseInt($("#jumAddJurnal").val())+1);
+
+    var bplafon = $("#txtmbplafon").val().replace(/\./g,'');
+    var ket = $("#txtmket").val();
+    var model = $("#cbomodel").val();
+    var qty = $("#txtqty").val();
+    var kelengkapan = $("#cbokelengkapan").val();
+    var d = $("#txtmD").val();
+    var dt = $("#txtmDt").val();
+    var t = $("#txtmT").val();
+    var transport = $("#txtmongkir").val();
+    var l = $("#idluas").val();
+    var m = $("#idmargin").val();
+    var h1 = $("#idharga1").val();
+    var h2 = $("#idharga2").val();
+    var h3 = $("#idharga3").val();
+    var gold = '0';
+    var chkEnGa = modelcheck();
+
+if ($('#chkGold').is(":checked")){
+    gold = '1';
+}
+var tcounter = $("#jumAddJurnal").val();
+var ttable = document.getElementById("kendali");
+var trow = document.createElement("TR");
+trow.setAttribute('id','trid_'+tcounter);
+
+$("#modalDetailkubah").modal('hide');
+document.getElementById("simpan").disabled = false;
+
 //Kolom 1 Checkbox
 var td = document.createElement("TD");
 td.setAttribute("align","center");
-if ($("#chkmode").val()=='edit') {
-    td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkEdit_'+tcounter+'" id="chkEdit_'+tcounter+'" value="'+$("#chkeditval").val()+'" checked /></div>';
-    var tr = document.getElementById("trid_"+tcounter);
-    tr.remove();
-}else{
-    td.innerHTML+='<div class="form-group"><input type="checkbox" class="minimal" name="chkAddJurnal_'+tcounter+'" id="chkAddJurnal_'+tcounter+'" value="1" checked /></div>';
-}
 td.style.verticalAlign = 'top';
-
+td.innerHTML+='<div class="form-group"><a class="btn btn-default btn-sm" onclick=deleteRow("trid_'+tcounter+'")><i class="fa fa-fw fa-trash"></i></a><input type="hidden" class="minimal" name="chkAddJurnal_'+tcounter+'" id="chkAddJurnal_'+tcounter+'" value="1" checked /></div>';
 trow.appendChild(td);
 
 //Kolom 2 Ket
 var td = document.createElement("TD");
 td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtKet_'+tcounter+'" id="txtKet_'+tcounter+'" class="form-control" value="'+ket+'" readonly style="min-width: 120px;"></div>';
-trow.appendChild(td);
-
-//Kolom 4 qty
-var td = document.createElement("TD");
-td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
-td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" class="form-control"  value="'+qty+'" readonly style="min-width: 35px;"></div>';
 trow.appendChild(td);
 
 //Kolom 5 Model
 var td = document.createElement("TD");
 td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control"  value="'+model+'" readonly style="min-width: 35px;"></div>';
 trow.appendChild(td);
@@ -519,7 +498,7 @@ trow.appendChild(td);
 //Kolom 6 d
 var td = document.createElement("TD");
 td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtD_'+tcounter+'" id="txtD_'+tcounter+'" class="form-control"  value="'+d+'" readonly style="min-width: 35px;"></div>';
 trow.appendChild(td);
@@ -527,7 +506,7 @@ trow.appendChild(td);
 //Kolom 7 t
 var td = document.createElement("TD");
 td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtT_'+tcounter+'" id="txtT_'+tcounter+'" class="form-control"  value="'+t+'" readonly style="min-width: 35px;"></div>';
 trow.appendChild(td);
@@ -535,15 +514,15 @@ trow.appendChild(td);
 //Kolom 8 dt
 var td = document.createElement("TD");
 td.setAttribute("align","left");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group"><input name="txtDt_'+tcounter+'" id="txtDt_'+tcounter+'" class="form-control"  value="'+dt+'" readonly style="min-width: 35px;"><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'" class="form-control" type="hidden" value="'+bplafon+'"><input name="txtKel_'+tcounter+'" id="txtKel_'+tcounter+'" class="form-control" type="hidden" value="'+kelengkapan+'"></div>';
+td.innerHTML+='<div class="form-group"><input name="txtDt_'+tcounter+'" id="txtDt_'+tcounter+'" class="form-control"  value="'+dt+'" readonly style="min-width: 35px;"><input name="txtBplafon_'+tcounter+'" id="txtBplafon_'+tcounter+'"type="hidden" value="'+bplafon+'"><input name="txtKel_'+tcounter+'" id="txtKel_'+tcounter+'" type="hidden" value="'+kelengkapan+'"><input name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" type="hidden" value="'+qty+'"></div>';
 trow.appendChild(td);
 
 //Kolom 9 Transport
 var td = document.createElement("TD");
 td.setAttribute("align","right");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtTransport_'+tcounter+'" id="txtTransport_'+tcounter+'" class="form-control" readonly  value="'+transport+'" style="min-width: 120px;"></div>';
 trow.appendChild(td);
@@ -551,7 +530,7 @@ trow.appendChild(td);
 //Kolom 10 h1
 var td = document.createElement("TD");
 td.setAttribute("align","right");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtHarga1_'+tcounter+'" id="txtHarga1_'+tcounter+'" class="form-control" readonly value="'+h1+'"style="min-width: 120px;" ></div>';
 trow.appendChild(td);
@@ -559,19 +538,18 @@ trow.appendChild(td);
 //Kolom 11 h2
 var td = document.createElement("TD");
 td.setAttribute("align","right");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
-td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="luas_'+tcounter+'" id="luas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="chkGold_'+tcounter+'" id="chkGold_'+tcounter+'" class="form-control" type="hidden" value="'+gold+'"></div>';
+td.innerHTML+='<div class="form-group" ><input name="txtHarga2_'+tcounter+'" id="txtHarga2_'+tcounter+'" class="form-control" readonly value="'+h2+'"style="min-width: 120px;" ><input name="chkEnGa_'+tcounter+'" id="chkEnGa_'+tcounter+'" class="form-control" type="hidden" value="'+chkEnGa+'"><input name="txtLuas_'+tcounter+'" id="txtLuas_'+tcounter+'" class="form-control" type="hidden" value="'+l+'"><input name="chkGold_'+tcounter+'" id="chkGold_'+tcounter+'" class="form-control" type="hidden" value="'+gold+'"></div>';
 trow.appendChild(td);
 //Kolom 12 h3
 var td = document.createElement("TD");
 td.setAttribute("align","right");
-td.setAttribute('onclick','adddetail('+tcounter+');');
+td.setAttribute('onclick','addmDetail('+tcounter+');');
 td.style.verticalAlign = 'top';
 td.innerHTML+='<div class="form-group"><input name="txtHarga3_'+tcounter+'" id="txtHarga3_'+tcounter+'" class="form-control" readonly value="'+h3+'"style="min-width: 120px;" ></div>';
 trow.appendChild(td);
 ttable.appendChild(trow);
-}
 }
 
 function validasiForm(form)
@@ -603,13 +581,13 @@ function validasiForm(form)
     if(form.idharga2.value=='')
     {
         alert("Isikan Detail Kubah !");
-        $("#myModal").modal({backdrop: false});
+        $("#modalDetailkubah").modal({backdrop: false});
         return false;
     }
-    if(form.txtongkir.value=='')
+    if(form.txtmongkir.value=='')
     {
         alert("Biaya Transport belum diisi!");
-        $("#txtongkir").focus();
+        $("#txtmongkir").focus();
         return false;
     }
     return true;
@@ -931,7 +909,6 @@ function validasiForm(form)
                     <tr>
                         <th style="width: 2%"><i class='fa fa-edit'></i></th>
                         <th style="width: 10%">Information</th>
-                        <th style="width: 3%">Quantity</th>
                         <th style="width: 8%">Model</th>
                         <th style="width: 3%">D</th>
                         <th style="width: 3%">T</th>
@@ -954,32 +931,27 @@ function validasiForm(form)
                         while ($DetilJurnal = mysql_fetch_array($rsDetilJurnal)) {
                             $kel = '';
                             echo '<div><tr id="trid_'.$iJurnal.'" >';
-                            echo '<td align="center" valign="top" ><div class="form-group">
-                            <input type="checkbox" class="minimal" checked name="chkEdit_' . $iJurnal . '" id="chkEdit_' . $iJurnal . '" value="' . $DetilJurnal["idDsph"] . '" /></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top"><div class="form-group"><a class="btn btn-default btn-sm" onclick=deleteRow("trid_' . $iJurnal . '")><i class="fa fa-fw fa-trash"></i></a>
+                            <input type="hidden" checked class="minimal"  name="chkAddJurnal_' . $iJurnal . '" id="chkAddJurnal_' . $iJurnal . '" value="1"/></div></td>';
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input readonly type="text" class="form-control"  name="txtKet_' . $iJurnal . '" id="txtKet_' . $iJurnal . '" value="' . $DetilJurnal["ket"] . '"style="min-width: 120px;"></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                            <input type="text" class="form-control" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '" readonly="" style="min-width: 35px;"></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"name="txtModel_' . $iJurnal . '" id="txtModel_' . $iJurnal . '" value="' . $DetilJurnal["model"] . '" readonly="" style="min-width: 100px;"></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"name="txtD_' . $iJurnal . '" id="txtD_' . $iJurnal . '" value="' . ($DetilJurnal["d"]) . '" readonly="" style="min-width: 45px;"></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"name="txtT_' . $iJurnal . '" id="txtT_' . $iJurnal . '" value="' . ($DetilJurnal["t"]) . '" readonly="" style="min-width: 45px;"></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
-                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" class="form-control"  name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" class="form-control"  name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" class="form-control"  name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/><input type="hidden" class="form-control"  name="chkGold_' . $iJurnal . '" id="chkGold_' . $iJurnal . '" value="' . $DetilJurnal["gold"] . '"/></div></td>';
-                            if ($DetilJurnal["model"] == 'custom') {
-                                echo '<input type="hidden" class="form-control"  name="luas_' . $iJurnal . '" id="luas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
-                            }   
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
+                            <input type="text" class="form-control"name="txtDt_' . $iJurnal . '" id="txtDt_' . $iJurnal . '" value="' . ($DetilJurnal["dt"]) . '" readonly="" style="min-width: 45px;"><input type="hidden" name="txtKel_' . $iJurnal . '" id="txtKel_' . $iJurnal . '" value="' . $DetilJurnal["plafon"] . '"/><input type="hidden" name="chkEnGa_' . $iJurnal . '" id="chkEnGa_' . $iJurnal . '" value="' . $DetilJurnal["bahan"] . '"/><input type="hidden" name="txtBplafon_' . $iJurnal . '" id="txtBplafon_' . $iJurnal . '" value="' . $DetilJurnal["biaya_plafon"] . '"/><input type="hidden" name="chkGold_' . $iJurnal . '" id="chkGold_' . $iJurnal . '" value="' . $DetilJurnal["gold"] . '"/><input type="hidden" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="' . $DetilJurnal["jumlah"] . '"/></div></td>';
+                                echo '<input type="hidden"  name="txtLuas_' . $iJurnal . '" id="txtLuas_' . $iJurnal . '" value="' . $DetilJurnal["luas"] . '"/>';
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"  name="txtTransport_' . $iJurnal . '" id="txtTransport_' . $iJurnal . '" value="' . number_format($DetilJurnal["transport"]) . '" readonly style="text-align:right;min-width: 120px;"></div></td>';
 
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control"  name="txtHarga1_' . $iJurnal . '" id="txtHarga1_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga"]) . '" style="text-align:right;min-width: 120px;" readonly></div></td>';
-
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control" name="txtHarga2_' . $iJurnal . '" id="txtHarga2_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga2"]) . '" style="text-align:right;min-width: 120px;" readonly ></div></td>';
-                            echo '<td align="center" valign="top" onclick="adddetail('.$iJurnal.')"><div class="form-group">
+                            echo '<td align="center" valign="top" onclick="addmDetail('.$iJurnal.')"><div class="form-group">
                             <input type="text" class="form-control" name="txtHarga3_' . $iJurnal . '" id="txtHarga3_' . $iJurnal . '" value="' . number_format($DetilJurnal["harga3"]) . '" style="text-align:right;min-width: 120px;" readonly ></div></td></div></tr>';
                             $iJurnal++;
                         }
@@ -987,19 +959,21 @@ function validasiForm(form)
                     ?>
                 </tbody>
             </table>
-            <input type="hidden" value="<?php if($_GET['mode']=='edit'){echo $iJurnal;}else{echo '0';} ?>" id="jumAddJurnal" name="jumAddJurnal"/>
+            <input type="" value="<?php if($_GET['mode']=='edit'){echo $iJurnal;}else{echo '0';} ?>" id="jumAddJurnal" name="jumAddJurnal"/>
             
             <input type="hidden" value="" id="chkeditval" name="chkeditval"/>
             <input type="hidden" value="" id="validEdit" name="validEdit"/>
             <div class="container">
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="modalDetailkubah" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <form action="index2.php?page=view/sph_detail" method="post" name="frmPerkiraanDetail" >
                                     <div class="box-header">
+                                        <input type="" name="detkubah" id="detkubah" value="">
+                                        <input type="" name="chkmodel" id="chkmodel" value="0">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <i class="ion ion-clipboard"></i>
                                         <?php
@@ -1015,7 +989,7 @@ function validasiForm(form)
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <select name="txtket" id="txtket" class="form-control">
+                                        <select name="txtmket" id="txtmket" class="form-control">
                                             <option value='Kubah Utama'>Kubah Utama</option>;
                                             <option value='Mahrab'>Mahrab</option>;
                                             <option value='Anakan'>Anakan</option>;
@@ -1060,26 +1034,26 @@ function validasiForm(form)
                                         </div>
                                         <div class="col-lg-6" id="dt">
                                             <label class="control-label" for="txtKeteranganKas">Diameter Tengah</label><div class="input-group">
-                                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtDt" id="txtDt" class="form-control" value="0" ><span class="input-group-addon">meter</span></div>
+                                                <input type="text"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" name="txtmDt" id="txtmDt" class="form-control" value="0" ><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Diameter</label><div class="input-group">
-                                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtD" id="txtD" class="form-control" placeholder="0"
+                                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtmD" id="txtmD" class="form-control" placeholder="0"
                                                     value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Tinggi</label><div class="input-group">
-                                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtT" id="txtT" class="form-control" placeholder="0"
+                                                <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"  name="txtmT" id="txtmT" class="form-control" placeholder="0"
                                                 value="0" onfocus="this.value=''"><span class="input-group-addon">meter</span></div>
                                             </div>
                                             <div class="col-lg-6" id="dt">
                                                 <label class="control-label" for="txtKeteranganKas">Plafon Motif</label><div class="input-group"><span class="input-group-addon">Rp</span>
-                                                    <input type="text" name="txtBiayaPlafon" id="txtBiayaPlafon" class="form-control"
+                                                    <input type="text" name="txtmbplafon" id="txtmbplafon" class="form-control"
                                                     value="0" onfocus="" placeholder="0" ></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Transport</label><div class="input-group"><span class="input-group-addon">Rp</span>
-                                                    <input type="text" name="txtongkir" id="txtongkir" class="form-control"
+                                                    <input type="text" name="txtmongkir" id="txtmongkir" class="form-control"
                                                     value="0" onfocus="" placeholder="0" ></div>
                                             </div>
                                             <div class="col-lg-6">
@@ -1087,7 +1061,7 @@ function validasiForm(form)
                                                     value=""><span class="input-group-addon">m<sup>2</sup></span></div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="number" value=""placeholder="0" name="idmargin" id="idmargin" min="21" max="40" class="form-control" value="0"><span class="input-group-addon">%</span></div>
+                                                <label class="control-label" for="txtKeteranganKas">Margin</label><div class="input-group"><input type="number" value=""placeholder="0" name="idmargin" id="idmargin" min="21"  class="form-control" value="0"><span class="input-group-addon">%</span></div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label class="control-label" for="txtKeteranganKas">Harga Galvalum</label><div class="input-group"><span class="input-group-addon">Rp</span><input onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))" type="text" name="idharga1" id="idharga1" placeholder="0"class="form-control"value="0"><span class="input-group-addon"><input type="checkbox" id="chkHargaGa"checked></span></div>

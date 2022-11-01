@@ -126,82 +126,43 @@ $(document).ready(function () {
     var jmlid = 0;
     var jmldetail = $("#jumAddJurnal").val();
     if (res == 'mode=edit') {
-        var idr = 0;
-        var idc = 0;
         for(var i=0; i<jmldetail; ++i) {
+            var idr = 0;
             $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk[1],nomer:i},function(data){
                 if (data != 0) {
-                    $("#jumDetailr_"+idr).val(data.length);
+                    for(var j=1; j<=data.length; ++j) {
+                        var ttable = document.getElementById("drangka");
+                        var trow = document.createElement("TR");
+                        trow.setAttribute("id", "trid_"+idrangka);
+                        var td = document.createElement("TD");
+                        td.setAttribute("align","left");
+                        td.style.verticalAlign = 'top';
+                        trow.innerHTML+='<input type="" class="form-control" id="txtrangka'+idr+'_'+j+'"name="txtrangka'+idr+'_'+j+'" value="'+data[j-1]+'">';
+                        trow.appendChild(td);
+                        td.setAttribute('onclick','opendmodal(1);');
+                        ttable.appendChild(trow);
+                    }
+                    jmlid +=data.length;
+                    $("#jumDetailr").val(jmlid);
+                    idr=idr+1;
+                }else{
+                    $("#jumDetailr").val(data);
                 }
-                idr++;
-            },"json");
-            $.post("function/ajax_function.php",{ fungsi: "getdwarna",nokk:$nokk[1],nomer:i},function(data){
-                if (data != 0) {
-                    $("#jumWarna_"+idc).val(data.length);
-                }
-                idc++;
+                
             },"json");
         }
     }
     
     $('#btnrangka').click(function(){
-        var idrangka = $("#idrangka").val();
-        var norangka = $("#jumDetailr_"+idrangka).val();
-        var ttable = document.getElementById("drangka_"+idrangka);
-        ttable.innerHTML='';
 
-        $("#jumDetailr_"+idrangka).val(0);
-        var sumd =0;
-        for(var j=1; j<=norangka; ++j) {
-            var drangka = $("#txtmrangka"+idrangka+"_"+j).val();
-            if (drangka!='') {
-                sumd++;
-                var trow = document.createElement("TR");
-                trow.setAttribute("id", "trid_"+idrangka);
-                var td = document.createElement("TD");
-                td.setAttribute("align","left");
-                td.style.verticalAlign = 'top';
-                trow.innerHTML+='<input type="hidden" class="form-control" id="txtrangka'+idrangka+'_'+sumd+'"name="txtrangka'+idrangka+'_'+sumd+'" value="'+drangka+'">';
-                trow.appendChild(td);
-                ttable.appendChild(trow);
-            }
+        var idrangka = $("#idrangka").val();
+        var norangka = $("#norangka_"+idrangka).val();
+        for($i = 1; $i <= norangka; $i++){
+            var drangka = $("#txtmrangka"+idrangka+"_"+$i).val();
+            $("#txtrangka"+idrangka+"_"+$i).val(drangka);
         }
-        $("#jumDetailr_"+idrangka).val(sumd);
         $("#mySModal").modal('hide');
-    });
-    $('#btnwarna').click(function(){
-        var idwarna = $("#idwarna").val();
-        var nowarna = $("#jumWarna_"+idwarna).val();
-        var sumd =0;var sumdk =0;
-        var ttable = document.getElementById("dwarna_"+idwarna);
-        ttable.innerHTML='';
-        for($i = 1; $i <= nowarna; $i++){
-            var dwarna = $("#txtmwarna"+idwarna+"_"+$i).val();
-            var dkwarna = $("#txtmkwarna"+idwarna+"_"+$i).val();
-            if (dwarna!='') {
-                sumd++;
-                var trow = document.createElement("TR");
-                trow.setAttribute("id", "trid_"+idwarna);
-                var td = document.createElement("TD");
-                td.setAttribute("align","left");
-                td.style.verticalAlign = 'top';
-                trow.innerHTML+='<input type="hidden" class="form-control" id="txtwarna'+idwarna+'_'+sumd+'"name="txtwarna'+idwarna+'_'+sumd+'" value="'+dwarna+'">';
-                trow.appendChild(td);
-                ttable.appendChild(trow);
-            }
-            if (dkwarna!='') {
-                sumdk++;
-                var tkrow = document.createElement("TR");
-                tkrow.setAttribute("id", "trid_"+idwarna);
-                var tdk = document.createElement("TD");
-                tdk.setAttribute("align","left");
-                tdk.style.verticalAlign = 'top';
-                tkrow.innerHTML+='<input type="hidden" class="form-control" id="txtkwarna'+idwarna+'_'+sumdk+'"name="txtkwarna'+idwarna+'_'+sumdk+'" value="'+dkwarna+'">';
-                tkrow.appendChild(tdk);
-                ttable.appendChild(tkrow);
-            }
-        }
-        $("#myModal").modal('hide');
+        
     });
     var harga = document.getElementById('idharga1');
     harga.addEventListener('keyup', function(e){
@@ -246,12 +207,40 @@ $(document).ready(function () {
             $("#txttransport").val(0);
         }
     });
+    $("#color1").click(function(){ 
+        $("#color1").val('');
+    });
+    $("#color2").click(function(){ 
+        $("#color2").val('');
+    });
+    $("#color3").click(function(){ 
+        $("#color3").val('');
+    });
+    $("#color4").click(function(){ 
+        $("#color4").val('');
+    });
+    $("#color5").click(function(){ 
+        $("#color5").val('');
+    });
+    $("#kcolor1").click(function(){ 
+        $("#kcolor1").val('');
+    });
+    $("#kcolor2").click(function(){ 
+        $("#kcolor2").val('');
+    });
+    $("#kcolor3").click(function(){ 
+        $("#kcolor3").val('');
+    });
+    $("#kcolor4").click(function(){ 
+        $("#kcolor4").val('');
+    });
+    $("#kcolor5").click(function(){ 
+        $("#kcolor5").val('');
+    });
     $("#closemyCModal").click(function(){ 
         $("#mySModal").modal('hide');
     });
-    $("#closemyModal").click(function(){ 
-        $("#myModal").modal('hide');
-    });
+
 });
 
 function hitungtotal($param) {
@@ -285,48 +274,53 @@ function getpemasangan(){
         },"json"); 
 }
 
-function cmodal($no,$nokk) {
+function cmodal($param) {
     $("#myModal").modal({backdrop: 'static'});
-    $('#txtnomerc').val($no);
-    $('#labelclr').html(parseInt($no)+1);
+    $('#txtnomerc').val($param);
+    $('#labelclr').html($param+1);
     var link = window.location.href;
     var res = link.match(/mode=edit/g);
-    $("#idwarna").val($no);
-    var x = document.getElementById("detailwarna");
-    var kx = document.getElementById("detailkwarna");
-    x.innerHTML = '';kx.innerHTML = '';
-    if ($("#jumWarna_"+$no).val() != 0) {
-        var nowarna = $("#jumWarna_"+$no).val();
-        for(var j=1; j<=nowarna; ++j) {
-            var dwarna = $("#txtwarna"+$no+"_"+j).val();
-            var dkwarna = $("#txtkwarna"+$no+"_"+j).val();
-            if (dwarna!='') {
-                var y = document.createElement("input");
-                y.setAttribute("type", "text");
-                y.classList.add("form-control")
-                y.setAttribute("id", "txtmwarna"+$no+'_'+j);
-                y.setAttribute("name", "txtmwarna"+$no+'_'+j);
-                y.setAttribute("value", dwarna);
-                x.appendChild(y);
-            }
-            if (dkwarna!='') {
-                var ky = document.createElement("input");
-                ky.setAttribute("type", "text");
-                ky.classList.add("form-control")
-                ky.setAttribute("id", "txtmkwarna"+$no+'_'+j);
-                ky.setAttribute("name", "txtmkwarna"+$no+'_'+j);
-                ky.setAttribute("value", dkwarna);
-                kx.appendChild(ky);
-            }
-        }
+    if (res == 'mode=edit') {
+        $('#color1').val($("#color1_"+$param).val());
+        $('#color2').val($("#color2_"+$param).val());
+        $('#color3').val($("#color3_"+$param).val());
+        $('#color4').val($("#color4_"+$param).val());
+        $('#color5').val($("#color5_"+$param).val());
+
+        $('#kcolor1').val($("#kcolor1_"+$param).val());
+        $('#kcolor2').val($("#kcolor2_"+$param).val());
+        $('#kcolor3').val($("#kcolor3_"+$param).val());
+        $('#kcolor4').val($("#kcolor4_"+$param).val());
+        $('#kcolor5').val($("#kcolor5_"+$param).val());
     }
+
+    $('#btncolor').click(function(){
+        $("#color1_"+$('#txtnomerc').val()).val($('#color1').val());
+        $("#color2_"+$('#txtnomerc').val()).val($("#color2").val());
+        $("#color3_"+$('#txtnomerc').val()).val($('#color3').val());
+        $("#color4_"+$('#txtnomerc').val()).val($("#color4").val());
+        $("#color5_"+$('#txtnomerc').val()).val($('#color5').val());
+
+        $("#kcolor1_"+$('#txtnomerc').val()).val($('#kcolor1').val());
+        $("#kcolor2_"+$('#txtnomerc').val()).val($('#kcolor2').val());
+        $("#kcolor3_"+$('#txtnomerc').val()).val($('#kcolor3').val());
+        $("#kcolor4_"+$('#txtnomerc').val()).val($('#kcolor4').val());
+        $("#kcolor5_"+$('#txtnomerc').val()).val($('#kcolor5').val());
+        $("#myModal").modal('hide');
+    });
 }
 function rmodal($no,$nokk) {
     $("#idrangka").val($no);
     var x = document.getElementById("detailrangka");
-    if ($("#jumDetailr_"+$no).val() == 0) {
-        x.innerHTML = '';
-        $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:'c21f969b5f03d33d43e04f8f136e7682',nomer:0},function(data){
+    x.innerHTML = '';
+    var y = document.createElement("input");
+    y.setAttribute("type", "");
+    y.setAttribute("id", "norangka_"+$no);
+    y.setAttribute("name", "norangka_"+$no);
+    y.setAttribute("value", 0);
+    x.appendChild(y);
+    if ($nokk == '') {
+        $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:'fb7be49259eb1b31e6818fdf69ad4ece',nomer:0},function(data){
             $("#norangka_"+$no).val(data.length);
             for(var i=1; i<=data.length; ++i) {
                 var y = document.createElement("input");
@@ -337,74 +331,68 @@ function rmodal($no,$nokk) {
                 y.setAttribute("value", data[i-1]);
                 x.appendChild(y);
             }
+            var idr = 0;
             var jmlid = 0;
+            for(var j=1; j<=data.length; ++j) {
+                var ttable = document.getElementById("drangka");
+                var trow = document.createElement("TR");
+                trow.setAttribute("id", "trid_"+$no);
+                var td = document.createElement("TD");
+                td.setAttribute("align","left");
+                td.style.verticalAlign = 'top';
+                trow.innerHTML+='<input type="" class="form-control" id="txtrangka'+idr+'_'+j+'"name="txtrangka'+idr+'_'+j+'" value="'+data[j-1]+'">';
+                trow.appendChild(td);
+                td.setAttribute('onclick','opendmodal(1);');
+                ttable.appendChild(trow);
+            }
             jmlid +=data.length;
-            jmlid = parseInt($("#jumDetailr_"+$no).val())+parseInt(jmlid);
-            $("#jumDetailr_"+$no).val(jmlid);
+            jmlid = parseInt($("#jumDetailr").val())+parseInt(jmlid);
+            $("#jumDetailr").val(jmlid);
+            idr=idr+1;
         },"json");
     }else{
-        var norangka = $("#jumDetailr_"+$no).val();
-        x.innerHTML = '';
-        for(var j=1; j<=norangka; ++j) {
-            var drangka = $("#txtrangka"+$no+"_"+j).val();
-            if (drangka!='') {
-                var ttable = document.getElementById("drangka_"+$no);
-                var y = document.createElement("input");
-                y.setAttribute("type", "text");
-                y.classList.add("form-control")
-                y.setAttribute("id", "txtmrangka"+$no+'_'+j);
-                y.setAttribute("name", "txtmrangka"+$no+'_'+j);
-                y.setAttribute("value", drangka);
-                x.appendChild(y);
+        $.post("function/ajax_function.php",{ fungsi: "getdrangka",nokk:$nokk,nomer:$no },function(data)
+        {
+            if (data != 0) {
+                $("#norangka_"+$no).val(data.length);
+                for(var i=1; i<=data.length; ++i) {
+                    var y = document.createElement("input");
+                    y.setAttribute("type", "text");
+                    y.classList.add("form-control")
+                    y.setAttribute("id", "txtmrangka"+$no+'_'+i);
+                    y.setAttribute("name", "txtmrangka"+$no+'_'+i);
+                    y.setAttribute("value", data[i-1]);
+                    x.appendChild(y);
+                }
+            }else{
+                $("#norangka_"+$no).val(data);
             }
-        }
+        },"json");
     }
     $def++;
     $("#mySModal").modal({backdrop: 'static'});
 }
 function prangka() {
     var idrangka = $("#idrangka").val();
-    var norangka = $("#jumDetailr_"+idrangka).val();
+    //var norangka = parseInt($("#norangka_"+idrangka).val())+1;
+    var norangka = $("#norangka_"+idrangka).val();
     var trow = document.createElement("DIV");
     var inp = document.getElementById("detailrangka");
     trow.innerHTML+='<input type="text" class="form-control" id="txtmrangka'+idrangka+'_'+(parseInt(norangka)+1)+'"name="txtmrangka'+idrangka+'_'+(parseInt(norangka)+1)+'" value="">';
     inp.appendChild(trow);
-    $("#norangka_"+idrangka).val(parseInt(norangka)+1);
-    $("#jumDetailr_"+idrangka).val(parseInt($("#jumDetailr_"+idrangka).val())+1);
-}
-function pwarna() {
-    var idwarna = $("#idwarna").val();
-    var nowarna = $("#jumWarna_"+idwarna).val();
-    var trow = document.createElement("DIV");
-    var inp = document.getElementById("detailwarna");
-    trow.innerHTML+='<input type="text" class="form-control" id="txtmwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'"name="txtmwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'" value="">';
-    inp.appendChild(trow);
-    var trowk = document.createElement("DIV");
-    var inpk = document.getElementById("detailkwarna");
-    trowk.innerHTML+='<input type="text" class="form-control" id="txtmkwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'"name="txtmkwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'" value="">';
-    inpk.appendChild(trowk);
 
-    /*var ttable = document.getElementById("dwarna");
+    var ttable = document.getElementById("drangka");
     var trow = document.createElement("TR");
-    trow.setAttribute("id", "trid_"+idwarna);
+    trow.setAttribute("id", "trid_"+idrangka);
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
-    trow.innerHTML+='<input type="" class="form-control" id="txtwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'"name="txtwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'" value="">';
+    trow.innerHTML+='<input type="hidden" class="form-control" id="txtrangka'+idrangka+'_'+(parseInt(norangka)+1)+'"name="txtrangka'+idrangka+'_'+(parseInt(norangka)+1)+'" value="">';
     trow.appendChild(td);
+    td.setAttribute('onclick','opendmodal(1);');
     ttable.appendChild(trow);
-
-    var trowk = document.createElement("TR");
-    trowk.setAttribute("id", "trid_"+idwarna);
-    var tdk = document.createElement("TD");
-    tdk.setAttribute("align","left");
-    tdk.style.verticalAlign = 'top';
-    trowk.innerHTML+='<input type="" class="form-control" id="txtkwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'"name="txtkwarna'+idwarna+'_'+(parseInt(nowarna)+1)+'" value="">';
-    trowk.appendChild(tdk);
-    ttable.appendChild(trowk);*/
-
-    $("#nowarna_"+idwarna).val(parseInt(nowarna)+1);
-    $("#jumWarna_"+idwarna).val(parseInt($("#jumWarna_"+idwarna).val())+1);
+    $("#norangka_"+idrangka).val(parseInt(norangka)+1);
+    $("#jumDetailr").val(parseInt($("#jumDetailr").val())+1);
 }
 function chkadddetail(tcounter) {
     if ($("#chkAddJurnal_"+tcounter).val()==1) {
@@ -503,9 +491,6 @@ function opendmodal(tcounter) {
     });
 }
 function addJurnal(){    
-    var link = window.location.href;
-    var res = link.match(/mode=edit/g);
-    var $nokk = link.split('noKK=');
     tcounter = $("#jumAddJurnal").val();
 
     var ttable = document.getElementById("kendali");
@@ -531,7 +516,7 @@ function addJurnal(){
     var td = document.createElement("TD");
     td.setAttribute("align","left");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control" value="setbola" readonly><input name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'" type="hidden" value="Full"><input name="txtBahan_'+tcounter+'" id="txtBahan_'+tcounter+'" type="hidden" value="Enamel"><input name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" type="hidden" value="1"><input name="txtKtransport_'+tcounter+'" id="txtKtransport_'+tcounter+'" type="hidden" value="Transport Biasa"><input name="txtbMakara_'+tcounter+'" id="txtbMakara_'+tcounter+'" type="hidden"><input name="txtMakara_'+tcounter+'" id="txtMakara_'+tcounter+'" type="hidden"><input name="txtHargaKubah_'+tcounter+'" id="txtHargaKubah_'+tcounter+'" type="hidden"></div>';
+    td.innerHTML+='<div class="form-group"><input style="text-align:center" name="txtModel_'+tcounter+'" id="txtModel_'+tcounter+'" class="form-control" value="Setengah Bola" readonly><input name="txtPlafon_'+tcounter+'" id="txtPlafon_'+tcounter+'" type="hidden"><input name="txtBahan_'+tcounter+'" id="txtBahan_'+tcounter+'" type="hidden"><input name="txtQty_'+tcounter+'" id="txtQty_'+tcounter+'" type="hidden"><input name="txtKtransport_'+tcounter+'" id="txtKtransport_'+tcounter+'" type="hidden"><input name="txtbMakara_'+tcounter+'" id="txtbMakara_'+tcounter+'" type="hidden"><input name="txtMakara_'+tcounter+'" id="txtMakara_'+tcounter+'" type="hidden"><input name="txtHargaKubah_'+tcounter+'" id="txtHargaKubah_'+tcounter+'" type="hidden"></div>';
     trow.appendChild(td);
     td.setAttribute('onclick','opendmodal('+tcounter+');');
 
@@ -589,13 +574,13 @@ function addJurnal(){
     var td = document.createElement("TD");
     td.setAttribute("align","center");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><input type="button" class="btn btn-primary" value="select" onclick=rmodal("' + tcounter + '","'+$nokk[1]+'" )></div>';
+    td.innerHTML+='<div class="form-group"><input type="button" class="btn btn-primary" value="select" onclick=rmodal("' + tcounter + '","")></div>';
     trow.appendChild(td);
 
     var td = document.createElement("TD");
     td.setAttribute("align","center");
     td.style.verticalAlign = 'top';
-    td.innerHTML+='<div class="form-group"><input type="button" class="btn btn-primary" value="select" onclick=cmodal("' + tcounter + '","'+$nokk[1]+'")></div><input type="hidden" id="jumDetailr_' + tcounter + '" name="jumDetailr_' + tcounter + '" value="0" /><input type="hidden" id="jumWarna_' + tcounter + '" name="jumWarna_' + tcounter + '" value="0" /><div id="drangka_' + tcounter + '"></div><div id="dwarna_' + tcounter + '"></div>';
+    td.innerHTML+='<div class="form-group"><input type="button" class="btn btn-primary" value="select" onclick="cmodal(' + tcounter + ')"></div>';
     trow.appendChild(td);
 
     ttable.appendChild(trow);
@@ -976,7 +961,7 @@ return true;
                                 <?php
                                     $q='';
                                     if ($_GET['mode']=='edit'){
-                                        $q = "SELECT kk.*,dp.* FROM aki_dkk kk left join aki_dpembayaran dp on kk.noKK=dp.noKk ";
+                                        $q = "SELECT kk.*,dp.*,kkc.* FROM aki_dkk kk left join aki_dpembayaran dp on kk.noKK=dp.noKk  left join aki_kkcolor as kkc on kk.noKK=kkc.noKk and kk.nomer=kkc.nomer ";
                                         $q.= "WHERE 1=1 and MD5(kk.nokk)='" . $noKk;
                                         $q.= "' ORDER BY  kk.nomer ";
                                     }else{
@@ -1031,10 +1016,11 @@ return true;
                                             echo '<input type="hidden" name="txtharga1_' . $iJurnal . '" id="txtharga1_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga"]-$DetilJurnal["ntransport"]).'"/>';
                                             echo '<input type="hidden" name="txtharga2_' . $iJurnal . '" id="txtharga2_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga2"]-$DetilJurnal["ntransport"]).'"/>';
                                             echo '<input type="hidden" name="txtharga3_' . $iJurnal . '" id="txtharga3_' . $iJurnal . '" value="'.number_format($DetilJurnal["harga3"]-$DetilJurnal["ntransport"]).'"/>';
-                                            echo '<input type="hidden" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="'.$DetilJurnal["jumlah"].'"/>';
+                                            echo '<input type="hidden" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="'.$DetilJurnal["jumlah"].'"/><input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="-"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="-"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="-"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="-"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="-"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="-"/>';
                                         }else{
                                             $harga= ($DetilJurnal["harga"]-$DetilJurnal["ntransport"]);
                                             echo '<input type="hidden" name="txtQty_' . $iJurnal . '" id="txtQty_' . $iJurnal . '" value="'.$DetilJurnal["jumlah"].'"/>';
+                                            echo '<input type="hidden" name="color1_' . $iJurnal . '" id="color1_' . $iJurnal . '" value="' . $DetilJurnal["color1"] . '"/><input type="hidden" name="color2_' . $iJurnal . '" id="color2_' . $iJurnal . '" value="' . $DetilJurnal["color2"] . '"/><input type="hidden" name="color3_' . $iJurnal . '" id="color3_' . $iJurnal . '" value="' . $DetilJurnal["color3"] . '"/><input type="hidden" name="color4_' . $iJurnal . '" id="color4_' . $iJurnal . '" value="' . $DetilJurnal["color4"] . '"/><input type="hidden" name="color5_' . $iJurnal . '" id="color5_' . $iJurnal . '" value="' . $DetilJurnal["color5"] . '"/><input type="hidden" name="kcolor1_' . $iJurnal . '" id="kcolor1_' . $iJurnal . '" value="' . $DetilJurnal["kcolor1"] . '"/><input type="hidden" name="kcolor2_' . $iJurnal . '" id="kcolor2_' . $iJurnal . '" value="' . $DetilJurnal["kcolor2"] . '"/><input type="hidden" name="kcolor3_' . $iJurnal . '" id="kcolor3_' . $iJurnal . '" value="' . $DetilJurnal["kcolor3"] . '"/><input type="hidden" name="kcolor4_' . $iJurnal . '" id="kcolor4_' . $iJurnal . '" value="' . $DetilJurnal["kcolor4"] . '"/><input type="hidden" name="kcolor5_' . $iJurnal . '" id="kcolor5_' . $iJurnal . '" value="' . $DetilJurnal["kcolor5"] . '"/>';
                                         }
                                         echo '<td align="center" valign="top" onclick="opendmodal('.$iJurnal.')"><div class="form-group">
                                         <input type="text" class="form-control"  name="txtntrans_' . $iJurnal . '" id="txtntrans_' . $iJurnal . '" value="'.number_format($DetilJurnal["ntransport"]).'" style="text-align:right;min-width: 120px;" onkeyup="hitungtotal(' . $iJurnal . ')"></div></td>';
@@ -1056,34 +1042,15 @@ return true;
                                         echo '<td valign="top" ><div class="form-group"><center>
                                         <input type="button" class="btn btn-primary" value="select" onclick=rmodal("' . $iJurnal . '","' . $_GET['noKK'] . '")></center></div></td>';
                                         echo '<td valign="top" ><div class="form-group"><center>
-                                        <input type="button" class="btn btn-primary" value="select" onclick=cmodal("' . $iJurnal . '","' . $_GET['noKK'] . '")></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/><input type="hidden" id="jumDetailr_' . $iJurnal . '" name="jumDetailr_' . $iJurnal . '" value="0" /><input type="hidden" id="jumWarna_' . $iJurnal . '" name="jumWarna_' . $iJurnal . '" value="0" />';
-                                        $qrangka = 'SELECT * FROM aki_kkrangka WHERE `aktif`=1 and MD5(noKK)="'.$_GET["noKK"].'" and nomer="'.$iJurnal.'" order by idRangka asc';
-                                        $rsrangka = mysql_query($qrangka, $dbLink);
-                                        $irgk = 1;
-                                        echo '<div id="drangka_' . $iJurnal . '">';
-                                        while ($Detilrgk = mysql_fetch_array($rsrangka)) {
-                                            echo '<input type="hidden" id="txtrangka'.$iJurnal.'_'.$irgk.'"name="txtrangka'.$iJurnal.'_'.$irgk.'" value="'.$Detilrgk["rangka"].'">';
-                                            $irgk++;
-                                        }
-
-                                        $qwarna = 'SELECT * FROM aki_kkcolor WHERE MD5(noKK)="'.$_GET["noKK"].'" and nomer="'.$iJurnal.'" order by id asc';
-                                        $rswarna = mysql_query($qwarna, $dbLink);
-                                        $iwrn = 1;
-                                        echo '</div><div id="dwarna_' . $iJurnal . '">';
-                                        while ($Detilwrn = mysql_fetch_array($rswarna)) {
-                                            echo '<input type="hidden" id="txtwarna'.$iJurnal.'_'.$iwrn.'"name="txtwarna'.$iJurnal.'_'.$iwrn.'" value="'.$Detilwrn["color"].'">';
-                                            echo '<input type="hidden" id="txtkwarna'.$iJurnal.'_'.$iwrn.'"name="txtkwarna'.$iJurnal.'_'.$iwrn.'" value="'.$Detilwrn["kcolor"].'">';
-                                            $iwrn++;
-                                        }
-                                        echo "</div></td>";
+                                        <input type="button" class="btn btn-primary" value="select" onclick="cmodal(' . $iJurnal . ')"></center></div><input type="hidden" name="txtPatas_' . $iJurnal . '" id="txtPatas_' . $iJurnal . '" value="-"/></td>';
                                         $iJurnal++;
                                     }
                                 ?>
                             </tbody>
-                            <div id="dwarna"></div>
+                            <div id="drangka"></div>
                         </table>
                         <input type="hidden" value="<?php echo $iJurnal; ?>" id="jumAddJurnal" name="jumAddJurnal"/>
-                        
+                        <input type="" id="jumDetailr" name="jumDetailr" value="0" />
                         <center><button type="button" class="btn btn-success" onclick="javascript:addJurnal()">Add Detail</button></center>
                     </div>
                     <div class="box-footer">
@@ -1101,21 +1068,56 @@ return true;
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" id="closemyModal">&times;</button>
-                    <h4 class="modal-title">Warna Kubah <label id="labelclr"></label></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warna <label id="labelclr"></label></h4>
+                    <input type="hidden" class="form-control" id="txtnomerc" value="">
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <div id="detailwarna" class="col-lg-6"></div>
-                        <div id="detailkwarna" class="col-lg-6"></div>
-                        <input type="hidden"  id="idwarna" name="idwarna" value="" >
+                        <div class="col-lg-6">
+                            <label class="control-label" for="chkPPN">Warna</label>
+                            <input type="text" class="form-control" id="color1" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="control-label" for="chkPPN">Kode</label>
+                            <input type="text" class="form-control" id="kcolor1" value="-" placeholder="">
+                        </div>
                     </div>
-                    <center>
-                        <button type="button" class="btn btn-primary" id="addwarna" onclick="pwarna();"><i class="fa fa-plus"></i></button>
-                    </center>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color2" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor2" value="-" placeholder="-">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color3" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor3" value="-" placeholder="-">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color4" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor4" value="-" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="color5" value="-" placeholder="">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="kcolor5" value="-" placeholder="">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-primary" value="Add" id="btnwarna">
+                    <input type="button" class="btn btn-primary" value="Add"  id="btncolor">
                 </div>
             </div>
         </div>
@@ -1230,11 +1232,11 @@ return true;
                             </select>
                             <label class="control-label" for="txtKeteranganKas"></label>
                             <select name="cbomodel" id="cbomodel" class="form-control">
-                                <option value='setbola'>Setengah Bola</option>";
-                                <option value='pinang'>Pinang</option>";
-                                <option value='madinah'>Madinah</option>";
-                                <option value='bawang'>Bawang</option>";
-                                <option value='custom'>Custom</option>";
+                                <option value=setbola>Setengah Bola</option>";
+                                <option value=pinang>Pinang</option>";
+                                <option value=madinah>Madinah</option>";
+                                <option value=bawang>Bawang</option>";
+                                <option value=custom>Custom</option>";
                             </select>
                             <label class="control-label" for="txtKeteranganKas">Transport</label>
                             <div class="input-group"><span class="input-group-addon">Rp</span>
@@ -1286,6 +1288,7 @@ return true;
     </div>
     <div class="modal fade" id="mySModal" role="dialog">
         <div class="modal-dialog">
+            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" id="closemyCModal">&times;</button>
@@ -1295,16 +1298,14 @@ return true;
                     <div class="form-group">
                         <div id="detailrangka"></div>
                         <input type="hidden"  id="idrangka" name="idrangka" value="" >
+                    </div><center>
+                        <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button></center>
                     </div>
-                    <center>
-                        <button type="button" class="btn btn-primary" id="addrangka" onclick="prangka();"><i class="fa fa-plus"></i></button>
-                    </center>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-primary" value="Add" id="btnrangka">
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-primary" value="Add" id="btnrangka">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
