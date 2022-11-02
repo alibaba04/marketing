@@ -146,7 +146,7 @@ $datakcolor1 = '';
             if ($dataspk = mysql_fetch_array($rsTemp)) {
               if ($dataspk["noproyek"]=='-') {
                 echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
-                echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . md5($dataspk["noKk"])."'"; 
+                echo "onclick=location.href='" . $_SERVER['PHP_SELF'] . "?page=view/kk_detail&mode=edit&noKK=" . $noKk."'"; 
                 echo '><i class="fa fa-pencil" ></i></button>';
               }else{
                 echo '<button type="button" class="btn btn-default pull-right" id="btnEdit" style="margin-right: 5px;"';
@@ -324,7 +324,7 @@ $datakcolor1 = '';
           </div>
           <div class="tab-pane" id="spec">
             <?php
-                $q4="SELECT dkk.*,col.* FROM aki_dkk dkk left join aki_kkcolor col on dkk.noKK=col.noKK and dkk.nomer=col.nomer WHERE 1=1 and MD5(dkk.noKk)='".$noKk."' group by dkk.nomer order by dkk.nomer asc";
+                $q4="SELECT dkk.* FROM aki_dkk dkk WHERE 1=1 and MD5(dkk.noKk)='".$noKk."' group by dkk.nomer order by dkk.nomer asc";
                 $rsTemp3 = mysql_query($q4, $dbLink);
                 while ($detail = mysql_fetch_array($rsTemp3)) {
                   ?>
@@ -354,31 +354,11 @@ $datakcolor1 = '';
                             <th><center>Kode</center></th>
                           </tr>
                           <?php 
-                          
-                            if ($detail['color1']!='-') {
-                              $datacolor1 = $detail['color1'];
-                              $datakcolor1 = $detail['kcolor1'];
-                              echo '<tr><td style="text-align: center;">'.$detail['color1'];
-                              echo '<td style="text-align: center;">'.$detail['kcolor1'].'</tr>';
-                            }else{
-                              echo '<tr><td style="text-align: center;">-';
-                              echo '<td style="text-align: center;">-</tr>';
-                            }
-                            if ($detail['color2']!='-') {
-                              echo '<tr><td style="text-align: center;">'.$detail['color2'];
-                              echo '<td style="text-align: center;">'.$detail['kcolor2'].'</tr>';
-                            }
-                            if ($detail['color3']!='-') {
-                              echo '<tr><td style="text-align: center;">'.$detail['color3'];
-                              echo '<td style="text-align: center;">'.$detail['kcolor3'].'</tr>';
-                            }
-                            if ($detail['color4']!='-') {
-                              echo '<tr><td style="text-align: center;">'.$detail['color4'];
-                              echo '<td style="text-align: center;">'.$detail['kcolor4'].'</tr>';
-                            }
-                            if ($detail['color5']!='-') {
-                              echo '<tr><td style="text-align: center;">'.$detail['color5'];
-                              echo '<td style="text-align: center;">'.$detail['kcolor5'].'</tr>';
+                            $qq3 = "SELECT * FROM `aki_kkcolor` WHERE MD5(noKK)='".$noKk."'";
+                            $rsq3 = mysql_query($qq3, $dbLink);
+                            while (  $hasilcol = mysql_fetch_array($rsq3)) {
+                              echo '<tr><td style="text-align: center;">'.$hasilcol['color'];
+                              echo '<td style="text-align: center;">'.$hasilcol['kcolor'].'</tr>';
                             }
                           
                           echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';

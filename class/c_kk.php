@@ -244,7 +244,7 @@ class c_kk
 			}
 			
 			//report
-			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`hppn`,ds.`jumlah`,ds.`transport`,ds.`biaya_plafon`,ds.`bahan` FROM aki_kk s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$params["txtnoKk"]."'", $dbLink);
+			$rsTemp=mysql_query("SELECT s.`nama_cust`,s.`provinsi`,s.`kota`,ds.`model`,ds.`d`,ds.`dt`,ds.`t`,ds.`luas`,ds.`plafon`,ds.`harga`,ds.`hppn`,ds.`jumlah`,ds.`transport`,ds.`bahan`,ds.`filekubah` FROM aki_kk s LEFT JOIN aki_dkk ds ON s.`noKk`=ds.`noKk` WHERE s.`noKk` = '".$params["txtnoKk"]."'", $dbLink);
 			$temp = mysql_fetch_array($rsTemp);
 			$tempNamecust  = $temp['nama_cust'];
 			$tempP  = $temp['provinsi'];
@@ -259,8 +259,8 @@ class c_kk
 			$tempHarga2  = $temp['hppn'];
 			$tempJumlah  = $temp['jumlah'];
 			$tempTrans  = $temp['transport'];
-			$tempBiaya  = $temp['biaya_plafon'];
 			$tempBahan  = $temp['bahan'];
+			$tempfile  = $temp['filekubah'];
 
 			$qkk = "UPDATE aki_kk SET `nama_cust`='".$namacust."',`jenis_id`='".$jenis_id."',`no_id`='".$no_id."',`no_phone`='".$no_phone."',`jabatan`='".$jabatan."',`nmasjid`='".$nmasjid."',`nproyek`='".$nproyek."',`kproyek`='".$kproyek."',`project_pemerintah`='".$project_pemerintah."',`alamat_proyek`='".$alamat_proyek."',`mproduksi`='".$mproduksi."',`mpemasangan`='".$mpemasangan."',`alamat`='".$alamat."',`provinsi`='".$provinsi."',`kota`='".$kota."',`approve`='0',`approve_kpenjualan`='-',`approve_tgl`='0000-00-00',`approve_koperational`='-',`approve_tgl2`='0000-00-00' WHERE noKk='".$nokk."'";
 			if (!mysql_query( $qkk, $dbLink))
@@ -348,8 +348,16 @@ class c_kk
                     }
 
                     $filekaligrafi = secureParam($params["filekaligrafi_" . $j], $dbLink);
+                    $filedesain = '';
+                    if ($tempfile != '') {
+                    	$filedesain = $tempfile;
+                    }elseif ($tempfile != '' && $nameimg[0] !='') {
+                    	$filedesain = $nameimg[0];
+                    }{
+                    	$filedesain = $nameimg[0];
+                    }
                     $q2 = "INSERT INTO aki_dkk(`nomer`, `noKK`, `model`, `kubah`, `d`, `t`, `dt`, `luas`, `plafon`, `makara`, `bmakara`, `kaligrafi`, `harga`, `jumlah`, `bahan`,`ppn`,`hppn`, `transport`, `ntransport`, `ktransport`,`filekubah`, `filekaligrafi`) ";
-					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$bmakara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$nameimg[0]."', '".$nameimg[1]."');";
+					$q2.= "VALUES ('".$nomer."','".$nokk."','".$model."', '".$jkubah."', '".$diameter."', '".$tinggi."', '".$dtengah."','".$luas."', '".$plafon."', '".$makara."', '".$bmakara."', '".$kaligrafi."', '".$h."', '".$qty."', '".$bahan."', '".$project_pemerintah."', '".$hppn."', '".$transport."', '".$ntransport."', '".$ktrans."', '".$filedesain."', '".$nameimg[1]."');";
 
 					if (!mysql_query( $q2, $dbLink))
 						throw new Exception($q2.'Gagal ubah data KK5.');
@@ -369,7 +377,7 @@ class c_kk
 			}
 			date_default_timezone_set("Asia/Jakarta");
 			$tgl = date("Y-m-d H:i:s");
-			$ket = "`nomer`=".$params["txtnoKk"]." -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempLuas.", ".$tempJumlah.", ".$tempBiaya.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
+			$ket = "`nomer`=".$params["txtnoKk"]." -has change, ket : ".$tempNamecust.", ".$tempP.", ".$tempK.", ".$tempModel.", ".$tempD.", ".$tempT.", ".$tempDt.", ".$tempTrans.", ".$tempLuas.", ".$tempJumlah.", ".$tempHarga.", ".$tempHarga2.", ".$tempPlafon.", ".$tempBahan.", datetime: ".$tgl;
 			$q4 = "INSERT INTO `aki_report`( `kodeUser`, `datetime`, `ket`) VALUES";
 			$q4.= "('".$pembuat."','".$tgl."','".$ket."');";
 			if (!mysql_query( $q4, $dbLink))
