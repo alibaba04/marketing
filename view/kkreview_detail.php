@@ -78,7 +78,7 @@ $datakcolor1 = '';
 
   function accmodal() {
     if ($('#ktransport').val()!='' ) {
-      if ($('#datadesain').val()!='' && $('#color1').val()!='' ) {
+      if ($('#datadesain').val()!='' && $('#color1').val()!='' && $('#kcolor1').val()!='' ) {
         $("#myAcc").modal({backdrop: 'static'});
         $('#txtMode').val('approve');
       }else{
@@ -359,10 +359,12 @@ $datakcolor1 = '';
                             while (  $hasilcol = mysql_fetch_array($rsq3)) {
                               echo '<tr><td style="text-align: center;">'.$hasilcol['color'];
                               echo '<td style="text-align: center;">'.$hasilcol['kcolor'].'</tr>';
+                              $datacolor1 =$hasilcol['color'];
+                              $datakcolor1 = $hasilcol['kcolor'];
                             }
                           
-                          echo '<input type="hidden" name="color1" id="color1" class="form-control" value="'.$datacolor1.'">';
-                          echo '<input type="hidden" name="kcolor1" id="kcolor1" class="form-control" value="'.$datakcolor1.'">';
+                          echo '<input type="hidden" name="color1" id="color1" value="'.$datacolor1.'">';
+                          echo '<input type="hidden" name="kcolor1" id="kcolor1" value="'.$datakcolor1.'">';
                           ?></table>
                         </div>
                         <div class="timeline-body"><h4>Masa Produksi <b><?php  echo $mproduksi; ?> hari,</b> Masa Pemasangan <b><?php  echo $mpemasangan; ?> hari</b></h4></div>
